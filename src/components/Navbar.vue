@@ -1,14 +1,14 @@
 <template>
   <nav class="navbar">
     <h1 class="navbar__brand">
-      <a href="./" class="navbar__brand__link">E-protfolio</a>
+      <a href="/" class="navbar__brand__link">E-protfolio</a>
     </h1>
     <ul class="navbar__links">
       <li>
-        <router-link class="navbar__links__link" to="/">學習歷程</router-link>
+        <router-link class="navbar__links__link" :to="{name: 'Experience'}">學習歷程</router-link>
       </li>
       <li>
-        <router-link class="navbar__links__link" to="./protfolio">Protfolio</router-link>
+        <router-link class="navbar__links__link" :to="{name: 'Protfolio'}">Protfolio</router-link>
       </li>
     </ul>
   </nav>
@@ -25,11 +25,11 @@ export default {
 @import "../scss/mixins";
 
 .navbar {
-  height: $navbar-height;
-  padding: 0 24px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  height: $navbar-height;
+  padding: 0 24px;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
   background-color: #fff;
   z-index: 10;
