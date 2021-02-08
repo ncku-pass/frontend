@@ -21,14 +21,26 @@
           <router-link class="tabs__tab" :to="{name: 'Experience', params: { type: 'others' }}">其他</router-link>
         </li>
       </ul>
-      <router-view></router-view>
+      <div class="experiences-table">
+        <div class="experiences-table__block">
+          <h3 class="experiences-table__block__semester">106-1</h3>
+          <ul class="experiences-table__block__list">
+            <ExperienceListItem />
+          </ul>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+import ExperienceListItem from '@/components/ExperienceListItem.vue'
+
 export default {
-  name: 'Experience'
+  name: 'Experience',
+  components: {
+    ExperienceListItem
+  }
 }
 </script>
 
@@ -51,9 +63,7 @@ export default {
 }
 
 .tabs {
-  display: grid;
-  grid-auto-flow: column;
-  gap: 0 20px;
+  @include grid(column, 0, 20px);
   padding: 8px 10px;
   list-style: none;
   box-shadow: 0px 4px 15px rgba(241, 90, 96, 0.06);

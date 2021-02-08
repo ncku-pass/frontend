@@ -48,11 +48,9 @@ export default {
 }
 
 .navbar__links {
-  display: grid;
+  @include grid(column, 0, 10px);
   margin: 0;
   padding: 0;
-  grid-auto-flow: column;
-  gap: 0 10px;
   list-style: none;
   &__link {
     @include tab-link;
