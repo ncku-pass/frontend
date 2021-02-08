@@ -22,6 +22,7 @@ export default {
 
 <style lang="scss">
 @import "../scss/variables";
+@import "../scss/mixins";
 
 .navbar {
   height: $navbar-height;
@@ -54,17 +55,7 @@ export default {
   gap: 0 10px;
   list-style: none;
   &__link {
-    display: block;
-    padding: 8px 24px;
-    text-decoration: none;
-    color: $gray-4;
-    letter-spacing: 0.05em;
-    font-weight: $weight-medium;
+    @include tab-link;
   }
-}
-
-.router-link-active {
-  color: $gray-1;
-  box-shadow: 0px 3px 0px #F15A60;
 }
 </style>
