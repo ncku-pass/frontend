@@ -1,6 +1,8 @@
 <template>
   <Navbar/>
-  <router-view/>
+  <main>
+    <router-view/>
+  </main>
 </template>
 
 <script>
@@ -18,8 +20,14 @@ export default {
 @import "./scss/variables";
 
 #app {
+  display: flex;
+  flex-direction: column;
   height: 100vh;
   background: rgb(255,255,255);
   background: linear-gradient(90deg, white 300px, $pink 300px);
+}
+
+main {
+  height: calc(100vh - #{$navbar-height});
 }
 </style>

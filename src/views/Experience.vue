@@ -71,4 +71,17 @@ export default {
     @include tab-link;
   }
 }
+
+.experiences-table {
+  padding: 24px 80px;
+}
+
+.experiences-table__block {
+  &__semester {
+    margin: 5px;
+    font-size: 26px;
+    font-weight: $weight-medium;
+    color: $gray-3;
+  }
+}
 </style>
