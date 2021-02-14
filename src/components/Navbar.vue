@@ -25,14 +25,24 @@ export default {
 @import "../scss/mixins";
 
 .navbar {
+  position: relative;
   display: flex;
   justify-content: space-between;
   align-items: center;
   height: $navbar-height;
-  padding: 0 24px;
+  padding: 2px 24px 0;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
   background-color: #fff;
   z-index: 10;
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background-color: $red;
+  }
 }
 
 .navbar__brand {
