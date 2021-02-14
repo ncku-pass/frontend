@@ -6,7 +6,8 @@ const routes = [
   {
     path: '/experience/:type?',
     name: 'Experience',
-    component: Experience
+    component: Experience,
+    props: true
   },
   {
     path: '/protfolio',

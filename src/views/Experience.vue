@@ -3,7 +3,7 @@
     <div class="experience__window">
       <ul class="experience__window__tabs">
         <li>
-          <router-link class="tab" :to="{name: 'Experience', params: { type: 'class' }}">課程紀錄</router-link>
+          <router-link class="tab" :class="{'router-link-active': type === 'class'}" :to="{name: 'Experience', params: { type: 'class' }}">課程紀錄</router-link>
         </li>
         <li>
           <router-link class="tab" :to="{name: 'Experience', params: { type: 'activity' }}">活動經驗</router-link>
@@ -74,6 +74,13 @@ export default {
     ExperienceListItem,
     ExperienceListBlock
   },
+  props: {
+    // 目前顯示的TAB種類
+    type: {
+      type: String,
+      default: 'class'
+    }
+  },
   setup () {
     return { allData }
   }
@@ -96,10 +103,13 @@ export default {
   flex-direction: column;
   background-color: #fff;
   box-shadow: 0px 0px 30px rgba(241, 90, 96, 0.05), 0px 0px 25px rgba(241, 90, 96, 0.1);
+  width: 100%;
+  max-width: 1110px;
 }
 
 .experience__window__tabs {
-  @include grid(column, 0, 20px);
+  display: flex;
+  justify-content: space-between;
   padding: 8px 10px;
   list-style: none;
   box-shadow: 0px 4px 15px rgba(241, 90, 96, 0.06);
@@ -111,7 +121,7 @@ export default {
 
 .experience__window__table {
   position: relative;
-  padding: 24px 80px 104px;
+  padding: 24px 96px 104px;
   overflow-y: auto;
   display: flex;
   flex-direction: column;
@@ -137,6 +147,15 @@ export default {
     font-size: 42px;
     color: #fff;
     filter: drop-shadow(0px 0px 4px rgba(0, 0, 0, 0.25));
+  }
+}
+
+@media (max-width: 1440px) {
+  .experience__window {
+    max-width: 930px;
+  }
+  .experience__window__table {
+    padding: 24px 80px 104px;
   }
 }
 </style>
