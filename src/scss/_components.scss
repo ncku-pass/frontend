@@ -1,0 +1,13 @@
+.btn {
+  padding: 6px 16px;
+  background: #fff;
+  border: 1px solid $gray-4;
+  border-radius: 5px;
+  line-height: 24px;
+  text-align: center;
+  &--danger {
+    @extend .btn;
+    background: $red;
+    color: #fff;
+  }
+}
