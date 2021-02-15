@@ -1,8 +1,10 @@
 <template>
   <div class="experience-list-block">
-    <h3 class="experience-list-block__semester">{{props.semester}}</h3>
+    <h3 class="experience-list-block__semester">
+      {{ props.semester }}
+    </h3>
     <ul class="experience-list-block__list">
-      <slot></slot>
+      <slot />
     </ul>
   </div>
 </template>
@@ -11,7 +13,10 @@
 export default {
   name: 'ExperienceListBlock',
   props: {
-    semester: String
+    semester: {
+      type: String,
+      default: '未知學期'
+    }
   },
   setup (props) {
     return { props }

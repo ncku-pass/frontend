@@ -3,33 +3,80 @@
     <div class="experience__window">
       <ul class="experience__window__tabs">
         <li>
-          <router-link class="tab" :class="{'router-link-active': type === 'class'}" :to="{name: 'Experience', params: { type: 'class' }}">課程紀錄</router-link>
+          <router-link
+            class="tab"
+            :class="{'router-link-active': type === 'class'}"
+            :to="{name: 'Experience', params: { type: 'class' }}"
+          >
+            課程紀錄
+          </router-link>
         </li>
         <li>
-          <router-link class="tab" :to="{name: 'Experience', params: { type: 'activity' }}">活動經驗</router-link>
+          <router-link
+            class="tab"
+            :to="{name: 'Experience', params: { type: 'activity' }}"
+          >
+            活動經驗
+          </router-link>
         </li>
         <li>
-          <router-link class="tab" :to="{name: 'Experience', params: { type: 'competition' }}">競賽經驗</router-link>
+          <router-link
+            class="tab"
+            :to="{name: 'Experience', params: { type: 'competition' }}"
+          >
+            競賽經驗
+          </router-link>
         </li>
         <li>
-          <router-link class="tab" :to="{name: 'Experience', params: { type: 'work' }}">工作經驗</router-link>
+          <router-link
+            class="tab"
+            :to="{name: 'Experience', params: { type: 'work' }}"
+          >
+            工作經驗
+          </router-link>
         </li>
         <li>
-          <router-link class="tab" :to="{name: 'Experience', params: { type: 'certificate' }}">外語能力或證照</router-link>
+          <router-link
+            class="tab"
+            :to="{name: 'Experience', params: { type: 'certificate' }}"
+          >
+            外語能力或證照
+          </router-link>
         </li>
         <li>
-          <router-link class="tab" :to="{name: 'Experience', params: { type: 'others' }}">其他</router-link>
+          <router-link
+            class="tab"
+            :to="{name: 'Experience', params: { type: 'others' }}"
+          >
+            其他
+          </router-link>
         </li>
       </ul>
       <div class="experience__window__table">
         <div class="experience__window__table__wrapper">
-          <ExperienceListBlock v-for="semesterData in allData" :key="semesterData.semester" :semester="semesterData.semester">
-            <ExperienceListItem v-for="experience in semesterData.experiences" :key="experience.name" v-bind="experience"/>
+          <ExperienceListBlock
+            v-for="semesterData in allData"
+            :key="semesterData.semester"
+            :semester="semesterData.semester"
+          >
+            <ExperienceListItem
+              v-for="experience in semesterData.experiences"
+              :key="experience.name"
+              v-bind="experience"
+            />
           </ExperienceListBlock>
         </div>
         <button class="experience__window__table__add">
-          <svg width="22" height="22" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
-            <path d="M8.71431 22.3811H13.2913V13.4791H21.7733V9.0701H13.2913V0.126143H8.71431V9.0701H0.232251V13.4791H8.71431V22.3811Z" fill="white"/>
+          <svg
+            width="22"
+            height="22"
+            viewBox="0 0 22 22"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M8.71431 22.3811H13.2913V13.4791H21.7733V9.0701H13.2913V0.126143H8.71431V9.0701H0.232251V13.4791H8.71431V22.3811Z"
+              fill="white"
+            />
           </svg>
         </button>
       </div>

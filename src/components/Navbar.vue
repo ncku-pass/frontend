@@ -1,14 +1,27 @@
 <template>
   <nav class="navbar">
     <h1 class="navbar__brand">
-      <a href="/" class="navbar__brand__link">E-protfolio</a>
+      <a
+        href="/"
+        class="navbar__brand__link"
+      >E-protfolio</a>
     </h1>
     <ul class="navbar__links">
       <li>
-        <router-link class="navbar__links__link" :to="{name: 'Experience'}">學習歷程</router-link>
+        <router-link
+          class="navbar__links__link"
+          :to="{name: 'Experience'}"
+        >
+          學習歷程
+        </router-link>
       </li>
       <li>
-        <router-link class="navbar__links__link" :to="{name: 'Protfolio'}">Protfolio</router-link>
+        <router-link
+          class="navbar__links__link"
+          :to="{name: 'Protfolio'}"
+        >
+          Protfolio
+        </router-link>
       </li>
     </ul>
   </nav>
