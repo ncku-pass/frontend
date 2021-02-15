@@ -1,11 +1,11 @@
 <template>
   <li class="experience-list-item">
     <h4 class="experience-list-item__title">
-      {{ props.name }}
+      {{ name }}
     </h4>
     <ul class="experience-list-item__tags">
       <li
-        v-for="tag in props.tags"
+        v-for="tag in tags"
         :key="tag"
         class="tag"
       >
@@ -70,7 +70,7 @@ export default {
     }
   },
   setup (props) {
-    return { props }
+    return {}
   }
 }
 </script>

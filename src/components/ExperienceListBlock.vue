@@ -1,7 +1,7 @@
 <template>
   <div class="experience-list-block">
     <h3 class="experience-list-block__semester">
-      {{ props.semester }}
+      {{ semester }}
     </h3>
     <ul class="experience-list-block__list">
       <slot />
@@ -19,13 +19,13 @@ export default {
     }
   },
   setup (props) {
-    return { props }
+    return {}
   }
 }
 </script>
 
 <style lang="scss" scoped>
-@import "../scss/variables";
+@import '../scss/variables';
 
 .experience-list-block {
   margin-bottom: 15px;
