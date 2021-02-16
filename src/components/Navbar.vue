@@ -9,7 +9,7 @@
     <ul class="navbar__links">
       <li>
         <router-link
-          class="navbar__links__link"
+          class="navbar__links__link tab-link"
           :to="{name: 'Experience'}"
         >
           學習歷程
@@ -17,7 +17,7 @@
       </li>
       <li>
         <router-link
-          class="navbar__links__link"
+          class="navbar__links__link tab-link"
           :to="{name: 'Protfolio'}"
         >
           Protfolio
@@ -75,8 +75,5 @@ export default {
   margin: 0;
   padding: 0;
   list-style: none;
-  &__link {
-    @include tab-link;
-  }
 }
 </style>

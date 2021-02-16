@@ -21,6 +21,31 @@
   line-height: 15px;
 }
 
+.btn-pill {
+  @include grid(column, 0, 5px);
+  align-items: center;
+  padding: 5px 10px;
+  border: 1px solid $gray-2;
+  border-radius: 50px;
+}
+
+.tab-link {
+  display: block;
+  padding: 8px 24px;
+  text-decoration: none;
+  color: $gray-4;
+  letter-spacing: 0.05em;
+  font-weight: $weight-medium;
+  transition: all .3s;
+  &.router-link-active {
+    color: $gray-1;
+    box-shadow: 0px 3px 0px #F15A60;
+  }
+  &:hover {
+    color: $gray-1;
+  }
+}
+
 .text {
   &--red {
     color: $red;

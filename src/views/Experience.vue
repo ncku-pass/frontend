@@ -4,7 +4,7 @@
       <ul class="experience__window__tabs">
         <li>
           <router-link
-            class="tab"
+            class="tab-link"
             :class="{'router-link-active': type === 'class'}"
             :to="{name: 'Experience', params: { type: 'class' }}"
           >
@@ -13,7 +13,7 @@
         </li>
         <li>
           <router-link
-            class="tab"
+            class="tab-link"
             :to="{name: 'Experience', params: { type: 'activity' }}"
           >
             活動經驗
@@ -21,7 +21,7 @@
         </li>
         <li>
           <router-link
-            class="tab"
+            class="tab-link"
             :to="{name: 'Experience', params: { type: 'competition' }}"
           >
             競賽經驗
@@ -29,7 +29,7 @@
         </li>
         <li>
           <router-link
-            class="tab"
+            class="tab-link"
             :to="{name: 'Experience', params: { type: 'work' }}"
           >
             工作經驗
@@ -37,7 +37,7 @@
         </li>
         <li>
           <router-link
-            class="tab"
+            class="tab-link"
             :to="{name: 'Experience', params: { type: 'certificate' }}"
           >
             外語能力或證照
@@ -45,7 +45,7 @@
         </li>
         <li>
           <router-link
-            class="tab"
+            class="tab-link"
             :to="{name: 'Experience', params: { type: 'others' }}"
           >
             其他
@@ -160,10 +160,6 @@ export default {
   padding: 8px 10px;
   list-style: none;
   box-shadow: 0px 4px 15px rgba(241, 90, 96, 0.06);
-}
-
-.tab {
-  @include tab-link;
 }
 
 .experience__window__table {

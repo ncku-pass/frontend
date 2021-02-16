@@ -13,7 +13,7 @@
       </li>
     </ul>
     <div class="experience-list-item__btns">
-      <button class="experience-list-item__btns__edit">
+      <button class="experience-list-item__btns__edit btn-pill">
         <svg
           width="24"
           height="24"
@@ -28,7 +28,7 @@
         </svg>
         編輯
       </button>
-      <button class="experience-list-item__btns__delete" @click="confirmDelete">
+      <button class="experience-list-item__btns__delete btn-pill" @click="confirmDelete">
         <svg
           width="20"
           height="20"
@@ -123,12 +123,10 @@ export default {
     @include grid(column, 0, 10px);
     margin-left: auto;
     &__edit {
-      @include btn-pill;
       color: $gray-2;
       background-color: #fff;
     }
     &__delete {
-      @include btn-pill;
       color: #fff;
       background-color: $gray-2;
     }
