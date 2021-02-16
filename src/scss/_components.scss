@@ -11,3 +11,21 @@
     color: #fff;
   }
 }
+
+.tag {
+  padding: 3px 8px;
+  background-color: $gray-6;
+  border-radius: 50px;
+  font-weight: $weight-light;
+  font-size: 10px;
+  line-height: 15px;
+}
+
+.text {
+  &--red {
+    color: $red;
+  }
+  &--blue {
+    color: $blue; 
+  }
+}

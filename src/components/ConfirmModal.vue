@@ -1,7 +1,10 @@
 <template>
   <div class="confirm-modal" @click.self="$emit('cancel')">
     <div class="confirm-modal__content">
-      {{ message }}
+      <span v-if="confirmType === 'customize'">{{ message }}</span>
+      <span v-else-if="confirmType === 'leave'">離開則無法儲存資料喔！</span>
+      <span v-else>確定要刪除<span class="text--red">{{ message }}</span>此項歷程？</span>
+
       <div class="confirm-modal__btns">
         <button class="btn" @click="$emit('cancel')">
           取消
@@ -25,6 +28,13 @@ export default {
     confirmMessage: {
       type: String,
       default: '確定刪除'
+    },
+    confirmType: {
+      type: String,
+      default: 'leave',
+      validator (value) {
+        return ['leave', 'delete', 'customize'].indexOf(value) !== -1
+      }
     }
   },
   emits: ['cancel', 'confirm'],

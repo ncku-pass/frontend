@@ -28,7 +28,7 @@
         </svg>
         編輯
       </button>
-      <button class="experience-list-item__btns__delete">
+      <button class="experience-list-item__btns__delete" @click="confirmDelete">
         <svg
           width="20"
           height="20"
@@ -52,11 +52,24 @@
         刪除
       </button>
     </div>
+    <ConfirmModal
+      v-if="showConfirmModal"
+      :message="name"
+      confirm-type="delete"
+      @cancel="showConfirmModal = false"
+      @confirm="deleteExperience"
+    />
   </li>
 </template>
 
 <script>
+import ConfirmModal from '@/components/ConfirmModal'
+import { ref } from 'vue'
+
 export default {
+  components: {
+    ConfirmModal
+  },
   props: {
     name: {
       type: String,
@@ -70,7 +83,17 @@ export default {
     }
   },
   setup (props) {
-    return {}
+    const showConfirmModal = ref(false)
+
+    const confirmDelete = () => {
+      showConfirmModal.value = true
+    }
+
+    const deleteExperience = () => {
+      console.log('刪除')
+    }
+
+    return { showConfirmModal, confirmDelete, deleteExperience }
   }
 }
 </script>
@@ -110,14 +133,5 @@ export default {
       background-color: $gray-2;
     }
   }
-}
-
-.tag {
-  padding: 3px 8px;
-  background-color: $gray-6;
-  border-radius: 50px;
-  font-weight: $weight-light;
-  font-size: 10px;
-  line-height: 15px;
 }
 </style>
