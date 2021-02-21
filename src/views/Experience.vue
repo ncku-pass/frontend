@@ -82,11 +82,13 @@
       </div>
     </div>
   </div>
+  <FormModal />
 </template>
 
 <script>
 import ExperienceListItem from '@/components/ExperienceListItem.vue'
 import ExperienceListBlock from '@/components/ExperienceListBlock.vue'
+import FormModal from '@/components/FormModal.vue'
 
 const allData = [
   {
@@ -119,7 +121,8 @@ export default {
   name: 'Experience',
   components: {
     ExperienceListItem,
-    ExperienceListBlock
+    ExperienceListBlock,
+    FormModal
   },
   props: {
     // 目前顯示的TAB種類

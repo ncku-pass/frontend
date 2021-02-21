@@ -2,6 +2,7 @@
 @import './normalize';
 @import './variables';
 @import './mixins';
+@import './utils';
 @import './components';
 
 * {
@@ -17,4 +18,11 @@ ul {
 button {
   cursor: pointer;
   outline: none;
+}
+
+textarea {
+  resize: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }
