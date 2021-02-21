@@ -164,12 +164,13 @@ export default {
 
 .experience__window__table {
   position: relative;
-  padding: 24px 96px 104px;
+  padding: 24px 0 104px;
   overflow-y: auto;
   display: flex;
   flex-direction: column;
   &__wrapper {
     overflow-y: auto;
+    padding: 0 96px;
     &::-webkit-scrollbar {
       display: none;
     }
@@ -197,8 +198,8 @@ export default {
   .experience__window {
     max-width: 930px;
   }
-  .experience__window__table {
-    padding: 24px 80px 104px;
+  .experience__window__table__wrapper {
+    padding: 0 80px;
   }
 }
 </style>
