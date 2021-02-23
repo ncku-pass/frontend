@@ -66,7 +66,7 @@
             />
           </ExperienceListBlock>
         </div>
-        <button class="experience__window__table__add">
+        <button class="experience__window__table__add" @click="showFormModal = true">
           <svg
             width="22"
             height="22"
@@ -82,13 +82,14 @@
       </div>
     </div>
   </div>
-  <FormModal />
+  <FormModal v-if="showFormModal" @cancel="showFormModal = false" />
 </template>
 
 <script>
 import ExperienceListItem from '@/components/ExperienceListItem.vue'
 import ExperienceListBlock from '@/components/ExperienceListBlock.vue'
 import FormModal from '@/components/FormModal.vue'
+import { ref } from 'vue'
 
 const allData = [
   {
@@ -132,7 +133,9 @@ export default {
     }
   },
   setup () {
-    return { allData }
+    const showFormModal = ref(false)
+
+    return { allData, showFormModal }
   }
 }
 </script>
@@ -193,7 +196,11 @@ export default {
     font-weight: $weight-bold;
     font-size: 42px;
     color: #fff;
-    filter: drop-shadow(0px 0px 4px rgba(0, 0, 0, 0.25));
+    transition: box-shadow .3s;
+    box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.25);
+    &:hover svg{
+      transform: scale(1.2);
+    }
   }
 }
 

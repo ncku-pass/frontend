@@ -1,6 +1,6 @@
 <template>
   <div
-    class="message-modal modal"
+    class="message-modal modal-bg"
     @click.self="$emit('close')"
   >
     <div class="message-modal__content">

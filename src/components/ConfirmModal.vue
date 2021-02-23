@@ -1,5 +1,5 @@
 <template>
-  <div class="confirm-modal modal" @click.self="$emit('cancel')">
+  <div class="confirm-modal modal-bg" @click.self="$emit('cancel')">
     <div class="confirm-modal__content">
       <span v-if="confirmType === 'customize'">{{ message }}</span>
       <span v-else-if="confirmType === 'leave'">離開則無法儲存資料喔！</span>
@@ -7,7 +7,7 @@
 
       <div class="confirm-modal__content__btns">
         <button class="btn" @click="$emit('cancel')">
-          取消
+          {{ cancelMessage }}
         </button>
         <button class="btn--danger" @click="$emit('confirm')">
           {{ confirmMessage }}
@@ -28,6 +28,10 @@ export default {
     confirmMessage: {
       type: String,
       default: '確定刪除'
+    },
+    cancelMessage: {
+      type: String,
+      default: '取消'
     },
     confirmType: {
       type: String,
