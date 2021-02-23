@@ -49,17 +49,18 @@ export default {
 </script>
 
 <style lang="scss">
+@import "../scss/mixins";
+
 .confirm-modal__content {
   padding: 10px 24px;
-  width: 230px;
+  width: 240px;
   line-height: 24px;
   text-align: center;
   background-color: #fff;
   box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
   border-radius: 10px;
   &__btns {
-    display: flex;
-    justify-content: space-between;
+    @include grid(column, 0, 10px);
     margin-top: 10px;
   }
 }

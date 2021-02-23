@@ -146,7 +146,7 @@ export default {
 
 .experience {
   height: 100%;
-  padding: 52px 0 68px;
+  padding: 26px 0;
   display: flex;
   justify-content: center;
 }
@@ -198,9 +198,6 @@ export default {
     color: #fff;
     transition: box-shadow .3s;
     box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.25);
-    &:hover svg{
-      transform: scale(1.2);
-    }
   }
 }
 

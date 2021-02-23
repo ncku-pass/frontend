@@ -147,6 +147,7 @@ sup {
  */
 
 img {
+  display: block;
   border-style: none;
 }
 
@@ -167,6 +168,10 @@ textarea {
   font-size: 100%; /* 1 */
   line-height: 1.15; /* 1 */
   margin: 0; /* 2 */
+}
+
+input {
+  line-height: 1;
 }
 
 /**
