@@ -4,7 +4,7 @@
     <hr>
     <ul class="ability-card__body">
       <li
-        v-for="j in [1,2,3]"
+        v-for="j in [1,2]"
         :key="j"
         class="experience-card"
       >
@@ -43,9 +43,10 @@ export default {
 
 .ability-card {
   @include grid(row, 12px, 0);
+  margin-bottom: 12px;
+  padding: 15px 0;
   background-color: #f8f8f8;
   border-radius: 8px;
-  padding: 15px 0;
   hr {
     height: 1px;
     margin: 0;

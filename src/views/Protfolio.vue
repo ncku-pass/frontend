@@ -31,9 +31,12 @@
         </div>
         <div class="content-body">
           <div class="content-body__card-list">
-            <AbilityCard />
+            <AbilityCard v-if="false" />
           </div>
-          <div class="content-body__add" />
+          <button class="content-body__add">
+            <!-- <span>+ 新增主題</span> -->
+            <span>+ 目前還沒主題 趕快新增一個吧</span>
+          </button>
         </div>
       </div>
     </div>
@@ -117,6 +120,15 @@ export default {
 
 .content-body {
   overflow-y: auto;
+  &__add {
+    display: block;
+    margin: 12px auto;
+    padding: 10px 60px;
+    border: none;
+    border-radius: 8px;
+    background-color: $blue-dark;
+    color: $white;
+  }
 }
 
 .protfolio__menu {
