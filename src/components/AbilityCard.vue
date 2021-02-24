@@ -1,27 +1,31 @@
 <template>
   <div class="ability-card">
-    <input class="ability-card__topic" placeholder="填入能力主題，如文書行政能力/溝通能力...">
+    <input
+      v-model="abilityTopic"
+      class="ability-card__topic"
+      placeholder="填入能力主題，如文書行政能力/溝通能力..."
+    >
     <hr>
     <ul class="ability-card__body">
       <li
-        v-for="j in [1,2]"
-        :key="j"
+        v-for="experience in experiences"
+        :key="experience.name"
         class="experience-card"
       >
         <h3 class="experience-card__name">
-          系統分析與設計
+          {{ experience.name }}
         </h3>
         <div class="experience-card__tags">
           <div
-            v-for="i in [1,2,3]"
-            :key="i"
+            v-for="tag in experience.tags"
+            :key="tag"
             class="tag"
           >
-            tag
+            {{ tag }}
           </div>
         </div>
         <div class="experience-card__description">
-          蘇霍姆林斯基在過去曾經講過，熱愛祖國，這是一種最純潔、最高尚、最強烈、最溫柔、最無情、最溫存、最嚴酷的感情。這段話令我陷入了沈思。本人也是經過了深思熟慮，在每個日日夜夜思考這個問題。老舊的想法已經過時了。我們都很清楚，這是個嚴謹的議題。不要先入為主覺得心得很複雜，實際上，心得可能比你想的還要更複雜。想必大家都能了解心得的重要性。
+          {{ experience.description }}
         </div>
       </li>
       <p class="ability-card__body__tips">
@@ -32,8 +36,22 @@
 </template>
 
 <script>
+import { ref } from 'vue'
 export default {
-  name: 'AbilityCard'
+  name: 'AbilityCard',
+  props: {
+    experiences: {
+      type: Array,
+      default () {
+        return []
+      }
+    }
+  },
+  setup () {
+    const abilityTopic = ref('')
+
+    return { abilityTopic }
+  }
 }
 </script>
 

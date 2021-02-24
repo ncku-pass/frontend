@@ -31,11 +31,15 @@
         </div>
         <div class="content-body">
           <div class="content-body__card-list">
-            <AbilityCard v-if="false" />
+            <AbilityCard
+              v-for="card in cards"
+              :key="card.id"
+              v-bind="card"
+            />
           </div>
           <button class="content-body__add">
-            <!-- <span>+ 新增主題</span> -->
-            <span>+ 目前還沒主題 趕快新增一個吧</span>
+            <span v-if="cards.length">+ 新增主題</span>
+            <span v-else>+ 目前還沒主題 趕快新增一個吧</span>
           </button>
         </div>
       </div>
@@ -47,9 +51,35 @@
 <script>
 import AbilityCard from '@/components/AbilityCard.vue'
 
+const cards = [
+  {
+    id: 0,
+    experiences: [
+      { name: '系統分析與設計', tags: ['國際視野', '數理能力'], description: '這段話令我陷入了沈思。本人也是經過了深思熟慮，在每個日日夜夜思考這個問題。想必大家都能了解心得的重要性。' },
+      { name: '互動介面設計松', tags: ['設計能力', '介面設計'], description: ' 蘇霍姆林斯基在過去曾經講過，熱愛祖國，這是一種最純潔、最高尚、最強烈、最溫柔、最無情、最溫存、最嚴酷的感情。這段話令我陷入了沈思。本人也是經過了深思熟慮，在每個日日夜夜思考這個問題。想必大家都能了解心得的重要性。' },
+      { name: '大數據分析與資料探勘', tags: ['python', '數據分析'] }
+    ]
+  },
+  {
+    id: 1,
+    experiences: [
+      { name: '系統分析與設計', tags: ['國際視野', '數理能力'], description: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Provident fuga debitis enim, alias dolor harum tempora fugit maiores accusamus eius?' },
+      { name: '互動介面設計松', tags: ['設計能力', '介面設計'] },
+      { name: '大數據分析與資料探勘', tags: ['python', '數據分析'] }
+    ]
+  },
+  {
+    id: 2,
+    experiences: []
+  }
+]
+
 export default {
   components: {
     AbilityCard
+  },
+  setup () {
+    return { cards }
   }
 }
 </script>
