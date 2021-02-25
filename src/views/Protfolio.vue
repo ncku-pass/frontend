@@ -2,14 +2,14 @@
   <div class="protfolio">
     <div class="protfolio__main">
       <ul class="protfolio__main__tabs">
-        <li class="tab-link">
-          實習履歷
-        </li>
-        <li class="tab-link">
-          打工經驗
-        </li>
-        <li class="tab-link">
-          營隊面試用
+        <li
+          v-for="tab in tabs"
+          :key="tab"
+          class="tab-link"
+          :class="{'is-active': tabNow === tab}"
+          @click="tabNow = tab"
+        >
+          {{ tab }}
         </li>
         <li class="protfolio__main__tabs__add">
           <img src="@/assets/add_circle.svg" alt="">
@@ -18,7 +18,7 @@
       <div class="protfolio__main__content">
         <div class="content-header">
           <h3 class="content-header__title">
-            寰宇補習班工讀
+            {{ tabNow }}
           </h3>
           <div class="content-header__btns">
             <button class="btn">
@@ -50,6 +50,7 @@
 
 <script>
 import AbilityCard from '@/components/AbilityCard.vue'
+import { ref } from 'vue'
 
 const cards = [
   {
@@ -73,13 +74,15 @@ const cards = [
     experiences: []
   }
 ]
+const tabs = ['實習履歷', '打工經驗', '營隊面試用']
 
 export default {
   components: {
     AbilityCard
   },
   setup () {
-    return { cards }
+    const tabNow = ref('實習履歷')
+    return { cards, tabs, tabNow }
   }
 }
 </script>
