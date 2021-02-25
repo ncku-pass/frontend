@@ -4,7 +4,7 @@
       <a
         href="/"
         class="navbar__brand__link"
-      >E-protfolio</a>
+      >E-portfolio</a>
     </h1>
     <ul class="navbar__links">
       <li>
@@ -18,9 +18,9 @@
       <li>
         <router-link
           class="navbar__links__link tab-link"
-          :to="{name: 'Protfolio'}"
+          :to="{name: 'Portfolio'}"
         >
-          Protfolio
+          Portfolio
         </router-link>
       </li>
     </ul>

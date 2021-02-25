@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Experience from '../views/Experience.vue'
-import Protfolio from '../views/Protfolio.vue'
+import Portfolio from '../views/Portfolio.vue'
 
 const routes = [
   {
@@ -10,9 +10,9 @@ const routes = [
     props: true
   },
   {
-    path: '/protfolio',
-    name: 'Protfolio',
-    component: Protfolio
+    path: '/portfolio',
+    name: 'Portfolio',
+    component: Portfolio
   }
 ]
 

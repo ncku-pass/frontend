@@ -1,7 +1,7 @@
 <template>
-  <div class="protfolio">
-    <div class="protfolio__main">
-      <ul class="protfolio__main__tabs">
+  <div class="portfolio">
+    <div class="portfolio__main">
+      <ul class="portfolio__main__tabs">
         <li
           v-for="tab in tabs"
           :key="tab"
@@ -11,11 +11,11 @@
         >
           {{ tab }}
         </li>
-        <li class="protfolio__main__tabs__add">
+        <li class="portfolio__main__tabs__add">
           <img src="@/assets/add_circle.svg" alt="">
         </li>
       </ul>
-      <div class="protfolio__main__content">
+      <div class="portfolio__main__content">
         <div class="content-header">
           <h3 class="content-header__title">
             {{ tabNow }}
@@ -44,7 +44,7 @@
         </div>
       </div>
     </div>
-    <div class="protfolio__menu" />
+    <div class="portfolio__menu" />
   </div>
 </template>
 
@@ -91,7 +91,7 @@ export default {
 @import "../scss/variables";
 @import "../scss/mixins";
 
-.protfolio {
+.portfolio {
   display: grid;
   grid-template-columns: 7fr 3fr;
   gap: 0 30px;
@@ -100,7 +100,7 @@ export default {
   padding: 26px 0;
   margin: 0 auto;
 }
-.protfolio__main {
+.portfolio__main {
   display: flex;
   flex-direction: column;
   background-color: #fff;
@@ -164,7 +164,7 @@ export default {
   }
 }
 
-.protfolio__menu {
+.portfolio__menu {
   background-color: #fff;
   border-radius: 10px;
   box-shadow: 0px 0px 30px rgba(241, 90, 96, 0.05), 0px 0px 25px rgba(241, 90, 96, 0.1);
