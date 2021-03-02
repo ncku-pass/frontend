@@ -1,46 +1,48 @@
 <template>
   <div class="portfolio">
-    <div class="portfolio__main">
-      <ul class="portfolio__main__tabs">
-        <li
-          v-for="tab in tabs"
-          :key="tab"
-          class="tab-link"
-          :class="{'is-active': tabNow === tab}"
-          @click="tabNow = tab"
-        >
-          {{ tab }}
-        </li>
-        <li class="portfolio__main__tabs__add">
-          <img src="@/assets/add_circle.svg" alt="">
-        </li>
-      </ul>
-      <div class="portfolio__main__content">
-        <div class="content-header">
-          <h3 class="content-header__title">
-            {{ tabNow }}
-          </h3>
-          <div class="content-header__btns">
-            <button class="btn">
-              匯出
-            </button>
-            <button class="btn">
-              存檔
+    <div class="portfolio__main-container">
+      <div class="portfolio__main">
+        <ul class="portfolio__main__tabs">
+          <li
+            v-for="tab in tabs"
+            :key="tab"
+            class="tab-link"
+            :class="{'is-active': tabNow === tab}"
+            @click="tabNow = tab"
+          >
+            {{ tab }}
+          </li>
+          <li class="portfolio__main__tabs__add">
+            <img src="@/assets/add_circle.svg" alt="">
+          </li>
+        </ul>
+        <div class="portfolio__main__content">
+          <div class="content-header">
+            <h3 class="content-header__title">
+              {{ tabNow }}
+            </h3>
+            <div class="content-header__btns">
+              <button class="btn">
+                匯出
+              </button>
+              <button class="btn">
+                存檔
+              </button>
+            </div>
+          </div>
+          <div class="content-body">
+            <div class="content-body__card-list">
+              <AbilityCard
+                v-for="card in cards"
+                :key="card.id"
+                v-bind="card"
+              />
+            </div>
+            <button class="content-body__add">
+              <span v-if="cards.length">+ 新增主題</span>
+              <span v-else>+ 目前還沒主題 趕快新增一個吧</span>
             </button>
           </div>
-        </div>
-        <div class="content-body">
-          <div class="content-body__card-list">
-            <AbilityCard
-              v-for="card in cards"
-              :key="card.id"
-              v-bind="card"
-            />
-          </div>
-          <button class="content-body__add">
-            <span v-if="cards.length">+ 新增主題</span>
-            <span v-else>+ 目前還沒主題 趕快新增一個吧</span>
-          </button>
         </div>
       </div>
     </div>
@@ -63,31 +65,33 @@
         </svg>
       </div>
       <div class="portfolio__menu__filter" />
-      <ul class="portfolio__menu__body">
-        <li
-          v-for="i in Array(20)"
-          :key="i"
-          class="menu-card"
-        >
-          <div class="menu-card__type">
-            課
-          </div>
-          <span class="menu-card__name">系統分析與設計</span>
-          <svg
-            width="15"
-            height="10"
-            viewBox="0 0 15 10"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
+      <div class="shadow-container" @scroll.capture="setShadows">
+        <ul class="portfolio__menu__body">
+          <li
+            v-for="i in Array(20)"
+            :key="i"
+            class="menu-card"
           >
-            <path
-              d="M1 1L7.5 8L14 1"
-              stroke="#4F4F4F"
-              stroke-width="2"
-            />
-          </svg>
-        </li>
-      </ul>
+            <div class="menu-card__type">
+              課
+            </div>
+            <span class="menu-card__name">系統分析與設計</span>
+            <svg
+              width="15"
+              height="10"
+              viewBox="0 0 15 10"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M1 1L7.5 8L14 1"
+                stroke="#4F4F4F"
+                stroke-width="2"
+              />
+            </svg>
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
 </template>
@@ -95,6 +99,7 @@
 <script>
 import AbilityCard from '@/components/AbilityCard.vue'
 import { ref } from 'vue'
+import useScrollShadow from '@/composables/useScrollShadow'
 
 const cards = [
   {
@@ -126,12 +131,15 @@ export default {
   },
   setup () {
     const tabNow = ref('實習履歷')
-    return { cards, tabs, tabNow }
+    const { setShadows } = useScrollShadow()
+
+    return { cards, tabs, tabNow, setShadows }
   }
 }
 </script>
 
 <style lang="scss" scoped>
+@use "sass:color";
 @import "../scss/variables";
 @import "../scss/mixins";
 
@@ -141,7 +149,6 @@ export default {
   gap: 0 30px;
   height: 100%;
   max-width: 1110px;
-  padding: 26px 0;
   margin: 0 auto;
 }
 .portfolio__main {
@@ -150,7 +157,10 @@ export default {
   background-color: #fff;
   border-radius: 10px 10px 0 0;
   box-shadow: 0px 0px 30px rgba(241, 90, 96, 0.05), 0px 0px 25px rgba(241, 90, 96, 0.1);
-  overflow-y: auto;
+  &-container {
+    overflow-y: auto;
+    padding: 26px 0;
+  }
   &__tabs {
     display: flex;
     justify-content: flex-start;
@@ -170,7 +180,6 @@ export default {
     flex-direction: column;
     height: 100%;
     padding: 0 20px 20px;
-    overflow-y: auto;
   }
 }
 
@@ -196,7 +205,6 @@ export default {
 }
 
 .content-body {
-  overflow-y: auto;
   &__add {
     display: block;
     margin: 12px auto;
@@ -213,6 +221,7 @@ export default {
   flex-direction: column;
   overflow-y: auto;
   padding: 15px;
+  margin: 26px 0;
   background-color: #fff;
   border-radius: 10px;
   box-shadow: 0px 0px 30px rgba(241, 90, 96, 0.05), 0px 0px 25px rgba(241, 90, 96, 0.1);
@@ -221,9 +230,6 @@ export default {
     justify-content: space-between;
     align-items: center;
     margin-bottom: 10px;
-  }
-  &__body {
-    overflow: scroll;
   }
 }
 

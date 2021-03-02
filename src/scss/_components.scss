@@ -69,6 +69,36 @@
   background-color: rgba(0, 0, 0, 0.25);
 }
 
+// 用來產生滾動陰影的容器，子元素高度與此容器相同
+.shadow-container {
+  height: 100%;
+  position: relative;
+  overflow-y: auto;
+  & > *{
+    height: 100%;
+    overflow-y: auto;
+  }
+  &::before, &::after {
+    content: '';
+    position: absolute;
+    height: 15px;
+    width: 100%;
+    transition: opacity .3s ease-out;
+    opacity: 0;
+  }
+  &::before {
+    top: 0;
+    background: linear-gradient(rgba($gray-2, .1), transparent);
+  }
+  &::after {
+    bottom: 0;
+    background: linear-gradient(to top, rgba($gray-2, .1), transparent);
+  }
+  &.off-top::before, &.off-bottom::after {
+    opacity: 1;
+  }
+}
+
 // ===== 表單類 =====
 .form-label {
   display: inline-block;
