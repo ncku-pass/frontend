@@ -31,11 +31,16 @@ const useScrollShadow = () => {
     }
   }
 
-  // const checkShadows = () => {
+  const initShadows = (scrollContent) => {
+    const shadowContainer = scrollContent.parentNode
+    if (scrollContent.offsetHeight + scrollContent.scrollTop < scrollContent.scrollHeight) {
+      shadowContainer.classList.add('off-bottom')
+    } else {
+      shadowContainer.classList.remove('off-bottom')
+    }
+  }
 
-  // }
-
-  return { setShadows }
+  return { setShadows, initShadows }
 }
 
 export default useScrollShadow

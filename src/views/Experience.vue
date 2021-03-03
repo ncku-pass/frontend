@@ -53,18 +53,20 @@
         </li>
       </ul>
       <div class="experience__window__table">
-        <div class="experience__window__table__wrapper">
-          <ExperienceListBlock
-            v-for="semesterData in allData"
-            :key="semesterData.semester"
-            :semester="semesterData.semester"
-          >
-            <ExperienceListItem
-              v-for="experience in semesterData.experiences"
-              :key="experience.name"
-              v-bind="experience"
-            />
-          </ExperienceListBlock>
+        <div class="shadow-container" @scroll.capture="setShadows">
+          <div ref="scrollContent" class="experience__window__table__wrapper">
+            <ExperienceListBlock
+              v-for="semesterData in allData"
+              :key="semesterData.semester"
+              :semester="semesterData.semester"
+            >
+              <ExperienceListItem
+                v-for="experience in semesterData.experiences"
+                :key="experience.name"
+                v-bind="experience"
+              />
+            </ExperienceListBlock>
+          </div>
         </div>
         <button class="experience__window__table__add" @click="showFormModal = true">
           <svg
@@ -89,7 +91,8 @@
 import ExperienceListItem from '@/components/ExperienceListItem.vue'
 import ExperienceListBlock from '@/components/ExperienceListBlock.vue'
 import FormModal from '@/components/FormModal.vue'
-import { ref } from 'vue'
+import { ref, onMounted, onUpdated } from 'vue'
+import useScrollShadow from '@/composables/useScrollShadow'
 
 const allData = [
   {
@@ -115,6 +118,14 @@ const allData = [
       { name: '互動介面設計松', tags: ['設計能力', '介面設計'] },
       { name: '大數據分析與資料探勘', tags: ['python', '數據分析'] }
     ]
+  },
+  {
+    semester: '107-2',
+    experiences: [
+      { name: '系統分析與設計', tags: ['國際視野', '數理能力'] },
+      { name: '互動介面設計松', tags: ['設計能力', '介面設計'] },
+      { name: '大數據分析與資料探勘', tags: ['python', '數據分析'] }
+    ]
   }
 ]
 
@@ -134,8 +145,17 @@ export default {
   },
   setup () {
     const showFormModal = ref(false)
+    const { setShadows, initShadows } = useScrollShadow()
 
-    return { allData, showFormModal }
+    const scrollContent = ref(null)
+    onMounted(() => {
+      initShadows(scrollContent.value)
+    })
+    onUpdated(() => {
+      initShadows(scrollContent.value)
+    })
+
+    return { allData, showFormModal, setShadows, initShadows, scrollContent }
   }
 }
 </script>
@@ -170,13 +190,13 @@ export default {
 
 .experience__window__table {
   position: relative;
-  padding: 24px 0 104px;
+  padding: 0 0 104px;
   overflow-y: auto;
   display: flex;
   flex-direction: column;
   &__wrapper {
     overflow-y: auto;
-    padding: 0 96px;
+    padding: 24px 96px;
     &::-webkit-scrollbar {
       display: none;
     }
@@ -206,7 +226,7 @@ export default {
     max-width: 930px;
   }
   .experience__window__table__wrapper {
-    padding: 0 80px;
+    padding: 24px 80px;
   }
 }
 </style>

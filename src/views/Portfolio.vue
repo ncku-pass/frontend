@@ -139,7 +139,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@use "sass:color";
 @import "../scss/variables";
 @import "../scss/mixins";
 
@@ -156,10 +155,10 @@ export default {
   flex-direction: column;
   background-color: #fff;
   border-radius: 10px 10px 0 0;
-  box-shadow: 0px 0px 30px rgba(241, 90, 96, 0.05), 0px 0px 25px rgba(241, 90, 96, 0.1);
   &-container {
     overflow-y: auto;
     padding: 26px 0;
+    filter: drop-shadow(-2px 4px 30px rgba(241, 90, 96, 0.05)) drop-shadow(-2px 4px 30px rgba(241, 90, 96, 0.1));
   }
   &__tabs {
     display: flex;
@@ -231,6 +230,9 @@ export default {
     align-items: center;
     margin-bottom: 10px;
   }
+  &__body {
+    border-radius: 5px;
+  }
 }
 
 .menu-card {
@@ -252,6 +254,15 @@ export default {
   }
   &__name {
     margin-right: auto;
+  }
+}
+
+.shadow-container {
+  &::before {
+    border-radius: 5px 5px 0 0;
+  }
+  &::after {
+    border-radius: 0 0 5px 5px;
   }
 }
 </style>
