@@ -70,21 +70,21 @@
                 v-bind="experience"
               />
             </ExperienceListBlock>
+            <button class="experience__window__table__add" @click="showFormModal = true">
+              <svg
+                width="22"
+                height="22"
+                viewBox="0 0 22 22"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M8.71431 22.3811H13.2913V13.4791H21.7733V9.0701H13.2913V0.126143H8.71431V9.0701H0.232251V13.4791H8.71431V22.3811Z"
+                  fill="white"
+                />
+              </svg>
+            </button>
           </div>
         </div>
-        <button class="experience__window__table__add" @click="showFormModal = true">
-          <svg
-            width="22"
-            height="22"
-            viewBox="0 0 22 22"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M8.71431 22.3811H13.2913V13.4791H21.7733V9.0701H13.2913V0.126143H8.71431V9.0701H0.232251V13.4791H8.71431V22.3811Z"
-              fill="white"
-            />
-          </svg>
-        </button>
       </div>
     </div>
   </div>
@@ -194,7 +194,6 @@ export default {
 
 .experience__window__table {
   position: relative;
-  padding: 0 0 104px;
   overflow-y: auto;
   display: flex;
   flex-direction: column;
@@ -206,21 +205,17 @@ export default {
     }
   }
   &__add {
-    position: absolute;
-    bottom: 24px;
-    left: 50%;
     display: grid;
     place-items: center;
+    margin: 0 auto;
     height: 60px;
     width: 60px;
-    transform: translateX(-50%);
     border: none;
     border-radius: 50px;
     background-color: $red;
     font-weight: $weight-bold;
     font-size: 42px;
     color: #fff;
-    transition: box-shadow .3s;
     box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.25);
   }
 }

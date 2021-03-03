@@ -49,30 +49,79 @@
     <div class="portfolio__menu">
       <div class="portfolio__menu__header">
         <span>經驗列表</span>
-        <svg
-          width="13"
-          height="8"
-          viewBox="0 0 13 8"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            fill-rule="evenodd"
-            clip-rule="evenodd"
-            d="M4.33333 7.42857C4.33333 7.27702 4.3904 7.13167 4.49198 7.02451C4.59357 6.91735 4.73134 6.85714 4.875 6.85714H8.125C8.26866 6.85714 8.40644 6.91735 8.50802 7.02451C8.6096 7.13167 8.66667 7.27702 8.66667 7.42857C8.66667 7.58012 8.6096 7.72547 8.50802 7.83263C8.40644 7.9398 8.26866 8 8.125 8H4.875C4.73134 8 4.59357 7.9398 4.49198 7.83263C4.3904 7.72547 4.33333 7.58012 4.33333 7.42857ZM2.16667 4C2.16667 3.84845 2.22374 3.7031 2.32532 3.59594C2.4269 3.48878 2.56467 3.42857 2.70833 3.42857H10.2917C10.4353 3.42857 10.5731 3.48878 10.6747 3.59594C10.7763 3.7031 10.8333 3.84845 10.8333 4C10.8333 4.15155 10.7763 4.2969 10.6747 4.40406C10.5731 4.51122 10.4353 4.57143 10.2917 4.57143H2.70833C2.56467 4.57143 2.4269 4.51122 2.32532 4.40406C2.22374 4.2969 2.16667 4.15155 2.16667 4ZM0 0.571429C0 0.419876 0.0570684 0.274531 0.158651 0.167368C0.260233 0.060204 0.398008 0 0.541667 0H12.4583C12.602 0 12.7398 0.060204 12.8414 0.167368C12.9429 0.274531 13 0.419876 13 0.571429C13 0.722981 12.9429 0.868326 12.8414 0.975489C12.7398 1.08265 12.602 1.14286 12.4583 1.14286H0.541667C0.398008 1.14286 0.260233 1.08265 0.158651 0.975489C0.0570684 0.868326 0 0.722981 0 0.571429Z"
-            fill="#4F4F4F"
-          />
-        </svg>
+        <div class="filter-btn" @click="showFilter = !showFilter">
+          <svg
+            viewBox="0 0 13 8"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              fill-rule="evenodd"
+              clip-rule="evenodd"
+              d="M4.33333 7.42857C4.33333 7.27702 4.3904 7.13167 4.49198 7.02451C4.59357 6.91735 4.73134 6.85714 4.875 6.85714H8.125C8.26866 6.85714 8.40644 6.91735 8.50802 7.02451C8.6096 7.13167 8.66667 7.27702 8.66667 7.42857C8.66667 7.58012 8.6096 7.72547 8.50802 7.83263C8.40644 7.9398 8.26866 8 8.125 8H4.875C4.73134 8 4.59357 7.9398 4.49198 7.83263C4.3904 7.72547 4.33333 7.58012 4.33333 7.42857ZM2.16667 4C2.16667 3.84845 2.22374 3.7031 2.32532 3.59594C2.4269 3.48878 2.56467 3.42857 2.70833 3.42857H10.2917C10.4353 3.42857 10.5731 3.48878 10.6747 3.59594C10.7763 3.7031 10.8333 3.84845 10.8333 4C10.8333 4.15155 10.7763 4.2969 10.6747 4.40406C10.5731 4.51122 10.4353 4.57143 10.2917 4.57143H2.70833C2.56467 4.57143 2.4269 4.51122 2.32532 4.40406C2.22374 4.2969 2.16667 4.15155 2.16667 4ZM0 0.571429C0 0.419876 0.0570684 0.274531 0.158651 0.167368C0.260233 0.060204 0.398008 0 0.541667 0H12.4583C12.602 0 12.7398 0.060204 12.8414 0.167368C12.9429 0.274531 13 0.419876 13 0.571429C13 0.722981 12.9429 0.868326 12.8414 0.975489C12.7398 1.08265 12.602 1.14286 12.4583 1.14286H0.541667C0.398008 1.14286 0.260233 1.08265 0.158651 0.975489C0.0570684 0.868326 0 0.722981 0 0.571429Z"
+              fill="#4F4F4F"
+            />
+          </svg>
+        </div>
       </div>
-      <div class="portfolio__menu__filter" />
+
+      <transition
+        name="slide-down"
+        @after-enter="afterEnter"
+        @after-leave="afterLeave"
+      >
+        <div v-show="showFilter" class="portfolio__menu__filter">
+          <div
+            ref="FilterShadowContainer"
+            class="shadow-container"
+            @scroll.capture="setShadows"
+          >
+            <div class="portfolio__menu__filter__container">
+              <div class="filter-block">
+                <div class="filter-block__title">
+                  學期
+                </div>
+                <ul class="filter-block__tags">
+                  <li class="filter-block__tags__tag">
+                    106-1
+                  </li>
+                  <li class="filter-block__tags__tag">
+                    106-2
+                  </li>
+                  <li class="filter-block__tags__tag">
+                    107-1
+                  </li>
+                  <li class="filter-block__tags__tag">
+                    107-2
+                  </li>
+                </ul>
+              </div>
+              <div class="filter-block">
+                <div class="filter-block__title">
+                  標籤
+                </div>
+                <ul class="filter-block__tags">
+                  <li
+                    v-for="i in Array(25)"
+                    :key="i"
+                    class="filter-block__tags__tag"
+                  >
+                    設計能力
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </transition>
       <div
-        ref="shadowContainer"
+        ref="MenuShadowContainer"
         class="shadow-container"
         @scroll.capture="setShadows"
       >
         <ul class="portfolio__menu__body">
           <li
-            v-for="i in Array(20)"
+            v-for="i in Array(10)"
             :key="i"
             class="menu-card"
           >
@@ -102,7 +151,7 @@
 
 <script>
 import AbilityCard from '@/components/AbilityCard.vue'
-import { ref, onMounted, onUpdated } from 'vue'
+import { ref, onMounted } from 'vue'
 import useScrollShadow from '@/composables/useScrollShadow'
 
 const cards = [
@@ -135,17 +184,28 @@ export default {
   },
   setup () {
     const tabNow = ref('實習履歷')
+
+    // 切換filter顯示
+    const showFilter = ref(false)
+    // 列表完全展開後再檢測是否加上列表陰影
+    const afterEnter = () => {
+      initShadows(FilterShadowContainer.value)
+      initShadows(MenuShadowContainer.value)
+    }
+    const afterLeave = () => {
+      initShadows(FilterShadowContainer.value)
+      initShadows(MenuShadowContainer.value)
+    }
+
+    // 設定滾動容器的陰影
     const { setShadows, initShadows } = useScrollShadow()
-
-    const shadowContainer = ref(null)
+    const FilterShadowContainer = ref(null)
+    const MenuShadowContainer = ref(null)
     onMounted(() => {
-      initShadows(shadowContainer.value)
-    })
-    onUpdated(() => {
-      initShadows(shadowContainer.value)
+      initShadows(MenuShadowContainer.value)
     })
 
-    return { cards, tabs, tabNow, setShadows, shadowContainer }
+    return { cards, tabs, tabNow, showFilter, afterEnter, afterLeave, setShadows, FilterShadowContainer, MenuShadowContainer }
   }
 }
 </script>
@@ -241,9 +301,50 @@ export default {
     justify-content: space-between;
     align-items: center;
     margin-bottom: 10px;
+    color: $gray-1;
+  }
+  &__filter {
+    max-height: 250px;
+    margin-bottom: 15px;
+    flex: 1 0 auto;
+    overflow: auto;
+    &__container {
+      border-radius: 5px;
+    }
   }
   &__body {
     border-radius: 5px;
+  }
+}
+
+.filter-btn {
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  padding: 5px;
+  cursor: pointer;
+}
+
+.filter-block {
+  margin-bottom: 10px;
+  &__title {
+    color: $gray-1;
+    margin-bottom: 10px;
+  }
+  &__tags {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    margin: -5px;
+    &__tag {
+      padding: 10px;
+      background-color: $red;
+      color: #fff;
+      border-radius: 15px;
+      line-height: 16px;
+      margin: 5px;
+    }
   }
 }
 
@@ -275,6 +376,23 @@ export default {
   }
   &::after {
     border-radius: 0 0 5px 5px;
+  }
+}
+
+.slide-down-enter-active {
+  animation: slide-down .5s ease-in-out;
+}
+.slide-down-leave-active {
+  animation: slide-down .5s ease-in-out reverse;
+}
+
+@keyframes slide-down {
+  0% {
+    flex: 0 20 auto;
+    margin: 0;
+  }
+  100% {
+    flex: 1 0 auto;
   }
 }
 </style>
