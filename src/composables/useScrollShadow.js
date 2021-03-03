@@ -31,8 +31,8 @@ const useScrollShadow = () => {
     }
   }
 
-  const initShadows = (scrollContent) => {
-    const shadowContainer = scrollContent.parentNode
+  const initShadows = (shadowContainer) => {
+    const scrollContent = shadowContainer.childNodes[0]
     if (scrollContent.offsetHeight + scrollContent.scrollTop < scrollContent.scrollHeight) {
       shadowContainer.classList.add('off-bottom')
     } else {

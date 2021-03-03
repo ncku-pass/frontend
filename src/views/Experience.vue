@@ -53,8 +53,12 @@
         </li>
       </ul>
       <div class="experience__window__table">
-        <div class="shadow-container" @scroll.capture="setShadows">
-          <div ref="scrollContent" class="experience__window__table__wrapper">
+        <div
+          ref="shadowContainer"
+          class="shadow-container"
+          @scroll.capture="setShadows"
+        >
+          <div class="experience__window__table__wrapper">
             <ExperienceListBlock
               v-for="semesterData in allData"
               :key="semesterData.semester"
@@ -147,15 +151,15 @@ export default {
     const showFormModal = ref(false)
     const { setShadows, initShadows } = useScrollShadow()
 
-    const scrollContent = ref(null)
+    const shadowContainer = ref(null)
     onMounted(() => {
-      initShadows(scrollContent.value)
+      initShadows(shadowContainer.value)
     })
     onUpdated(() => {
-      initShadows(scrollContent.value)
+      initShadows(shadowContainer.value)
     })
 
-    return { allData, showFormModal, setShadows, initShadows, scrollContent }
+    return { allData, showFormModal, setShadows, shadowContainer }
   }
 }
 </script>

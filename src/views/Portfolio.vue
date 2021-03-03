@@ -65,7 +65,11 @@
         </svg>
       </div>
       <div class="portfolio__menu__filter" />
-      <div class="shadow-container" @scroll.capture="setShadows">
+      <div
+        ref="shadowContainer"
+        class="shadow-container"
+        @scroll.capture="setShadows"
+      >
         <ul class="portfolio__menu__body">
           <li
             v-for="i in Array(20)"
@@ -98,7 +102,7 @@
 
 <script>
 import AbilityCard from '@/components/AbilityCard.vue'
-import { ref } from 'vue'
+import { ref, onMounted, onUpdated } from 'vue'
 import useScrollShadow from '@/composables/useScrollShadow'
 
 const cards = [
@@ -131,9 +135,17 @@ export default {
   },
   setup () {
     const tabNow = ref('實習履歷')
-    const { setShadows } = useScrollShadow()
+    const { setShadows, initShadows } = useScrollShadow()
 
-    return { cards, tabs, tabNow, setShadows }
+    const shadowContainer = ref(null)
+    onMounted(() => {
+      initShadows(shadowContainer.value)
+    })
+    onUpdated(() => {
+      initShadows(shadowContainer.value)
+    })
+
+    return { cards, tabs, tabNow, setShadows, shadowContainer }
   }
 }
 </script>
