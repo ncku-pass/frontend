@@ -28,7 +28,13 @@
         </svg>
         編輯
       </button>
-      <button class="experience-list-item__btns__delete btn-pill" @click="confirmDelete">
+      <!-- TODO:  寫死的資料改掉-->
+      <button
+        class="experience-list-item__btns__delete btn-pill"
+        :class="{disabled: false}"
+        :disabled="false"
+        @click="confirmDelete"
+      >
         <svg
           width="20"
           height="20"
@@ -129,6 +135,10 @@ export default {
     &__delete {
       color: #fff;
       background-color: $gray-2;
+      &.disabled {
+        background-color: $gray-4;
+        border: 1px solid $gray-4;
+      }
     }
   }
 }
