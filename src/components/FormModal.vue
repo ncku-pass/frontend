@@ -11,6 +11,17 @@
           >
         </div>
         <div>
+          <label for="" class="form-label">*課程時間</label>
+          <select class="form-control">
+            <option
+              value=""
+              selected
+            >
+              請選擇課程時間
+            </option>
+          </select>
+        </div>
+        <div>
           <label for="" class="form-label">課程簡介</label>
           <textarea
             class="form-control"
