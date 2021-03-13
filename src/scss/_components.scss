@@ -45,10 +45,12 @@
   color: $gray-4;
   letter-spacing: 0.05em;
   font-weight: $weight-medium;
-  transition: all .3s;
+  transition: all 0.3s;
   flex-shrink: 0;
   cursor: pointer;
-  &.router-link-active, &.is-active {
+  white-space: nowrap;
+  &.router-link-active,
+  &.is-active {
     color: $gray-1;
     box-shadow: 0px 3px 0px $red;
   }
@@ -74,27 +76,29 @@
   height: 100%;
   position: relative;
   overflow-y: auto;
-  & > *{
+  & > * {
     height: 100%;
     overflow-y: auto;
   }
-  &::before, &::after {
+  &::before,
+  &::after {
     content: '';
     position: absolute;
     height: 15px;
     width: 100%;
-    transition: opacity .3s ease-out;
+    transition: opacity 0.3s ease-out;
     opacity: 0;
   }
   &::before {
     top: 0;
-    background: linear-gradient(rgba($gray-2, .1), transparent);
+    background: linear-gradient(rgba($gray-2, 0.1), transparent);
   }
   &::after {
     bottom: 0;
-    background: linear-gradient(to top, rgba($gray-2, .1), transparent);
+    background: linear-gradient(to top, rgba($gray-2, 0.1), transparent);
   }
-  &.off-top::before, &.off-bottom::after {
+  &.off-top::before,
+  &.off-bottom::after {
     opacity: 1;
   }
 }

@@ -76,4 +76,10 @@ export default {
   padding: 0;
   list-style: none;
 }
+
+@media (max-width: 767px) {
+  .navbar__links__link[href="/portfolio"] {
+    display: none;
+  }
+}
 </style>

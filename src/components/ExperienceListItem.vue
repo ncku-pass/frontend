@@ -26,12 +26,12 @@
             fill="#4F4F4F"
           />
         </svg>
-        編輯
+        <span class="btn-pill__text">編輯</span>
       </button>
       <!-- TODO:  寫死的資料改掉-->
       <button
         class="experience-list-item__btns__delete btn-pill"
-        :class="{disabled: false}"
+        :class="{ disabled: false }"
         :disabled="false"
         @click="confirmDelete"
       >
@@ -55,7 +55,7 @@
             fill="white"
           />
         </svg>
-        刪除
+        <span class="btn-pill__text">刪除</span>
       </button>
     </div>
     <ConfirmModal
@@ -105,17 +105,17 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "../scss/variables";
-@import "../scss/mixins";
+@import '../scss/variables';
+@import '../scss/mixins';
 
 .experience-list-item {
   display: flex;
   align-items: center;
   padding: 10px 5px 10px 10px;
   border-radius: 5px;
-  transition: background .3s;
+  transition: background 0.3s;
   &:hover {
-    background-color: #F8F8F8;
+    background-color: #f8f8f8;
   }
   &__title {
     margin: 0;
@@ -140,6 +140,15 @@ export default {
         border: 1px solid $gray-4;
       }
     }
+  }
+}
+
+@media (max-width: 767px) {
+  .experience-list-item__tags {
+    display: none;
+  }
+  .btn-pill__text {
+    display: none;
   }
 }
 </style>

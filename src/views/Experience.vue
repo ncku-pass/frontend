@@ -5,8 +5,8 @@
         <li>
           <router-link
             class="tab-link"
-            :class="{'router-link-active': type === 'class'}"
-            :to="{name: 'Experience', params: { type: 'class' }}"
+            :class="{ 'router-link-active': type === 'class' }"
+            :to="{ name: 'Experience', params: { type: 'class' } }"
           >
             課程紀錄
           </router-link>
@@ -14,7 +14,7 @@
         <li>
           <router-link
             class="tab-link"
-            :to="{name: 'Experience', params: { type: 'activity' }}"
+            :to="{ name: 'Experience', params: { type: 'activity' } }"
           >
             活動經驗
           </router-link>
@@ -22,7 +22,7 @@
         <li>
           <router-link
             class="tab-link"
-            :to="{name: 'Experience', params: { type: 'competition' }}"
+            :to="{ name: 'Experience', params: { type: 'competition' } }"
           >
             競賽經驗
           </router-link>
@@ -30,7 +30,7 @@
         <li>
           <router-link
             class="tab-link"
-            :to="{name: 'Experience', params: { type: 'work' }}"
+            :to="{ name: 'Experience', params: { type: 'work' } }"
           >
             工作經驗
           </router-link>
@@ -38,7 +38,7 @@
         <li>
           <router-link
             class="tab-link"
-            :to="{name: 'Experience', params: { type: 'certificate' }}"
+            :to="{ name: 'Experience', params: { type: 'certificate' } }"
           >
             外語能力或證照
           </router-link>
@@ -46,7 +46,7 @@
         <li>
           <router-link
             class="tab-link"
-            :to="{name: 'Experience', params: { type: 'others' }}"
+            :to="{ name: 'Experience', params: { type: 'others' } }"
           >
             其他
           </router-link>
@@ -70,7 +70,10 @@
                 v-bind="experience"
               />
             </ExperienceListBlock>
-            <button class="experience__window__table__add" @click="showFormModal = true">
+            <button
+              class="experience__window__table__add"
+              @click="showFormModal = true"
+            >
               <svg
                 width="22"
                 height="22"
@@ -165,8 +168,8 @@ export default {
 </script>
 
 <style lang="scss">
-@import "../scss/variables";
-@import "../scss/mixins";
+@import '../scss/variables';
+@import '../scss/mixins';
 
 .experience {
   height: 100%;
@@ -179,7 +182,8 @@ export default {
   display: flex;
   flex-direction: column;
   background-color: #fff;
-  box-shadow: 0px 0px 30px rgba(241, 90, 96, 0.05), 0px 0px 25px rgba(241, 90, 96, 0.1);
+  box-shadow: 0px 0px 30px rgba(241, 90, 96, 0.05),
+    0px 0px 25px rgba(241, 90, 96, 0.1);
   width: 100%;
   max-width: 1110px;
 }
@@ -188,8 +192,10 @@ export default {
   display: flex;
   justify-content: space-between;
   padding: 8px 10px;
+  min-height: 50px;
   list-style: none;
   box-shadow: 0px 4px 15px rgba(241, 90, 96, 0.06);
+  overflow-x: auto;
 }
 
 .experience__window__table {
@@ -226,6 +232,17 @@ export default {
   }
   .experience__window__table__wrapper {
     padding: 24px 80px;
+  }
+}
+
+@media (max-width: 767px) {
+  .experience {
+    padding: 0;
+  }
+  .experience__window__table {
+    &__wrapper {
+      padding: 12px 24px;
+    }
   }
 }
 </style>
