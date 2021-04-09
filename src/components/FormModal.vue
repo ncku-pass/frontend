@@ -49,7 +49,7 @@
           <button class="btn" @click="showConfirmModal = true">
             取消
           </button>
-          <button class="btn--danger">
+          <button class="btn--danger" @click="getExperiences">
             儲存
           </button>
         </div>
@@ -68,6 +68,7 @@
 <script>
 import ConfirmModal from '@/components/ConfirmModal.vue'
 import { ref } from 'vue'
+import { useGetExperiences } from '@/composables/experiences'
 
 export default {
   components: { ConfirmModal },
@@ -75,7 +76,9 @@ export default {
   setup () {
     const showConfirmModal = ref(false)
 
-    return { showConfirmModal }
+    const { data, error, isPending, statefulApiCall: getExperiences } = useGetExperiences()
+
+    return { showConfirmModal, data, error, isPending, getExperiences }
   }
 }
 </script>
