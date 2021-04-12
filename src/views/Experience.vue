@@ -60,14 +60,15 @@
         >
           <div class="experience__window__table__wrapper">
             <ExperienceListBlock
-              v-for="semesterData in allData"
-              :key="semesterData.semester"
-              :semester="semesterData.semester"
+              v-for="(semesterData, semester) in classifiedData[type]"
+              :key="semester"
+              :semester="semester"
             >
               <ExperienceListItem
-                v-for="experience in semesterData.experiences"
-                :key="experience.name"
-                v-bind="experience"
+                v-for="experience in semesterData"
+                :key="experience.id"
+                :experience="experience"
+                @delete="loadData"
               />
             </ExperienceListBlock>
             <button
@@ -95,46 +96,12 @@
 </template>
 
 <script>
+import { ref, onMounted, onUpdated, reactive } from 'vue'
 import ExperienceListItem from '@/components/ExperienceListItem.vue'
 import ExperienceListBlock from '@/components/ExperienceListBlock.vue'
 import FormModal from '@/components/FormModal.vue'
-import { ref, onMounted, onUpdated } from 'vue'
 import useScrollShadow from '@/composables/useScrollShadow'
-
-const allData = [
-  {
-    semester: '106-1',
-    experiences: [
-      { name: '系統分析與設計', tags: ['國際視野', '數理能力'] },
-      { name: '互動介面設計松', tags: ['設計能力', '介面設計'] },
-      { name: '大數據分析與資料探勘', tags: ['python', '數據分析'] }
-    ]
-  },
-  {
-    semester: '106-2',
-    experiences: [
-      { name: '系統分析與設計', tags: ['國際視野', '數理能力'] },
-      { name: '互動介面設計松', tags: ['設計能力', '介面設計'] },
-      { name: '大數據分析與資料探勘', tags: ['python', '數據分析'] }
-    ]
-  },
-  {
-    semester: '107-1',
-    experiences: [
-      { name: '系統分析與設計', tags: ['國際視野', '數理能力'] },
-      { name: '互動介面設計松', tags: ['設計能力', '介面設計'] },
-      { name: '大數據分析與資料探勘', tags: ['python', '數據分析'] }
-    ]
-  },
-  {
-    semester: '107-2',
-    experiences: [
-      { name: '系統分析與設計', tags: ['國際視野', '數理能力'] },
-      { name: '互動介面設計松', tags: ['設計能力', '介面設計'] },
-      { name: '大數據分析與資料探勘', tags: ['python', '數據分析'] }
-    ]
-  }
-]
+import { getExperiences } from '@/api/experiences'
 
 export default {
   name: 'Experience',
@@ -151,9 +118,33 @@ export default {
     }
   },
   setup () {
-    const showFormModal = ref(false)
-    const { setShadows, initShadows } = useScrollShadow()
+    const classifiedData = reactive({})
 
+    const loadData = async () => {
+      const { data } = await getExperiences()
+
+      for (const type in data) {
+        classifiedData[type] = classifySemester(data[type])
+      }
+    }
+    loadData()
+
+    const classifySemester = (arr) => {
+      return arr.reduce((obj, experience) => {
+        if (Array.isArray(obj[experience.semester])) {
+          obj[experience.semester].push(experience)
+        } else {
+          obj[experience.semester] = [experience]
+        }
+        return obj
+      }, {})
+    }
+
+    // 新增活動表單
+    const showFormModal = ref(false)
+
+    // ===設定滾動容器陰影===
+    const { setShadows, initShadows } = useScrollShadow()
     const shadowContainer = ref(null)
     onMounted(() => {
       initShadows(shadowContainer.value)
@@ -162,7 +153,7 @@ export default {
       initShadows(shadowContainer.value)
     })
 
-    return { allData, showFormModal, setShadows, shadowContainer }
+    return { classifiedData, loadData, showFormModal, setShadows, shadowContainer }
   }
 }
 </script>

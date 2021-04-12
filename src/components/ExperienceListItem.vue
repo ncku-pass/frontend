@@ -1,15 +1,15 @@
 <template>
   <li class="experience-list-item">
     <h4 class="experience-list-item__title">
-      {{ name }}
+      {{ experience.name }}
     </h4>
     <ul class="experience-list-item__tags">
       <li
-        v-for="tag in tags"
-        :key="tag"
+        v-for="tag in experience.tags"
+        :key="tag.id"
         class="tag"
       >
-        {{ tag }}
+        {{ tag.name }}
       </li>
     </ul>
     <div class="experience-list-item__btns">
@@ -60,46 +60,46 @@
     </div>
     <ConfirmModal
       v-if="showConfirmModal"
-      :message="name"
+      :message="experience.name"
       confirm-type="delete"
       @cancel="showConfirmModal = false"
-      @confirm="deleteExperience"
+      @confirm="handleDeleteExperience"
     />
   </li>
 </template>
 
 <script>
-import ConfirmModal from '@/components/ConfirmModal'
 import { ref } from 'vue'
+import ConfirmModal from '@/components/ConfirmModal'
+import { deleteExperience } from '@/api/experiences'
 
 export default {
   components: {
     ConfirmModal
   },
   props: {
-    name: {
-      type: String,
-      default: '歷程名稱'
-    },
-    tags: {
-      type: Array,
+    experience: {
+      type: Object,
       default () {
-        return []
+        return {}
       }
     }
   },
-  setup (props) {
+  emits: ['delete'],
+  setup (props, context) {
     const showConfirmModal = ref(false)
 
     const confirmDelete = () => {
       showConfirmModal.value = true
     }
 
-    const deleteExperience = () => {
-      console.log('刪除')
+    const handleDeleteExperience = async () => {
+      await deleteExperience(props.experience.id)
+      showConfirmModal.value = false
+      context.emit('delete')
     }
 
-    return { showConfirmModal, confirmDelete, deleteExperience }
+    return { showConfirmModal, confirmDelete, handleDeleteExperience }
   }
 }
 </script>
