@@ -3,8 +3,9 @@
     <div class="form-modal">
       <div class="form-modal__content">
         <div>
-          <label for="" class="form-label">*課程名稱</label>
+          <label for="" class="form-label">{{ showedFieldText.name.text }}</label>
           <input
+            v-model="formData.name"
             type="text"
             class="form-control"
             placeholder="請輸入課程名稱"
@@ -22,8 +23,9 @@
           </select>
         </div>
         <div>
-          <label for="" class="form-label">課程簡介</label>
+          <label for="" class="form-label">{{ showedFieldText.description.text }}</label>
           <textarea
+            v-model="formData.description"
             class="form-control"
             rows="3"
             draggable="false"
@@ -42,16 +44,19 @@
           </div>
         </div>
         <div>
-          <label for="" class="form-label">課程收穫及成就 (150字以內)</label>
-          <input
-            type="text"
+          <label for="" class="form-label">{{ showedFieldText.feedback.text }}</label>
+          <textarea
+            v-model="formData.feedback"
             class="form-control"
-            placeholder="將課程中所得到的收穫極成就記錄下來吧~"
-          >
+            rows="3"
+            draggable="false"
+            placeholder="將課程中所得到的收穫及成就記錄下來吧~"
+          />
         </div>
         <div>
           <label for="" class="form-label">其他連結</label>
           <input
+            v-model="formData.link"
             type="text"
             class="form-control"
           >
@@ -78,15 +83,74 @@
 
 <script>
 import ConfirmModal from '@/components/ConfirmModal.vue'
-import { ref } from 'vue'
+import { computed, reactive, ref } from 'vue'
+
+const fieldText = {
+  course: {
+    name: { text: '*課程名稱', required: true },
+    semester: { text: '*課程時間', required: true },
+    description: { text: '課程簡介', placeholder: '', required: false },
+    feedback: { text: '課程收穫及成就 (150字以內)', placeholder: '', required: false }
+  },
+  activity: {
+    name: { text: '*活動名稱', required: true },
+    position: { text: '*活動擔任職位', required: true },
+    description: { text: '活動簡介', placeholder: '', required: false },
+    feedback: { text: '活動收穫及成就 (150字以內)', placeholder: '', required: false }
+  },
+  competition: {
+    name: { text: '*競賽名稱', required: true },
+    position: { text: '*競賽得獎名次', required: true },
+    description: { text: '競賽簡介', placeholder: '', required: false },
+    feedback: { text: '競賽收穫及成就 (150字以內)', placeholder: '', required: false }
+  },
+  work: {
+    name: { text: '*公司單位名稱', required: true },
+    position: { text: '*職位職位', required: true },
+    description: { text: '實習 / 工作內容', placeholder: '', required: false },
+    feedback: { text: '收穫及成就 (150字以內)', placeholder: '', required: false }
+  },
+  certification: {
+    name: { text: '*證照 名稱', required: true },
+    position: { text: '*證照分數或等級', required: true },
+    feedback: { text: '收穫及成就 (150字以內)', placeholder: '', required: false }
+  },
+  other: {
+    name: { text: '*經歷名稱', required: true },
+    position: { text: '經歷職位、成就', required: true },
+    description: { text: '經歷簡介', placeholder: '', required: false },
+    feedback: { text: '經歷收穫及成就 (150字以內)', placeholder: '', required: false }
+  }
+}
 
 export default {
   components: { ConfirmModal },
+  props: {
+    formType: {
+      type: String,
+      default: 'activity'
+    }
+  },
   emits: ['cancel'],
-  setup () {
+  setup (props) {
     const showConfirmModal = ref(false)
 
-    return { showConfirmModal }
+    const showedFieldText = computed(() => {
+      return fieldText[props.formType]
+    })
+
+    const formData = reactive({
+      name: '',
+      position: '',
+      description: '',
+      feedback: '',
+      semester: '',
+      link: '',
+      experienceType: '',
+      addTags: []
+    })
+
+    return { showConfirmModal, formData, showedFieldText }
   }
 }
 </script>
