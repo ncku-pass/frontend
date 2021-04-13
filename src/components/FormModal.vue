@@ -8,17 +8,23 @@
             v-model="formData.name"
             type="text"
             class="form-control"
-            placeholder="請輸入課程名稱"
           >
         </div>
         <div>
-          <label for="" class="form-label">*課程時間</label>
-          <select class="form-control">
+          <label for="" class="form-label">{{ showedFieldText.semester.text }}</label>
+          <select v-model="formData.semester" class="form-control">
             <option
               value=""
               selected
             >
-              請選擇課程時間
+              請選擇時間
+            </option>
+            <option
+              v-for="semester in semesters"
+              :key="semester"
+              :value="semester"
+            >
+              {{ semester }}
             </option>
           </select>
         </div>
@@ -29,7 +35,7 @@
             class="form-control"
             rows="3"
             draggable="false"
-            placeholder="填寫課程簡介以便日後方便回想課程內容"
+            :placeholder="showedFieldText.description.placeholder"
           />
         </div>
         <div>
@@ -50,7 +56,7 @@
             class="form-control"
             rows="3"
             draggable="false"
-            placeholder="將課程中所得到的收穫及成就記錄下來吧~"
+            :placeholder="showedFieldText.feedback.placeholder"
           />
         </div>
         <div>
@@ -89,37 +95,42 @@ const fieldText = {
   course: {
     name: { text: '*課程名稱', required: true },
     semester: { text: '*課程時間', required: true },
-    description: { text: '課程簡介', placeholder: '', required: false },
-    feedback: { text: '課程收穫及成就 (150字以內)', placeholder: '', required: false }
+    description: { text: '課程簡介', placeholder: '填寫課程簡介以便日後方便回想課程內容', required: false },
+    feedback: { text: '課程收穫及成就 (150字以內)', placeholder: '將課程中所得到的收穫極成就記錄下來吧~', required: false }
   },
   activity: {
     name: { text: '*活動名稱', required: true },
+    semester: { text: '*活動時間', required: true },
     position: { text: '*活動擔任職位', required: true },
-    description: { text: '活動簡介', placeholder: '', required: false },
-    feedback: { text: '活動收穫及成就 (150字以內)', placeholder: '', required: false }
+    description: { text: '活動簡介', placeholder: '填寫活動簡介以便日後方便回想課程內容', required: false },
+    feedback: { text: '活動收穫及成就 (150字以內)', placeholder: '將活動中所得到的收穫及成就記錄下來吧~', required: false }
   },
   competition: {
     name: { text: '*競賽名稱', required: true },
+    semester: { text: '*競賽時間', required: true },
     position: { text: '*競賽得獎名次', required: true },
-    description: { text: '競賽簡介', placeholder: '', required: false },
-    feedback: { text: '競賽收穫及成就 (150字以內)', placeholder: '', required: false }
+    description: { text: '競賽簡介', placeholder: '填寫競賽簡介以便日後方便回想課程內容', required: false },
+    feedback: { text: '競賽收穫及成就 (150字以內)', placeholder: '將競賽中所得到的收穫及成就記錄下來吧~', required: false }
   },
   work: {
     name: { text: '*公司單位名稱', required: true },
+    semester: { text: '*實習 / 工作時間', required: true },
     position: { text: '*職位職位', required: true },
-    description: { text: '實習 / 工作內容', placeholder: '', required: false },
-    feedback: { text: '收穫及成就 (150字以內)', placeholder: '', required: false }
+    description: { text: '實習 / 工作內容', placeholder: '填寫以便日後方便回想實習 / 工作內容', required: false },
+    feedback: { text: '收穫及成就 (150字以內)', placeholder: '將實習 / 工作中所得到的收穫及成就記錄下來吧~', required: false }
   },
   certification: {
-    name: { text: '*證照 名稱', required: true },
+    name: { text: '*證照名稱', required: true },
+    semester: { text: '*考取時間', required: true },
     position: { text: '*證照分數或等級', required: true },
-    feedback: { text: '收穫及成就 (150字以內)', placeholder: '', required: false }
+    feedback: { text: '收穫及成就 (150字以內)', placeholder: '將過程中所得到的收穫及成就記錄下來吧~', required: false }
   },
   other: {
     name: { text: '*經歷名稱', required: true },
+    semester: { text: '時間', required: false },
     position: { text: '經歷職位、成就', required: true },
-    description: { text: '經歷簡介', placeholder: '', required: false },
-    feedback: { text: '經歷收穫及成就 (150字以內)', placeholder: '', required: false }
+    description: { text: '經歷簡介', placeholder: '填寫簡介以便日後方便回想經歷內容', required: false },
+    feedback: { text: '經歷收穫及成就 (150字以內)', placeholder: '將過程中所得到的收穫及成就記錄下來吧~', required: false }
   }
 }
 
@@ -135,10 +146,20 @@ export default {
   setup (props) {
     const showConfirmModal = ref(false)
 
+    // 顯示不同類型對應的文字
     const showedFieldText = computed(() => {
       return fieldText[props.formType]
     })
 
+    // 產生學期選項（往前10個學期）
+    const year = new Date().getFullYear() - 1911
+    const semesters = [...Array(10).keys()]
+      .map((_, i) => {
+        return [`${year - i}-1`, `${year - i}-2`]
+      })
+      .flat()
+
+    // 儲存填入的資料
     const formData = reactive({
       name: '',
       position: '',
@@ -146,11 +167,11 @@ export default {
       feedback: '',
       semester: '',
       link: '',
-      experienceType: '',
+      experienceType: props.formType,
       addTags: []
     })
 
-    return { showConfirmModal, formData, showedFieldText }
+    return { showConfirmModal, formData, showedFieldText, semesters }
   }
 }
 </script>
