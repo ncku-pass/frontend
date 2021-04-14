@@ -2,7 +2,7 @@
   <div class="modal-bg" @click.self="showConfirmModal = true">
     <div class="form-modal">
       <div class="form-modal__content">
-        <div>
+        <div v-if="showedFieldText.name">
           <label for="" class="form-label">{{ showedFieldText.name.text }}</label>
           <input
             v-model="formData.name"
@@ -10,7 +10,7 @@
             class="form-control"
           >
         </div>
-        <div>
+        <div v-if="showedFieldText.semester">
           <label for="" class="form-label">{{ showedFieldText.semester.text }}</label>
           <select v-model="formData.semester" class="form-control">
             <option
@@ -28,14 +28,14 @@
             </option>
           </select>
         </div>
-        <div>
-          <label for="" class="form-label">{{ showedFieldText.description.text }}</label>
+        <div v-if="showedFieldText.description">
+          <label for="" class="form-label">{{ showedFieldText.description?.text }}</label>
           <textarea
             v-model="formData.description"
             class="form-control"
             rows="3"
             draggable="false"
-            :placeholder="showedFieldText.description.placeholder"
+            :placeholder="showedFieldText.description?.placeholder"
           />
         </div>
         <div>
@@ -49,7 +49,7 @@
             </div>
           </div>
         </div>
-        <div>
+        <div v-if="showedFieldText.feedback">
           <label for="" class="form-label">{{ showedFieldText.feedback.text }}</label>
           <textarea
             v-model="formData.feedback"
@@ -71,7 +71,7 @@
           <button class="btn" @click="showConfirmModal = true">
             取消
           </button>
-          <button class="btn--danger">
+          <button class="btn--danger" @click="handleFormSubmit">
             儲存
           </button>
         </div>
@@ -83,13 +83,14 @@
     confirm-message="確定離開"
     cancel-message="留下"
     @cancel="showConfirmModal = false"
-    @confirm="$emit('cancel')"
+    @confirm="$emit('close')"
   />
 </template>
 
 <script>
 import ConfirmModal from '@/components/ConfirmModal.vue'
 import { computed, reactive, ref } from 'vue'
+import { addExperience, updateExperience } from '@/api/experiences'
 
 const fieldText = {
   course: {
@@ -119,7 +120,7 @@ const fieldText = {
     description: { text: '實習 / 工作內容', placeholder: '填寫以便日後方便回想實習 / 工作內容', required: false },
     feedback: { text: '收穫及成就 (150字以內)', placeholder: '將實習 / 工作中所得到的收穫及成就記錄下來吧~', required: false }
   },
-  certification: {
+  certificate: {
     name: { text: '*證照名稱', required: true },
     semester: { text: '*考取時間', required: true },
     position: { text: '*證照分數或等級', required: true },
@@ -140,10 +141,16 @@ export default {
     formType: {
       type: String,
       default: 'activity'
+    },
+    editData: {
+      type: Object,
+      default () {
+        return {}
+      }
     }
   },
-  emits: ['cancel'],
-  setup (props) {
+  emits: ['close', 'submit'],
+  setup (props, context) {
     const showConfirmModal = ref(false)
 
     // 顯示不同類型對應的文字
@@ -159,19 +166,33 @@ export default {
       })
       .flat()
 
-    // 儲存填入的資料
+    // 儲存填入的資料，若有傳入要編輯的資料，則設為預設值
     const formData = reactive({
-      name: '',
-      position: '',
-      description: '',
-      feedback: '',
-      semester: '',
-      link: '',
+      name: props.editData?.name || '',
+      position: props.editData?.position || '',
+      description: props.editData?.description || '',
+      feedback: props.editData?.feedback || '',
+      semester: props.editData?.semester || '',
+      link: props.editData?.link || '',
       experienceType: props.formType,
-      addTags: []
+      addTags: props.editData?.tags || []
     })
 
-    return { showConfirmModal, formData, showedFieldText, semesters }
+    const handleFormSubmit = async () => {
+      try {
+        if (props.editData) {
+          // TODO: 處理編輯錯誤
+          await updateExperience(formData)
+        } else {
+          await addExperience(formData)
+        }
+        context.emit('submit')
+      } catch (error) {
+        console.log(error)
+      }
+    }
+
+    return { showConfirmModal, formData, showedFieldText, semesters, handleFormSubmit }
   }
 }
 </script>

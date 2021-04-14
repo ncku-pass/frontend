@@ -9,15 +9,11 @@ export const getExperience = async (experienceId) => {
 }
 
 export const addExperience = (data) => {
-  return req.post('/', {
-    data
-  })
+  return req.post('/', data)
 }
 
 export const updateExperience = async (experienceId, data) => {
-  return req.put(`/${experienceId}`, {
-    data
-  })
+  return req.put(`/${experienceId}`, data)
 }
 
 export const deleteExperience = async (experienceId) => {

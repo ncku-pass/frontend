@@ -13,7 +13,7 @@
       </li>
     </ul>
     <div class="experience-list-item__btns">
-      <button class="experience-list-item__btns__edit btn-pill">
+      <button class="experience-list-item__btns__edit btn-pill" @click="handleEditExperience">
         <svg
           width="24"
           height="24"
@@ -85,7 +85,7 @@ export default {
       }
     }
   },
-  emits: ['delete'],
+  emits: ['delete', 'edit'],
   setup (props, context) {
     const showConfirmModal = ref(false)
 
@@ -99,7 +99,11 @@ export default {
       context.emit('delete')
     }
 
-    return { showConfirmModal, confirmDelete, handleDeleteExperience }
+    const handleEditExperience = async () => {
+      context.emit('edit', props.experience.id)
+    }
+
+    return { showConfirmModal, confirmDelete, handleDeleteExperience, handleEditExperience }
   }
 }
 </script>

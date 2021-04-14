@@ -5,8 +5,8 @@
         <li>
           <router-link
             class="tab-link"
-            :class="{ 'router-link-active': type === 'class' }"
-            :to="{ name: 'Experience', params: { type: 'class' } }"
+            :class="{ 'router-link-active': type === 'course' }"
+            :to="{ name: 'Experience', params: { type: 'course' } }"
           >
             課程紀錄
           </router-link>
@@ -46,7 +46,7 @@
         <li>
           <router-link
             class="tab-link"
-            :to="{ name: 'Experience', params: { type: 'others' } }"
+            :to="{ name: 'Experience', params: { type: 'other' } }"
           >
             其他
           </router-link>
@@ -68,12 +68,13 @@
                 v-for="experience in semesterData"
                 :key="experience.id"
                 :experience="experience"
-                @delete="loadData"
+                @delete="handleDelete"
+                @edit="handleEditExperience"
               />
             </ExperienceListBlock>
             <button
               class="experience__window__table__add"
-              @click="showFormModal = true"
+              @click="handleAddExperience"
             >
               <svg
                 width="22"
@@ -92,7 +93,13 @@
       </div>
     </div>
   </div>
-  <FormModal v-if="showFormModal" @cancel="showFormModal = false" />
+  <FormModal
+    v-if="showFormModal"
+    :form-type="type"
+    :edit-data="experienceToEdit"
+    @close="showFormModal = false"
+    @submit="handleSubmit"
+  />
 </template>
 
 <script>
@@ -117,11 +124,13 @@ export default {
       default: 'class'
     }
   },
-  setup () {
+  setup (props) {
+    const experiences = ref(null)
     const classifiedData = reactive({})
 
     const loadData = async () => {
       const { data } = await getExperiences()
+      experiences.value = data
 
       for (const type in data) {
         classifiedData[type] = classifySemester(data[type])
@@ -142,6 +151,10 @@ export default {
 
     // 新增活動表單
     const showFormModal = ref(false)
+    const handleAddExperience = () => {
+      showFormModal.value = true
+      experienceToEdit.value = null
+    }
 
     // ===設定滾動容器陰影===
     const { setShadows, initShadows } = useScrollShadow()
@@ -153,7 +166,27 @@ export default {
       initShadows(shadowContainer.value)
     })
 
-    return { classifiedData, loadData, showFormModal, setShadows, shadowContainer }
+    // 處理表單送出
+    const handleSubmit = () => {
+      showFormModal.value = false
+      loadData()
+    }
+
+    // 處理經驗刪除
+    const handleDelete = () => {
+      loadData()
+    }
+
+    // 處理編輯經歷
+    const experienceToEdit = ref(null)
+    const handleEditExperience = (experienceId) => {
+      showFormModal.value = true;
+      [experienceToEdit.value] = experiences.value[props.type].filter(exp => {
+        return exp.id === experienceId
+      })
+    }
+
+    return { classifiedData, loadData, showFormModal, handleAddExperience, setShadows, shadowContainer, handleSubmit, handleDelete, handleEditExperience, experienceToEdit }
   }
 }
 </script>
