@@ -3,19 +3,18 @@
     <div class="section section-1">
       <svg
         class="section-1__bg"
-        width="1434"
-        height="1065"
-        viewBox="0 0 1434 1065"
+        viewBox="0 0 1440 953"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
       >
-        <path
-          fill-rule="evenodd"
-          clip-rule="evenodd"
-          d="M1012.21 -523.054C1183.44 -457.079 1307.41 -301.352 1382.13 -133.75C1453.3 25.8978 1437.75 203.759 1413.39 376.853C1389.2 548.798 1362.16 729.353 1242.92 855.577C1123.43 982.073 946.005 1028.48 773.861 1053.86C606.82 1078.48 439.607 1060.17 283.001 997.072C117.49 930.381 -53.0788 844.254 -137.067 686.809C-220.88 529.691 -189.228 341.864 -160.244 166.156C-132.109 -4.40497 -96.974 -182.972 26.3849 -304.072C147.847 -423.31 327.737 -439.089 493.889 -475.997C667.497 -514.56 846.272 -586.993 1012.21 -523.054Z"
+        <circle
+          cx="720"
+          cy="-1547"
+          r="2500"
           fill="#9D2235"
         />
       </svg>
+
       <div class="container section-1__content">
         <div class="intro">
           <img src="@/assets/brand_icon_white.svg" alt="">
@@ -206,7 +205,7 @@ export default {
   color: #fff;
   &__bg {
     position: absolute;
-    bottom: 0;
+    bottom: 50px;
     left: 0;
     z-index: -1;
   }
@@ -218,7 +217,7 @@ export default {
 }
 .scroll-arrow {
   position: absolute;
-  bottom: 22px;
+  bottom: 72px;
   left: 50%;
   transform: translateX(-50%);
   animation: jump 1.5s infinite;
@@ -289,13 +288,13 @@ export default {
 
 @keyframes jump {
   0% {
-    transform: translateY(0px);
+    transform: translate(-50%, 0px);
   }
   50% {
-    transform: translateY(-15px);
+    transform: translate(-50%, -15px);
   }
   100% {
-    transform: translateY(0px);
+    transform: translate(-50%, 0px);
   }
 }
 </style>

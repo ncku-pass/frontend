@@ -136,6 +136,7 @@ const fieldText = {
 }
 
 export default {
+  name: 'FormModal',
   components: { ConfirmModal },
   props: {
     formType: {
@@ -168,6 +169,7 @@ export default {
 
     // 儲存填入的資料，若有傳入要編輯的資料，則設為預設值
     const formData = reactive({
+      id: `${props.editData.id}`,
       name: props.editData?.name || '',
       position: props.editData?.position || '',
       description: props.editData?.description || '',
@@ -175,14 +177,14 @@ export default {
       semester: props.editData?.semester || '',
       link: props.editData?.link || '',
       experienceType: props.formType,
-      addTags: props.editData?.tags || []
+      tags: [] // TODO: 處理送出表單時的TAG
     })
 
     const handleFormSubmit = async () => {
       try {
         if (props.editData) {
           // TODO: 處理編輯錯誤
-          await updateExperience(formData)
+          await updateExperience(props.editData.id, formData)
         } else {
           await addExperience(formData)
         }
