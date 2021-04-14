@@ -121,7 +121,7 @@ export default {
     // 目前顯示的TAB種類
     type: {
       type: String,
-      default: 'class'
+      default: 'course'
     }
   },
   setup (props) {
