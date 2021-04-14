@@ -1,13 +1,19 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Experience from '../views/Experience.vue'
 import Portfolio from '../views/Portfolio.vue'
+import Landing from '../views/Landing.vue'
 
 const routes = [
+  {
+    path: '/',
+    name: 'Landing',
+    component: Landing
+  },
   {
     path: '/experience/:type?',
     name: 'Experience',
     component: Experience,
-    props: true
+    props: (route) => ({ type: route.params.type || 'course' })
   },
   {
     path: '/portfolio',

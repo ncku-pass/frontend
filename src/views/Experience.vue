@@ -1,105 +1,108 @@
 <template>
-  <div class="experience">
-    <div class="experience__window">
-      <ul class="experience__window__tabs">
-        <li>
-          <router-link
-            class="tab-link"
-            :class="{ 'router-link-active': type === 'course' }"
-            :to="{ name: 'Experience', params: { type: 'course' } }"
-          >
-            課程紀錄
-          </router-link>
-        </li>
-        <li>
-          <router-link
-            class="tab-link"
-            :to="{ name: 'Experience', params: { type: 'activity' } }"
-          >
-            活動經驗
-          </router-link>
-        </li>
-        <li>
-          <router-link
-            class="tab-link"
-            :to="{ name: 'Experience', params: { type: 'competition' } }"
-          >
-            競賽經驗
-          </router-link>
-        </li>
-        <li>
-          <router-link
-            class="tab-link"
-            :to="{ name: 'Experience', params: { type: 'work' } }"
-          >
-            工作經驗
-          </router-link>
-        </li>
-        <li>
-          <router-link
-            class="tab-link"
-            :to="{ name: 'Experience', params: { type: 'certificate' } }"
-          >
-            外語能力或證照
-          </router-link>
-        </li>
-        <li>
-          <router-link
-            class="tab-link"
-            :to="{ name: 'Experience', params: { type: 'other' } }"
-          >
-            其他
-          </router-link>
-        </li>
-      </ul>
-      <div class="experience__window__table">
-        <div
-          ref="shadowContainer"
-          class="shadow-container"
-          @scroll.capture="setShadows"
-        >
-          <div class="experience__window__table__wrapper">
-            <ExperienceListBlock
-              v-for="(semesterData, semester) in classifiedData[type]"
-              :key="semester"
-              :semester="semester"
+  <Navbar />
+  <main>
+    <div class="experience">
+      <div class="experience__window">
+        <ul class="experience__window__tabs">
+          <li>
+            <router-link
+              class="tab-link"
+              :class="{ 'router-link-active': type === 'course' }"
+              :to="{ name: 'Experience', params: { type: 'course' } }"
             >
-              <ExperienceListItem
-                v-for="experience in semesterData"
-                :key="experience.id"
-                :experience="experience"
-                @delete="handleDelete"
-                @edit="handleEditExperience"
-              />
-            </ExperienceListBlock>
-            <button
-              class="experience__window__table__add"
-              @click="handleAddExperience"
+              課程紀錄
+            </router-link>
+          </li>
+          <li>
+            <router-link
+              class="tab-link"
+              :to="{ name: 'Experience', params: { type: 'activity' } }"
             >
-              <svg
-                width="22"
-                height="22"
-                viewBox="0 0 22 22"
-                xmlns="http://www.w3.org/2000/svg"
+              活動經驗
+            </router-link>
+          </li>
+          <li>
+            <router-link
+              class="tab-link"
+              :to="{ name: 'Experience', params: { type: 'competition' } }"
+            >
+              競賽經驗
+            </router-link>
+          </li>
+          <li>
+            <router-link
+              class="tab-link"
+              :to="{ name: 'Experience', params: { type: 'work' } }"
+            >
+              工作經驗
+            </router-link>
+          </li>
+          <li>
+            <router-link
+              class="tab-link"
+              :to="{ name: 'Experience', params: { type: 'certificate' } }"
+            >
+              外語能力或證照
+            </router-link>
+          </li>
+          <li>
+            <router-link
+              class="tab-link"
+              :to="{ name: 'Experience', params: { type: 'other' } }"
+            >
+              其他
+            </router-link>
+          </li>
+        </ul>
+        <div class="experience__window__table">
+          <div
+            ref="shadowContainer"
+            class="shadow-container"
+            @scroll.capture="setShadows"
+          >
+            <div class="experience__window__table__wrapper">
+              <ExperienceListBlock
+                v-for="(semesterData, semester) in classifiedData[type]"
+                :key="semester"
+                :semester="semester"
               >
-                <path
-                  d="M8.71431 22.3811H13.2913V13.4791H21.7733V9.0701H13.2913V0.126143H8.71431V9.0701H0.232251V13.4791H8.71431V22.3811Z"
-                  fill="white"
+                <ExperienceListItem
+                  v-for="experience in semesterData"
+                  :key="experience.id"
+                  :experience="experience"
+                  @delete="handleDelete"
+                  @edit="handleEditExperience"
                 />
-              </svg>
-            </button>
+              </ExperienceListBlock>
+              <button
+                class="experience__window__table__add"
+                @click="handleAddExperience"
+              >
+                <svg
+                  width="22"
+                  height="22"
+                  viewBox="0 0 22 22"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M8.71431 22.3811H13.2913V13.4791H21.7733V9.0701H13.2913V0.126143H8.71431V9.0701H0.232251V13.4791H8.71431V22.3811Z"
+                    fill="white"
+                  />
+                </svg>
+              </button>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-  <FormModal
-    v-if="showFormModal"
-    :form-type="type"
-    :edit-data="experienceToEdit"
-    @close="showFormModal = false"
-    @submit="handleSubmit"
-  />
+    <FormModal
+      v-if="showFormModal"
+      :form-type="type"
+      :edit-data="experienceToEdit"
+      @close="showFormModal = false"
+      @submit="handleSubmit"
+    />
+  </main>
 </template>
 
 <script>
@@ -107,6 +110,7 @@ import { ref, onMounted, onUpdated, reactive } from 'vue'
 import ExperienceListItem from '@/components/ExperienceListItem.vue'
 import ExperienceListBlock from '@/components/ExperienceListBlock.vue'
 import FormModal from '@/components/FormModal.vue'
+import Navbar from '@/components/Navbar'
 import useScrollShadow from '@/composables/useScrollShadow'
 import { getExperiences } from '@/api/experiences'
 
@@ -115,7 +119,8 @@ export default {
   components: {
     ExperienceListItem,
     ExperienceListBlock,
-    FormModal
+    FormModal,
+    Navbar
   },
   props: {
     // 目前顯示的TAB種類
