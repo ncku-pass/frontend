@@ -83,17 +83,14 @@
                     學期
                   </div>
                   <ul class="filter-block__tags">
-                    <li class="filter-block__tags__tag">
-                      106-1
-                    </li>
-                    <li class="filter-block__tags__tag">
-                      106-2
-                    </li>
-                    <li class="filter-block__tags__tag">
-                      107-1
-                    </li>
-                    <li class="filter-block__tags__tag">
-                      107-2
+                    <li
+                      v-for="(checked, semester) in filter.semesters"
+                      :key="semester"
+                      class="filter-block__tags__tag"
+                      :class="{'filter-block__tags__tag--selected': checked}"
+                      @click="toggleSemester(semester)"
+                    >
+                      {{ semester }}
                     </li>
                   </ul>
                 </div>
@@ -103,11 +100,13 @@
                   </div>
                   <ul class="filter-block__tags">
                     <li
-                      v-for="i in Array(25)"
-                      :key="i"
+                      v-for="(checked, tag) in filter.tags"
+                      :key="tag"
                       class="filter-block__tags__tag"
+                      :class="{'filter-block__tags__tag--selected': checked}"
+                      @click="toggleTag(tag)"
                     >
-                      設計能力
+                      {{ tag }}
                     </li>
                   </ul>
                 </div>
@@ -122,14 +121,14 @@
         >
           <ul class="portfolio__menu__body">
             <li
-              v-for="i in Array(10)"
-              :key="i"
+              v-for="experience in filteredExperienceArray"
+              :key="experience.id"
               class="menu-card"
             >
               <div class="menu-card__type">
-                課
+                {{ typeChinese[experience.experienceType] }}
               </div>
-              <span class="menu-card__name">系統分析與設計</span>
+              <span class="menu-card__name">{{ experience.name }}</span>
               <svg
                 width="15"
                 height="10"
@@ -152,10 +151,12 @@
 </template>
 
 <script>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, reactive, watchEffect, computed } from 'vue'
 import AbilityCard from '@/components/AbilityCard.vue'
 import useScrollShadow from '@/composables/useScrollShadow'
 import Navbar from '@/components/Navbar'
+import getExperiences from '@/composables/experiences/getExperiences'
+import getTags from '@/composables/tags/getTags'
 
 const cards = [
   {
@@ -180,8 +181,17 @@ const cards = [
   }
 ]
 const tabs = ['實習履歷', '打工經驗', '營隊面試用']
+const typeChinese = {
+  course: '課',
+  activity: '活',
+  competition: '賽',
+  work: '工',
+  certificate: '證',
+  other: '其'
+}
 
 export default {
+  name: 'Portfolio',
   components: {
     AbilityCard,
     Navbar
@@ -189,9 +199,48 @@ export default {
   setup () {
     const tabNow = ref('實習履歷')
 
-    // 切換filter顯示
+    const { experiencesArray, semesters } = getExperiences()
+    const { tags } = getTags()
+
+    // ===篩選經驗列表===
+    const filter = reactive({
+      semesters: {},
+      tags: {}
+    })
+    watchEffect(() => {
+      filter.semesters = semesters.value.reduce((obj, key) => ({ ...obj, [key]: true }), {})
+    })
+    watchEffect(() => {
+      filter.tags = tags.value.reduce((obj, tag) => ({ ...obj, [tag.name]: true }), {})
+    })
+
+    const filteredExperienceArray = computed(() => {
+      return experiencesArray.value.filter((experience) => {
+        for (const key in filter.semesters) {
+          if (!filter.semesters[key] && experience.semester === key) {
+            return false
+          }
+        }
+        for (const key in filter.tags) {
+          if (!filter.tags[key] && experience.semester === key) {
+            return false
+          }
+        }
+        return true
+      })
+    })
+
+    const toggleSemester = (semester) => {
+      filter.semesters[semester] = !filter.semesters[semester]
+    }
+    const toggleTag = (tag) => {
+      filter.tags[tag] = !filter.tags[tag]
+    }
+
+    // ===切換filter顯示===
     const showFilter = ref(false)
-    // 列表完全展開後再檢測是否加上列表陰影
+
+    // ===列表完全展開後再檢測是否加上列表陰影===
     const afterEnter = () => {
       initShadows(FilterShadowContainer.value)
       initShadows(MenuShadowContainer.value)
@@ -201,7 +250,7 @@ export default {
       initShadows(MenuShadowContainer.value)
     }
 
-    // 設定滾動容器的陰影
+    // ===設定滾動容器的陰影===
     const { setShadows, initShadows } = useScrollShadow()
     const FilterShadowContainer = ref(null)
     const MenuShadowContainer = ref(null)
@@ -209,7 +258,23 @@ export default {
       initShadows(MenuShadowContainer.value)
     })
 
-    return { cards, tabs, tabNow, showFilter, afterEnter, afterLeave, setShadows, FilterShadowContainer, MenuShadowContainer }
+    return {
+      tags,
+      typeChinese,
+      filteredExperienceArray,
+      filter,
+      toggleSemester,
+      toggleTag,
+      cards,
+      tabs,
+      tabNow,
+      showFilter,
+      afterEnter,
+      afterLeave,
+      setShadows,
+      FilterShadowContainer,
+      MenuShadowContainer
+    }
   }
 }
 </script>
@@ -343,11 +408,16 @@ export default {
     margin: -5px;
     &__tag {
       padding: 10px;
-      background-color: $red;
-      color: #fff;
+      color: $gray-1;
+      border: 1px solid $gray-1;
       border-radius: 15px;
       line-height: 16px;
       margin: 5px;
+      cursor: pointer;
+      &--selected {
+        color: $white;
+        background-color: $gray-1;
+      }
     }
   }
 }

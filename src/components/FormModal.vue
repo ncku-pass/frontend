@@ -40,20 +40,19 @@
         </div>
         <div>
           <label for="" class="form-label">標籤分類</label>
+          // TODO: 篩選邏輯處理
           <Multiselect
             v-model="formData.tags"
             mode="tags"
             :searchable="true"
             :create-tag="true"
-            :options="[
-              'Batman',
-              'Robin',
-              'Joker',
-            ]"
+            :append-new-tag="false"
+            :options="tagOptions"
+            @tag="handleCreateTag"
           >
             <template #tag="{ option, handleTagRemove, disabled }">
               <div class="multiselect-tag tag--large">
-                {{ option.value }}
+                {{ option.label }}
                 <i
                   v-if="!disabled"
                   @click.prevent
@@ -105,6 +104,8 @@
 import ConfirmModal from '@/components/ConfirmModal.vue'
 import { computed, reactive, ref } from 'vue'
 import { addExperience, updateExperience } from '@/api/experiences'
+import { addTag } from '@/api/tags'
+import getTags from '@/composables/tags/getTags'
 import Multiselect from '@vueform/multiselect'
 import '@vueform/multiselect/themes/default.css'
 
@@ -183,6 +184,21 @@ export default {
       })
       .flat()
 
+    // 產生所有的tag
+    const { tags } = getTags()
+    const tagOptions = computed(() => {
+      return tags.value.map((tag) => {
+        return { value: tag.id, label: tag.name }
+      })
+    })
+
+    const handleCreateTag = async (tag) => {
+      const { data } = await addTag(tag)
+      tags.value.push({ value: data[0].id, label: data[0].name })
+      // reloadTags()
+      console.log(data)
+    }
+
     // 儲存填入的資料，若有傳入要編輯的資料，則設為預設值
     const formData = reactive({
       name: props.editData?.name || '',
@@ -192,7 +208,7 @@ export default {
       semester: props.editData?.semester || '',
       link: props.editData?.link || '',
       experienceType: props.formType,
-      tags: [] // TODO: 處理送出表單時的TAG
+      tags: props.editData?.tags.map(tag => tag.id) || []
     })
 
     const handleFormSubmit = async () => {
@@ -210,7 +226,7 @@ export default {
       }
     }
 
-    return { showConfirmModal, formData, showedFieldText, semesters, handleFormSubmit }
+    return { tagOptions, handleCreateTag, showConfirmModal, formData, showedFieldText, semesters, handleFormSubmit }
   }
 }
 </script>
