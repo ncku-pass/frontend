@@ -62,7 +62,7 @@
           >
             <div class="experience__window__table__wrapper">
               <ExperienceListBlock
-                v-for="(semesterData, semester) in classifiedData[type]"
+                v-for="(semesterData, semester) in classifiedExperiences[type]"
                 :key="semester"
                 :semester="semester"
               >
@@ -106,13 +106,13 @@
 </template>
 
 <script>
-import { ref, onMounted, onUpdated, reactive } from 'vue'
+import { ref, onMounted, onUpdated } from 'vue'
 import ExperienceListItem from '@/components/ExperienceListItem.vue'
 import ExperienceListBlock from '@/components/ExperienceListBlock.vue'
 import FormModal from '@/components/FormModal.vue'
 import Navbar from '@/components/Navbar'
 import useScrollShadow from '@/composables/useScrollShadow'
-import { getExperiences } from '@/api/experiences'
+import getExperiences from '@/composables/experiences/getExperiences'
 
 export default {
   name: 'Experience',
@@ -130,33 +130,9 @@ export default {
     }
   },
   setup (props) {
-    const experiences = ref(null)
-    const classifiedData = reactive({})
+    const { experiences, classifiedExperiences, reloadExperiences } = getExperiences()
 
-    const loadData = async () => {
-      const { data } = await getExperiences()
-      experiences.value = data
-
-      for (const type in data) {
-        classifiedData[type] = classifySemester(data[type].sort((a, b) => {
-          return a.semester < b.semester ? 1 : -1
-        }))
-      }
-    }
-    loadData()
-
-    const classifySemester = (arr) => {
-      return arr.reduce((obj, experience) => {
-        if (Array.isArray(obj[experience.semester])) {
-          obj[experience.semester].push(experience)
-        } else {
-          obj[experience.semester] = [experience]
-        }
-        return obj
-      }, {})
-    }
-
-    // 新增活動表單
+    // ===新增活動表單===
     const showFormModal = ref(false)
     const handleAddExperience = () => {
       showFormModal.value = true
@@ -173,18 +149,18 @@ export default {
       initShadows(shadowContainer.value)
     })
 
-    // 處理表單送出
+    // ===處理表單送出===
     const handleSubmit = () => {
       showFormModal.value = false
-      loadData()
+      reloadExperiences()
     }
 
-    // 處理經驗刪除
+    // ===處理經驗刪除===
     const handleDelete = () => {
-      loadData()
+      reloadExperiences()
     }
 
-    // 處理編輯經歷
+    // ===點擊編輯的按鈕時，抓出此筆經歷，傳入表單中===
     const experienceToEdit = ref(null)
     const handleEditExperience = (experienceId) => {
       showFormModal.value = true;
@@ -193,7 +169,7 @@ export default {
       })
     }
 
-    return { classifiedData, loadData, showFormModal, handleAddExperience, setShadows, shadowContainer, handleSubmit, handleDelete, handleEditExperience, experienceToEdit }
+    return { classifiedExperiences, showFormModal, handleAddExperience, setShadows, shadowContainer, handleSubmit, handleDelete, handleEditExperience, experienceToEdit }
   }
 }
 </script>

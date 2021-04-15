@@ -21,5 +21,5 @@ export const useRequest = apiCall => {
     }
   }
 
-  return { ...toRefs(state), statefulApiCall }
+  return { ...toRefs(state), [apiCall.name]: statefulApiCall }
 }
