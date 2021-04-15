@@ -138,7 +138,9 @@ export default {
       experiences.value = data
 
       for (const type in data) {
-        classifiedData[type] = classifySemester(data[type])
+        classifiedData[type] = classifySemester(data[type].sort((a, b) => {
+          return a.semester < b.semester ? 1 : -1
+        }))
       }
     }
     loadData()
