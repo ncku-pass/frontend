@@ -185,7 +185,6 @@ export default {
 
     // 儲存填入的資料，若有傳入要編輯的資料，則設為預設值
     const formData = reactive({
-      id: `${props.editData.id}`,
       name: props.editData?.name || '',
       position: props.editData?.position || '',
       description: props.editData?.description || '',
@@ -200,7 +199,8 @@ export default {
       try {
         if (props.editData) {
           // TODO: 處理編輯錯誤
-          await updateExperience(props.editData.id, formData)
+          const res = await updateExperience(props.editData.id, formData)
+          console.log(res)
         } else {
           await addExperience(formData)
         }
