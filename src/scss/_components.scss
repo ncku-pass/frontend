@@ -8,6 +8,7 @@
   text-align: center;
   &--danger {
     @extend .btn;
+    border-color: $red;
     background: $red;
     color: #fff;
   }
