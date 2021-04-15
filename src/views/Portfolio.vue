@@ -38,11 +38,12 @@
                   v-for="card in cards"
                   :key="card.id"
                   v-bind="card"
+                  v-model:abilityTopic="card.topic"
                 />
               </div>
               <button class="content-body__add">
-                <span v-if="cards.length">+ 新增主題</span>
-                <span v-else>+ 目前還沒主題 趕快新增一個吧</span>
+                <span v-if="cards.length" @click="handleAddCard">+ 新增主題</span>
+                <span v-else @click="handleAddCard">+ 目前還沒主題 趕快新增一個吧</span>
               </button>
             </div>
           </div>
@@ -120,7 +121,38 @@
           @scroll.capture="setShadows"
         >
           <ul class="portfolio__menu__body">
-            <li
+            <draggable
+              v-model="filteredExperienceArray"
+              :group="{ name: 'experience', pull: 'clone', put: true }"
+              item-key="id"
+              :sort="false"
+              @start="drag=true"
+              @end="drag=false"
+            >
+              <template #item="{element}">
+                <li class="menu-card">
+                  <div class="menu-card__type">
+                    {{ typeChinese[element.experienceType] }}
+                  </div>
+                  <span class="menu-card__name">{{ element.name }}</span>
+                  <svg
+                    width="15"
+                    height="10"
+                    viewBox="0 0 15 10"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M1 1L7.5 8L14 1"
+                      stroke="#4F4F4F"
+                      stroke-width="2"
+                    />
+                  </svg>
+                </li>
+              </template>
+            </draggable>
+
+            <!-- <li
               v-for="experience in filteredExperienceArray"
               :key="experience.id"
               class="menu-card"
@@ -142,7 +174,7 @@
                   stroke-width="2"
                 />
               </svg>
-            </li>
+            </li> -->
           </ul>
         </div>
       </div>
@@ -157,29 +189,10 @@ import useScrollShadow from '@/composables/useScrollShadow'
 import Navbar from '@/components/Navbar'
 import getExperiences from '@/composables/experiences/getExperiences'
 import getTags from '@/composables/tags/getTags'
+import draggable from 'vuedraggable'
 
-const cards = [
-  {
-    id: 0,
-    experiences: [
-      { name: '系統分析與設計', tags: ['國際視野', '數理能力'], description: '這段話令我陷入了沈思。本人也是經過了深思熟慮，在每個日日夜夜思考這個問題。想必大家都能了解心得的重要性。' },
-      { name: '互動介面設計松', tags: ['設計能力', '介面設計'], description: ' 蘇霍姆林斯基在過去曾經講過，熱愛祖國，這是一種最純潔、最高尚、最強烈、最溫柔、最無情、最溫存、最嚴酷的感情。這段話令我陷入了沈思。本人也是經過了深思熟慮，在每個日日夜夜思考這個問題。想必大家都能了解心得的重要性。' },
-      { name: '大數據分析與資料探勘', tags: ['python', '數據分析'] }
-    ]
-  },
-  {
-    id: 1,
-    experiences: [
-      { name: '系統分析與設計', tags: ['國際視野', '數理能力'], description: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Provident fuga debitis enim, alias dolor harum tempora fugit maiores accusamus eius?' },
-      { name: '互動介面設計松', tags: ['設計能力', '介面設計'] },
-      { name: '大數據分析與資料探勘', tags: ['python', '數據分析'] }
-    ]
-  },
-  {
-    id: 2,
-    experiences: []
-  }
-]
+const cardsData = []
+// TODO: 改成動態的
 const tabs = ['實習履歷', '打工經驗', '營隊面試用']
 const typeChinese = {
   course: '課',
@@ -194,15 +207,26 @@ export default {
   name: 'Portfolio',
   components: {
     AbilityCard,
-    Navbar
+    Navbar,
+    draggable
   },
   setup () {
     const tabNow = ref('實習履歷')
 
+    // ===履歷資料===
+    const cards = ref(cardsData)
+    const handleAddCard = () => {
+      cards.value.push({
+        id: cards.value.length,
+        topic: '',
+        experiences: []
+      })
+    }
+
+    // ===經驗列表===
     const { experiencesArray, semesters } = getExperiences()
     const { tags } = getTags()
 
-    // ===篩選經驗列表===
     const filter = reactive({
       semesters: {},
       tags: {}
@@ -259,6 +283,8 @@ export default {
     })
 
     return {
+      experiencesArray,
+      handleAddCard,
       tags,
       typeChinese,
       filteredExperienceArray,

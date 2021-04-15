@@ -10,7 +10,7 @@ export const experiencesRequest = axios.create({
   baseURL: `${baseURL}/experiences`
 })
 
-export const tagRequest = axios.create({
+export const tagsRequest = axios.create({
   baseURL: `${baseURL}/tags`
 })
 

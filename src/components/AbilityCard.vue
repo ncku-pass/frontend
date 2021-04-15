@@ -1,13 +1,42 @@
 <template>
   <div class="ability-card">
     <input
-      v-model="abilityTopic"
+      :value="abilityTopic"
       class="ability-card__topic"
       placeholder="填入能力主題，如文書行政能力/溝通能力..."
+      @input="$emit('update:abilityTopic', $event.target.value)"
     >
     <hr>
     <ul class="ability-card__body">
-      <li
+      <draggable
+        :list="experiences"
+        group="experience"
+        item-key="id"
+        @start="drag=true"
+        @end="drag=false"
+      >
+        <template #item="{element}">
+          <li class="experience-card">
+            <h3 class="experience-card__name">
+              {{ element.name }}
+            </h3>
+            <div class="experience-card__tags">
+              <div
+                v-for="tag in element.tags"
+                :key="tag"
+                class="tag"
+              >
+                {{ tag.name }}
+              </div>
+            </div>
+            <div class="experience-card__description">
+              {{ element.description }}
+            </div>
+          </li>
+        </template>
+      </draggable>
+
+      <!-- <li
         v-for="experience in experiences"
         :key="experience.name"
         class="experience-card"
@@ -27,7 +56,7 @@
         <div class="experience-card__description">
           {{ experience.description }}
         </div>
-      </li>
+      </li> -->
       <p class="ability-card__body__tips">
         由右方列表拉入適合課程
       </p>
@@ -36,21 +65,27 @@
 </template>
 
 <script>
-import { ref } from 'vue'
+import draggable from 'vuedraggable'
+
 export default {
   name: 'AbilityCard',
+  components: {
+    draggable
+  },
   props: {
     experiences: {
       type: Array,
       default () {
         return []
       }
+    },
+    abilityTopic: {
+      type: String,
+      default: ''
     }
   },
+  emits: ['update:abilityTopic'],
   setup () {
-    const abilityTopic = ref('')
-
-    return { abilityTopic }
   }
 }
 </script>
@@ -109,6 +144,14 @@ export default {
   &__description {
     line-height: 24px;
     color: $gray-3;
+  }
+}
+.experience-card.sortable-chosen {
+  .experience-card__tags {
+    display: none;
+  }
+  .experience-card__description {
+    display: none;
   }
 }
 </style>
