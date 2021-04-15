@@ -40,14 +40,28 @@
         </div>
         <div>
           <label for="" class="form-label">標籤分類</label>
-          <div class="form-modal__content__tags">
-            <div class="tag--large">
-              國際視野
-            </div>
-            <div class="tag--large">
-              數理能力
-            </div>
-          </div>
+          <Multiselect
+            v-model="formData.tags"
+            mode="tags"
+            :searchable="true"
+            :create-tag="true"
+            :options="[
+              'Batman',
+              'Robin',
+              'Joker',
+            ]"
+          >
+            <template #tag="{ option, handleTagRemove, disabled }">
+              <div class="multiselect-tag tag--large">
+                {{ option.value }}
+                <i
+                  v-if="!disabled"
+                  @click.prevent
+                  @mousedown.prevent.stop="handleTagRemove(option, $event)"
+                />
+              </div>
+            </template>
+          </Multiselect>
         </div>
         <div v-if="showedFieldText.feedback">
           <label for="" class="form-label">{{ showedFieldText.feedback.text }}</label>
@@ -91,6 +105,8 @@
 import ConfirmModal from '@/components/ConfirmModal.vue'
 import { computed, reactive, ref } from 'vue'
 import { addExperience, updateExperience } from '@/api/experiences'
+import Multiselect from '@vueform/multiselect'
+import '@vueform/multiselect/themes/default.css'
 
 const fieldText = {
   course: {
@@ -137,7 +153,7 @@ const fieldText = {
 
 export default {
   name: 'FormModal',
-  components: { ConfirmModal },
+  components: { ConfirmModal, Multiselect },
   props: {
     formType: {
       type: String,
@@ -169,7 +185,6 @@ export default {
 
     // 儲存填入的資料，若有傳入要編輯的資料，則設為預設值
     const formData = reactive({
-      id: `${props.editData.id}`,
       name: props.editData?.name || '',
       position: props.editData?.position || '',
       description: props.editData?.description || '',
@@ -184,7 +199,8 @@ export default {
       try {
         if (props.editData) {
           // TODO: 處理編輯錯誤
-          await updateExperience(props.editData.id, formData)
+          const res = await updateExperience(props.editData.id, formData)
+          console.log(res)
         } else {
           await addExperience(formData)
         }
@@ -201,6 +217,8 @@ export default {
 
 <style lang="scss">
 @import "../scss/mixins";
+@import "../scss/variables";
+
 .form-modal {
   width: 770px;
   max-height: 80vh;
@@ -225,5 +243,41 @@ export default {
     @include grid(column, 0, 18px);
     justify-content: end;
   }
+}
+
+.multiselect-input {
+  border: 1px solid #E0E0E0;
+  border-radius: 8px;
+}
+.is-open .multiselect-input {
+  border-radius: 8px 8px 0 0;
+}
+.is-tags .multiselect-search input {
+  margin: 0;
+}
+.multiselect-tags {
+  margin-top: 0;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  .multiselect-tag {
+    color: #000;
+    font-weight: normal;
+    background-color: #F2F2F2;
+    border-radius: 50px;
+    line-height: 1.5;
+    padding: 4px 8px;
+    margin: 0 5px 0 0;
+  }
+  i::before {
+    color: $red;
+    border-radius: 50%;
+  }
+  i:hover::before {
+    color: $red;
+    background: #ffffff;
+  }
+}
+.multiselect-clear {
+  border-radius: 50%;
 }
 </style>
