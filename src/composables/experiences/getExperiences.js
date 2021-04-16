@@ -1,13 +1,13 @@
 import { reactive, toRefs, computed } from 'vue'
 import { getExperiences as getExperiencesAPI } from '@/api/experiences'
 
-const getExperiences = () => {
-  const state = reactive({
-    experiences: {},
-    error: null,
-    isPending: false
-  })
+const state = reactive({
+  experiences: {},
+  error: null,
+  isPending: false
+})
 
+const getExperiences = () => {
   // 將每個活動類別內的資料，依照學期分類好
   const classifiedExperiences = computed(() => {
     const data = {}
@@ -47,7 +47,9 @@ const getExperiences = () => {
       state.isPending = false
     }
   }
-  reloadExperiences()
+  if (Object.keys(state.experiences).length === 0) {
+    reloadExperiences()
+  }
 
   return { ...toRefs(state), classifiedExperiences, experiencesArray, semesters, reloadExperiences }
 }

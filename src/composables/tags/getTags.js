@@ -1,13 +1,13 @@
 import { reactive, toRefs } from 'vue'
 import { getTags as getTagsAPI } from '@/api/tags'
 
-const getTags = () => {
-  const state = reactive({
-    tags: [],
-    error: null,
-    isPending: false
-  })
+const state = reactive({
+  tags: [],
+  error: null,
+  isPending: false
+})
 
+const getTags = () => {
   const reloadTags = async () => {
     try {
       state.isPending = true
@@ -22,7 +22,9 @@ const getTags = () => {
       state.isPending = false
     }
   }
-  reloadTags()
+  if (!state.tags.length) {
+    reloadTags()
+  }
 
   return { ...toRefs(state), reloadTags }
 }
