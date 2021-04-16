@@ -276,6 +276,7 @@ export default {
   padding-top: 5px;
   padding-bottom: 5px;
   .multiselect-tag {
+    display: flex;
     color: #000;
     font-weight: normal;
     background-color: #F2F2F2;
