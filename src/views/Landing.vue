@@ -69,57 +69,86 @@
       </svg>
     </div>
     <div class="section section-2">
-      <div class="container section-2__content">
-        <h2 class="section-2__title">
-          透過 e-portfolio 來實現你的目標
-        </h2>
-        <div class="section-2__cards">
-          <div class="card">
-            <img
-              src="@/assets/card-record.svg"
-              alt=""
-              class="card__img"
-            >
-            <h3 class="card__title">
-              紀錄學習收穫
-            </h3>
-            <p class="card__desc">
-              紀錄學習過程，
-              如：自己過去的努力及收穫
-            </p>
+      <div class="slide">
+        <div class="container section-2__content">
+          <h2 class="section-2__title">
+            透過 e-portfolio 來實現你的目標
+          </h2>
+          <div class="section-2__cards">
+            <div class="card">
+              <img
+                src="@/assets/card-record.svg"
+                alt=""
+                class="card__img"
+              >
+              <h3 class="card__title">
+                紀錄學習收穫
+              </h3>
+              <p class="card__desc">
+                紀錄學習過程，<br>
+                如：自己過去的努力及收穫
+              </p>
+            </div>
+            <div class="card">
+              <img
+                src="@/assets/card-plan.svg"
+                alt=""
+                class="card__img"
+              >
+              <h3 class="card__title">
+                幫助自我學習規劃
+              </h3>
+              <p class="card__desc">
+                安排新學期課程之前，<br>
+                檢視過去的學習，讓學習更有脈絡
+              </p>
+            </div>
+            <div class="card">
+              <img
+                src="@/assets/card-portfolio.svg"
+                alt=""
+                class="card__img"
+              >
+              <h3 class="card__title">
+                幫助履歷&備審撰寫
+              </h3>
+              <p class="card__desc">
+                彙整學經歷，<br>
+                讓撰寫變得更加方便
+              </p>
+            </div>
           </div>
-          <div class="card">
-            <img
-              src="@/assets/card-plan.svg"
-              alt=""
-              class="card__img"
-            >
-            <h3 class="card__title">
-              紀錄學習收穫
-            </h3>
-            <p class="card__desc">
-              紀錄學習過程，
-              如：自己過去的努力及收穫
-            </p>
+        </div>
+      </div>
+      <div class="slide">
+        <div class="container introduction">
+          <img class="introduction__img" src="@/assets/landing-1.png">
+          <div class="introduction__text">
+            <h2>個人化紀錄</h2>
+            <p>內建校內學習紀錄，以簡潔快速的方式一覽大學學習歷程，可以即時的在已修習過的課程進行紀錄，更能透過自行增減不同的學習紀錄，來增添你精彩大學的學習經歷。</p>
           </div>
-          <div class="card">
-            <img
-              src="@/assets/card-portfolio.svg"
-              alt=""
-              class="card__img"
-            >
-            <h3 class="card__title">
-              紀錄學習收穫
-            </h3>
-            <p class="card__desc">
-              紀錄學習過程，
-              如：自己過去的努力及收穫
-            </p>
+        </div>
+      </div>
+      <div class="slide">
+        <div class="container introduction introduction--reverse">
+          <img class="introduction__img" src="@/assets/landing-2.png">
+          <div class="introduction__text">
+            <h2>歸納出關鍵能力</h2>
+            <p>提供個人專屬的分類工具，以TAG 來標示課程所得到的能力，透過分類 TAG 歸納出個人的關鍵技能，快速歸納自身特質及專長，精準統整，侃侃而談個人能力不再是難事。</p>
+          </div>
+        </div>
+      </div>
+      <div class="slide">
+        <div class="container introduction">
+          <img class="introduction__img" src="@/assets/landing-3.png">
+          <div class="introduction__text">
+            <h2>展現個人優勢</h2>
+            <p>可以針對履歷、研究所備審等編排不同版本，在各版本中能主題式的展現個人能力，不再擔心不會排版，只需拉入各項經驗即可，最後一鍵即能輸出簡潔的個人履歷。</p>
           </div>
         </div>
       </div>
     </div>
-    <div class="section">
+    <!-- <div class="section">
       <div class="container introduction">
         <img class="introduction__img" src="@/assets/landing-1.png">
         <div class="introduction__text">
@@ -127,8 +156,8 @@
           <p>內建校內學習紀錄，以簡潔快速的方式一覽大學學習歷程，可以即時的在已修習過的課程進行紀錄，更能透過自行增減不同的學習紀錄，來增添你精彩大學的學習經歷。</p>
         </div>
       </div>
-    </div>
-    <div class="section">
+    </div> -->
+    <!-- <div class="section">
       <div class="container introduction introduction--reverse">
         <img class="introduction__img" src="@/assets/landing-2.png">
         <div class="introduction__text">
@@ -136,8 +165,8 @@
           <p>提供個人專屬的分類工具，以TAG 來標示課程所得到的能力，透過分類 TAG 歸納出個人的關鍵技能，快速歸納自身特質及專長，精準統整，侃侃而談個人能力不再是難事。</p>
         </div>
       </div>
-    </div>
-    <div class="section">
+    </div> -->
+    <!-- <div class="section">
       <div class="container introduction">
         <img class="introduction__img" src="@/assets/landing-3.png">
         <div class="introduction__text">
@@ -145,8 +174,8 @@
           <p>可以針對履歷、研究所備審等編排不同版本，在各版本中能主題式的展現個人能力，不再擔心不會排版，只需拉入各項經驗即可，最後一鍵即能輸出簡潔的個人履歷。</p>
         </div>
       </div>
-    </div>
-    // TODO: 等待設計師修正
+    </div> -->
+    <!-- TODO: 等待設計師修正 -->
     <div class="section section-footer">
       <div class="section-footer__bg" />
       <div class="container section-footer__content">
@@ -185,7 +214,31 @@ export default {
         fullpage('.landing', {
           licenseKey: "i#eq#uS42Kr]C~j4g/m~3P;2R+( &83iM?yko4P'HZ9E|k1-x:<okp",
           easingcss3: 'cubic-bezier(0.64, 0.055, 0.345, 1)',
-          anchors: ['1', '2', '3', '4', '5', '6']
+          anchors: ['1', '2', '3'],
+          controlArrows: false,
+          slidesNavigation: true,
+          slidesNavPosition: 'bottom'
+          // onLeave: function (index, nextIndex, direction) {
+          //   if (index == 2 && !sliding) {
+          //     if (direction == 'down' && slideIndex < 5) {
+          //       sliding = true
+          //       $.fn.fullpage.moveSlideRight()
+          //       slideIndex++
+          //       return false
+          //     } else if (direction == 'up' && slideIndex > 1) {
+          //       sliding = true
+          //       $.fn.fullpage.moveSlideLeft()
+          //       slideIndex--
+          //       return false
+          //     }
+          //   } else if (sliding) {
+          //     return false
+          //   }
+          // },
+
+          // afterSlideLoad: function (anchorLink, index, slideAnchor, slideIndex) {
+          //   sliding = false
+          // }
         })
         isInit.value = true
       }
@@ -397,5 +450,12 @@ export default {
   100% {
     transform: translate(-50%, 0px);
   }
+}
+</style>
+
+<style>
+.fp-slidesNav {
+  width: 300px;
+  text-align: center;
 }
 </style>

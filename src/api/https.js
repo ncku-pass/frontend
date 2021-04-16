@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-axios.defaults.timeout = 7000
+axios.defaults.timeout = 15000
 // axios.defaults.headers.common.Authorization = `Bearer ${process.env.VUE_APP_AUTHORIZATION_TOKEN}`
 // axios.defaults.headers.common.Authorization = `Bearer ${localStorage.getItem('auth')}`
 

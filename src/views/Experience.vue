@@ -113,6 +113,7 @@ import FormModal from '@/components/FormModal.vue'
 import Navbar from '@/components/Navbar'
 import useScrollShadow from '@/composables/useScrollShadow'
 import getExperiences from '@/composables/experiences/getExperiences'
+import getTags from '@/composables/tags/getTags'
 
 export default {
   name: 'Experience',
@@ -131,6 +132,8 @@ export default {
   },
   setup (props) {
     const { experiences, classifiedExperiences, reloadExperiences } = getExperiences()
+    const { reloadTags } = getTags()
+    reloadTags()
 
     // ===新增活動表單===
     const showFormModal = ref(false)
