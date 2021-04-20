@@ -148,33 +148,6 @@
         </div>
       </div>
     </div>
-    <!-- <div class="section">
-      <div class="container introduction">
-        <img class="introduction__img" src="@/assets/landing-1.png">
-        <div class="introduction__text">
-          <h2>個人化紀錄</h2>
-          <p>內建校內學習紀錄，以簡潔快速的方式一覽大學學習歷程，可以即時的在已修習過的課程進行紀錄，更能透過自行增減不同的學習紀錄，來增添你精彩大學的學習經歷。</p>
-        </div>
-      </div>
-    </div> -->
-    <!-- <div class="section">
-      <div class="container introduction introduction--reverse">
-        <img class="introduction__img" src="@/assets/landing-2.png">
-        <div class="introduction__text">
-          <h2>歸納出關鍵能力</h2>
-          <p>提供個人專屬的分類工具，以TAG 來標示課程所得到的能力，透過分類 TAG 歸納出個人的關鍵技能，快速歸納自身特質及專長，精準統整，侃侃而談個人能力不再是難事。</p>
-        </div>
-      </div>
-    </div> -->
-    <!-- <div class="section">
-      <div class="container introduction">
-        <img class="introduction__img" src="@/assets/landing-3.png">
-        <div class="introduction__text">
-          <h2>展現個人優勢</h2>
-          <p>可以針對履歷、研究所備審等編排不同版本，在各版本中能主題式的展現個人能力，不再擔心不會排版，只需拉入各項經驗即可，最後一鍵即能輸出簡潔的個人履歷。</p>
-        </div>
-      </div>
-    </div> -->
     <!-- TODO: 等待設計師修正 -->
     <div class="section section-footer">
       <div class="section-footer__bg" />
@@ -200,7 +173,7 @@
 
 <script>
 import { onMounted, reactive, ref } from '@vue/runtime-core'
-import { useRouter } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
 import fullpage from 'fullpage.js'
 import 'fullpage.js/dist/fullpage.min.css'
 import { login } from '@/api/auth'
@@ -208,7 +181,13 @@ import { login } from '@/api/auth'
 export default {
   name: 'Landing',
   setup () {
+    const route = useRoute()
+
     const isInit = ref(false)
+    const fullpageInfo = reactive({
+      slideIndex: route.hash.replace(/^#.+\//, ''),
+      isSliding: false
+    })
     onMounted(() => {
       if (!isInit.value) {
         fullpage('.landing', {
@@ -217,39 +196,42 @@ export default {
           anchors: ['1', '2', '3'],
           controlArrows: false,
           slidesNavigation: true,
-          slidesNavPosition: 'bottom'
-          // onLeave: function (index, nextIndex, direction) {
-          //   if (index == 2 && !sliding) {
-          //     if (direction == 'down' && slideIndex < 5) {
-          //       sliding = true
-          //       $.fn.fullpage.moveSlideRight()
-          //       slideIndex++
-          //       return false
-          //     } else if (direction == 'up' && slideIndex > 1) {
-          //       sliding = true
-          //       $.fn.fullpage.moveSlideLeft()
-          //       slideIndex--
-          //       return false
-          //     }
-          //   } else if (sliding) {
-          //     return false
-          //   }
-          // },
+          slidesNavPosition: 'bottom',
+          onLeave (origin, destination, direction) {
+            /* global fullpage_api */
+            console.log('原:', origin, '後:', destination)
+            // console.log(origin)
+            if (origin.index === 1 && !fullpageInfo.isSliding) {
+              if (direction === 'down' && fullpageInfo.slideIndex < 3) {
+                fullpageInfo.isSliding = true
+                fullpage_api.moveSlideRight()
+                fullpageInfo.slideIndex++
+                return false
+              } else if (direction === 'up' && fullpageInfo.slideIndex > 0) {
+                fullpageInfo.isSliding = true
+                fullpage_api.moveSlideLeft()
+                fullpageInfo.slideIndex--
+                return false
+              }
+            } else if (fullpageInfo.sliding) {
+              return false
+            }
+          },
 
-          // afterSlideLoad: function (anchorLink, index, slideAnchor, slideIndex) {
-          //   sliding = false
-          // }
+          afterSlideLoad (section, origin, destination, direction) {
+            fullpageInfo.isSliding = false
+          }
         })
         isInit.value = true
       }
     })
 
-    const router = useRouter()
-
     const authData = reactive({
       studentId: '',
       password: ''
     })
+
+    const router = useRouter()
 
     const handleSubmit = async () => {
       try {
@@ -262,7 +244,7 @@ export default {
       }
     }
 
-    return { authData, handleSubmit }
+    return { authData, handleSubmit, fullpageInfo }
   }
 }
 </script>
