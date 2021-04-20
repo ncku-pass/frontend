@@ -1,0 +1,81 @@
+<template>
+  <form class="login-form" @submit.prevent="handleSubmit">
+    <h2 class="login-form__title">
+      登入E-portfolio
+    </h2>
+    <div>
+      <label for="studentId" class="form-label">帳號</label>
+      <input
+        id="studentId"
+        v-model="authData.studentId"
+        type="text"
+        class="form-control"
+      >
+    </div>
+    <div>
+      <label for="password" class="form-label">密碼</label>
+      <input
+        id="password"
+        v-model="authData.password"
+        type="password"
+        class="form-control"
+      >
+    </div>
+    <button class="btn">
+      登入
+    </button>
+    <a class="register">還沒註冊嗎，點我立即註冊</a>
+  </form>
+</template>
+
+<script>
+import { reactive } from 'vue'
+import { useRouter } from 'vue-router'
+import { login } from '@/api/auth'
+
+export default {
+  setup () {
+    const authData = reactive({
+      studentId: '',
+      password: ''
+    })
+
+    const router = useRouter()
+
+    const handleSubmit = async () => {
+      try {
+        const res = await login(authData)
+        localStorage.setItem('auth', res.data.tokenStr)
+        router.push({ name: 'Experience' })
+        console.log(res)
+      } catch (error) {
+        console.log(error)
+      }
+    }
+
+    return { authData, handleSubmit }
+  }
+}
+</script>
+
+<style lang="scss" scoped>
+@import "~@/scss/mixins";
+.login-form {
+  @include grid(row, 20px, 0);
+  width: 350px;
+  &__title {
+    margin: 0;
+    font-size: 26px;
+  }
+  label {
+    color: #fff;
+  }
+  .btn, .register {
+    justify-self: flex-end;
+  }
+  .register {
+    color: #fff;
+    text-decoration-line: underline;
+  }
+}
+</style>

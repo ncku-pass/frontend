@@ -25,33 +25,7 @@
             E-portfolio 陪你整理學習經歷
           </h2>
         </div>
-        <form class="login-form" @submit.prevent="handleSubmit">
-          <h2 class="login-form__title">
-            登入E-portfolio
-          </h2>
-          <div>
-            <label for="studentId" class="form-label">帳號</label>
-            <input
-              id="studentId"
-              v-model="authData.studentId"
-              type="text"
-              class="form-control"
-            >
-          </div>
-          <div>
-            <label for="password" class="form-label">密碼</label>
-            <input
-              id="password"
-              v-model="authData.password"
-              type="password"
-              class="form-control"
-            >
-          </div>
-          <button class="btn">
-            登入
-          </button>
-          <a class="register">還沒註冊嗎，點我立即註冊</a>
-        </form>
+        <LoginForm />
       </div>
       <svg
         class="scroll-arrow"
@@ -173,13 +147,16 @@
 
 <script>
 import { onMounted, reactive, ref } from '@vue/runtime-core'
-import { useRouter, useRoute } from 'vue-router'
+import { useRoute } from 'vue-router'
+import LoginForm from '@/components/Landing/LoginForm'
 import fullpage from 'fullpage.js'
 import 'fullpage.js/dist/fullpage.min.css'
-import { login } from '@/api/auth'
 
 export default {
   name: 'Landing',
+  components: {
+    LoginForm
+  },
   setup () {
     const route = useRoute()
 
@@ -226,25 +203,7 @@ export default {
       }
     })
 
-    const authData = reactive({
-      studentId: '',
-      password: ''
-    })
-
-    const router = useRouter()
-
-    const handleSubmit = async () => {
-      try {
-        const res = await login(authData)
-        localStorage.setItem('auth', res.data.tokenStr)
-        router.push({ name: 'Experience' })
-        console.log(res)
-      } catch (error) {
-        console.log(error)
-      }
-    }
-
-    return { authData, handleSubmit, fullpageInfo }
+    return { fullpageInfo }
   }
 }
 </script>
@@ -287,24 +246,6 @@ export default {
   }
   &__subtitle {
     font-size: 32px;
-  }
-}
-.login-form {
-  @include grid(row, 20px, 0);
-  width: 350px;
-  &__title {
-    margin: 0;
-    font-size: 26px;
-  }
-  label {
-    color: #fff;
-  }
-  .btn, .register {
-    justify-self: flex-end;
-  }
-  .register {
-    color: #fff;
-    text-decoration-line: underline;
   }
 }
 
