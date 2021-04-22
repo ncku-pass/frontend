@@ -16,7 +16,7 @@ const getExperiences = () => {
     }
     return data
   })
-  // TODO: 修正資料沒更新的問題
+
   // 把所有經驗整合到同一個array
   const experiencesArray = computed(() => {
     const data = []
@@ -47,6 +47,7 @@ const getExperiences = () => {
       state.isPending = false
     }
   }
+
   if (Object.keys(state.experiences).length === 0) {
     reloadExperiences()
   }
@@ -55,12 +56,13 @@ const getExperiences = () => {
 }
 
 const sortExperiences = (experiences) => {
-  for (const type in experiences) {
-    experiences[type].sort((a, b) => {
+  const obj = Object.assign(experiences)
+  for (const type in obj) {
+    obj[type].sort((a, b) => {
       return a.semester < b.semester ? 1 : -1 // 學期靠近的排在前面
     })
   }
-  return experiences
+  return obj
 }
 
 const classifySemester = (arr) => {

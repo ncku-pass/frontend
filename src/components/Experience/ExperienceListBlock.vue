@@ -25,7 +25,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../scss/variables';
+@import '~@/scss/variables';
 
 .experience-list-block {
   margin-bottom: 15px;

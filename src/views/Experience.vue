@@ -3,57 +3,7 @@
   <main>
     <div class="experience">
       <div class="experience__window">
-        <ul class="experience__window__tabs">
-          <li>
-            <router-link
-              class="tab-link"
-              :class="{ 'router-link-active': type === 'course' }"
-              :to="{ name: 'Experience', params: { type: 'course' } }"
-            >
-              課程紀錄
-            </router-link>
-          </li>
-          <li>
-            <router-link
-              class="tab-link"
-              :to="{ name: 'Experience', params: { type: 'activity' } }"
-            >
-              活動經驗
-            </router-link>
-          </li>
-          <li>
-            <router-link
-              class="tab-link"
-              :to="{ name: 'Experience', params: { type: 'competition' } }"
-            >
-              競賽經驗
-            </router-link>
-          </li>
-          <li>
-            <router-link
-              class="tab-link"
-              :to="{ name: 'Experience', params: { type: 'work' } }"
-            >
-              工作經驗
-            </router-link>
-          </li>
-          <li>
-            <router-link
-              class="tab-link"
-              :to="{ name: 'Experience', params: { type: 'certificate' } }"
-            >
-              外語能力或證照
-            </router-link>
-          </li>
-          <li>
-            <router-link
-              class="tab-link"
-              :to="{ name: 'Experience', params: { type: 'other' } }"
-            >
-              其他
-            </router-link>
-          </li>
-        </ul>
+        <ExperienceWindowTabs :type="type" />
         <div class="experience__window__table">
           <div
             ref="shadowContainer"
@@ -107,8 +57,9 @@
 
 <script>
 import { ref, onMounted, onUpdated } from 'vue'
-import ExperienceListItem from '@/components/ExperienceListItem.vue'
-import ExperienceListBlock from '@/components/ExperienceListBlock.vue'
+import ExperienceWindowTabs from '@/components/Experience/ExperienceWindowTabs.vue'
+import ExperienceListItem from '@/components/Experience/ExperienceListItem.vue'
+import ExperienceListBlock from '@/components/Experience/ExperienceListBlock.vue'
 import FormModal from '@/components/FormModal.vue'
 import Navbar from '@/components/Navbar'
 import useScrollShadow from '@/composables/useScrollShadow'
@@ -118,6 +69,7 @@ import getTags from '@/composables/tags/getTags'
 export default {
   name: 'Experience',
   components: {
+    ExperienceWindowTabs,
     ExperienceListItem,
     ExperienceListBlock,
     FormModal,
@@ -132,8 +84,7 @@ export default {
   },
   setup (props) {
     const { experiences, classifiedExperiences, reloadExperiences } = getExperiences()
-    const { reloadTags } = getTags()
-    reloadTags()
+    getTags()
 
     // ===新增活動表單===
     const showFormModal = ref(false)
@@ -196,16 +147,6 @@ export default {
     0px 0px 25px rgba(241, 90, 96, 0.1);
   width: 100%;
   max-width: 1110px;
-}
-
-.experience__window__tabs {
-  display: flex;
-  justify-content: space-between;
-  padding: 8px 10px;
-  min-height: 50px;
-  list-style: none;
-  box-shadow: 0px 4px 15px rgba(241, 90, 96, 0.06);
-  overflow-x: auto;
 }
 
 .experience__window__table {
