@@ -149,7 +149,7 @@
 import { onMounted, reactive, ref } from '@vue/runtime-core'
 import { useRoute } from 'vue-router'
 import LoginForm from '@/components/Landing/LoginForm'
-import fullpage from 'fullpage.js'
+import Fullpage from 'fullpage.js'
 import 'fullpage.js/dist/fullpage.min.css'
 
 export default {
@@ -167,17 +167,16 @@ export default {
     })
     onMounted(() => {
       if (!isInit.value) {
-        fullpage('.landing', {
+        Fullpage('.landing', {
           licenseKey: "i#eq#uS42Kr]C~j4g/m~3P;2R+( &83iM?yko4P'HZ9E|k1-x:<okp",
           easingcss3: 'cubic-bezier(0.64, 0.055, 0.345, 1)',
           anchors: ['1', '2', '3'],
           controlArrows: false,
           slidesNavigation: true,
           slidesNavPosition: 'bottom',
+          recordHistory: false,
           onLeave (origin, destination, direction) {
             /* global fullpage_api */
-            console.log('原:', origin, '後:', destination)
-            // console.log(origin)
             if (origin.index === 1 && !fullpageInfo.isSliding) {
               if (direction === 'down' && fullpageInfo.slideIndex < 3) {
                 fullpageInfo.isSliding = true
