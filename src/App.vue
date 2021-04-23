@@ -7,9 +7,20 @@
 </template>
 
 <script>
+import useGrab from '@/composables/useGrab'
+import { watchEffect } from '@vue/runtime-core'
+
 export default {
   name: 'Home',
-  components: {
+  setup () {
+    const { isGrabbing } = useGrab()
+    watchEffect(() => {
+      if (isGrabbing.value) {
+        document.documentElement.classList.add('draggable-cursor')
+      } else {
+        document.documentElement.classList.remove('draggable-cursor')
+      }
+    })
   }
 }
 </script>

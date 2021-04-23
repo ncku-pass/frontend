@@ -10,10 +10,10 @@
     <ul class="ability-card__body">
       <draggable
         :list="experiences"
-        group="experience"
+        :group="draggableGroupOption"
         item-key="id"
-        @start="drag=true"
-        @end="drag=false"
+        @start="handleDrag(true)"
+        @end="handleDrag(false)"
       >
         <template #item="{element}">
           <li class="experience-card">
@@ -35,28 +35,6 @@
           </li>
         </template>
       </draggable>
-
-      <!-- <li
-        v-for="experience in experiences"
-        :key="experience.name"
-        class="experience-card"
-      >
-        <h3 class="experience-card__name">
-          {{ experience.name }}
-        </h3>
-        <div class="experience-card__tags">
-          <div
-            v-for="tag in experience.tags"
-            :key="tag"
-            class="tag"
-          >
-            {{ tag }}
-          </div>
-        </div>
-        <div class="experience-card__description">
-          {{ experience.description }}
-        </div>
-      </li> -->
       <p class="ability-card__body__tips">
         由右方列表拉入適合課程
       </p>
@@ -66,6 +44,7 @@
 
 <script>
 import draggable from 'vuedraggable'
+import useGrab from '@/composables/useGrab'
 
 export default {
   name: 'AbilityCard',
@@ -85,7 +64,21 @@ export default {
     }
   },
   emits: ['update:abilityTopic'],
-  setup () {
+  setup (props) {
+    const { setIsGrabbing } = useGrab()
+
+    const handleDrag = (onDragging) => {
+      setIsGrabbing(onDragging)
+    }
+
+    const draggableGroupOption = {
+      name: 'experience',
+      put: (to, from, item) => {
+        return !props.experiences.some(el => el.id === ~~item.dataset.id)
+      }
+    }
+
+    return { setIsGrabbing, handleDrag, draggableGroupOption }
   }
 }
 </script>
@@ -96,6 +89,7 @@ export default {
 
 .ability-card {
   @include grid(row, 12px, 0);
+  user-select: none;
   margin-bottom: 12px;
   padding: 15px 0;
   background-color: #f8f8f8;
@@ -123,6 +117,7 @@ export default {
 }
 
 .experience-card {
+  cursor: grab;
   padding: 15px;
   border-radius: 8px;
   margin-bottom: 24px;
@@ -146,12 +141,7 @@ export default {
     color: $gray-3;
   }
 }
-.experience-card.sortable-chosen {
-  .experience-card__tags {
-    display: none;
-  }
-  .experience-card__description {
-    display: none;
-  }
+.experience-card[draggable="true"] {
+  cursor: grabbing;
 }
 </style>

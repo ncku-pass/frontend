@@ -127,14 +127,12 @@
           <ul class="portfolio__menu__body">
             <draggable
               v-model="filteredExperienceArray"
-              :group="{ name: 'experience', pull: 'clone', put: true }"
+              :group="{ name: 'experience', pull: 'clone', put: false }"
               item-key="id"
               :sort="false"
-              @start="drag=true"
-              @end="drag=false"
             >
               <template #item="{element}">
-                <li class="menu-card">
+                <li class="menu-card" :data-id="element.id">
                   <div class="menu-card__type">
                     {{ typeChinese[element.experienceType] }}
                   </div>
@@ -155,30 +153,6 @@
                 </li>
               </template>
             </draggable>
-
-            <!-- <li
-              v-for="experience in filteredExperienceArray"
-              :key="experience.id"
-              class="menu-card"
-            >
-              <div class="menu-card__type">
-                {{ typeChinese[experience.experienceType] }}
-              </div>
-              <span class="menu-card__name">{{ experience.name }}</span>
-              <svg
-                width="15"
-                height="10"
-                viewBox="0 0 15 10"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M1 1L7.5 8L14 1"
-                  stroke="#4F4F4F"
-                  stroke-width="2"
-                />
-              </svg>
-            </li> -->
           </ul>
         </div>
       </div>
@@ -453,6 +427,7 @@ export default {
 }
 
 .menu-card {
+  cursor: grab;
   display: flex;
   justify-content: flex-start;
   align-items: center;
