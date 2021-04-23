@@ -41,9 +41,13 @@
                   v-model:abilityTopic="card.topic"
                 />
               </div>
-              <button class="content-body__add">
-                <span v-if="cards.length" @click="handleAddCard">+ 新增主題</span>
-                <span v-else @click="handleAddCard">+ 目前還沒主題 趕快新增一個吧</span>
+              <button class="content-body__add" @click="handleAddCard">
+                <template v-if="cards.length">
+                  + 新增主題
+                </template>
+                <template v-else>
+                  + 目前還沒主題 趕快新增一個吧
+                </template>
               </button>
             </div>
           </div>
