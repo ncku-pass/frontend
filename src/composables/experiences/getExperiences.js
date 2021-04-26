@@ -32,7 +32,9 @@ const getExperiences = () => {
     for (const type in classifiedExperiences.value) {
       semesters.push(...Object.keys(classifiedExperiences.value[type]))
     }
-    return [...new Set(semesters)]
+    return [...new Set(semesters)].sort((a, b) => {
+      return a > b ? -1 : 1 // 學期靠近的排在前面
+    })
   })
 
   const reloadExperiences = async () => {

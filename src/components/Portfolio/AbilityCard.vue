@@ -84,8 +84,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "../scss/variables";
-@import "../scss/mixins";
+@import "~@/scss/variables";
+@import "~@/scss/mixins";
 
 .ability-card {
   @include grid(row, 12px, 0);
@@ -120,8 +120,11 @@ export default {
   cursor: grab;
   padding: 15px;
   border-radius: 8px;
-  margin-bottom: 24px;
+  margin: 12px 0;
   background-color: #fff;
+  &:first-child {
+    margin-top: 0;
+  }
   &__name {
     font-size: 26px;
     line-height: 43px;
