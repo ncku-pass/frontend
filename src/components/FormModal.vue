@@ -114,20 +114,20 @@ const fieldText = {
     name: { text: '*課程名稱', required: true },
     semester: { text: '*課程時間', required: true },
     description: { text: '課程簡介', placeholder: '填寫課程簡介以便日後方便回想課程內容', required: false },
-    feedback: { text: '課程收穫及成就 (150字以內)', placeholder: '將課程中所得到的收穫極成就記錄下來吧~', required: false }
+    feedback: { text: '課程收穫及成就 (150字以內)', placeholder: '將課程中所得到的收穫及成就記錄下來吧~', required: false }
   },
   activity: {
     name: { text: '*活動名稱', required: true },
     semester: { text: '*活動時間', required: true },
     position: { text: '*活動擔任職位', required: true },
-    description: { text: '活動簡介', placeholder: '填寫活動簡介以便日後方便回想課程內容', required: false },
+    description: { text: '活動簡介', placeholder: '填寫活動簡介以便日後方便回想活動內容', required: false },
     feedback: { text: '活動收穫及成就 (150字以內)', placeholder: '將活動中所得到的收穫及成就記錄下來吧~', required: false }
   },
   competition: {
     name: { text: '*競賽名稱', required: true },
     semester: { text: '*競賽時間', required: true },
     position: { text: '*競賽得獎名次', required: true },
-    description: { text: '競賽簡介', placeholder: '填寫競賽簡介以便日後方便回想課程內容', required: false },
+    description: { text: '競賽簡介', placeholder: '填寫競賽簡介以便日後方便回想競賽內容', required: false },
     feedback: { text: '競賽收穫及成就 (150字以內)', placeholder: '將競賽中所得到的收穫及成就記錄下來吧~', required: false }
   },
   work: {
