@@ -73,8 +73,8 @@ export default {
       tags: {}
     })
     watchEffect(() => {
-      filter.semesters = semesters.value.reduce((obj, key) => {
-        return { ...obj, [key]: true }
+      filter.semesters = semesters.value.reduce((obj, semester, index) => {
+        return { ...obj, [semester]: index === 0 }
       }, {})
     })
     watchEffect(() => {
@@ -100,16 +100,16 @@ export default {
     // ===列表開合時檢測是否加上列表陰影===
     onMounted(() => {
       watch([showFilter, filteredExperienceArray], () => {
-        initShadows(MenuShadowContainer.value)
+        requestAnimationFrame(() => initShadows(MenuShadowContainer.value))
       })
     })
 
     // ===設定滾動容器的陰影===
     const { setShadows, initShadows } = useScrollShadow()
     const MenuShadowContainer = ref(null)
-    onMounted(() => {
-      initShadows(MenuShadowContainer.value)
-    })
+    // onMounted(() => {
+    //   initShadows(MenuShadowContainer.value)
+    // })
 
     // ===打勾/取消篩選===
     const toggleSemester = (semester) => {

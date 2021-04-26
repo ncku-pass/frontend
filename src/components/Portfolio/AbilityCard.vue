@@ -15,11 +15,19 @@
         @start="handleDrag(true)"
         @end="handleDrag(false)"
       >
-        <template #item="{element}">
+        <template #item="{element, index}">
           <li class="experience-card">
-            <h3 class="experience-card__name">
-              {{ element.name }}
-            </h3>
+            <div class="experience-card__header">
+              <h3 class="experience-card__name">
+                {{ element.name }}
+              </h3>
+              <img
+                class="experience-card__delete"
+                src="~@/assets/delete.svg"
+                alt="delete"
+                @click.stop="$emit('delete-experience', index)"
+              >
+            </div>
             <div class="experience-card__tags">
               <div
                 v-for="tag in element.tags"
@@ -30,7 +38,7 @@
               </div>
             </div>
             <div class="experience-card__description">
-              {{ element.description }}
+              {{ element.feedback }}
             </div>
           </li>
         </template>
@@ -63,7 +71,7 @@ export default {
       default: ''
     }
   },
-  emits: ['update:abilityTopic'],
+  emits: ['update:abilityTopic', 'delete-experience'],
   setup (props) {
     const { setIsGrabbing } = useGrab()
 
@@ -74,6 +82,7 @@ export default {
     const draggableGroupOption = {
       name: 'experience',
       put: (to, from, item) => {
+        // 重複的經驗無法放入
         return !props.experiences.some(el => el.id === ~~item.dataset.id)
       }
     }
@@ -125,10 +134,19 @@ export default {
   &:first-child {
     margin-top: 0;
   }
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
   &__name {
-    font-size: 26px;
-    line-height: 43px;
+    font-size: 21px;
+    line-height: 34px;
     color: $blue-dark;
+    font-weight: normal;
+  }
+  &__delete {
+    cursor: pointer;
   }
   &__tags {
     @include grid(column, 0, 10px);

@@ -36,6 +36,7 @@
               :key="card.id"
               v-bind="card"
               v-model:abilityTopic="card.topic"
+              @delete-experience="handleDeleteExperience($event, card)"
             />
           </div>
           <button class="content-body__add" @click="handleAddCard">
@@ -63,7 +64,7 @@ export default {
   },
   setup () {
     const tabs = ref(['實習履歷', '打工經驗', '營隊面試用'])
-    const tabNow = ref('實習履歷')
+    const tabNow = ref(tabs.value[0])
 
     const cards = ref([])
     const handleAddCard = () => {
@@ -73,8 +74,12 @@ export default {
         experiences: []
       })
     }
+    const handleDeleteExperience = (experienceIndex, card) => {
+      card.experiences.splice(experienceIndex, 1)
+      console.log('delete')
+    }
 
-    return { tabs, tabNow, cards, handleAddCard }
+    return { tabs, tabNow, cards, handleAddCard, handleDeleteExperience }
   }
 }
 </script>

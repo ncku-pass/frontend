@@ -108,13 +108,14 @@ export default {
       color: $gray-1;
       border: 1px solid $gray-1;
       border-radius: 15px;
-      line-height: 16px;
+      line-height: 14px;
       margin: 5px;
       cursor: pointer;
       user-select: none;
       &--selected {
         color: $white;
-        background-color: $gray-1;
+        border-color: $red;
+        background-color: $red;
       }
     }
   }

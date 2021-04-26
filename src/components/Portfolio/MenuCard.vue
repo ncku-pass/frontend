@@ -7,19 +7,6 @@
       {{ typeChinese[element.experienceType] }}
     </div>
     <span class="menu-card__name">{{ element.name }}</span>
-    <svg
-      width="15"
-      height="10"
-      viewBox="0 0 15 10"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <path
-        d="M1 1L7.5 8L14 1"
-        stroke="#4F4F4F"
-        stroke-width="2"
-      />
-    </svg>
   </li>
 </template>
 
@@ -59,6 +46,12 @@ export default {
   padding: 5px 15px;
   background-color: $gray-blue;
   border-radius: 5px;
+  &:hover {
+    background-color: $gray-5;
+  }
+  &[draggable="true"] {
+    cursor: grabbing;
+  }
   &__type {
     height: 30px;
     width: 30px;
