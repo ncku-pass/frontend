@@ -146,7 +146,7 @@
 </template>
 
 <script>
-import { onMounted, reactive, ref } from '@vue/runtime-core'
+import { onMounted, onUnmounted, reactive, ref } from '@vue/runtime-core'
 import { useRoute } from 'vue-router'
 import LoginForm from '@/components/Landing/LoginForm'
 import Fullpage from 'fullpage.js'
@@ -200,6 +200,10 @@ export default {
         })
         isInit.value = true
       }
+    })
+
+    onUnmounted(() => {
+      fullpage_api.destroy()
     })
 
     return { fullpageInfo }
