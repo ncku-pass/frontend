@@ -10,23 +10,23 @@
             class="form-control"
           >
         </div>
+        <div v-if="showedFieldText.position">
+          <label for="" class="form-label">{{ showedFieldText.position.text }}</label>
+          <input
+            v-model="formData.position"
+            type="text"
+            class="form-control"
+          >
+        </div>
         <div v-if="showedFieldText.semester">
           <label for="" class="form-label">{{ showedFieldText.semester.text }}</label>
-          <select v-model="formData.semester" class="form-control">
-            <option
-              value=""
-              selected
-            >
-              請選擇時間
-            </option>
-            <option
-              v-for="semester in semesters"
-              :key="semester"
-              :value="semester"
-            >
-              {{ semester }}
-            </option>
-          </select>
+          <Multiselect
+            v-model="formData.semester"
+            :options="semesters"
+            :searchable="true"
+            :max-height="240"
+            placeholder="請選擇時間"
+          />
         </div>
         <div v-if="showedFieldText.description">
           <label for="" class="form-label">{{ showedFieldText.description?.text }}</label>
@@ -39,20 +39,22 @@
           />
         </div>
         <div>
-          <label for="" class="form-label">標籤分類</label>
-          <!-- TODO: 篩選邏輯處理 -->
+          <label for="" class="form-label">獲得技能Tag</label>
           <Multiselect
             v-model="formData.tags"
             mode="tags"
             :searchable="true"
             :create-tag="true"
-            :append-new-tag="false"
-            :options="tagOptions"
+            :append-new-tag="true"
+            :options="tags"
+            value-prop="id"
+            label="name"
+            track-by="name"
             @tag="handleCreateTag"
           >
             <template #tag="{ option, handleTagRemove, disabled }">
               <div class="multiselect-tag tag--large">
-                {{ option.label }}
+                {{ option.name }}
                 <i
                   v-if="!disabled"
                   @click.prevent
@@ -104,7 +106,7 @@
 import ConfirmModal from '@/components/ConfirmModal.vue'
 import { computed, reactive, ref } from 'vue'
 import { addExperience, updateExperience } from '@/api/experiences'
-import { addTag } from '@/api/tags'
+// import { addTag } from '@/api/tags'
 import getTags from '@/composables/tags/getTags'
 import Multiselect from '@vueform/multiselect'
 import '@vueform/multiselect/themes/default.css'
@@ -176,9 +178,9 @@ export default {
       return fieldText[props.formType]
     })
 
-    // 產生學期選項（往前10個學期）
+    // 產生學期選項（往前5個學期）
     const year = new Date().getFullYear() - 1911
-    const semesters = [...Array(10).keys()]
+    const semesters = [...Array(5).keys()]
       .map((_, i) => {
         return [`${year - i}-1`, `${year - i}-2`]
       })
@@ -186,17 +188,17 @@ export default {
 
     // 產生所有的tag
     const { tags } = getTags()
-    const tagOptions = computed(() => {
-      return tags.value.map((tag) => {
-        return { value: tag.id, label: tag.name }
-      })
-    })
+    // const tagOptions = computed(() => {
+    //   return tags.value.map((tag) => {
+    //     return { value: tag.id, label: tag.name }
+    //   })
+    // })
 
     const handleCreateTag = async (tag) => {
-      const { data } = await addTag(tag)
-      tags.value.push({ value: data[0].id, label: data[0].name })
-      // reloadTags()
-      console.log(data)
+      console.log(tag)
+      // tags.value.push({ id: 200, name: tag })
+      // const { data } = await addTag(tag)
+      // tags.value.push(data[0])
     }
 
     // 儲存填入的資料，若有傳入要編輯的資料，則設為預設值
@@ -226,7 +228,7 @@ export default {
       }
     }
 
-    return { tagOptions, handleCreateTag, showConfirmModal, formData, showedFieldText, semesters, handleFormSubmit }
+    return { tags, handleCreateTag, showConfirmModal, formData, showedFieldText, semesters, handleFormSubmit }
   }
 }
 </script>
@@ -250,6 +252,9 @@ export default {
   overflow-y: auto;
   &::-webkit-scrollbar {
     display: none;
+  }
+  select {
+    appearance: none;
   }
   &__tags {
     @include grid(column, 0, 6px);
@@ -294,7 +299,8 @@ export default {
     background: #ffffff;
   }
 }
-.multiselect-clear {
-  border-radius: 50%;
+.multiselect-clear,
+.multiselect-caret {
+  display: none;
 }
 </style>
