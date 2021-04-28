@@ -2,24 +2,29 @@
   <div class="modal-bg" @click.self="showConfirmModal = true">
     <div class="form-modal">
       <div class="form-modal__content">
+        <p class="form-modal__hint">
+          有*欄位代表必填
+        </p>
         <div v-if="showedFieldText.name">
-          <label for="" class="form-label">{{ showedFieldText.name.text }}</label>
+          <label for="experienceName" class="form-label">{{ showedFieldText.name.text }}</label>
           <input
+            id="experienceName"
             v-model="formData.name"
             type="text"
             class="form-control"
           >
         </div>
         <div v-if="showedFieldText.position">
-          <label for="" class="form-label">{{ showedFieldText.position.text }}</label>
+          <label for="experiencePosition" class="form-label">{{ showedFieldText.position.text }}</label>
           <input
+            id="experiencePosition"
             v-model="formData.position"
             type="text"
             class="form-control"
           >
         </div>
         <div v-if="showedFieldText.semester">
-          <label for="" class="form-label">{{ showedFieldText.semester.text }}</label>
+          <label class="form-label">{{ showedFieldText.semester.text }}</label>
           <Multiselect
             v-model="formData.semester"
             :options="semesters"
@@ -29,12 +34,12 @@
           />
         </div>
         <div v-if="showedFieldText.description">
-          <label for="" class="form-label">{{ showedFieldText.description?.text }}</label>
+          <label for="experienceDescription" class="form-label">{{ showedFieldText.description?.text }}</label>
           <textarea
+            id="experienceDescription"
             v-model="formData.description"
             class="form-control"
-            rows="3"
-            draggable="false"
+            rows="2"
             :placeholder="showedFieldText.description?.placeholder"
           />
         </div>
@@ -65,17 +70,36 @@
           </Multiselect>
         </div>
         <div v-if="showedFieldText.feedback">
-          <label for="" class="form-label">{{ showedFieldText.feedback.text }}</label>
+          <label for="experienceFeedback" class="form-label">{{ showedFieldText.feedback.text }}</label>
           <textarea
+            id="experienceFeedback"
             v-model="formData.feedback"
             class="form-control"
             rows="3"
-            draggable="false"
+            maxlength="150"
             :placeholder="showedFieldText.feedback.placeholder"
           />
         </div>
         <div>
-          <label for="" class="form-label">其他連結</label>
+          <label for="" class="form-label">
+            <span>其他連結</span>
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 16 16"
+              fill="none"
+              style="cursor: pointer;"
+              xmlns="http://www.w3.org/2000/svg"
+              @click.stop="showMessageModal = true"
+            >
+              <path
+                fill-rule="evenodd"
+                clip-rule="evenodd"
+                d="M8 16C10.1217 16 12.1566 15.1571 13.6569 13.6569C15.1571 12.1566 16 10.1217 16 8C16 5.87827 15.1571 3.84344 13.6569 2.34315C12.1566 0.842855 10.1217 0 8 0C5.87827 0 3.84344 0.842855 2.34315 2.34315C0.842855 3.84344 0 5.87827 0 8C0 10.1217 0.842855 12.1566 2.34315 13.6569C3.84344 15.1571 5.87827 16 8 16ZM8.93 6.588L6.64 6.875L6.558 7.255L7.008 7.338C7.302 7.408 7.36 7.514 7.296 7.807L6.558 11.275C6.364 12.172 6.663 12.594 7.366 12.594C7.911 12.594 8.544 12.342 8.831 11.996L8.919 11.58C8.719 11.756 8.427 11.826 8.233 11.826C7.958 11.826 7.858 11.633 7.929 11.293L8.93 6.588ZM8 5.5C8.26522 5.5 8.51957 5.39464 8.70711 5.20711C8.89464 5.01957 9 4.76522 9 4.5C9 4.23478 8.89464 3.98043 8.70711 3.79289C8.51957 3.60536 8.26522 3.5 8 3.5C7.73478 3.5 7.48043 3.60536 7.29289 3.79289C7.10536 3.98043 7 4.23478 7 4.5C7 4.76522 7.10536 5.01957 7.29289 5.20711C7.48043 5.39464 7.73478 5.5 8 5.5Z"
+                fill="#2697C7"
+              />
+            </svg>
+          </label>
           <input
             v-model="formData.link"
             type="text"
@@ -100,10 +124,17 @@
     @cancel="showConfirmModal = false"
     @confirm="$emit('close')"
   />
+  <MessageModal
+    v-show="showMessageModal"
+    message="可以將更多相關資訊（ex.照片、PPT等等）統整到自己的連結裡頭喔！"
+    :show="showMessageModal"
+    @close="showMessageModal = false"
+  />
 </template>
 
 <script>
 import ConfirmModal from '@/components/ConfirmModal.vue'
+import MessageModal from '@/components/MessageModal.vue'
 import { computed, reactive, ref } from 'vue'
 import { addExperience, updateExperience } from '@/api/experiences'
 // import { addTag } from '@/api/tags'
@@ -116,7 +147,7 @@ const fieldText = {
     name: { text: '*課程名稱', required: true },
     semester: { text: '*課程時間', required: true },
     description: { text: '課程簡介', placeholder: '填寫課程簡介以便日後方便回想課程內容', required: false },
-    feedback: { text: '課程收穫及成就 (150字以內)', placeholder: '將課程中所得到的收穫及成就記錄下來吧~', required: false }
+    feedback: { text: '課程收穫及成就 (150字以內)', placeholder: '將課程中所得到的收穫及成就記錄下來，或是寫出課程內容的特色吧', required: false }
   },
   activity: {
     name: { text: '*活動名稱', required: true },
@@ -156,7 +187,7 @@ const fieldText = {
 
 export default {
   name: 'FormModal',
-  components: { ConfirmModal, Multiselect },
+  components: { ConfirmModal, Multiselect, MessageModal },
   props: {
     formType: {
       type: String,
@@ -173,12 +204,15 @@ export default {
   setup (props, context) {
     const showConfirmModal = ref(false)
 
-    // 顯示不同類型對應的文字
+    // === 顯示提示訊息 ===
+    const showMessageModal = ref(false)
+
+    // === 顯示不同類型對應的文字 ===
     const showedFieldText = computed(() => {
       return fieldText[props.formType]
     })
 
-    // 產生學期選項（往前5個學期）
+    // === 產生學期選項（往前5個學期） ===
     const year = new Date().getFullYear() - 1911
     const semesters = [...Array(5).keys()]
       .map((_, i) => {
@@ -186,7 +220,7 @@ export default {
       })
       .flat()
 
-    // 產生所有的tag
+    // === 產生所有的tag ===
     const { tags } = getTags()
     // const tagOptions = computed(() => {
     //   return tags.value.map((tag) => {
@@ -228,7 +262,7 @@ export default {
       }
     }
 
-    return { tags, handleCreateTag, showConfirmModal, formData, showedFieldText, semesters, handleFormSubmit }
+    return { tags, handleCreateTag, showConfirmModal, showMessageModal, formData, showedFieldText, semesters, handleFormSubmit }
   }
 }
 </script>
@@ -240,10 +274,13 @@ export default {
 .form-modal {
   width: 770px;
   max-height: 80vh;
-  padding: 25px;
+  padding: 25px 25px 20px;
   background-color: #fff;
   border-radius: 8px;
   display: flex;
+  &__hint {
+    color: $gray-3;
+  }
 }
 
 .form-modal__content {
@@ -263,6 +300,7 @@ export default {
   &__btns {
     @include grid(column, 0, 18px);
     justify-content: end;
+    padding-bottom: 5px;
   }
 }
 

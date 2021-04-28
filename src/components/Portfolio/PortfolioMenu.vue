@@ -156,6 +156,9 @@ export default {
   }
   &__body {
     border-radius: 5px;
+    &::-webkit-scrollbar {
+      display: none;
+    }
   }
 }
 

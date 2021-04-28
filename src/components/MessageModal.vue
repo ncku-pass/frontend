@@ -1,7 +1,7 @@
 <template>
   <div
     class="message-modal modal-bg"
-    @click.self="$emit('close')"
+    @click.self="handleClick"
   >
     <div class="message-modal__content">
       {{ message }}
@@ -10,6 +10,7 @@
 </template>
 
 <script>
+import { ref, watchEffect } from '@vue/runtime-core'
 export default {
   name: 'MessageModal',
   props: {
@@ -19,16 +20,31 @@ export default {
     },
     duration: {
       type: Number,
-      default: 1000
+      default: 1500
+    },
+    show: {
+      type: Boolean,
+      default: false
     }
   },
   emits: ['close'],
   setup (props, context) {
-    setTimeout(() => {
-      context.emit('close')
-    }, props.duration)
+    const timer = ref(null)
 
-    return {}
+    const handleClick = () => {
+      clearTimeout(timer.value)
+      context.emit('close')
+    }
+
+    watchEffect(() => {
+      if (props.show) {
+        timer.value = setTimeout(() => {
+          context.emit('close')
+        }, props.duration)
+      }
+    })
+
+    return { handleClick }
   }
 }
 </script>
