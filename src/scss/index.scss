@@ -7,9 +7,9 @@
 
 * {
   box-sizing: border-box;
-  &::-webkit-scrollbar {
-    display: none;
-  }
+  // &::-webkit-scrollbar {
+  //   display: none;
+  // }
 }
 
 html.draggable-cursor {
@@ -32,8 +32,9 @@ button {
 }
 
 textarea {
-  resize: none;
-  &::-webkit-scrollbar {
-    display: none;
-  }
+  resize: vertical;
+  overflow-y: auto;
+  // &::-webkit-scrollbar {
+  //   display: none;
+  // }
 }

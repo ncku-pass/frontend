@@ -90,6 +90,9 @@ export default {
   overflow: auto;
   &__container {
     border-radius: 5px;
+    &::-webkit-scrollbar {
+      display: none;
+    }
   }
 }
 .filter-block {
