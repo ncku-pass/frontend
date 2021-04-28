@@ -3,23 +3,26 @@
     <div class="portfolio__main">
       <ul class="portfolio__main__tabs">
         <li
-          v-for="tab in tabs"
-          :key="tab"
+          v-for="(portfolio, index) in portfolios"
+          :key="portfolio.id"
           class="tab-link"
-          :class="{'is-active': tabNow === tab}"
-          @click="tabNow = tab"
+          :class="{'is-active': selectedIndex === index}"
+          @click="selectedIndex = index"
         >
-          {{ tab }}
+          {{ portfolio.name || '請輸入名稱' }}
         </li>
-        <li class="portfolio__main__tabs__add">
+        <li class="portfolio__main__tabs__add" @click="handleAddPortfolio">
           <img src="@/assets/add_circle.svg" alt="">
         </li>
       </ul>
       <div class="portfolio__main__content">
         <div class="content-header">
-          <h3 class="content-header__title">
-            {{ tabNow }}
-          </h3>
+          <input
+            v-model="portfolio.name"
+            placeholder="請輸入名稱"
+            class="content-header__title"
+            type="text"
+          >
           <div class="content-header__btns">
             <button class="btn">
               匯出
@@ -32,7 +35,7 @@
         <div class="content-body">
           <div class="content-body__card-list">
             <AbilityCard
-              v-for="card in cards"
+              v-for="card in portfolio.cards"
               :key="card.id"
               v-bind="card"
               v-model:abilityTopic="card.topic"
@@ -40,7 +43,7 @@
             />
           </div>
           <button class="content-body__add" @click="handleAddCard">
-            <template v-if="cards.length">
+            <template v-if="portfolio.cards.length">
               + 新增主題
             </template>
             <template v-else>
@@ -54,7 +57,7 @@
 </template>
 
 <script>
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import AbilityCard from '@/components/Portfolio/AbilityCard.vue'
 
 export default {
@@ -63,13 +66,39 @@ export default {
     AbilityCard
   },
   setup () {
-    const tabs = ref(['實習履歷', '打工經驗', '營隊面試用'])
-    const tabNow = ref(tabs.value[0])
+    const selectedIndex = ref(0)
+    const portfolios = ref([
+      {
+        id: 0,
+        name: '實習履歷',
+        cards: []
+      },
+      {
+        id: 1,
+        name: '打工經驗',
+        cards: []
+      },
+      {
+        id: 2,
+        name: '營隊面試用',
+        cards: []
+      }
+    ])
+    const portfolio = computed(() => {
+      return portfolios.value[selectedIndex.value]
+    })
 
-    const cards = ref([])
+    const handleAddPortfolio = () => {
+      portfolios.value.push({
+        id: portfolios.value.length,
+        name: '新的履歷',
+        cards: []
+      })
+    }
+
     const handleAddCard = () => {
-      cards.value.push({
-        id: cards.value.length,
+      portfolio.value.cards.push({
+        id: portfolio.value.cards.length,
         topic: '',
         experiences: []
       })
@@ -79,7 +108,7 @@ export default {
       console.log('delete')
     }
 
-    return { tabs, tabNow, cards, handleAddCard, handleDeleteExperience }
+    return { portfolios, portfolio, selectedIndex, handleAddPortfolio, handleAddCard, handleDeleteExperience }
   }
 }
 </script>
@@ -134,6 +163,8 @@ export default {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    border: none;
+    outline: none
   }
   &__btns {
     @include grid(column, 0, 25px);
