@@ -4,7 +4,11 @@
     <div class="experience">
       <div class="experience__window">
         <ExperienceWindowTabs :type="type" />
-        <div class="experience__window__table">
+        <div v-if="isPending" class="experience__loading">
+          <p>Loading</p>
+          <div class="lds-dual-ring" />
+        </div>
+        <div v-else class="experience__window__table">
           <div
             ref="shadowContainer"
             class="shadow-container"
@@ -56,7 +60,7 @@
 </template>
 
 <script>
-import { ref, onMounted, onUpdated } from 'vue'
+import { ref, onMounted, watchEffect, nextTick, onUpdated } from 'vue'
 import ExperienceWindowTabs from '@/components/Experience/ExperienceWindowTabs.vue'
 import ExperienceListItem from '@/components/Experience/ExperienceListItem.vue'
 import ExperienceListBlock from '@/components/Experience/ExperienceListBlock.vue'
@@ -83,7 +87,7 @@ export default {
     }
   },
   setup (props) {
-    const { experiences, classifiedExperiences, reloadExperiences } = getExperiences()
+    const { isPending, experiences, classifiedExperiences, reloadExperiences } = getExperiences()
     getTags()
 
     // ===新增活動表單===
@@ -97,7 +101,12 @@ export default {
     const { setShadows, initShadows } = useScrollShadow()
     const shadowContainer = ref(null)
     onMounted(() => {
-      initShadows(shadowContainer.value)
+      watchEffect(async () => {
+        if (isPending.value === false) {
+          await nextTick()
+          initShadows(shadowContainer.value)
+        }
+      })
     })
     onUpdated(() => {
       initShadows(shadowContainer.value)
@@ -123,7 +132,7 @@ export default {
       })
     }
 
-    return { classifiedExperiences, showFormModal, handleAddExperience, setShadows, shadowContainer, handleSubmit, handleDelete, handleEditExperience, experienceToEdit }
+    return { isPending, classifiedExperiences, showFormModal, handleAddExperience, setShadows, shadowContainer, handleSubmit, handleDelete, handleEditExperience, experienceToEdit }
   }
 }
 </script>
@@ -137,6 +146,14 @@ export default {
   padding: 26px 0;
   display: flex;
   justify-content: center;
+  &__loading {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    font-size: 26px;
+  }
 }
 
 .experience__window {
@@ -174,6 +191,31 @@ export default {
     font-size: 42px;
     color: #fff;
     box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.25);
+  }
+}
+
+.lds-dual-ring {
+  display: inline-block;
+  width: 60px;
+  height: 60px;
+}
+.lds-dual-ring:after {
+  content: " ";
+  display: block;
+  width: 60px;
+  height: 60px;
+  box-sizing: border-box;
+  border-radius: 50%;
+  border: 6px solid #000;
+  border-color: #000 transparent #000 transparent;
+  animation: lds-dual-ring 1.2s linear infinite;
+}
+@keyframes lds-dual-ring {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
   }
 }
 
