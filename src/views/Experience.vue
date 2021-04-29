@@ -60,7 +60,7 @@
 </template>
 
 <script>
-import { ref, onMounted, watchEffect, nextTick, onUpdated } from 'vue'
+import { ref, nextTick, onUpdated } from 'vue'
 import ExperienceWindowTabs from '@/components/Experience/ExperienceWindowTabs.vue'
 import ExperienceListItem from '@/components/Experience/ExperienceListItem.vue'
 import ExperienceListBlock from '@/components/Experience/ExperienceListBlock.vue'
@@ -100,16 +100,12 @@ export default {
     // ===設定滾動容器陰影===
     const { setShadows, initShadows } = useScrollShadow()
     const shadowContainer = ref(null)
-    onMounted(() => {
-      watchEffect(async () => {
-        if (isPending.value === false) {
-          await nextTick()
-          initShadows(shadowContainer.value)
-        }
-      })
-    })
-    onUpdated(() => {
-      initShadows(shadowContainer.value)
+    // 切換tab或是資料更新時，重新檢查是否渲染陰影
+    onUpdated(async () => {
+      if (isPending.value === false) {
+        await nextTick()
+        initShadows(shadowContainer.value)
+      }
     })
 
     // ===處理表單送出===
