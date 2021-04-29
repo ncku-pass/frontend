@@ -138,7 +138,7 @@ import MessageModal from '@/components/MessageModal.vue'
 import { computed, reactive, ref } from 'vue'
 import { addExperience, updateExperience } from '@/api/experiences'
 // import { addTag } from '@/api/tags'
-import getTags from '@/composables/tags/getTags'
+import getTags from '@/composables/tags/useTags'
 import Multiselect from '@vueform/multiselect'
 import '@vueform/multiselect/themes/default.css'
 

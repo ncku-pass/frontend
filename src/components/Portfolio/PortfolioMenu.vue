@@ -47,8 +47,8 @@
 <script>
 import { ref, onMounted, reactive, watchEffect, watch, computed } from 'vue'
 import useScrollShadow from '@/composables/useScrollShadow'
-import getExperiences from '@/composables/experiences/getExperiences'
-import getTags from '@/composables/tags/getTags'
+import useExperiences from '@/composables/experiences/useExperiences'
+import getTags from '@/composables/tags/useTags'
 import MenuFilter from '@/components/Portfolio/MenuFilter'
 import MenuCard from '@/components/Portfolio/MenuCard'
 import draggable from 'vuedraggable'
@@ -65,7 +65,7 @@ export default {
     const showFilter = ref(true)
 
     // ===經驗列表===
-    const { experiencesArray, semesters } = getExperiences()
+    const { experiencesArray, semesters } = useExperiences()
     const { tags } = getTags()
 
     const filter = reactive({

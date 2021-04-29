@@ -67,8 +67,8 @@ import ExperienceListBlock from '@/components/Experience/ExperienceListBlock.vue
 import FormModal from '@/components/FormModal.vue'
 import Navbar from '@/components/Navbar'
 import useScrollShadow from '@/composables/useScrollShadow'
-import getExperiences from '@/composables/experiences/getExperiences'
-import getTags from '@/composables/tags/getTags'
+import useExperiences from '@/composables/experiences/useExperiences'
+import getTags from '@/composables/tags/useTags'
 
 export default {
   name: 'Experience',
@@ -87,7 +87,7 @@ export default {
     }
   },
   setup (props) {
-    const { isPending, experiences, classifiedExperiences, reloadExperiences } = getExperiences()
+    const { isPending, experiences, classifiedExperiences, getExperiences } = useExperiences()
     getTags()
 
     // ===新增活動表單===
@@ -115,12 +115,12 @@ export default {
     // ===處理表單送出===
     const handleSubmit = () => {
       showFormModal.value = false
-      reloadExperiences()
+      getExperiences()
     }
 
     // ===處理經驗刪除===
     const handleDelete = () => {
-      reloadExperiences()
+      getExperiences()
     }
 
     // ===點擊編輯的按鈕時，抓出此筆經歷，傳入表單中===
