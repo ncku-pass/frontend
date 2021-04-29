@@ -34,13 +34,26 @@
         </div>
         <div class="content-body">
           <div class="content-body__card-list">
-            <AbilityCard
+            <!-- <AbilityCard
               v-for="card in portfolio.cards"
               :key="card.id"
               v-bind="card"
               v-model:abilityTopic="card.topic"
               @delete-experience="handleDeleteExperience($event, card)"
-            />
+            /> -->
+            <draggable
+              :list="portfolio.cards"
+              :group="{ name: 'ability' }"
+              item-key="id"
+            >
+              <template #item="{element}">
+                <AbilityCard
+                  v-model:abilityTopic="element.topic"
+                  v-bind="element"
+                  @delete-experience="handleDeleteExperience($event, element)"
+                />
+              </template>
+            </draggable>
           </div>
           <button class="content-body__add" @click="handleAddCard">
             <template v-if="portfolio.cards.length">
@@ -58,12 +71,14 @@
 
 <script>
 import { computed, ref } from 'vue'
+import draggable from 'vuedraggable'
 import AbilityCard from '@/components/Portfolio/AbilityCard.vue'
 
 export default {
   name: 'PortfolioMain',
   components: {
-    AbilityCard
+    AbilityCard,
+    draggable
   },
   setup () {
     const selectedIndex = ref(0)

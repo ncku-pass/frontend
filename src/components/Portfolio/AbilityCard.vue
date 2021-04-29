@@ -81,7 +81,8 @@ export default {
 
     const draggableGroupOption = {
       name: 'experience',
-      put: (to, from, item) => {
+      put: function (to, from, item) {
+        if (from.options.group.name !== to.options.group.name) return false
         // 重複的經驗無法放入
         return !props.experiences.some(el => el.id === ~~item.dataset.id)
       }
