@@ -78,4 +78,16 @@ export default {
     text-decoration-line: underline;
   }
 }
+
+@media (max-width: 1023px) {
+  .login-form {
+    width: 250px;
+  }
+}
+@media (max-width: 767px) {
+  .login-form {
+    margin-top: 60px;
+    width: 350px;
+  }
+}
 </style>

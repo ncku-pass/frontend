@@ -16,7 +16,7 @@ html.draggable-cursor {
   cursor: grabbing;
 }
 
-h3, h4, h5, p {
+h1, h2, h3, h4, h5, p {
   margin: 0;
 } 
 
@@ -37,4 +37,33 @@ textarea {
   // &::-webkit-scrollbar {
   //   display: none;
   // }
+}
+
+.container {
+  max-width: 1110px;
+  margin: 0 auto;
+}
+
+@media (max-width: 1279px) {
+  .container {
+    max-width: 1024px;
+  }
+}
+
+@media (max-width: 1023px) {
+  .container {
+    max-width: 768px;
+  }
+}
+
+@media (max-width: 767px) {
+  .container {
+    max-width: 640px;
+  }
+}
+
+@media (max-width: 639px) {
+  .container {
+    max-width: 100%;
+  }
 }

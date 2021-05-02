@@ -1,25 +1,15 @@
 <template>
   <div class="landing">
-    <div class="section section-1">
-      <svg
-        class="section-1__bg"
-        viewBox="0 0 1440 953"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <circle
-          cx="720"
-          cy="-1547"
-          r="2500"
-          fill="#9D2235"
-        />
-      </svg>
-
-      <div class="container section-1__content">
+    <section class="hero">
+      <div class="container hero__content">
         <div class="intro">
-          <img src="@/assets/brand_icon_white.svg" alt="">
+          <img
+            class="intro__icon"
+            src="@/assets/brand_icon_white.svg"
+            alt="brand__icon"
+          >
           <h1 class="intro__title">
-            因為整理，<br>讓你更了解自己
+            幫助你整理經歷，<br>全方位展現個人特質
           </h1>
           <h2 class="intro__subtitle">
             E-portfolio 陪你整理學習經歷
@@ -41,172 +31,78 @@
           stroke-width="5"
         />
       </svg>
+    </section>
+    <div class="container">
+      <section class="features">
+        <h2 class="features__title">
+          E-portfolio 三大功能
+        </h2>
+        <ul class="features__list">
+          <li class="features__item">
+            <img
+              src="@/assets/card-record.svg"
+              alt=""
+              class="features__item__img"
+            >
+            <h3 class="features__item__title">
+              紀錄大學各項經驗
+            </h3>
+          </li>
+          <li class="features__item">
+            <img
+              src="@/assets/card-plan.svg"
+              alt=""
+              class="features__item__img"
+            >
+            <h3 class="features__item__title">
+              以TAG 整理個人能力
+            </h3>
+          </li>
+          <li class="features__item">
+            <img
+              src="@/assets/card-portfolio.svg"
+              alt=""
+              class="features__item__img"
+            >
+            <h3 class="features__item__title">
+              簡易製作履歷
+            </h3>
+          </li>
+        </ul>
+      </section>
+      <section class="feature">
+        <img class="feature__img" src="@/assets/landing-1.png">
+        <div class="feature__text">
+          <h2>個人化紀錄</h2>
+          <p>內建校內學習紀錄，以簡潔快速的方式一覽大學學習歷程，可以即時的在已修習過的課程進行紀錄，更能透過自行增減不同的學習紀錄，來增添你精彩大學的學習經歷。</p>
+        </div>
+      </section>
+      <section class="feature feature--reverse">
+        <img class="feature__img" src="@/assets/landing-2.png">
+        <div class="feature__text">
+          <h2>以TAG整理個人能力</h2>
+          <p>提供個人專屬的分類工具，以TAG 來標示課程所得到的能力，透過分類 TAG 歸納出個人的關鍵技能，快速歸納自身特質及專長，精準統整，侃侃而談個人能力不再是難事。</p>
+        </div>
+      </section>
+      <section class="feature">
+        <img class="feature__img" src="@/assets/landing-3.png">
+        <div class="feature__text">
+          <h2>簡易製作履歷</h2>
+          <p>可以針對履歷、研究所備審等編排不同版本，在各版本中能主題式的展現個人能力，不再擔心不會排版，只需拉入各項經驗即可，最後一鍵即能輸出簡潔的個人履歷。</p>
+        </div>
+      </section>
     </div>
-    <div class="section section-2">
-      <div class="slide">
-        <div class="container section-2__content">
-          <h2 class="section-2__title">
-            透過 e-portfolio 來實現你的目標
-          </h2>
-          <div class="section-2__cards">
-            <div class="card">
-              <img
-                src="@/assets/card-record.svg"
-                alt=""
-                class="card__img"
-              >
-              <h3 class="card__title">
-                紀錄學習收穫
-              </h3>
-              <p class="card__desc">
-                紀錄學習過程，<br>
-                如：自己過去的努力及收穫
-              </p>
-            </div>
-            <div class="card">
-              <img
-                src="@/assets/card-plan.svg"
-                alt=""
-                class="card__img"
-              >
-              <h3 class="card__title">
-                幫助自我學習規劃
-              </h3>
-              <p class="card__desc">
-                安排新學期課程之前，<br>
-                檢視過去的學習，讓學習更有脈絡
-              </p>
-            </div>
-            <div class="card">
-              <img
-                src="@/assets/card-portfolio.svg"
-                alt=""
-                class="card__img"
-              >
-              <h3 class="card__title">
-                幫助履歷&備審撰寫
-              </h3>
-              <p class="card__desc">
-                彙整學經歷，<br>
-                讓撰寫變得更加方便
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="slide">
-        <div class="container introduction">
-          <img class="introduction__img" src="@/assets/landing-1.png">
-          <div class="introduction__text">
-            <h2>個人化紀錄</h2>
-            <p>內建校內學習紀錄，以簡潔快速的方式一覽大學學習歷程，可以即時的在已修習過的課程進行紀錄，更能透過自行增減不同的學習紀錄，來增添你精彩大學的學習經歷。</p>
-          </div>
-        </div>
-      </div>
-      <div class="slide">
-        <div class="container introduction introduction--reverse">
-          <img class="introduction__img" src="@/assets/landing-2.png">
-          <div class="introduction__text">
-            <h2>歸納出關鍵能力</h2>
-            <p>提供個人專屬的分類工具，以TAG 來標示課程所得到的能力，透過分類 TAG 歸納出個人的關鍵技能，快速歸納自身特質及專長，精準統整，侃侃而談個人能力不再是難事。</p>
-          </div>
-        </div>
-      </div>
-      <div class="slide">
-        <div class="container introduction">
-          <img class="introduction__img" src="@/assets/landing-3.png">
-          <div class="introduction__text">
-            <h2>展現個人優勢</h2>
-            <p>可以針對履歷、研究所備審等編排不同版本，在各版本中能主題式的展現個人能力，不再擔心不會排版，只需拉入各項經驗即可，最後一鍵即能輸出簡潔的個人履歷。</p>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- TODO: 等待設計師修正 -->
-    <div class="section section-footer">
-      <div class="section-footer__bg" />
-      <div class="container section-footer__content">
-        <div class="section-footer__summary">
-          E-portfolio幫助學生<span class="red">有效的</span>整理經歷，並<span class="red">全方位</span>展現個人特質
-        </div>
-        <div class="section-footer__btns">
-          <button class="btn">
-            馬上登入
-          </button>
-          <button class="btn--danger">
-            立即註冊
-          </button>
-        </div>
-        <div class="section-footer__footer">
-          <p>© NCKU 教學發展中心版權所有</p>
-        </div>
-      </div>
-    </div>
+    <footer />
   </div>
 </template>
 
 <script>
-import { onMounted, onUnmounted, reactive, ref } from '@vue/runtime-core'
-import { useRoute } from 'vue-router'
 import LoginForm from '@/components/Landing/LoginForm'
-import Fullpage from 'fullpage.js'
-import 'fullpage.js/dist/fullpage.min.css'
 
 export default {
   name: 'Landing',
   components: {
     LoginForm
-  },
-  setup () {
-    const route = useRoute()
-
-    const isInit = ref(false)
-    const fullpageInfo = reactive({
-      slideIndex: route.hash.replace(/^#.+\//, ''),
-      isSliding: false
-    })
-    onMounted(() => {
-      if (!isInit.value) {
-        Fullpage('.landing', {
-          licenseKey: "i#eq#uS42Kr]C~j4g/m~3P;2R+( &83iM?yko4P'HZ9E|k1-x:<okp",
-          easingcss3: 'cubic-bezier(0.64, 0.055, 0.345, 1)',
-          anchors: ['1', '2', '3'],
-          controlArrows: false,
-          slidesNavigation: true,
-          slidesNavPosition: 'bottom',
-          recordHistory: false,
-          onLeave (origin, destination, direction) {
-            /* global fullpage_api */
-            if (origin.index === 1 && !fullpageInfo.isSliding) {
-              if (direction === 'down' && fullpageInfo.slideIndex < 3) {
-                fullpageInfo.isSliding = true
-                fullpage_api.moveSlideRight()
-                fullpageInfo.slideIndex++
-                return false
-              } else if (direction === 'up' && fullpageInfo.slideIndex > 0) {
-                fullpageInfo.isSliding = true
-                fullpage_api.moveSlideLeft()
-                fullpageInfo.slideIndex--
-                return false
-              }
-            } else if (fullpageInfo.sliding) {
-              return false
-            }
-          },
-
-          afterSlideLoad (section, origin, destination, direction) {
-            fullpageInfo.isSliding = false
-          }
-        })
-        isInit.value = true
-      }
-    })
-
-    onUnmounted(() => {
-      fullpage_api.destroy()
-    })
-
-    return { fullpageInfo }
   }
 }
 </script>
@@ -217,23 +113,35 @@ export default {
 .landing {
   background-color: #FAF5F5;
 }
-.container {
-  max-width: 1110px;
-  margin: 0 auto;
-}
-.section-1 {
+.hero {
   position: relative;
   color: #fff;
-  &__bg {
-    position: absolute;
-    bottom: 50px;
-    left: 0;
-    z-index: -1;
-  }
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  background-image: url('~@/assets/landing_bg.svg');
+  background-position: center -50px;
+  background-size: cover;
+  background-repeat: no-repeat;
   &__content {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     margin-bottom: 100px;
+    width: 100%;
+  }
+}
+.intro {
+  &__icon {
+    margin-bottom: 64px;
+  }
+  &__title {
+    font-size: 60px;
+    line-height: 97px;
+  }
+  &__subtitle {
+    font-size: 21px;
+    line-height: 34px;
   }
 }
 .scroll-arrow {
@@ -243,127 +151,67 @@ export default {
   transform: translateX(-50%);
   animation: jump 1.5s infinite;
 }
-.intro {
+
+.features {
+  @include grid(row, 45px, 0);
+  text-align: center;
+  margin: 115px 0 45px;
   &__title {
+    color: $red-light;
+    font-weight: $weight-black;
     font-size: 60px;
+    line-height: 97px;
   }
-  &__subtitle {
-    font-size: 32px;
+  &__list {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 20px;
+  }
+  &__item {
+    @include grid(row, 40px, 0);
+    justify-items: center;
+    &__img {
+      width: 150px;
+    }
+    &__title {
+      font-size: 32px;
+      line-height: 52px;
+      color: $gray-1;
+    }
   }
 }
 
-.section-2 {
-  &__content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-  }
-  &__title {
-    font-size: 60px;
-    color: $red;
-    margin-top: 0;
-    margin-bottom: 65px;
-    padding-bottom: 15px;
-    box-shadow: 0 5px $red;
-  }
-  &__cards {
-    @include grid(column, 0px, 65px);
-  }
-}
-.card {
-  width: 260px;
-  padding: 40px 30px;
-  @include grid(row, 20px, 0);
-  justify-items: center;
-  background-color: #fff;
-  border: 1px solid $gray-5;
-  box-shadow: 0px 0px 15px rgba(241, 90, 96, 0.1), 2px 2px 10px rgba(241, 90, 96, 0.15);
-  border-radius: 15px;
-  &__title {
-    font-size: 21px;
-    font-weight: normal;
-  }
-  &__desc {
-    color: $gray-3;
-  }
-}
-.introduction {
+.feature {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 135px 0;
   &--reverse {
     flex-direction: row-reverse;
   }
   &__img {
-    width: 445px;
+    max-width: 500px;
   }
   &__text {
-    width: 540px;
+    max-width: 540px;
     h2 {
+      margin-bottom: 50px;
       color: $red-light;
       font-weight: $weight-black;
-      margin-top: 0;
-      margin-bottom: 50px;
       font-size: 60px;
+      line-height: 97px;
     }
     p {
       font-size: 21px;
-      text-indent : 2em;
       line-height: 34px;
+      color: $gray-2;
     }
   }
 }
-.section-footer {
-  &__content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  &__bg {
-    position: absolute;
-    z-index: -1;
-    top: 0;
-    width: 100%;
-    height: 480px;
-    background: url('~@/assets/chatting.png') no-repeat center;
-    background-size: cover;
-  }
-  &__summary {
-    padding: 8px 20px;
-    margin-bottom: 50px;
-    background: rgba(255, 255, 255, 0.69);
-    border-radius: 10px;
-    color: $gray-1;
-    text-align: center;
-    font-weight: 900;
-    font-size: 60px;
-    line-height: 97px;
-    .red {
-      color: $red-light;
-    }
-  }
-  &__btns {
-    @include grid(column, 0, 60px);
-    button {
-      font-size: 32px;
-      line-height: 52px;
-    }
-  }
-  &__footer {
-    z-index: -1;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    position: absolute;
-    bottom: 0;
-    padding: 27px;
-    height: 200px;
-    width: 100%;
-    background-color: $red;
-    text-align: center;
-    color: $white;
-  }
+
+footer {
+  height: 250px;
+  background: $red;
 }
 
 @keyframes jump {
@@ -377,11 +225,143 @@ export default {
     transform: translate(-50%, 0px);
   }
 }
-</style>
 
-<style>
-.fp-slidesNav {
-  width: 300px;
-  text-align: center;
+@media (max-width: 1279px) {
+  .features {
+    margin: 115px 0;
+  }
+  .feature {
+    flex-direction: column-reverse;
+    text-align: center;
+    padding: 65px 0;
+    &__img {
+      max-width: 800px;
+    }
+    &__text {
+      max-width: 800px;
+      margin-bottom: 20px;
+      h2 {
+        margin-bottom: 20px;
+      }
+    }
+  }
+}
+
+@media (max-width: 1023px) {
+  .intro{
+    &__icon {
+      margin-bottom: 32px;
+    }
+    &__title {
+      font-size: 52px;
+      line-height: 70px;
+    }
+  }
+  .features {
+    margin: 115px 0;
+    &__title {
+      font-size: 52px;
+    }
+    &__item{
+      &__img {
+        max-width: 135px;
+      }
+      &__title {
+        font-size: 26px;
+      }
+    }
+  }
+  .feature {
+    flex-direction: column-reverse;
+    text-align: center;
+    padding: 65px 0;
+    &__img {
+      max-width: 720px;
+    }
+    &__text {
+      max-width: 720px;
+      margin-bottom: 20px;
+      h2 {
+        margin-bottom: 20px;
+        font-size: 52px;
+      }
+    }
+  }
+}
+
+@media (max-width: 767px) {
+  .hero__content {
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+  }
+  .intro{
+    &__icon {
+      height: 48px;
+      display: inline-block;
+      margin: auto 0;
+    }
+  }
+  .features {
+    &__item{
+      &__img {
+        max-width: 115px;
+      }
+      &__title {
+        font-size: 20px;
+      }
+    }
+  }
+  .feature {
+    &__img {
+      max-width: 600px;
+    }
+    &__text {
+      max-width: 600px;
+      margin-bottom: 20px;
+      h2 {
+        margin-bottom: 20px;
+      }
+    }
+  }
+}
+@media (max-width: 639px) {
+  .intro{
+    &__title {
+      font-size: 44px;
+      line-height: 70px;
+    }
+  }
+
+  .features{
+    &__title {
+      font-size: 44px;
+    }
+    &__list {
+      flex-direction: column;
+    }
+    &__item {
+      gap: 5px 0;
+      &:not(:last-child) {
+        margin-bottom: 40px;
+      }
+      &__img {
+        max-width: 150px;
+      }
+      &__title {
+        font-size: 26px;
+      }
+    }
+  }
+
+  .feature {
+    padding: 40px 20px;
+    &__text h2{
+      line-height: 52px;
+    }
+    &__img {
+      max-width: 100%;
+    }
+  }
 }
 </style>
