@@ -21,6 +21,9 @@
         class="form-control"
       >
     </div>
+    <p v-if="error">
+      登入失敗，請重新嘗試
+    </p>
     <button
       class="btn"
       :disabled="isPending"
@@ -59,7 +62,7 @@ export default {
       }
     }
 
-    return { authData, handleSubmit, isPending }
+    return { authData, handleSubmit, error, isPending }
   }
 }
 </script>
