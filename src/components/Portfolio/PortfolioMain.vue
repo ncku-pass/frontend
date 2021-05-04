@@ -141,6 +141,9 @@ export default {
     overflow-y: auto;
     padding: 26px 0;
     filter: drop-shadow(-2px 4px 30px rgba(241, 90, 96, 0.05)) drop-shadow(-2px 4px 30px rgba(241, 90, 96, 0.1));
+    &::-webkit-scrollbar {
+      display: none;
+    }
   }
   &__tabs {
     display: flex;
