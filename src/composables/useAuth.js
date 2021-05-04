@@ -1,4 +1,5 @@
 import { reactive, toRefs } from 'vue'
+import router from '@/router/index'
 import { login as loginAPI } from '@/api/auth'
 
 const state = reactive({
@@ -18,14 +19,19 @@ const login = async ({ studentId, password }) => {
     localStorage.setItem('auth', data.tokenStr)
   } catch (error) {
     state.error = error
-    console.log(error)
   } finally {
     state.isPending = false
   }
 }
 
+const logout = () => {
+  state.tokenStr = ''
+  localStorage.removeItem('auth')
+  router.push({ name: 'Landing' })
+}
+
 const useAuth = () => {
-  return { ...toRefs(state), login }
+  return { ...toRefs(state), login, logout }
 }
 
 export default useAuth
