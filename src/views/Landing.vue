@@ -280,7 +280,6 @@ footer {
     }
     &__text {
       max-width: 720px;
-      margin-bottom: 20px;
       h2 {
         margin-bottom: 20px;
         font-size: 52px;
@@ -318,7 +317,7 @@ footer {
     }
     &__text {
       max-width: 600px;
-      margin-bottom: 20px;
+      margin-bottom: 30px;
       h2 {
         margin-bottom: 20px;
       }
