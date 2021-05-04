@@ -46,16 +46,17 @@
         <div>
           <label for="" class="form-label">獲得技能Tag</label>
           <Multiselect
+            ref="tagsMultiselect"
             v-model="formData.tags"
             mode="tags"
             :searchable="true"
             :create-tag="true"
-            :append-new-tag="true"
             :options="tags"
             value-prop="id"
             label="name"
             track-by="name"
             @tag="handleCreateTag"
+            @select="handleSelectTag"
           >
             <template #tag="{ option, handleTagRemove, disabled }">
               <div class="multiselect-tag tag--large">
@@ -262,7 +263,12 @@ export default {
       }
     }
 
-    return { tags, handleCreateTag, showConfirmModal, showMessageModal, formData, showedFieldText, semesters, handleFormSubmit }
+    const tagsMultiselect = ref(null)
+    const handleSelectTag = () => {
+      tagsMultiselect.value.close()
+    }
+
+    return { tags, handleCreateTag, showConfirmModal, showMessageModal, formData, showedFieldText, semesters, handleFormSubmit, tagsMultiselect, handleSelectTag }
   }
 }
 </script>
