@@ -21,8 +21,12 @@
         class="form-control"
       >
     </div>
-    <button class="btn">
-      登入
+    <button
+      class="btn"
+      :disabled="isPending"
+      type="submit"
+    >
+      {{ isPending ? '登入中' : '登入' }}
     </button>
     <a class="register">還沒註冊嗎，點我立即註冊</a>
   </form>
@@ -31,7 +35,8 @@
 <script>
 import { reactive } from 'vue'
 import { useRouter } from 'vue-router'
-import { login } from '@/api/auth'
+// import { login } from '@/api/auth'
+import useAuth from '@/composables/useAuth'
 
 export default {
   setup () {
@@ -39,21 +44,22 @@ export default {
       studentId: '',
       password: ''
     })
+    const { login, tokenStr, error, isPending } = useAuth()
 
     const router = useRouter()
 
     const handleSubmit = async () => {
-      try {
-        const res = await login(authData)
-        localStorage.setItem('auth', res.data.tokenStr)
+      if (isPending.value) {
+        return
+      }
+      await login(authData)
+      if (!error.value) {
         router.push({ name: 'Experience' })
-        console.log(res)
-      } catch (error) {
-        console.log(error)
+        console.log('登入成功', tokenStr.value)
       }
     }
 
-    return { authData, handleSubmit }
+    return { authData, handleSubmit, isPending }
   }
 }
 </script>
