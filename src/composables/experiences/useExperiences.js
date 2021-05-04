@@ -3,7 +3,7 @@ import { getExperiences as getExperiencesAPI } from '@/api/experiences'
 import { sortExperiences, classifySemester } from '@/helpers/index'
 
 const state = reactive({
-  experiences: {},
+  experiences: null,
   error: null,
   isPending: false
 })
@@ -51,7 +51,7 @@ const getExperiences = async () => {
 }
 
 const useExperiences = () => {
-  if (Object.keys(state.experiences).length === 0) {
+  if (!state.experiences) {
     getExperiences()
   }
 

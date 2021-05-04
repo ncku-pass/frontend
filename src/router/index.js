@@ -33,7 +33,7 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from) => {
-  console.log(to)
+  // TODO: 進入每一個route的時候應該要檢查JWT Token是否合法。(現在暫時的作法是打出API後檢查Status code 是否為401)
   if (to.name === 'Landing' && tokenStr.value) {
     return {
       name: 'Experience'
