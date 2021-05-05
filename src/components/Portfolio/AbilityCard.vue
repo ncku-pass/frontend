@@ -16,7 +16,7 @@
         @end="handleDrag(false)"
       >
         <template #item="{element, index}">
-          <li class="experience-card">
+          <li class="experience-card" :data-id="element.id">
             <div class="experience-card__header">
               <h3 class="experience-card__name">
                 {{ element.name }}
