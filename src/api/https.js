@@ -1,28 +1,29 @@
 import axios from 'axios'
 import useAuth from '@/composables/useAuth'
-const { logout } = useAuth()
+const { logout, tokenStr } = useAuth()
 
-// axios.defaults.timeout = 15000
-// const baseURL = 'https://e-portfolio-ncku.herokuapp.com/api'
+const errorHandler = (error) => {
+  if (error.response) {
+    // 有收到回應，但後端回覆 > 300
+    const { status } = error.response
 
-const errorHandler = ({ status, data }) => {
-  switch (status) {
-    case 400:
-      console.error(data)
-      break
-    case 401:
-      console.error(data)
+    switch (status) {
       // 若出現未授權的情況則把使用者登出
-      logout()
-      break
-    case 403:
-      console.error(data)
-      break
-    case 404:
-      console.error(data)
-      break
-    default:
-      console.error(data)
+      case 401:
+        console.error(error.response)
+        logout()
+        break
+      default:
+        console.error(error.response)
+    }
+  } else if (error.request) {
+    // 沒有收到回應
+    if (error?.code === 'ECONNABORTED') {
+      console.error('請求時間過長，取消請求')
+    }
+  } else {
+    // 送出請求之前就遇到錯誤了
+    console.error('請求沒有送出：', error.message)
   }
 }
 
@@ -32,9 +33,9 @@ export const req = axios.create({
   timeout: 15000
 })
 
-// 送出請求時加上JWT Token
+// 送出請求時加上Auth Token
 req.interceptors.request.use((config) => {
-  config.headers.Authorization = `Bearer ${localStorage.getItem('auth')}`
+  config.headers.Authorization = `Bearer ${tokenStr.value}`
   return config
 }, function (error) {
   return Promise.reject(error)
@@ -44,18 +45,6 @@ req.interceptors.request.use((config) => {
 req.interceptors.response.use(function (response) {
   return response
 }, function (error) {
-  errorHandler(error.response)
+  errorHandler(error)
   return Promise.reject(error)
 })
-
-// export const experiencesRequest = axios.create({
-//   baseURL: `${baseURL}/experiences`
-// })
-
-// export const tagsRequest = axios.create({
-//   baseURL: `${baseURL}/tags`
-// })
-
-// export const authRequest = axios.create({
-//   baseURL: `${baseURL}/auth`
-// })
