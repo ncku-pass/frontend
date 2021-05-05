@@ -10,6 +10,9 @@
         v-model="authData.studentId"
         type="text"
         class="form-control"
+        required
+        pattern="[a-zA-Z0-9]{8,}"
+        title="請輸入8位以上英數字"
       >
     </div>
     <div>
@@ -19,6 +22,9 @@
         v-model="authData.password"
         type="password"
         class="form-control"
+        required
+        pattern="[a-zA-Z0-9]{8,}"
+        title="請輸入8位以上英數字"
       >
     </div>
     <p v-if="error">
