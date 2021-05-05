@@ -1,12 +1,4 @@
-// import { tagsRequest as req } from './https'
 import { req } from './https'
-
-// req.interceptors.request.use((config) => {
-//   config.headers.Authorization = `Bearer ${localStorage.getItem('auth')}`
-//   return config
-// }, function (error) {
-//   return Promise.reject(error)
-// })
 
 export const getTags = () => {
   return req.get('/tags/')

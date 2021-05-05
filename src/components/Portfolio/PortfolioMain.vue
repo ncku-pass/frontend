@@ -120,7 +120,6 @@ export default {
     }
     const handleDeleteExperience = (experienceIndex, card) => {
       card.experiences.splice(experienceIndex, 1)
-      console.log('delete')
     }
 
     return { portfolios, portfolio, selectedIndex, handleAddPortfolio, handleAddCard, handleDeleteExperience }

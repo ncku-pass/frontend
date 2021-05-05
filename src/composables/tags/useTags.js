@@ -12,7 +12,6 @@ const getTags = async () => {
     state.isPending = true
     state.error = null
     const res = await getTagsAPI()
-    console.log(res)
     state.tags = res.data
   } catch (error) {
     state.error = error
