@@ -6,6 +6,10 @@
   border-radius: 5px;
   line-height: 24px;
   text-align: center;
+  &:disabled {
+    background-color: $gray-4;
+    border-color: $gray-4;
+  }
   &--danger {
     @extend .btn;
     border-color: $red;

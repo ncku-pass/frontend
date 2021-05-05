@@ -62,14 +62,28 @@
       v-if="showConfirmModal"
       :message="experience.name"
       confirm-type="delete"
-      @cancel="showConfirmModal = false"
-      @confirm="handleDeleteExperience"
-    />
+      @cancel="closeConfirmModal"
+    >
+      <button
+        v-show="!deleteStatus.isPending"
+        class="btn"
+        @click="closeConfirmModal"
+      >
+        取消
+      </button>
+      <button
+        class="btn--danger"
+        :disabled="deleteStatus.isPending"
+        @click="handleDeleteExperience"
+      >
+        {{ deleteStatus.isPending ? '刪除中' : '確定刪除' }}
+      </button>
+    </ConfirmModal>
   </li>
 </template>
 
 <script>
-import { ref } from 'vue'
+import { reactive, ref } from 'vue'
 import ConfirmModal from '@/components/ConfirmModal'
 import { deleteExperience } from '@/api/experiences'
 
@@ -88,22 +102,41 @@ export default {
   emits: ['delete', 'edit'],
   setup (props, context) {
     const showConfirmModal = ref(false)
+    const closeConfirmModal = () => {
+      if (deleteStatus.isPending) {
+        return
+      }
+      showConfirmModal.value = false
+    }
 
     const confirmDelete = () => {
       showConfirmModal.value = true
     }
 
+    // === 刪除經歷 ===
+    const deleteStatus = reactive({
+      isPending: false,
+      error: null
+    })
     const handleDeleteExperience = async () => {
-      await deleteExperience(props.experience.id)
-      showConfirmModal.value = false
-      context.emit('delete')
+      try {
+        deleteStatus.isPending = true
+        deleteStatus.error = null
+        await deleteExperience(props.experience.id)
+        showConfirmModal.value = false
+        context.emit('delete')
+      } catch (error) {
+        deleteStatus.error = error
+      } finally {
+        deleteStatus.isPending = false
+      }
     }
 
     const handleEditExperience = async () => {
       context.emit('edit', props.experience.id)
     }
 
-    return { showConfirmModal, confirmDelete, handleDeleteExperience, handleEditExperience }
+    return { showConfirmModal, closeConfirmModal, confirmDelete, deleteStatus, handleDeleteExperience, handleEditExperience }
   }
 }
 </script>

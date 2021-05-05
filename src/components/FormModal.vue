@@ -1,5 +1,5 @@
 <template>
-  <div class="modal-bg" @click.self="showConfirmModal = true">
+  <div class="modal-bg" @click.self="leaveForm">
     <div class="form-modal">
       <div class="form-modal__content">
         <p class="form-modal__hint">
@@ -108,11 +108,19 @@
           >
         </div>
         <div class="form-modal__content__btns">
-          <button class="btn" @click="showConfirmModal = true">
+          <button
+            v-show="!formStatus.isPending"
+            class="btn"
+            @click="leaveForm"
+          >
             取消
           </button>
-          <button class="btn--danger" @click="handleFormSubmit">
-            儲存
+          <button
+            class="btn--danger"
+            :disabled="formStatus.isPending"
+            @click="handleFormSubmit"
+          >
+            {{ formStatus.isPending ? '儲存中' : '儲存' }}
           </button>
         </div>
       </div>
@@ -203,7 +211,14 @@ export default {
   },
   emits: ['close', 'submit'],
   setup (props, context) {
+    // === 離開時跳出確認視窗 ===
     const showConfirmModal = ref(false)
+    const leaveForm = () => {
+      if (formStatus.isPending) {
+        return
+      }
+      showConfirmModal.value = true
+    }
 
     // === 顯示提示訊息 ===
     const showMessageModal = ref(false)
@@ -248,8 +263,14 @@ export default {
       tags: props.editData?.tags.map(tag => tag.id) || []
     })
 
+    const formStatus = reactive({
+      error: null,
+      isPending: false
+    })
     const handleFormSubmit = async () => {
       try {
+        formStatus.isPending = true
+        formStatus.error = null
         if (props.editData) {
           // TODO: 處理編輯錯誤
           const res = await updateExperience(props.editData.id, formData)
@@ -260,6 +281,9 @@ export default {
         context.emit('submit')
       } catch (error) {
         console.log(error)
+        formStatus.error = error
+      } finally {
+        formStatus.isPending = false
       }
     }
 
@@ -268,7 +292,7 @@ export default {
       tagsMultiselect.value.close()
     }
 
-    return { tags, handleCreateTag, showConfirmModal, showMessageModal, formData, showedFieldText, semesters, handleFormSubmit, tagsMultiselect, handleSelectTag }
+    return { tags, handleCreateTag, showConfirmModal, leaveForm, showMessageModal, formData, showedFieldText, semesters, handleFormSubmit, tagsMultiselect, handleSelectTag, formStatus }
   }
 }
 </script>

@@ -6,12 +6,14 @@
       <span v-else>確定要刪除<span class="text--red">{{ message }}</span>此項歷程？</span>
 
       <div class="confirm-modal__content__btns">
-        <button class="btn" @click="$emit('cancel')">
-          {{ cancelMessage }}
-        </button>
-        <button class="btn--danger" @click="$emit('confirm')">
-          {{ confirmMessage }}
-        </button>
+        <slot>
+          <button class="btn" @click="$emit('cancel')">
+            {{ cancelMessage }}
+          </button>
+          <button class="btn--danger" @click="$emit('confirm')">
+            {{ confirmMessage }}
+          </button>
+        </slot>
       </div>
     </div>
   </div>
