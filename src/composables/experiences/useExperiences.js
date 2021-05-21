@@ -8,7 +8,9 @@ const state = reactive({
   isPending: false
 })
 
-// 將每個活動類別內的資料，依照學期分類好
+/**
+ * 將每個活動類別內的資料，依照學期分類好
+ */
 const classifiedExperiences = computed(() => {
   const data = {}
   for (const type in state.experiences) {
@@ -17,7 +19,9 @@ const classifiedExperiences = computed(() => {
   return data
 })
 
-// 把所有經驗整合到同一個array
+/**
+ * 把所有經驗整合到同一個array
+ */
 const experiencesArray = computed(() => {
   const data = []
   for (const type in state.experiences) {
@@ -26,7 +30,9 @@ const experiencesArray = computed(() => {
   return data
 })
 
-// 取得不重複的所有學期
+/**
+ * 取得不重複的所有學期
+ */
 const semesters = computed(() => {
   const semesters = []
   for (const type in classifiedExperiences.value) {
@@ -37,6 +43,9 @@ const semesters = computed(() => {
   })
 })
 
+/**
+ * 取得所有經驗
+ */
 const getExperiences = async () => {
   try {
     state.isPending = true
@@ -55,7 +64,13 @@ const useExperiences = () => {
     getExperiences()
   }
 
-  return { ...toRefs(state), classifiedExperiences, experiencesArray, semesters, getExperiences }
+  return {
+    ...toRefs(state),
+    classifiedExperiences,
+    experiencesArray,
+    semesters,
+    getExperiences
+  }
 }
 
 export default useExperiences
