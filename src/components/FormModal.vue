@@ -6,22 +6,26 @@
           有*欄位代表必填
         </p>
         <div v-if="showedFieldText.name">
-          <label for="experienceName" class="form-label">{{ showedFieldText.name.text }}</label>
+          <label for="experienceName" class="form-label">{{
+            showedFieldText.name.text
+          }}</label>
           <input
             id="experienceName"
             v-model="formData.name"
             type="text"
             class="form-control"
-          >
+          />
         </div>
         <div v-if="showedFieldText.position">
-          <label for="experiencePosition" class="form-label">{{ showedFieldText.position.text }}</label>
+          <label for="experiencePosition" class="form-label">{{
+            showedFieldText.position.text
+          }}</label>
           <input
             id="experiencePosition"
             v-model="formData.position"
             type="text"
             class="form-control"
-          >
+          />
         </div>
         <div v-if="showedFieldText.semester">
           <label class="form-label">{{ showedFieldText.semester.text }}</label>
@@ -34,7 +38,9 @@
           />
         </div>
         <div v-if="showedFieldText.description">
-          <label for="experienceDescription" class="form-label">{{ showedFieldText.description?.text }}</label>
+          <label for="experienceDescription" class="form-label">{{
+            showedFieldText.description?.text
+          }}</label>
           <textarea
             id="experienceDescription"
             v-model="formData.description"
@@ -71,7 +77,9 @@
           </Multiselect>
         </div>
         <div v-if="showedFieldText.feedback">
-          <label for="experienceFeedback" class="form-label">{{ showedFieldText.feedback.text }}</label>
+          <label for="experienceFeedback" class="form-label">{{
+            showedFieldText.feedback.text
+          }}</label>
           <textarea
             id="experienceFeedback"
             v-model="formData.feedback"
@@ -105,7 +113,7 @@
             v-model="formData.link"
             type="text"
             class="form-control"
-          >
+          />
         </div>
         <div class="form-modal__content__btns">
           <button
@@ -155,42 +163,87 @@ const fieldText = {
   course: {
     name: { text: '*課程名稱', required: true },
     semester: { text: '*課程時間', required: true },
-    description: { text: '課程簡介', placeholder: '填寫課程簡介以便日後方便回想課程內容', required: false },
-    feedback: { text: '課程收穫及成就 (150字以內)', placeholder: '將課程中所得到的收穫及成就記錄下來，或是寫出課程內容的特色吧', required: false }
+    description: {
+      text: '課程簡介',
+      placeholder: '填寫課程簡介以便日後方便回想課程內容',
+      required: false
+    },
+    feedback: {
+      text: '課程收穫及成就 (150字以內)',
+      placeholder:
+        '將課程中所得到的收穫及成就記錄下來，或是寫出課程內容的特色吧',
+      required: false
+    }
   },
   activity: {
     name: { text: '*活動名稱', required: true },
     semester: { text: '*活動時間', required: true },
     position: { text: '*活動擔任職位', required: true },
-    description: { text: '活動簡介', placeholder: '填寫活動簡介以便日後方便回想活動內容', required: false },
-    feedback: { text: '活動收穫及成就 (150字以內)', placeholder: '將活動中所得到的收穫及成就記錄下來吧~', required: false }
+    description: {
+      text: '活動簡介',
+      placeholder: '填寫活動簡介以便日後方便回想活動內容',
+      required: false
+    },
+    feedback: {
+      text: '活動收穫及成就 (150字以內)',
+      placeholder: '將活動中所得到的收穫及成就記錄下來吧~',
+      required: false
+    }
   },
   competition: {
     name: { text: '*競賽名稱', required: true },
     semester: { text: '*競賽時間', required: true },
     position: { text: '*競賽得獎名次', required: true },
-    description: { text: '競賽簡介', placeholder: '填寫競賽簡介以便日後方便回想競賽內容', required: false },
-    feedback: { text: '競賽收穫及成就 (150字以內)', placeholder: '將競賽中所得到的收穫及成就記錄下來吧~', required: false }
+    description: {
+      text: '競賽簡介',
+      placeholder: '填寫競賽簡介以便日後方便回想競賽內容',
+      required: false
+    },
+    feedback: {
+      text: '競賽收穫及成就 (150字以內)',
+      placeholder: '將競賽中所得到的收穫及成就記錄下來吧~',
+      required: false
+    }
   },
   work: {
     name: { text: '*公司單位名稱', required: true },
     semester: { text: '*實習 / 工作時間', required: true },
     position: { text: '*職位職位', required: true },
-    description: { text: '實習 / 工作內容', placeholder: '填寫以便日後方便回想實習 / 工作內容', required: false },
-    feedback: { text: '收穫及成就 (150字以內)', placeholder: '將實習 / 工作中所得到的收穫及成就記錄下來吧~', required: false }
+    description: {
+      text: '實習 / 工作內容',
+      placeholder: '填寫以便日後方便回想實習 / 工作內容',
+      required: false
+    },
+    feedback: {
+      text: '收穫及成就 (150字以內)',
+      placeholder: '將實習 / 工作中所得到的收穫及成就記錄下來吧~',
+      required: false
+    }
   },
   certificate: {
     name: { text: '*證照名稱', required: true },
     semester: { text: '*考取時間', required: true },
     position: { text: '*證照分數或等級', required: true },
-    feedback: { text: '收穫及成就 (150字以內)', placeholder: '將過程中所得到的收穫及成就記錄下來吧~', required: false }
+    feedback: {
+      text: '收穫及成就 (150字以內)',
+      placeholder: '將過程中所得到的收穫及成就記錄下來吧~',
+      required: false
+    }
   },
   other: {
     name: { text: '*經歷名稱', required: true },
     semester: { text: '時間', required: false },
     position: { text: '經歷職位、成就', required: true },
-    description: { text: '經歷簡介', placeholder: '填寫簡介以便日後方便回想經歷內容', required: false },
-    feedback: { text: '經歷收穫及成就 (150字以內)', placeholder: '將過程中所得到的收穫及成就記錄下來吧~', required: false }
+    description: {
+      text: '經歷簡介',
+      placeholder: '填寫簡介以便日後方便回想經歷內容',
+      required: false
+    },
+    feedback: {
+      text: '經歷收穫及成就 (150字以內)',
+      placeholder: '將過程中所得到的收穫及成就記錄下來吧~',
+      required: false
+    }
   }
 }
 
@@ -244,7 +297,7 @@ export default {
     //   })
     // })
 
-    const handleCreateTag = async (tag) => {
+    const handleCreateTag = async tag => {
       console.log(tag)
       // tags.value.push({ id: 200, name: tag })
       // const { data } = await addTag(tag)
@@ -292,14 +345,27 @@ export default {
       tagsMultiselect.value.close()
     }
 
-    return { tags, handleCreateTag, showConfirmModal, leaveForm, showMessageModal, formData, showedFieldText, semesters, handleFormSubmit, tagsMultiselect, handleSelectTag, formStatus }
+    return {
+      tags,
+      handleCreateTag,
+      showConfirmModal,
+      leaveForm,
+      showMessageModal,
+      formData,
+      showedFieldText,
+      semesters,
+      handleFormSubmit,
+      tagsMultiselect,
+      handleSelectTag,
+      formStatus
+    }
   }
 }
 </script>
 
 <style lang="scss">
-@import "../scss/mixins";
-@import "../scss/variables";
+@import '../scss/mixins';
+@import '../scss/variables';
 
 .form-modal {
   width: 770px;
@@ -335,7 +401,7 @@ export default {
 }
 
 .multiselect-input {
-  border: 1px solid #E0E0E0;
+  border: 1px solid #e0e0e0;
   border-radius: 8px;
 }
 .is-open .multiselect-input {
@@ -352,7 +418,7 @@ export default {
     display: flex;
     color: #000;
     font-weight: normal;
-    background-color: #F2F2F2;
+    background-color: #f2f2f2;
     border-radius: 50px;
     line-height: 1.5;
     padding: 4px 8px;

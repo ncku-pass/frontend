@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import Experience from '../views/Experience.vue'
 import Portfolio from '../views/Portfolio.vue'
 import Landing from '../views/Landing.vue'
+import Register from '../views/Register.vue'
 import useAuth from '@/composables/useAuth'
 
 const { tokenStr } = useAuth()
@@ -13,17 +14,22 @@ const routes = [
     component: Landing
   },
   {
+    path: '/register',
+    name: 'Register',
+    component: Register
+  },
+  {
     path: '/experience/:type?',
     name: 'Experience',
     component: Experience,
     props: (route) => ({ type: route.params.type || 'course' }),
-    meta: { requiresAuth: true }
+    meta: { requiresAuth: true, layout: 'AppLayout' }
   },
   {
     path: '/portfolio',
     name: 'Portfolio',
     component: Portfolio,
-    meta: { requiresAuth: true }
+    meta: { requiresAuth: true, layout: 'AppLayout' }
   }
 ]
 
