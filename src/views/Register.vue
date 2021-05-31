@@ -1,22 +1,16 @@
 <template>
   <div class="register">
-    <form @submit.prevent="handleSubmit">
-      <h2>註冊帳號</h2>
+    <form class="register__form" @submit.prevent="handleSubmit">
+      <h2 class="register__title">
+        註冊帳號
+      </h2>
+
       <div>
-        <label for="name" class="form-label">名字</label>
+        <label for="studentId" class="form-label">學號</label>
         <input
-          id="name"
-          v-model="formData.name"
+          id="studentId"
+          v-model="formData.studentId"
           type="text"
-          class="form-control"
-        />
-      </div>
-      <div>
-        <label for="email" class="form-label">信箱</label>
-        <input
-          id="email"
-          v-model="formData.email"
-          type="email"
           class="form-control"
         />
       </div>
@@ -39,20 +33,42 @@
         />
       </div>
       <div>
-        <label for="college" class="form-label">學院</label>
-        <select id="college" class="form-control">
+        <label for="name" class="form-label">姓名</label>
+        <input
+          id="name"
+          v-model="formData.name"
+          type="text"
+          class="form-control"
+        />
+      </div>
+      <div>
+        <label for="email" class="form-label">信箱</label>
+        <input
+          id="email"
+          v-model="formData.email"
+          type="email"
+          class="form-control"
+        />
+      </div>
+      <div>
+        <label for="major" class="form-label">系所</label>
+        <select
+          id="major"
+          v-model="major"
+          class="form-control"
+        >
           <option value="請選擇">
             請選擇
           </option>
         </select>
       </div>
-      <div>
-        <label for="department" class="form-label">系所</label>
-        <select id="department" class="form-control">
-          <option value="請選擇">
-            請選擇
-          </option>
-        </select>
+      <div class="btns">
+        <div class="btn">
+          取消
+        </div>
+        <div class="btn--red">
+          送出
+        </div>
       </div>
     </form>
   </div>
@@ -67,10 +83,10 @@ export default {
     const formData = reactive({
       name: '',
       email: '',
+      studentId: '',
       password: '',
       confirmPassword: '',
-      college: '',
-      department: ''
+      major: ''
     })
 
     return { formData }
@@ -78,21 +94,30 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .register {
   height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-  form {
+  &__title {
+    font-weight: normal;
+  }
+  &__form {
     width: 600px;
     max-width: 600px;
-    max-height: 80vh;
-    padding: 25px 25px 20px;
+    padding: 20px;
     background-color: #fff;
     border-radius: 8px;
     display: grid;
-    row-gap: 20px;
+    row-gap: 15px;
+    box-shadow: -2px 4px 25px rgba(241, 90, 96, 0.05),
+      2px -4px 20px rgba(241, 90, 96, 0.1);
   }
+}
+.btns {
+  display: flex;
+  justify-content: flex-end;
+  column-gap: 10px;
 }
 </style>

@@ -124,7 +124,7 @@
             取消
           </button>
           <button
-            class="btn--danger"
+            class="btn--red"
             :disabled="formStatus.isPending"
             @click="handleFormSubmit"
           >

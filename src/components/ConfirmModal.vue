@@ -10,7 +10,7 @@
           <button class="btn" @click="$emit('cancel')">
             {{ cancelMessage }}
           </button>
-          <button class="btn--danger" @click="$emit('confirm')">
+          <button class="btn--red" @click="$emit('confirm')">
             {{ confirmMessage }}
           </button>
         </slot>
