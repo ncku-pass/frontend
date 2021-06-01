@@ -51,30 +51,7 @@
         </div>
         <div>
           <label for="" class="form-label">獲得技能Tag</label>
-          <Multiselect
-            ref="tagsMultiselect"
-            v-model="formData.tags"
-            mode="tags"
-            :searchable="true"
-            :create-tag="true"
-            :options="tags"
-            value-prop="id"
-            label="name"
-            track-by="name"
-            @tag="handleCreateTag"
-            @select="handleSelectTag"
-          >
-            <template #tag="{ option, handleTagRemove, disabled }">
-              <div class="multiselect-tag tag--large">
-                {{ option.name }}
-                <i
-                  v-if="!disabled"
-                  @click.prevent
-                  @mousedown.prevent.stop="handleTagRemove(option, $event)"
-                />
-              </div>
-            </template>
-          </Multiselect>
+          <TagSelect v-model:tags="formData.tags" :options="tags" />
         </div>
         <div v-if="showedFieldText.feedback">
           <label for="experienceFeedback" class="form-label">{{
@@ -158,6 +135,7 @@ import { addExperience, updateExperience } from '@/api/experiences'
 import getTags from '@/composables/tags/useTags'
 import Multiselect from '@vueform/multiselect'
 import '@vueform/multiselect/themes/default.css'
+import TagSelect from '@/components/TagSelect.vue'
 
 const fieldText = {
   course: {
@@ -249,7 +227,7 @@ const fieldText = {
 
 export default {
   name: 'FormModal',
-  components: { ConfirmModal, Multiselect, MessageModal },
+  components: { ConfirmModal, Multiselect, MessageModal, TagSelect },
   props: {
     formType: {
       type: String,
@@ -291,15 +269,11 @@ export default {
 
     // === 產生所有的tag ===
     const { tags } = getTags()
-    // const tagOptions = computed(() => {
-    //   return tags.value.map((tag) => {
-    //     return { value: tag.id, label: tag.name }
-    //   })
-    // })
 
     const handleCreateTag = async tag => {
       console.log(tag)
-      // tags.value.push({ id: 200, name: tag })
+      tagsMultiselect.value.deselect(tag)
+      // tags.value.push({ id: Math.random(), name: tag })
       // const { data } = await addTag(tag)
       // tags.value.push(data[0])
     }
@@ -313,7 +287,8 @@ export default {
       semester: props.editData?.semester || '',
       link: props.editData?.link || '',
       experienceType: props.formType,
-      tags: props.editData?.tags.map(tag => tag.id) || []
+      // tags: props.editData?.tags.map(tag => tag.id) || []
+      tags: props.editData?.tags || []
     })
 
     const formStatus = reactive({
@@ -326,7 +301,10 @@ export default {
         formStatus.error = null
         if (props.editData) {
           // TODO: 處理編輯錯誤
-          const res = await updateExperience(props.editData.id, formData)
+          const res = await updateExperience(props.editData.id, {
+            ...formData,
+            tags: formData.tags.map(tag => tag.id)
+          })
           console.log(res)
         } else {
           await addExperience(formData)
