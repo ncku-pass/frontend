@@ -28,23 +28,29 @@ const errorHandler = (error) => {
 }
 
 export const req = axios.create({
-  baseURL: 'https://e-portfolio-ncku.herokuapp.com/api',
+  baseURL: 'https://e-portfolio-ncku-dev.herokuapp.com/api',
   headers: { 'Content-Type': 'application/json' },
   timeout: 15000
 })
 
 // 送出請求時加上Auth Token
-req.interceptors.request.use((config) => {
-  config.headers.Authorization = `Bearer ${tokenStr.value}`
-  return config
-}, function (error) {
-  return Promise.reject(error)
-})
+req.interceptors.request.use(
+  (config) => {
+    config.headers.Authorization = `Bearer ${tokenStr.value}`
+    return config
+  },
+  (error) => {
+    return Promise.reject(error)
+  }
+)
 
 // 收到Response時，檢查status code
-req.interceptors.response.use(function (response) {
-  return response
-}, function (error) {
-  errorHandler(error)
-  return Promise.reject(error)
-})
+req.interceptors.response.use(
+  (response) => {
+    return response
+  },
+  (error) => {
+    errorHandler(error)
+    return Promise.reject(error)
+  }
+)
