@@ -7,9 +7,9 @@
             class="intro__icon"
             src="@/assets/brand_icon_white.svg"
             alt="brand__icon"
-          >
+          />
           <h1 class="intro__title">
-            幫助你整理經歷，<br>全方位展現個人特質
+            幫助你整理經歷，<br />全方位展現個人特質
           </h1>
           <h2 class="intro__subtitle">
             E-portfolio 陪你整理學習經歷
@@ -43,7 +43,7 @@
               src="@/assets/card-record.svg"
               alt=""
               class="features__item__img"
-            >
+            />
             <h3 class="features__item__title">
               紀錄大學各項經驗
             </h3>
@@ -53,7 +53,7 @@
               src="@/assets/card-plan.svg"
               alt=""
               class="features__item__img"
-            >
+            />
             <h3 class="features__item__title">
               以TAG 整理個人能力
             </h3>
@@ -63,7 +63,7 @@
               src="@/assets/card-portfolio.svg"
               alt=""
               class="features__item__img"
-            >
+            />
             <h3 class="features__item__title">
               簡易製作履歷
             </h3>
@@ -71,24 +71,31 @@
         </ul>
       </section>
       <section class="feature">
-        <img class="feature__img" src="@/assets/landing-1.png">
+        <img class="feature__img" src="@/assets/landing-1.png" />
         <div class="feature__text">
           <h2>個人化紀錄</h2>
-          <p>內建校內學習紀錄，以簡潔快速的方式一覽大學學習歷程，可以即時的在已修習過的課程進行紀錄，更能透過自行增減不同的學習紀錄，來增添你精彩大學的學習經歷。</p>
+          <p>
+            內建校內學習紀錄，以簡潔快速的方式一覽大學學習歷程，可以即時的在已修習過的課程進行紀錄，更能透過自行增減不同的學習紀錄，來增添你精彩大學的學習經歷。
+          </p>
         </div>
       </section>
       <section class="feature feature--reverse">
-        <img class="feature__img" src="@/assets/landing-2.png">
+        <img class="feature__img" src="@/assets/landing-2.png" />
         <div class="feature__text">
           <h2>以TAG整理個人能力</h2>
-          <p>提供個人專屬的分類工具，以TAG 來標示課程所得到的能力，透過分類 TAG 歸納出個人的關鍵技能，快速歸納自身特質及專長，精準統整，侃侃而談個人能力不再是難事。</p>
+          <p>
+            提供個人專屬的分類工具，以TAG 來標示課程所得到的能力，透過分類 TAG
+            歸納出個人的關鍵技能，快速歸納自身特質及專長，精準統整，侃侃而談個人能力不再是難事。
+          </p>
         </div>
       </section>
       <section class="feature">
-        <img class="feature__img" src="@/assets/landing-3.png">
+        <img class="feature__img" src="@/assets/landing-3.png" />
         <div class="feature__text">
           <h2>簡易製作履歷</h2>
-          <p>可以針對履歷、研究所備審等編排不同版本，在各版本中能主題式的展現個人能力，不再擔心不會排版，只需拉入各項經驗即可，最後一鍵即能輸出簡潔的個人履歷。</p>
+          <p>
+            可以針對履歷、研究所備審等編排不同版本，在各版本中能主題式的展現個人能力，不再擔心不會排版，只需拉入各項經驗即可，最後一鍵即能輸出簡潔的個人履歷。
+          </p>
         </div>
       </section>
     </div>
@@ -108,10 +115,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "~@/scss/mixins";
-@import "~@/scss/variables";
+@import '~@/scss/mixins';
+@import '~@/scss/variables';
 .landing {
-  background-color: #FAF5F5;
+  background-color: #faf5f5;
 }
 .hero {
   position: relative;
@@ -248,7 +255,7 @@ footer {
 }
 
 @media (max-width: 1023px) {
-  .intro{
+  .intro {
     &__icon {
       margin-bottom: 32px;
     }
@@ -262,7 +269,7 @@ footer {
     &__title {
       font-size: 52px;
     }
-    &__item{
+    &__item {
       &__img {
         max-width: 135px;
       }
@@ -294,7 +301,7 @@ footer {
     text-align: center;
     align-items: center;
   }
-  .intro{
+  .intro {
     &__icon {
       height: 48px;
       display: inline-block;
@@ -302,7 +309,7 @@ footer {
     }
   }
   .features {
-    &__item{
+    &__item {
       &__img {
         max-width: 115px;
       }
@@ -325,14 +332,14 @@ footer {
   }
 }
 @media (max-width: 639px) {
-  .intro{
+  .intro {
     &__title {
       font-size: 44px;
       line-height: 70px;
     }
   }
 
-  .features{
+  .features {
     &__title {
       font-size: 44px;
     }
@@ -355,7 +362,7 @@ footer {
 
   .feature {
     padding: 40px 20px;
-    &__text h2{
+    &__text h2 {
       line-height: 52px;
     }
     &__img {

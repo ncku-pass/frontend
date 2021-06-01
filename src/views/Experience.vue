@@ -1,62 +1,59 @@
 <template>
-  <Navbar />
-  <main>
-    <div class="experience">
-      <div class="experience__window">
-        <ExperienceWindowTabs :type="type" />
-        <div v-if="isPending" class="experience__loading">
-          <p>Loading</p>
-          <div class="lds-dual-ring" />
-        </div>
-        <div v-else class="experience__window__table">
-          <div
-            ref="shadowContainer"
-            class="shadow-container"
-            @scroll.capture="setShadows"
-          >
-            <div class="experience__window__table__wrapper">
-              <ExperienceListBlock
-                v-for="(semesterData, semester) in classifiedExperiences[type]"
-                :key="semester"
-                :semester="semester"
+  <div class="experience">
+    <div class="experience__window">
+      <ExperienceWindowTabs :type="type" />
+      <div v-if="isPending" class="experience__loading">
+        <p>Loading</p>
+        <div class="lds-dual-ring" />
+      </div>
+      <div v-else class="experience__window__table">
+        <div
+          ref="shadowContainer"
+          class="shadow-container"
+          @scroll.capture="setShadows"
+        >
+          <div class="experience__window__table__wrapper">
+            <ExperienceListBlock
+              v-for="(semesterData, semester) in classifiedExperiences[type]"
+              :key="semester"
+              :semester="semester"
+            >
+              <ExperienceListItem
+                v-for="experience in semesterData"
+                :key="experience.id"
+                :experience="experience"
+                @delete="handleDelete"
+                @edit="handleEditExperience"
+              />
+            </ExperienceListBlock>
+            <button
+              class="experience__window__table__add"
+              @click="handleAddExperience"
+            >
+              <svg
+                width="22"
+                height="22"
+                viewBox="0 0 22 22"
+                xmlns="http://www.w3.org/2000/svg"
               >
-                <ExperienceListItem
-                  v-for="experience in semesterData"
-                  :key="experience.id"
-                  :experience="experience"
-                  @delete="handleDelete"
-                  @edit="handleEditExperience"
+                <path
+                  d="M8.71431 22.3811H13.2913V13.4791H21.7733V9.0701H13.2913V0.126143H8.71431V9.0701H0.232251V13.4791H8.71431V22.3811Z"
+                  fill="white"
                 />
-              </ExperienceListBlock>
-              <button
-                class="experience__window__table__add"
-                @click="handleAddExperience"
-              >
-                <svg
-                  width="22"
-                  height="22"
-                  viewBox="0 0 22 22"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M8.71431 22.3811H13.2913V13.4791H21.7733V9.0701H13.2913V0.126143H8.71431V9.0701H0.232251V13.4791H8.71431V22.3811Z"
-                    fill="white"
-                  />
-                </svg>
-              </button>
-            </div>
+              </svg>
+            </button>
           </div>
         </div>
       </div>
     </div>
-    <FormModal
-      v-if="showFormModal"
-      :form-type="type"
-      :edit-data="experienceToEdit"
-      @close="showFormModal = false"
-      @submit="handleSubmit"
-    />
-  </main>
+  </div>
+  <FormModal
+    v-if="showFormModal"
+    :form-type="type"
+    :edit-data="experienceToEdit"
+    @close="showFormModal = false"
+    @submit="handleSubmit"
+  />
 </template>
 
 <script>
@@ -65,7 +62,6 @@ import ExperienceWindowTabs from '@/components/Experience/ExperienceWindowTabs.v
 import ExperienceListItem from '@/components/Experience/ExperienceListItem.vue'
 import ExperienceListBlock from '@/components/Experience/ExperienceListBlock.vue'
 import FormModal from '@/components/FormModal.vue'
-import Navbar from '@/components/Navbar'
 import useScrollShadow from '@/composables/useScrollShadow'
 import useExperiences from '@/composables/experiences/useExperiences'
 import getTags from '@/composables/tags/useTags'
@@ -76,8 +72,7 @@ export default {
     ExperienceWindowTabs,
     ExperienceListItem,
     ExperienceListBlock,
-    FormModal,
-    Navbar
+    FormModal
   },
   props: {
     // 目前顯示的TAB種類
@@ -87,7 +82,12 @@ export default {
     }
   },
   setup (props) {
-    const { isPending, experiences, classifiedExperiences, getExperiences } = useExperiences()
+    const {
+      isPending,
+      experiences,
+      classifiedExperiences,
+      getExperiences
+    } = useExperiences()
     getTags()
 
     // ===新增活動表單===
@@ -121,14 +121,25 @@ export default {
 
     // ===點擊編輯的按鈕時，抓出此筆經歷，傳入表單中===
     const experienceToEdit = ref(null)
-    const handleEditExperience = (experienceId) => {
-      showFormModal.value = true;
-      [experienceToEdit.value] = experiences.value[props.type].filter(exp => {
+    const handleEditExperience = experienceId => {
+      showFormModal.value = true
+      ;[experienceToEdit.value] = experiences.value[props.type].filter(exp => {
         return exp.id === experienceId
       })
     }
 
-    return { isPending, classifiedExperiences, showFormModal, handleAddExperience, setShadows, shadowContainer, handleSubmit, handleDelete, handleEditExperience, experienceToEdit }
+    return {
+      isPending,
+      classifiedExperiences,
+      showFormModal,
+      handleAddExperience,
+      setShadows,
+      shadowContainer,
+      handleSubmit,
+      handleDelete,
+      handleEditExperience,
+      experienceToEdit
+    }
   }
 }
 </script>
@@ -196,7 +207,7 @@ export default {
   height: 60px;
 }
 .lds-dual-ring:after {
-  content: " ";
+  content: ' ';
   display: block;
   width: 60px;
   height: 60px;

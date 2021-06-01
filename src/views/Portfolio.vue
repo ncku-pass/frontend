@@ -1,22 +1,17 @@
 <template>
-  <Navbar />
-  <main>
-    <div class="portfolio">
-      <PortfolioMain />
-      <PortfolioMenu />
-    </div>
-  </main>
+  <div class="portfolio">
+    <PortfolioMain />
+    <PortfolioMenu />
+  </div>
 </template>
 
 <script>
-import Navbar from '@/components/Navbar'
 import PortfolioMain from '@/components/Portfolio/PortfolioMain'
 import PortfolioMenu from '@/components/Portfolio/PortfolioMenu'
 
 export default {
   name: 'Portfolio',
   components: {
-    Navbar,
     PortfolioMain,
     PortfolioMenu
   }

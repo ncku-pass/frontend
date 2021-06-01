@@ -10,7 +10,7 @@
     background-color: $gray-4;
     border-color: $gray-4;
   }
-  &--danger {
+  &--red {
     @extend .btn;
     border-color: $red;
     background: $red;

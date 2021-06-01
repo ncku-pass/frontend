@@ -1,17 +1,23 @@
 <template>
-  <router-view v-slot="{ Component }">
-    <keep-alive :include="['Portfolio']">
-      <component :is="Component" />
-    </keep-alive>
-  </router-view>
+  <LayoutWrapper>
+    <router-view v-slot="{ Component }">
+      <keep-alive :include="['Portfolio']">
+        <component :is="Component" />
+      </keep-alive>
+    </router-view>
+  </LayoutWrapper>
 </template>
 
 <script>
 import useGrab from '@/composables/useGrab'
 import { watchEffect } from '@vue/runtime-core'
+import LayoutWrapper from '@/layouts/LayoutWrapper.vue'
 
 export default {
   name: 'Home',
+  components: {
+    LayoutWrapper
+  },
   setup () {
     const { isGrabbing } = useGrab()
     watchEffect(() => {
@@ -26,16 +32,10 @@ export default {
 </script>
 
 <style lang="scss">
-@import "./scss/variables";
+@import './scss/variables';
 
 #app {
-  display: flex;
-  flex-direction: column;
   height: 100vh;
   background: $pink;
-}
-
-main {
-  height: calc(100vh - #{$navbar-height});
 }
 </style>

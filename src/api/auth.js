@@ -3,12 +3,27 @@ import { req } from './https'
 
 export const login = ({ studentId, password }) => {
   return req.post('/auth/login', {
-    studentId, password
+    studentId,
+    password
   })
 }
 
-export const register = async ({ email, name, password, confirmPassword, studentId, major, graduationYear }) => {
+export const register = async ({
+  email,
+  name,
+  password,
+  confirmPassword,
+  studentId,
+  major,
+  graduationYear
+}) => {
   return req.post('/auth/register', {
-    email, name, password, confirmPassword, studentId, major, graduationYear
+    email,
+    name,
+    password,
+    confirmPassword,
+    studentId,
+    major,
+    graduationYear
   })
 }
