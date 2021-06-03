@@ -5,8 +5,8 @@
       class="ability-card__topic"
       placeholder="填入能力主題，如文書行政能力/溝通能力..."
       @input="$emit('update:abilityTopic', $event.target.value)"
-    >
-    <hr>
+    />
+    <hr />
     <ul class="ability-card__body">
       <draggable
         :list="experiences"
@@ -26,7 +26,7 @@
                 src="~@/assets/delete.svg"
                 alt="delete"
                 @click.stop="$emit('delete-experience', index)"
-              >
+              />
             </div>
             <div class="experience-card__tags">
               <div

@@ -12,7 +12,7 @@
           {{ portfolio.name || '請輸入名稱' }}
         </li>
         <li class="portfolio__main__tabs__add" @click="handleAddPortfolio">
-          <img src="@/assets/add_circle.svg" alt="">
+          <img src="@/assets/add_circle.svg" alt="" />
         </li>
       </ul>
       <div class="portfolio__main__content">
@@ -22,7 +22,7 @@
             placeholder="請輸入名稱"
             class="content-header__title"
             type="text"
-          >
+          />
           <div class="content-header__btns">
             <button class="btn">
               匯出

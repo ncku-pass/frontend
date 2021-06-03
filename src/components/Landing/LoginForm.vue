@@ -13,7 +13,7 @@
         required
         pattern="[a-zA-Z0-9]{8,}"
         title="請輸入8位以上英數字"
-      >
+      />
     </div>
     <div>
       <label for="password" class="form-label">密碼</label>
@@ -25,7 +25,7 @@
         required
         pattern="[a-zA-Z0-9]{8,}"
         title="請輸入8位以上英數字"
-      >
+      />
     </div>
     <p v-if="error">
       登入失敗，請重新嘗試
