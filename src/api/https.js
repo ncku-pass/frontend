@@ -51,6 +51,6 @@ req.interceptors.response.use(
   },
   (error) => {
     errorHandler(error)
-    return Promise.reject(error)
+    return Promise.reject(error.response)
   }
 )

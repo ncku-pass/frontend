@@ -37,7 +37,9 @@
     >
       {{ isPending ? '登入中' : '登入' }}
     </button>
-    <a class="register">還沒註冊嗎，點我立即註冊</a>
+    <router-link class="register" :to="{ name: 'Register' }">
+      還沒註冊嗎，點我立即註冊
+    </router-link>
   </form>
 </template>
 

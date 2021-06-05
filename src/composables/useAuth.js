@@ -1,6 +1,6 @@
 import { reactive, toRefs } from 'vue'
 import router from '@/router/index'
-import { login as loginAPI } from '@/api/auth'
+import { login as loginAPI, register as registerAPI } from '@/api/auth'
 
 const state = reactive({
   tokenStr: localStorage.getItem('auth') || '',
@@ -30,8 +30,38 @@ const logout = () => {
   router.push({ name: 'Landing' })
 }
 
+const register = async ({
+  email,
+  name,
+  password,
+  confirmPassword,
+  studentId,
+  major,
+  graduationYear
+}) => {
+  try {
+    state.isPending = true
+    state.error = null
+    const { data } = await registerAPI({
+      email,
+      name,
+      password,
+      confirmPassword,
+      studentId,
+      major,
+      graduationYear: ~~graduationYear // ~~ 把string轉成number
+    })
+    state.tokenStr = data.tokenStr
+    localStorage.setItem('auth', data.tokenStr)
+  } catch (err) {
+    state.error = err
+  } finally {
+    state.isPending = false
+  }
+}
+
 const useAuth = () => {
-  return { ...toRefs(state), login, logout }
+  return { ...toRefs(state), login, logout, register }
 }
 
 export default useAuth
