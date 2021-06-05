@@ -307,7 +307,10 @@ export default {
           })
           console.log(res)
         } else {
-          await addExperience(formData)
+          await addExperience({
+            ...formData,
+            tags: formData.tags.map(tag => tag.id)
+          })
         }
         context.emit('submit')
       } catch (error) {
