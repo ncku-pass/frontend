@@ -28,14 +28,49 @@
           />
         </div>
         <div v-if="showedFieldText.semester">
-          <label class="form-label">{{ showedFieldText.semester.text }}</label>
-          <Multiselect
+          <label class="form-label" for="experienceSemester">{{ showedFieldText.semester.text }}</label>
+          <select
+            v-if="formType === 'course'"
+            id="experienceSemester"
             v-model="formData.semester"
-            :options="semesters"
-            :searchable="true"
-            :max-height="240"
-            placeholder="請選擇時間"
-          />
+            class="form-control"
+          >
+            <option value="" disabled>
+              請選擇時間
+            </option>
+            <option
+              v-for="semester in semesters"
+              :key="semester"
+              :value="semester"
+            >
+              {{ semester }}
+            </option>
+          </select>
+          <div v-else class="form-modal__time">
+            <p>開始時間</p>
+            <input type="date" class="form-control" />
+            <p>結束時間</p>
+            <input type="date" class="form-control" />
+          </div>
+        </div>
+        <div v-if="showedFieldText.type">
+          <label class="form-label" for="experienceType">{{ showedFieldText.type.text }}</label>
+          <select
+            id="experienceType"
+            v-model="formData.type"
+            class="form-control"
+          >
+            <option value="" disabled>
+              請選擇類別
+            </option>
+            <option
+              v-for="type in showedFieldText.type.options"
+              :key="type"
+              :value="type"
+            >
+              {{ type }}
+            </option>
+          </select>
         </div>
         <div v-if="showedFieldText.description">
           <label for="experienceDescription" class="form-label">{{
@@ -132,14 +167,13 @@ import MessageModal from '@/components/MessageModal.vue'
 import { computed, reactive, ref } from 'vue'
 import { addExperience, updateExperience } from '@/api/experiences'
 // import { addTag } from '@/api/tags'
-import getTags from '@/composables/tags/useTags'
-import Multiselect from '@vueform/multiselect'
-import '@vueform/multiselect/themes/default.css'
+import useTags from '@/composables/tags/useTags'
 import TagSelect from '@/components/TagSelect.vue'
 
 const fieldText = {
   course: {
     name: { text: '*課程名稱', required: true },
+    type: { text: '課程類別', required: false, options: ['必修課程', '選修課程', '通識', '工作坊', '密集課程', '線上課程'] },
     semester: { text: '*課程時間', required: true },
     description: {
       text: '課程簡介',
@@ -155,6 +189,7 @@ const fieldText = {
   },
   activity: {
     name: { text: '*活動名稱', required: true },
+    type: { text: '活動類別', required: false, options: ['社團', '系內活動', '校內活動', '校外活動', '其他'] },
     semester: { text: '*活動時間', required: true },
     position: { text: '*活動擔任職位', required: true },
     description: {
@@ -227,11 +262,14 @@ const fieldText = {
 
 export default {
   name: 'FormModal',
-  components: { ConfirmModal, Multiselect, MessageModal, TagSelect },
+  components: { ConfirmModal, MessageModal, TagSelect },
   props: {
     formType: {
       type: String,
-      default: 'activity'
+      default: 'activity',
+      validator (value) {
+        return ['course', 'activity', 'competition', 'work', 'certificate', 'other'].indexOf(value) !== -1
+      }
     },
     editData: {
       type: Object,
@@ -268,15 +306,7 @@ export default {
       .flat()
 
     // === 產生所有的tag ===
-    const { tags } = getTags()
-
-    const handleCreateTag = async tag => {
-      console.log(tag)
-      tagsMultiselect.value.deselect(tag)
-      // tags.value.push({ id: Math.random(), name: tag })
-      // const { data } = await addTag(tag)
-      // tags.value.push(data[0])
-    }
+    const { tags } = useTags()
 
     // 儲存填入的資料，若有傳入要編輯的資料，則設為預設值
     const formData = reactive({
@@ -289,6 +319,7 @@ export default {
       experienceType: props.formType,
       // tags: props.editData?.tags.map(tag => tag.id) || []
       tags: props.editData?.tags || []
+      // TODO: 新增開始/結束時間欄位、課程/活動類別欄位
     })
 
     const formStatus = reactive({
@@ -328,7 +359,6 @@ export default {
 
     return {
       tags,
-      handleCreateTag,
       showConfirmModal,
       leaveForm,
       showMessageModal,
@@ -349,7 +379,8 @@ export default {
 @import '../scss/variables';
 
 .form-modal {
-  width: 770px;
+  width: 100%;
+  max-width: 770px;
   max-height: 80vh;
   padding: 25px 25px 20px;
   background-color: #fff;
@@ -357,6 +388,12 @@ export default {
   display: flex;
   &__hint {
     color: $gray-3;
+  }
+  &__time {
+    display: grid;
+    align-items: center;
+    grid-template-columns: auto 1fr auto 1fr;
+    column-gap: 10px;
   }
 }
 
