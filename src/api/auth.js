@@ -27,3 +27,7 @@ export const register = async ({
     graduationYear
   })
 }
+
+export const checkToken = async () => {
+  return req.post('/auth/check-token')
+}

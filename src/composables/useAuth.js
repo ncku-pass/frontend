@@ -1,6 +1,6 @@
 import { reactive, toRefs } from 'vue'
 import router from '@/router/index'
-import { login as loginAPI, register as registerAPI } from '@/api/auth'
+import { login as loginAPI, register as registerAPI, checkToken as checkTokenAPI } from '@/api/auth'
 
 const state = reactive({
   tokenStr: localStorage.getItem('auth') || '',
@@ -60,8 +60,17 @@ const register = async ({
   }
 }
 
+const checkToken = async () => {
+  try {
+    await checkTokenAPI()
+  } catch (error) {
+    state.tokenStr = ''
+    localStorage.removeItem('auth')
+  }
+}
+
 const useAuth = () => {
-  return { ...toRefs(state), login, logout, register }
+  return { ...toRefs(state), login, logout, register, checkToken }
 }
 
 export default useAuth
