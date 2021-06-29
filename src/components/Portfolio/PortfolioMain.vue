@@ -1,6 +1,6 @@
 <template>
   <div class="portfolio__main-container">
-    <div class="portfolio__main">
+    <div v-if="resumes.length" class="portfolio__main">
       <ul class="portfolio__main__tabs">
         <li
           v-for="(resume, index) in resumes"
@@ -67,6 +67,7 @@
         </div>
       </div>
     </div>
+    <!-- TODO: 顯示Loading -->
   </div>
 </template>
 

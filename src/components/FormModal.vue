@@ -1,7 +1,7 @@
 <template>
   <div class="modal-bg" @click.self="leaveForm">
     <div class="form-modal">
-      <div class="form-modal__content">
+      <form class="form-modal__content" @submit.prevent="handleFormSubmit">
         <p class="form-modal__hint">
           有*欄位代表必填
         </p>
@@ -14,6 +14,7 @@
             v-model="formData.name"
             type="text"
             class="form-control"
+            :required="showedFieldText.name.required"
           />
         </div>
         <div v-if="showedFieldText.position">
@@ -25,6 +26,7 @@
             v-model="formData.position"
             type="text"
             class="form-control"
+            :required="showedFieldText.position.required"
           />
         </div>
         <div v-if="showedFieldText.semester">
@@ -34,6 +36,7 @@
             id="experienceSemester"
             v-model="formData.semester"
             class="form-control"
+            :required="showedFieldText.semester.required"
           >
             <option value="" disabled>
               請選擇時間
@@ -60,7 +63,11 @@
             v-model="formData.type"
             class="form-control"
           >
-            <option value="" disabled>
+            <option
+              value=""
+              disabled
+              selected
+            >
               請選擇類別
             </option>
             <option
@@ -82,6 +89,7 @@
             class="form-control"
             rows="2"
             :placeholder="showedFieldText.description?.placeholder"
+            :required="showedFieldText.description.required"
           />
         </div>
         <div>
@@ -99,6 +107,7 @@
             rows="3"
             maxlength="150"
             :placeholder="showedFieldText.feedback.placeholder"
+            :required="showedFieldText.feedback.required"
           />
         </div>
         <div>
@@ -131,6 +140,7 @@
           <button
             v-show="!formStatus.isPending"
             class="btn"
+            type="button"
             @click="leaveForm"
           >
             取消
@@ -138,12 +148,12 @@
           <button
             class="btn--red"
             :disabled="formStatus.isPending"
-            @click="handleFormSubmit"
+            type="submit"
           >
             {{ formStatus.isPending ? '儲存中' : '儲存' }}
           </button>
         </div>
-      </div>
+      </form>
     </div>
   </div>
   <ConfirmModal
@@ -318,8 +328,9 @@ export default {
       link: props.editData?.link || '',
       experienceType: props.formType,
       // tags: props.editData?.tags.map(tag => tag.id) || []
-      tags: props.editData?.tags || []
+      tags: props.editData?.tags || [],
       // TODO: 新增開始/結束時間欄位、課程/活動類別欄位
+      type: props.editData?.type || ''
     })
 
     const formStatus = reactive({
@@ -394,6 +405,7 @@ export default {
     align-items: center;
     grid-template-columns: auto 1fr auto 1fr;
     column-gap: 10px;
+    color: $gray-1;
   }
 }
 
