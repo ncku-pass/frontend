@@ -1,10 +1,6 @@
 <template>
   <div class="portfolio__menu__filter">
-    <div
-      ref="FilterShadowContainer"
-      class="shadow-container"
-      @scroll.capture="setShadows"
-    >
+    <vueScrollShadow>
       <div class="portfolio__menu__filter__container">
         <div class="filter-block">
           <div class="filter-block__title">
@@ -39,16 +35,18 @@
           </ul>
         </div>
       </div>
-    </div>
+    </vueScrollShadow>
   </div>
 </template>
 
 <script>
-import { ref, watch, onMounted } from 'vue'
-import useScrollShadow from '@/composables/useScrollShadow'
+import vueScrollShadow from 'vue3-scroll-shadow'
 
 export default {
   name: 'MenuFilter',
+  components: {
+    vueScrollShadow
+  },
   props: {
     toggleSemester: {
       type: Function,
@@ -63,18 +61,7 @@ export default {
       required: true
     }
   },
-  setup (props) {
-    // ===設定滾動容器的陰影===
-    const { setShadows, initShadows } = useScrollShadow()
-    const FilterShadowContainer = ref(null)
-
-    onMounted(() => {
-      watch(props.filter, () => {
-        initShadows(FilterShadowContainer.value)
-      })
-    })
-
-    return { setShadows, FilterShadowContainer }
+  setup () {
   }
 }
 </script>
@@ -105,14 +92,13 @@ export default {
     display: flex;
     flex-wrap: wrap;
     justify-content: flex-start;
-    margin: -5px;
+    gap: 5px;
     &__tag {
       padding: 10px;
       color: $gray-1;
       border: 1px solid $gray-1;
       border-radius: 15px;
       line-height: 14px;
-      margin: 5px;
       cursor: pointer;
       user-select: none;
       &--selected {

@@ -12,6 +12,20 @@
   // }
 }
 
+::-webkit-scrollbar {
+  -webkit-appearance: none;
+  width: 7px;
+  margin-right: 4px;
+}
+::-webkit-scrollbar {
+  width: 0!important;
+}
+::-webkit-scrollbar-thumb {
+  border-radius: 4px;
+  background-color: #ffffff66;
+  box-shadow: 0 0 1px #00000066;
+}
+
 html.draggable-cursor {
   cursor: grabbing;
 }

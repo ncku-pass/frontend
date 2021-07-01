@@ -7,11 +7,7 @@
         <div class="lds-dual-ring" />
       </div>
       <div v-else class="experience__window__table">
-        <div
-          ref="shadowContainer"
-          class="shadow-container"
-          @scroll.capture="setShadows"
-        >
+        <vueScrollShadow>
           <div class="experience__window__table__wrapper">
             <ExperienceListBlock
               v-for="(semesterData, semester) in classifiedExperiences[type]"
@@ -43,7 +39,7 @@
               </svg>
             </button>
           </div>
-        </div>
+        </vueScrollShadow>
       </div>
     </div>
   </div>
@@ -57,14 +53,14 @@
 </template>
 
 <script>
-import { ref, nextTick, onUpdated } from 'vue'
+import { ref } from 'vue'
 import ExperienceWindowTabs from '@/components/Experience/ExperienceWindowTabs.vue'
 import ExperienceListItem from '@/components/Experience/ExperienceListItem.vue'
 import ExperienceListBlock from '@/components/Experience/ExperienceListBlock.vue'
 import FormModal from '@/components/FormModal.vue'
-import useScrollShadow from '@/composables/useScrollShadow'
 import useExperiences from '@/composables/experiences/useExperiences'
 import getTags from '@/composables/tags/useTags'
+import vueScrollShadow from 'vue3-scroll-shadow'
 
 export default {
   name: 'Experience',
@@ -72,7 +68,8 @@ export default {
     ExperienceWindowTabs,
     ExperienceListItem,
     ExperienceListBlock,
-    FormModal
+    FormModal,
+    vueScrollShadow
   },
   props: {
     // 目前顯示的TAB種類
@@ -98,15 +95,7 @@ export default {
     }
 
     // ===設定滾動容器陰影===
-    const { setShadows, initShadows } = useScrollShadow()
     const shadowContainer = ref(null)
-    // 切換tab或是資料更新時，重新檢查是否渲染陰影
-    onUpdated(async () => {
-      if (isPending.value === false) {
-        await nextTick()
-        initShadows(shadowContainer.value)
-      }
-    })
 
     // ===處理表單送出===
     const handleSubmit = () => {
@@ -133,7 +122,6 @@ export default {
       classifiedExperiences,
       showFormModal,
       handleAddExperience,
-      setShadows,
       shadowContainer,
       handleSubmit,
       handleDelete,
