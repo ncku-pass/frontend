@@ -29,6 +29,18 @@
             :required="showedFieldText.position.required"
           />
         </div>
+        <div v-if="showedFieldText.score">
+          <label for="experienceScore" class="form-label">{{
+            showedFieldText.score.text
+          }}</label>
+          <input
+            id="experiencePosition"
+            v-model="formData.position"
+            type="text"
+            class="form-control"
+            :required="showedFieldText.position.required"
+          />
+        </div>
         <div v-if="showedFieldText.semester">
           <label class="form-label" for="experienceSemester">{{ showedFieldText.semester.text }}</label>
           <select
@@ -50,8 +62,12 @@
             </option>
           </select>
           <div v-else class="form-modal__time">
-            <p>開始時間</p>
-            <input type="date" class="form-control" />
+            <p>*開始時間</p>
+            <input
+              type="date"
+              class="form-control"
+              required
+            />
             <p>結束時間</p>
             <input type="date" class="form-control" />
           </div>
@@ -172,12 +188,11 @@
 </template>
 
 <script>
+import { computed, reactive, ref } from 'vue'
+import { useStore } from 'vuex'
 import ConfirmModal from '@/components/ConfirmModal.vue'
 import MessageModal from '@/components/MessageModal.vue'
-import { computed, reactive, ref } from 'vue'
 import { addExperience, updateExperience } from '@/api/experiences'
-// import { addTag } from '@/api/tags'
-import useTags from '@/composables/tags/useTags'
 import TagSelect from '@/components/TagSelect.vue'
 
 const fieldText = {
@@ -290,6 +305,8 @@ export default {
   },
   emits: ['close', 'submit'],
   setup (props, context) {
+    const store = useStore()
+
     // === 離開時跳出確認視窗 ===
     const showConfirmModal = ref(false)
     const leaveForm = () => {
@@ -316,7 +333,7 @@ export default {
       .flat()
 
     // === 產生所有的tag ===
-    const { tags } = useTags()
+    const tags = computed(() => store.state.tags.tags)
 
     // 儲存填入的資料，若有傳入要編輯的資料，則設為預設值
     const formData = reactive({

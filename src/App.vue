@@ -1,7 +1,7 @@
 <template>
   <LayoutWrapper>
     <router-view v-slot="{ Component }">
-      <keep-alive :include="['Portfolio']">
+      <keep-alive :include="['Portfolio', 'Experience']">
         <component :is="Component" />
       </keep-alive>
     </router-view>

@@ -23,13 +23,26 @@
           Portfolio
         </router-link>
       </li>
+      <li>
+        <a class="navbar__links__link tab-link" @click="logout">
+          登出
+        </a>
+      </li>
     </ul>
   </nav>
 </template>
 
 <script>
-export default {
+import { useStore } from 'vuex'
 
+export default {
+  name: 'Navbar',
+  setup () {
+    const store = useStore()
+    const logout = () => store.dispatch('auth/logout')
+
+    return { logout }
+  }
 }
 </script>
 

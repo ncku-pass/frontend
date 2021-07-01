@@ -73,9 +73,9 @@
 
 <script>
 import { computed, ref } from 'vue'
+import { useStore } from 'vuex'
 import draggable from 'vuedraggable'
 import AbilityCard from '@/components/Portfolio/AbilityCard.vue'
-import useResumes from '@/composables/resumes/useResumes'
 
 export default {
   name: 'PortfolioMain',
@@ -84,7 +84,13 @@ export default {
     draggable
   },
   setup () {
-    const { resumes, saveResume, error, isPending } = useResumes()
+    const store = useStore()
+
+    store.dispatch('resumes/getResumes')
+    const resumes = computed(() => store.state.resumes.resumes)
+    const error = computed(() => store.state.resumes.error)
+    const isPending = computed(() => store.state.resumes.isPending)
+    const saveResume = () => store.dispatch('saveResume')
 
     const selectedIndex = ref(0)
     const showedResume = computed(() => {

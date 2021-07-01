@@ -53,13 +53,12 @@
 </template>
 
 <script>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
+import { useStore } from 'vuex'
 import ExperienceWindowTabs from '@/components/Experience/ExperienceWindowTabs.vue'
 import ExperienceListItem from '@/components/Experience/ExperienceListItem.vue'
 import ExperienceListBlock from '@/components/Experience/ExperienceListBlock.vue'
 import FormModal from '@/components/FormModal.vue'
-import useExperiences from '@/composables/experiences/useExperiences'
-import getTags from '@/composables/tags/useTags'
 import vueScrollShadow from 'vue3-scroll-shadow'
 
 export default {
@@ -79,13 +78,15 @@ export default {
     }
   },
   setup (props) {
-    const {
-      isPending,
-      experiences,
-      classifiedExperiences,
-      getExperiences
-    } = useExperiences()
-    getTags()
+    const store = useStore()
+
+    store.dispatch('tags/initTags')
+    store.dispatch('experiences/initExperiences')
+
+    const isPending = computed(() => store.state.experiences.isPending)
+    const experiences = computed(() => store.state.experiences.experiences)
+    const classifiedExperiences = computed(() => store.getters['experiences/classifiedExperiences'])
+    const getExperiences = () => store.dispatch('experiences/getExperiences')
 
     // ===新增活動表單===
     const showFormModal = ref(false)

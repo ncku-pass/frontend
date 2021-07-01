@@ -6,6 +6,7 @@
 </template>
 
 <script>
+import { useStore } from 'vuex'
 import PortfolioMain from '@/components/Portfolio/PortfolioMain'
 import PortfolioMenu from '@/components/Portfolio/PortfolioMenu'
 
@@ -14,6 +15,10 @@ export default {
   components: {
     PortfolioMain,
     PortfolioMenu
+  },
+  setup () {
+    const store = useStore()
+    store.dispatch('experiences/initExperiences')
   }
 }
 </script>

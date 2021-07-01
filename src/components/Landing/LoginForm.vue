@@ -44,18 +44,22 @@
 </template>
 
 <script>
-import { reactive } from 'vue'
+import { reactive, computed } from 'vue'
+import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'
-// import { login } from '@/api/auth'
-import useAuth from '@/composables/useAuth'
 
 export default {
   setup () {
+    const store = useStore()
+
     const authData = reactive({
       studentId: '',
       password: ''
     })
-    const { login, tokenStr, error, isPending } = useAuth()
+    const error = computed(() => store.state.auth.error)
+    const isPending = computed(() => store.state.auth.isPending)
+    const tokenStr = computed(() => store.state.auth.tokenStr)
+    const login = (authData) => store.dispatch('auth/login', authData)
 
     const router = useRouter()
 

@@ -46,9 +46,8 @@
 
 <script>
 import { ref, onMounted, reactive, watchEffect, watch, computed } from 'vue'
+import { useStore } from 'vuex'
 import useScrollShadow from '@/composables/useScrollShadow'
-import useExperiences from '@/composables/experiences/useExperiences'
-import getTags from '@/composables/tags/useTags'
 import MenuFilter from '@/components/Portfolio/MenuFilter'
 import MenuCard from '@/components/Portfolio/MenuCard'
 import draggable from 'vuedraggable'
@@ -61,12 +60,15 @@ export default {
     MenuCard
   },
   setup () {
+    const store = useStore()
     // ===切換filter顯示===
     const showFilter = ref(true)
 
     // ===經驗列表===
-    const { experiencesArray, semesters } = useExperiences()
-    const { tags } = getTags()
+    const experiencesArray = computed(() => store.getters['experiences/experiencesArray'])
+    const semesters = computed(() => store.getters['experiences/semesters'])
+
+    const tags = computed(() => store.state.tags.tags)
 
     const filter = reactive({
       semesters: {},

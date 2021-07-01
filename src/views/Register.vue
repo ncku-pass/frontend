@@ -146,11 +146,11 @@
 
 <script>
 import { ref, reactive, computed } from 'vue'
+import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'
 import { object, string, number } from 'yup'
 import { Form, Field, ErrorMessage } from 'vee-validate'
 import departments from '@/assets/departments.json'
-import useAuth from '@/composables/useAuth'
 
 export default {
   name: 'Register',
@@ -160,6 +160,7 @@ export default {
     ErrorMessage
   },
   setup () {
+    const store = useStore()
     const router = useRouter()
 
     const currentStep = ref(0)
@@ -208,7 +209,10 @@ export default {
     })
 
     // 控制表單步驟
-    const { register, error: registerError, isPending } = useAuth()
+    const registerError = computed(() => store.state.auth.error)
+    const isPending = computed(() => store.state.auth.isPending)
+    const register = (formData) => store.dispatch('auth/register', formData)
+
     const nextStep = async () => {
       if (currentStep.value === 1) {
         console.log('完成表單：', formData)
