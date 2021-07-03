@@ -424,8 +424,8 @@ export default {
 </script>
 
 <style lang="scss">
-@import '../scss/mixins';
-@import '../scss/variables';
+@import '~@/scss/mixins';
+@import '~@/scss/variables';
 
 .form-modal {
   width: 100%;

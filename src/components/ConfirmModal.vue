@@ -51,7 +51,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import "../scss/mixins";
+@import "~@/scss/mixins";
 
 .confirm-modal__content {
   padding: 10px 24px;

@@ -58,7 +58,7 @@ import { useStore } from 'vuex'
 import ExperienceWindowTabs from '@/components/Experience/ExperienceWindowTabs.vue'
 import ExperienceListItem from '@/components/Experience/ExperienceListItem.vue'
 import ExperienceListBlock from '@/components/Experience/ExperienceListBlock.vue'
-import FormModal from '@/components/FormModal.vue'
+import FormModal from '@/components/Experience/FormModal.vue'
 import vueScrollShadow from 'vue3-scroll-shadow'
 
 export default {
