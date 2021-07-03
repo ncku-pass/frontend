@@ -139,6 +139,8 @@ export default {
   gap: 5px;
   padding: 4px 12px;
   position: relative;
+  min-height: 46px;
+  align-items: center;
 }
 .tag-select.active {
   border-bottom-right-radius: 0px;

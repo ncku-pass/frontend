@@ -29,18 +29,6 @@
             :required="showedFieldText.position.required"
           />
         </div>
-        <div v-if="showedFieldText.score">
-          <label for="experienceScore" class="form-label">{{
-            showedFieldText.score.text
-          }}</label>
-          <input
-            id="experiencePosition"
-            v-model="formData.position"
-            type="text"
-            class="form-control"
-            :required="showedFieldText.position.required"
-          />
-        </div>
         <div v-if="showedFieldText.semester">
           <label class="form-label" for="experienceSemester">{{ showedFieldText.semester.text }}</label>
           <select
@@ -71,6 +59,18 @@
             <p>結束時間</p>
             <input type="date" class="form-control" />
           </div>
+        </div>
+        <div v-if="showedFieldText.score">
+          <label for="experienceScore" class="form-label">{{
+            showedFieldText.score.text
+          }}</label>
+          <input
+            id="experienceScore"
+            v-model="formData.score"
+            type="text"
+            class="form-control"
+            :required="showedFieldText.score.required"
+          />
         </div>
         <div v-if="showedFieldText.type">
           <label class="form-label" for="experienceType">{{ showedFieldText.type.text }}</label>
@@ -219,6 +219,7 @@ const fieldText = {
     name: { text: '*課程名稱', required: true },
     type: { text: '課程類別', required: false, options: ['必修課程', '選修課程', '通識', '工作坊', '密集課程', '線上課程'] },
     semester: { text: '*課程時間', required: true },
+    score: { text: '課程分數', required: false },
     description: {
       text: '課程簡介',
       placeholder: '填寫課程簡介以便日後方便回想課程內容',
@@ -366,7 +367,8 @@ export default {
       // tags: props.editData?.tags.map(tag => tag.id) || []
       tags: props.editData?.tags || [],
       // TODO: 新增開始/結束時間欄位、課程/活動類別欄位
-      type: props.editData?.type || []
+      type: props.editData?.type || [],
+      score: props.editData?.score || ''
     })
 
     const formStatus = reactive({
@@ -469,6 +471,7 @@ export default {
 .multiselect-input {
   border: 1px solid #e0e0e0;
   border-radius: 8px;
+  min-height: 46px;
 }
 .is-open .multiselect-input {
   border-radius: 8px 8px 0 0;
@@ -480,6 +483,7 @@ export default {
   margin-top: 0;
   padding-top: 5px;
   padding-bottom: 5px;
+  padding-left: 12px;
   .multiselect-tag {
     display: flex;
     color: #000;
