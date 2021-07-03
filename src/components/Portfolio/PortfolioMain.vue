@@ -24,8 +24,8 @@
             type="text"
           />
           <div class="content-header__btns">
-            <button class="btn" disabled>
-              匯出
+            <button class="btn--red">
+              刪除
             </button>
             <button
               class="btn content-header__save"
@@ -56,14 +56,14 @@
               </template>
             </draggable>
           </div>
-          <button class="content-body__add" @click="handleAddCard">
-            <template v-if="showedResume.topics.length">
-              + 新增主題
-            </template>
-            <template v-else>
-              + 目前還沒主題 趕快新增一個吧
-            </template>
-          </button>
+          <div class="content-body__btns">
+            <button class="content-body__add" @click="handleAddCard('experiences')">
+              + 新增經歷區塊
+            </button>
+            <button class="content-body__add" @click="handleAddCard('text')">
+              + 新增文字區塊
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -105,11 +105,12 @@ export default {
       })
     }
 
-    const handleAddCard = () => {
+    const handleAddCard = (cardType = 'experiences') => {
       showedResume.value.topics.push({
         id: showedResume.value.topics.length,
         name: '',
-        experiences: []
+        experiences: [],
+        cardType
       })
     }
     const handleDeleteExperience = (experienceIndex, topic) => {
@@ -223,9 +224,14 @@ export default {
 }
 
 .content-body {
+  &__btns {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    padding: 12px;
+  }
   &__add {
     display: block;
-    margin: 12px auto;
     padding: 10px 60px;
     border: none;
     border-radius: 8px;

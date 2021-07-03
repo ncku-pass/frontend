@@ -26,69 +26,77 @@
     </div>
     <hr />
     <ul class="ability-card__body">
-      <draggable
-        :list="experiences"
-        :group="draggableGroupOption"
-        class="experience-list"
-        item-key="id"
-        @start="handleDrag(true)"
-        @end="handleDrag(false)"
-      >
-        <template #item="{element, index}">
-          <li class="experience-card" :data-id="element.id">
-            <div class="experience-card__header">
-              <h3 class="experience-card__name">
-                {{ element.name }}
-              </h3>
-              <Menu as="div" class="experience-card__menu">
-                <MenuButton class="experience-card__menu-btn">
-                  <img
-                    class="experience-card__delete"
-                    src="~@/assets/dots.svg"
-                    alt="menu"
-                  />
-                </MenuButton>
-                <MenuItems as="ul" class="experience-card__menu-items">
-                  <MenuItem v-slot="{ active }">
-                    <li :class="{ 'experience-card__menu-item--active': active }" class="experience-card__menu-item">
-                      顯示成績
-                    </li>
-                  </MenuItem>
-                  <MenuItem v-slot="{ active }">
-                    <li :class="{ 'experience-card__menu-item--active': active }" class="experience-card__menu-item">
-                      顯示心得
-                    </li>
-                  </MenuItem>
-                  <MenuItem v-slot="{ active }">
-                    <li
-                      :class="{ 'experience-card__menu-item--active': active }"
-                      class="experience-card__menu-item"
-                      @click.stop="$emit('delete-experience', index)"
-                    >
-                      刪除此經驗
-                    </li>
-                  </MenuItem>
-                </MenuItems>
-              </Menu>
-            </div>
-            <div class="experience-card__tags">
-              <div
-                v-for="tag in element.tags"
-                :key="tag"
-                class="tag"
-              >
-                {{ tag.name }}
+      <template v-if="cardType === 'experiences'">
+        <draggable
+          :list="experiences"
+          :group="draggableGroupOption"
+          class="experience-list"
+          item-key="id"
+          @start="handleDrag(true)"
+          @end="handleDrag(false)"
+        >
+          <template #item="{element, index}">
+            <li class="experience-card" :data-id="element.id">
+              <div class="experience-card__header">
+                <h3 class="experience-card__name">
+                  {{ element.name }}
+                </h3>
+                <Menu as="div" class="experience-card__menu">
+                  <MenuButton class="experience-card__menu-btn">
+                    <img
+                      class="experience-card__delete"
+                      src="~@/assets/dots.svg"
+                      alt="menu"
+                    />
+                  </MenuButton>
+                  <MenuItems as="ul" class="experience-card__menu-items">
+                    <MenuItem v-slot="{ active }">
+                      <li :class="{ 'experience-card__menu-item--active': active }" class="experience-card__menu-item">
+                        顯示成績
+                      </li>
+                    </MenuItem>
+                    <MenuItem v-slot="{ active }">
+                      <li :class="{ 'experience-card__menu-item--active': active }" class="experience-card__menu-item">
+                        顯示心得
+                      </li>
+                    </MenuItem>
+                    <MenuItem v-slot="{ active }">
+                      <li
+                        :class="{ 'experience-card__menu-item--active': active }"
+                        class="experience-card__menu-item"
+                        @click.stop="$emit('delete-experience', index)"
+                      >
+                        刪除此經驗
+                      </li>
+                    </MenuItem>
+                  </MenuItems>
+                </Menu>
               </div>
-            </div>
-            <div class="experience-card__description">
-              {{ element.feedback }}
-            </div>
-          </li>
-        </template>
-      </draggable>
-      <p v-if="experiences.length === 0" class="ability-card__body__tips">
-        由右方列表拉入適合課程
-      </p>
+              <div class="experience-card__tags">
+                <div
+                  v-for="tag in element.tags"
+                  :key="tag"
+                  class="tag"
+                >
+                  {{ tag.name }}
+                </div>
+              </div>
+              <div class="experience-card__description">
+                {{ element.feedback }}
+              </div>
+            </li>
+          </template>
+        </draggable>
+        <p v-if="experiences.length === 0" class="ability-card__body__tips">
+          由右方列表拉入適合課程
+        </p>
+      </template>
+      <template v-else>
+        <textarea
+          class="ability-card__text"
+          @input="adjustSize"
+        />
+      </template>
     </ul>
   </div>
 </template>
@@ -117,6 +125,13 @@ export default {
     abilityTopic: {
       type: String,
       default: ''
+    },
+    cardType: {
+      type: String,
+      default: 'experiences',
+      validator (value) {
+        return ['experiences', 'text'].indexOf(value) !== -1
+      }
     }
   },
   emits: ['update:abilityTopic', 'delete-experience', 'delete-ability'],
@@ -136,7 +151,14 @@ export default {
       }
     }
 
-    return { setIsGrabbing, handleDrag, draggableGroupOption }
+    const adjustSize = (e) => {
+      if (e.target.scrollHeight > 80) {
+        e.target.style.height = '5px'
+        e.target.style.height = `${e.target.scrollHeight}px`
+      }
+    }
+
+    return { setIsGrabbing, handleDrag, draggableGroupOption, adjustSize }
   }
 }
 </script>
@@ -190,6 +212,19 @@ export default {
       border-radius: 8px;
     }
   }
+  &__text {
+    width: 100%;
+    outline: none;
+    border: none;
+    padding: 15px;
+    border-radius: 8px;
+    margin: 12px 0 0 0;
+    background-color: #fff;
+    resize: none;
+    line-height: 1.5;
+    overflow: hidden;
+    min-height: 80px
+  }
 }
 .experience-list {
   &:empty {
@@ -200,7 +235,7 @@ export default {
   cursor: grab;
   padding: 15px;
   border-radius: 8px;
-  margin: 12px 0;
+  margin: 12px 0 0 0;
   background-color: #fff;
   &:first-child {
     margin-top: 0;
