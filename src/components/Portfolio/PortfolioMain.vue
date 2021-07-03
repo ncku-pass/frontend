@@ -109,7 +109,7 @@ export default {
       showedResume.value.topics.push({
         id: showedResume.value.topics.length,
         name: '',
-        topics: []
+        experiences: []
       })
     }
     const handleDeleteExperience = (experienceIndex, topic) => {
