@@ -22,6 +22,8 @@
       :toggle-semester="toggleSemester"
       :toggle-tag="toggleTag"
       :filter="filter"
+      @select-all-tags="changeAllTags(true)"
+      @un-select-all-tags="changeAllTags(false)"
     />
     <div
       ref="MenuShadowContainer"
@@ -120,6 +122,11 @@ export default {
     const toggleTag = (tag) => {
       filter.tags[tag] = !filter.tags[tag]
     }
+    const changeAllTags = (toStatus) => {
+      for (const tag in filter.tags) {
+        filter.tags[tag] = toStatus
+      }
+    }
 
     return {
       showFilter,
@@ -130,7 +137,8 @@ export default {
       setShadows,
       MenuShadowContainer,
       toggleSemester,
-      toggleTag
+      toggleTag,
+      changeAllTags
     }
   }
 }

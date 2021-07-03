@@ -19,8 +19,10 @@
           </ul>
         </div>
         <div class="filter-block">
-          <div class="filter-block__title">
+          <div class="filter-block__title filter-block__title--tag">
             標籤
+            <span v-if="allSelected" @click="$emit('unSelectAllTags')">取消全選</span>
+            <span v-else @click="$emit('selectAllTags')">全選</span>
           </div>
           <ul class="filter-block__tags">
             <li
@@ -40,6 +42,7 @@
 </template>
 
 <script>
+import { computed } from 'vue'
 import vueScrollShadow from 'vue3-scroll-shadow'
 
 export default {
@@ -61,7 +64,21 @@ export default {
       required: true
     }
   },
-  setup () {
+  emits: ['selectAllTags', 'unSelectAllTags'],
+  setup (props) {
+    const allSelected = computed(() => {
+      let flag = true
+      for (const tag in props.filter.tags) {
+        if (props.filter.tags[tag] === false) {
+          flag = false
+        }
+      }
+      return flag
+    })
+
+    return {
+      allSelected
+    }
   }
 }
 </script>
@@ -87,6 +104,13 @@ export default {
   &__title {
     color: $gray-1;
     margin-bottom: 10px;
+    &--tag {
+      display: flex;
+      justify-content: space-between;
+      span {
+        cursor: pointer;
+      }
+    }
   }
   &__tags {
     display: flex;
