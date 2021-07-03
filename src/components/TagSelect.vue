@@ -29,7 +29,7 @@
       v-model.trim="newTagName"
       class="text-input"
       type="text"
-      @keydown.enter="createTag"
+      @keydown.enter.prevent="createTag"
       @focus="showDropdown = true"
       @blur="!isChoosing && (showDropdown = false)"
     />
@@ -53,7 +53,7 @@
 
 <script>
 import { computed, ref } from 'vue'
-import { addTag } from '@/api/tags'
+import { useStore } from 'vuex'
 
 export default {
   name: 'TagSelect',
@@ -69,6 +69,8 @@ export default {
   },
   emits: ['update:tags'],
   setup (props, { emit }) {
+    const store = useStore()
+
     // ===== 下拉選單 =====
     const showDropdown = ref(false)
     const isChoosing = ref(false)
@@ -95,11 +97,14 @@ export default {
     // ===== 輸入 =====
     const textInput = ref(null) // dom
     const newTagName = ref('')
+    const addTag = (newTag) => store.dispatch('tags/addTag', newTag)
+
     const createTag = async () => {
       if (!newTagName.value) return
-      const { data } = await addTag(newTagName.value)
-      console.log(data)
-      emit('update:tags', [...props.tags, data[0]])
+      if (props.options.some(opt => opt.name === newTagName.value)) return
+
+      const res = await addTag(newTagName.value)
+      emit('update:tags', [...props.tags, res])
       newTagName.value = ''
     }
 
@@ -145,6 +150,8 @@ export default {
   align-items: center;
   column-gap: 5px;
   padding: 7px 8px;
+  font-size: 14px;
+  font-weight: 400;
 }
 .tag__delete {
   cursor: pointer;

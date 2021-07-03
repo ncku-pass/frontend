@@ -1,4 +1,4 @@
-import { createStore } from 'vuex'
+import { createStore, createLogger } from 'vuex'
 import auth from './auth'
 import tags from './tags'
 import resumes from './resumes'
@@ -16,5 +16,8 @@ export default createStore({
     tags,
     resumes,
     experiences
-  }
+  },
+  plugins: process.env.NODE_ENV !== 'production'
+    ? [createLogger()]
+    : []
 })

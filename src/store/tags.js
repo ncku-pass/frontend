@@ -1,4 +1,4 @@
-import { getTags as getTagsAPI } from '@/api/tags'
+import { getTags as getTagsAPI, addTag as addTagAPI } from '@/api/tags'
 
 const tags = {
   namespaced: true,
@@ -34,6 +34,21 @@ const tags = {
       } finally {
         commit('SET_STATUS', { isPending: false })
       }
+    },
+    async addTag ({ commit, state }, newTag) {
+      let res
+      try {
+        commit('SET_STATUS', { isPending: true, error: null })
+
+        res = await addTagAPI(newTag)
+
+        commit('SET_TAGS', [...state.tags, res.data[0]])
+      } catch (error) {
+        commit('SET_STATUS', { error })
+      } finally {
+        commit('SET_STATUS', { isPending: false })
+      }
+      return res.data[0]
     }
   }
 }
