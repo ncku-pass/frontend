@@ -40,12 +40,36 @@
               <h3 class="experience-card__name">
                 {{ element.name }}
               </h3>
-              <img
-                class="experience-card__delete"
-                src="~@/assets/delete.svg"
-                alt="delete"
-                @click.stop="$emit('delete-experience', index)"
-              />
+              <Menu as="div" class="experience-card__menu">
+                <MenuButton class="experience-card__menu-btn">
+                  <img
+                    class="experience-card__delete"
+                    src="~@/assets/dots.svg"
+                    alt="menu"
+                  />
+                </MenuButton>
+                <MenuItems as="ul" class="experience-card__menu-items">
+                  <MenuItem v-slot="{ active }">
+                    <li :class="{ 'experience-card__menu-item--active': active }" class="experience-card__menu-item">
+                      顯示成績
+                    </li>
+                  </MenuItem>
+                  <MenuItem v-slot="{ active }">
+                    <li :class="{ 'experience-card__menu-item--active': active }" class="experience-card__menu-item">
+                      顯示心得
+                    </li>
+                  </MenuItem>
+                  <MenuItem v-slot="{ active }">
+                    <li
+                      :class="{ 'experience-card__menu-item--active': active }"
+                      class="experience-card__menu-item"
+                      @click.stop="$emit('delete-experience', index)"
+                    >
+                      刪除此經驗
+                    </li>
+                  </MenuItem>
+                </MenuItems>
+              </Menu>
             </div>
             <div class="experience-card__tags">
               <div
@@ -72,11 +96,16 @@
 <script>
 import draggable from 'vuedraggable'
 import useGrab from '@/composables/useGrab'
+import { Menu, MenuButton, MenuItems, MenuItem } from '@headlessui/vue'
 
 export default {
   name: 'AbilityCard',
   components: {
-    draggable
+    draggable,
+    Menu,
+    MenuButton,
+    MenuItems,
+    MenuItem
   },
   props: {
     experiences: {
@@ -180,6 +209,35 @@ export default {
     display: flex;
     justify-content: space-between;
     align-items: center;
+  }
+  &__menu {
+    position: relative;
+  }
+  &__menu-btn {
+    background: transparent;
+    border: none;
+  }
+  &__menu-items {
+    position: absolute;
+    outline: none;
+    right: 0;
+    min-width: 150px;
+    background-color: #fff;
+    border-radius: 5px;
+    border: 1px solid $gray-6;
+    z-index: 1;
+    color: $gray-1;
+  }
+  &__menu-item {
+    padding: 2px 5px;
+    line-height: 26px;
+    cursor: pointer;
+    &--active {
+      background-color: $gray-6;
+    }
+    &:not(:last-child) {
+      border-bottom: 1px solid $gray-6;
+    }
   }
   &__name {
     font-size: 21px;

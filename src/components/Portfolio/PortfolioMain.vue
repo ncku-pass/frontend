@@ -50,7 +50,7 @@
                 <AbilityCard
                   v-model:abilityTopic="element.name"
                   v-bind="element"
-                  @delete-experience="handleDeleteExperience($event, element)"
+                  @delete-experience="handleDeleteExperience(experienceIndex, element)"
                   @delete-ability="handleDeleteAbility(index)"
                 />
               </template>
