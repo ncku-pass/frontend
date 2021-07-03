@@ -18,6 +18,7 @@ export default {
   },
   setup () {
     const store = useStore()
+    store.dispatch('tags/initTags')
     store.dispatch('experiences/initExperiences')
   }
 }
