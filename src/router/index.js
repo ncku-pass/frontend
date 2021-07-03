@@ -23,7 +23,12 @@ const routes = [
     path: '/experience/:type?',
     name: 'Experience',
     component: Experience,
-    props: (route) => ({ type: route.params.type || 'course' }),
+    props: (route) => {
+      if (route.params.type && ['course', 'activity', 'competition', 'work', 'certificate', 'other'].indexOf(route.params.type) === -1) {
+        return { type: 'course' }
+      }
+      return { type: route.params.type || 'course' }
+    },
     meta: { requiresAuth: true, layout: 'AppLayout' }
   },
   {

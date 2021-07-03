@@ -13,7 +13,7 @@
       </li>
     </ul>
     <div class="experience-list-item__btns">
-      <button class="experience-list-item__btns__edit btn-pill" @click="handleEditExperience">
+      <button class="experience-list-item__btns__edit btn-pill" @click.stop="handleEditExperience">
         <svg
           width="24"
           height="24"
@@ -33,7 +33,7 @@
         class="experience-list-item__btns__delete btn-pill"
         :class="{ disabled: false }"
         :disabled="false"
-        @click="confirmDelete"
+        @click.stop="confirmDelete"
       >
         <svg
           width="20"
@@ -67,14 +67,14 @@
       <button
         v-show="!deleteStatus.isPending"
         class="btn"
-        @click="closeConfirmModal"
+        @click.stop="closeConfirmModal"
       >
         取消
       </button>
       <button
         class="btn--red"
         :disabled="deleteStatus.isPending"
-        @click="handleDeleteExperience"
+        @click.stop="handleDeleteExperience"
       >
         {{ deleteStatus.isPending ? '刪除中' : '確定刪除' }}
       </button>

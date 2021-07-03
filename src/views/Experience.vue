@@ -20,6 +20,7 @@
                 :experience="experience"
                 @delete="handleDelete"
                 @edit="handleEditExperience"
+                @click="openViewerModal(experience)"
               />
             </ExperienceListBlock>
             <button
@@ -50,6 +51,12 @@
     @close="showFormModal = false"
     @submit="handleSubmit"
   />
+  <ViewerModal
+    v-if="showViewerModal"
+    :experience-type="type"
+    :experience="experienceToShow"
+    @close="showViewerModal = false"
+  />
 </template>
 
 <script>
@@ -58,7 +65,8 @@ import { useStore } from 'vuex'
 import ExperienceWindowTabs from '@/components/Experience/ExperienceWindowTabs.vue'
 import ExperienceListItem from '@/components/Experience/ExperienceListItem.vue'
 import ExperienceListBlock from '@/components/Experience/ExperienceListBlock.vue'
-import FormModal from '@/components/Experience/FormModal.vue'
+import FormModal from '@/components/Experience/Form/FormModal.vue'
+import ViewerModal from '@/components/Experience/ViewerModal.vue'
 import vueScrollShadow from 'vue3-scroll-shadow'
 
 export default {
@@ -68,6 +76,7 @@ export default {
     ExperienceListItem,
     ExperienceListBlock,
     FormModal,
+    ViewerModal,
     vueScrollShadow
   },
   props: {
@@ -118,6 +127,15 @@ export default {
       })
     }
 
+    // === 點擊經歷時，跳出檢視視窗 ===
+    const showViewerModal = ref(false)
+    const experienceToShow = ref(null)
+
+    const openViewerModal = (experience) => {
+      experienceToShow.value = experience
+      showViewerModal.value = true
+    }
+
     return {
       isPending,
       classifiedExperiences,
@@ -127,7 +145,10 @@ export default {
       handleSubmit,
       handleDelete,
       handleEditExperience,
-      experienceToEdit
+      experienceToEdit,
+      showViewerModal,
+      openViewerModal,
+      experienceToShow
     }
   }
 }

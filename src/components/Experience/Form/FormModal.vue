@@ -60,24 +60,12 @@
             <input type="date" class="form-control" />
           </div>
         </div>
-        <div v-if="showedFieldText.score">
-          <label for="experienceScore" class="form-label">{{
-            showedFieldText.score.text
-          }}</label>
-          <input
-            id="experienceScore"
-            v-model="formData.score"
-            type="text"
-            class="form-control"
-            :required="showedFieldText.score.required"
-          />
-        </div>
         <div v-if="showedFieldText.type">
           <label class="form-label" for="experienceType">{{ showedFieldText.type.text }}</label>
           <Multiselect
             v-model="formData.type"
             :options="showedFieldText.type.options"
-            :required="true"
+            :required="showedFieldText.type.required"
             mode="tags"
           >
             <template #tag="{ option, handleTagRemove, disabled }">
@@ -211,7 +199,7 @@ import Multiselect from '@vueform/multiselect'
 import ConfirmModal from '@/components/ConfirmModal.vue'
 import MessageModal from '@/components/MessageModal.vue'
 import { addExperience, updateExperience } from '@/api/experiences'
-import TagSelect from '@/components/TagSelect.vue'
+import TagSelect from '@/components/Experience/Form/TagSelect.vue'
 import '@vueform/multiselect/themes/default.css'
 
 const fieldText = {
@@ -219,7 +207,7 @@ const fieldText = {
     name: { text: '*課程名稱', required: true },
     type: { text: '課程類別', required: false, options: ['必修課程', '選修課程', '通識', '工作坊', '密集課程', '線上課程'] },
     semester: { text: '*課程時間', required: true },
-    score: { text: '課程分數', required: false },
+    position: { text: '課程分數', required: false },
     description: {
       text: '課程簡介',
       placeholder: '填寫課程簡介以便日後方便回想課程內容',
@@ -367,8 +355,7 @@ export default {
       // tags: props.editData?.tags.map(tag => tag.id) || []
       tags: props.editData?.tags || [],
       // TODO: 新增開始/結束時間欄位、課程/活動類別欄位
-      type: props.editData?.type || [],
-      score: props.editData?.score || ''
+      type: props.editData?.type || []
     })
 
     const formStatus = reactive({
