@@ -74,7 +74,24 @@
         </div>
         <div v-if="showedFieldText.type">
           <label class="form-label" for="experienceType">{{ showedFieldText.type.text }}</label>
-          <select
+          <Multiselect
+            v-model="formData.type"
+            :options="showedFieldText.type.options"
+            :required="true"
+            mode="tags"
+          >
+            <template #tag="{ option, handleTagRemove, disabled }">
+              <div class="multiselect-tag tag--large">
+                {{ option.value }}
+                <i
+                  v-if="!disabled"
+                  @click.prevent
+                  @mousedown.prevent.stop="handleTagRemove(option, $event)"
+                />
+              </div>
+            </template>
+          </Multiselect>
+          <!-- <select
             id="experienceType"
             v-model="formData.type"
             class="form-control"
@@ -93,7 +110,7 @@
             >
               {{ type }}
             </option>
-          </select>
+          </select> -->
         </div>
         <div v-if="showedFieldText.description">
           <label for="experienceDescription" class="form-label">{{
@@ -190,10 +207,12 @@
 <script>
 import { computed, reactive, ref } from 'vue'
 import { useStore } from 'vuex'
+import Multiselect from '@vueform/multiselect'
 import ConfirmModal from '@/components/ConfirmModal.vue'
 import MessageModal from '@/components/MessageModal.vue'
 import { addExperience, updateExperience } from '@/api/experiences'
 import TagSelect from '@/components/TagSelect.vue'
+import '@vueform/multiselect/themes/default.css'
 
 const fieldText = {
   course: {
@@ -287,7 +306,7 @@ const fieldText = {
 
 export default {
   name: 'FormModal',
-  components: { ConfirmModal, MessageModal, TagSelect },
+  components: { Multiselect, ConfirmModal, MessageModal, TagSelect },
   props: {
     formType: {
       type: String,
@@ -347,7 +366,7 @@ export default {
       // tags: props.editData?.tags.map(tag => tag.id) || []
       tags: props.editData?.tags || [],
       // TODO: 新增開始/結束時間欄位、課程/活動類別欄位
-      type: props.editData?.type || ''
+      type: props.editData?.type || []
     })
 
     const formStatus = reactive({
