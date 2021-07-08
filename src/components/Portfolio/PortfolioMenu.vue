@@ -87,17 +87,18 @@ export default {
 
     const filteredExperienceArray = computed(() => {
       return experiencesArray.value.filter((experience) => {
+        let tagsFlag = false
         for (const key in filter.semesters) {
           if (!filter.semesters[key] && experience.semester === key) {
             return false
           }
         }
         for (const key in filter.tags) {
-          if (!filter.tags[key] && experience.semester === key) {
-            return false
+          if (filter.tags[key] && experience.tags.some(tag => tag.name === key)) {
+            tagsFlag = true
           }
         }
-        return true
+        return tagsFlag
       })
     })
 

@@ -1,6 +1,6 @@
 <template>
   <div class="portfolio__main-container">
-    <div v-if="resumes.length" class="portfolio__main">
+    <div v-if="resumes" class="portfolio__main">
       <ul class="portfolio__main__tabs">
         <li
           v-for="(resume, index) in resumes"
@@ -51,7 +51,7 @@
                   v-model:abilityTopic="element.name"
                   v-bind="element"
                   @delete-experience="handleDeleteExperience(experienceIndex, element)"
-                  @delete-ability="handleDeleteAbility(index)"
+                  @delete-ability="handleDeleteCard(index)"
                 />
               </template>
             </draggable>
@@ -86,7 +86,6 @@ export default {
   setup () {
     const store = useStore()
 
-    store.dispatch('resumes/getResumes')
     const resumes = computed(() => store.state.resumes.resumes)
     const error = computed(() => store.state.resumes.error)
     const isPending = computed(() => store.state.resumes.isPending)
@@ -97,6 +96,7 @@ export default {
       return resumes.value[selectedIndex.value]
     })
 
+    // === 新增履歷 ===
     const handleAddResume = () => {
       resumes.value.push({
         id: resumes.value.length,
@@ -105,6 +105,7 @@ export default {
       })
     }
 
+    // === 新增 / 刪除卡片 ===
     const handleAddCard = (cardType = 'experiences') => {
       showedResume.value.topics.push({
         id: showedResume.value.topics.length,
@@ -113,12 +114,13 @@ export default {
         cardType
       })
     }
-    const handleDeleteExperience = (experienceIndex, topic) => {
-      topic.experiences.splice(experienceIndex, 1)
+    const handleDeleteCard = (abilityIndex) => {
+      showedResume.value.topics.splice(abilityIndex, 1)
     }
 
-    const handleDeleteAbility = (abilityIndex) => {
-      showedResume.value.topics.splice(abilityIndex, 1)
+    // === 刪除卡片內的經驗 ===
+    const handleDeleteExperience = (experienceIndex, topic) => {
+      topic.experiences.splice(experienceIndex, 1)
     }
 
     const handleSave = async () => {
@@ -140,7 +142,7 @@ export default {
       handleAddResume,
       handleAddCard,
       handleDeleteExperience,
-      handleDeleteAbility,
+      handleDeleteCard,
       handleSave,
       isPending
     }

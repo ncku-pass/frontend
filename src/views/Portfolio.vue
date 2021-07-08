@@ -20,6 +20,7 @@ export default {
     const store = useStore()
     store.dispatch('tags/initTags')
     store.dispatch('experiences/initExperiences')
+    store.dispatch('resumes/initResumes')
   }
 }
 </script>

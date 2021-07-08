@@ -3,7 +3,7 @@ import { getResumes as getResumesAPI, saveResume as saveResumeAPI } from '@/api/
 const resumes = {
   namespaced: true,
   state: () => ({
-    resumes: [],
+    resumes: null,
     error: null,
     isPending: false
   }),
@@ -17,6 +17,11 @@ const resumes = {
     }
   },
   actions: {
+    initResumes ({ state, dispatch }) {
+      if (!state.resumes) {
+        dispatch('getResumes')
+      }
+    },
     async getResumes ({ commit }) {
       try {
         commit('SET_STATUS', { isPending: true, error: null })
