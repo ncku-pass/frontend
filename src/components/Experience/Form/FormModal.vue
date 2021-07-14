@@ -279,7 +279,7 @@ const fieldText = {
   other: {
     name: { text: '*經歷名稱', required: true },
     semester: { text: '時間', required: false },
-    position: { text: '經歷職位、成就', required: true },
+    position: { text: '*經歷職位、成就', required: true },
     description: {
       text: '經歷簡介',
       placeholder: '填寫簡介以便日後方便回想經歷內容',
