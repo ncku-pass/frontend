@@ -113,6 +113,12 @@
             :required="showedFieldText.description.required"
           />
         </div>
+        <details>
+          <summary title="（點擊展開/收合）">
+            核心能力
+          </summary>
+          <p>Epcot is a theme park at Walt Disney World Resort featuring exciting attractions, international pavilions, award-winning fireworks and seasonal special events.</p>
+        </details>
         <div>
           <label for="" class="form-label">獲得技能Tag</label>
           <TagSelect v-model:tags="formData.tags" :options="tags" />
@@ -454,6 +460,14 @@ export default {
     grid-template-columns: auto 1fr auto 1fr;
     column-gap: 10px;
     color: $gray-1;
+  }
+  summary {
+    cursor: pointer;
+    color: #1C7BA3;
+    line-height: 24px;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    margin-bottom: 8px;
   }
 }
 
