@@ -11,7 +11,7 @@
         >
           {{ resume.name || '請輸入名稱' }}
         </li>
-        <li class="portfolio__main__tabs__add" @click="handleAddResume">
+        <li class="portfolio__main__tabs__add" @click="openTemplateModal">
           <PlusCircleIcon />
         </li>
       </ul>
@@ -68,6 +68,11 @@
       </div>
     </div>
     <!-- TODO: 顯示Loading -->
+    <TemplateModal
+      :show-modal="showTemplateModal"
+      @close="handleCloseTemplateModal"
+      @choose="handleAddResume"
+    />
   </div>
 </template>
 
@@ -75,13 +80,15 @@
 import { computed, ref } from 'vue'
 import { useStore } from 'vuex'
 import draggable from 'vuedraggable'
-import AbilityCard from '@/components/Portfolio/AbilityCard.vue'
 import { PlusCircleIcon } from '@heroicons/vue/outline'
+import AbilityCard from '@/components/Portfolio/AbilityCard.vue'
+import TemplateModal from '@/components/Portfolio/TemplateModal.vue'
 
 export default {
   name: 'PortfolioMain',
   components: {
     AbilityCard,
+    TemplateModal,
     draggable,
     PlusCircleIcon
   },
@@ -93,28 +100,44 @@ export default {
     const isPending = computed(() => store.state.resumes.isPending)
     const saveResume = () => store.dispatch('saveResume')
 
+    // === 顯示當前履歷 ===
     const selectedIndex = ref(0)
     const showedResume = computed(() => {
       return resumes.value[selectedIndex.value]
     })
 
     // === 新增履歷 ===
-    const handleAddResume = () => {
+    const showTemplateModal = ref(false)
+    const openTemplateModal = () => {
+      // resumes.value.push({
+      //   id: resumes.value.length,
+      //   name: '新的履歷',
+      //   topics: []
+      // })
+      showTemplateModal.value = true
+    }
+    const handleAddResume = ({ name, topics }) => {
+      showTemplateModal.value = false
       resumes.value.push({
         id: resumes.value.length,
-        name: '新的履歷',
-        topics: []
+        name,
+        topics
       })
+    }
+    const handleCloseTemplateModal = () => {
+      showTemplateModal.value = false
     }
 
     // === 新增 / 刪除卡片 ===
     const handleAddCard = (cardType = 'experiences') => {
-      showedResume.value.topics.push({
+      const card = {
         id: showedResume.value.topics.length,
         name: '',
         experiences: [],
+        text: '',
         cardType
-      })
+      }
+      showedResume.value.topics.push(card)
     }
     const handleDeleteCard = (abilityIndex) => {
       showedResume.value.topics.splice(abilityIndex, 1)
@@ -141,6 +164,9 @@ export default {
       resumes,
       showedResume,
       selectedIndex,
+      showTemplateModal,
+      openTemplateModal,
+      handleCloseTemplateModal,
       handleAddResume,
       handleAddCard,
       handleDeleteExperience,

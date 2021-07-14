@@ -3,6 +3,7 @@ import '@/scss/index.scss'
 import App from './App.vue'
 import router from './router'
 import store from './store'
+import '@vueform/multiselect/themes/default.css'
 
 async function startApp () {
   if (localStorage.getItem('auth')) {

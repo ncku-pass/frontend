@@ -206,7 +206,6 @@ import ConfirmModal from '@/components/ConfirmModal.vue'
 import MessageModal from '@/components/MessageModal.vue'
 import { addExperience, updateExperience } from '@/api/experiences'
 import TagSelect from '@/components/Experience/Form/TagSelect.vue'
-import '@vueform/multiselect/themes/default.css'
 
 const fieldText = {
   course: {
