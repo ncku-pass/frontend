@@ -61,6 +61,11 @@
                       </li>
                     </MenuItem>
                     <MenuItem v-slot="{ active }">
+                      <li :class="{ 'experience-card__menu-item--active': active }" class="experience-card__menu-item">
+                        顯示職稱
+                      </li>
+                    </MenuItem>
+                    <MenuItem v-slot="{ active }">
                       <li
                         :class="{ 'experience-card__menu-item--active': active }"
                         class="experience-card__menu-item"
