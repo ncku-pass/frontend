@@ -17,10 +17,8 @@
         placeholder="為這些經歷訂定一個主題吧"
         @input="$emit('update:abilityTopic', $event.target.value)"
       />
-      <img
+      <XCircleIcon
         class="ability-card__delete"
-        src="@/assets/delete.svg"
-        alt="delete"
         @click.stop="$emit('delete-ability')"
       />
     </div>
@@ -43,10 +41,8 @@
                 </h3>
                 <Menu as="div" class="experience-card__menu">
                   <MenuButton class="experience-card__menu-btn">
-                    <img
+                    <DotsVerticalIcon
                       class="experience-card__delete"
-                      src="~@/assets/dots.svg"
-                      alt="menu"
                     />
                   </MenuButton>
                   <MenuItems as="ul" class="experience-card__menu-items">
@@ -110,6 +106,7 @@
 import draggable from 'vuedraggable'
 import useGrab from '@/composables/useGrab'
 import { Menu, MenuButton, MenuItems, MenuItem } from '@headlessui/vue'
+import { XCircleIcon, DotsVerticalIcon } from '@heroicons/vue/solid'
 
 export default {
   name: 'AbilityCard',
@@ -118,7 +115,9 @@ export default {
     Menu,
     MenuButton,
     MenuItems,
-    MenuItem
+    MenuItem,
+    XCircleIcon,
+    DotsVerticalIcon
   },
   props: {
     experiences: {
@@ -192,6 +191,9 @@ export default {
   }
   &__delete {
     cursor: pointer;
+    width: 24px;
+    height: 24px;
+    color: $red;
   }
   hr {
     height: 1px;
@@ -287,6 +289,9 @@ export default {
   }
   &__delete {
     cursor: pointer;
+    width: 24px;
+    height: 24px;
+    color: $gray-3;
   }
   &__tags {
     @include grid(column, 0, 10px);

@@ -1,10 +1,8 @@
 <template>
   <div class="modal-bg" @click.self.stop="$emit('close')">
     <div class="viewer-modal">
-      <img
+      <XCircleIcon
         class="viewer-modal__close"
-        src="@/assets/delete.svg"
-        alt="delete"
         @click.stop="$emit('close')"
       />
       <div v-if="experience.name">
@@ -90,6 +88,8 @@
 
 <script>
 import { computed } from 'vue'
+import { XCircleIcon } from '@heroicons/vue/solid'
+
 const fieldText = {
   course: {
     name: '*課程名稱',
@@ -138,6 +138,9 @@ const fieldText = {
 
 export default {
   name: 'ViewerModal',
+  components: {
+    XCircleIcon
+  },
   props: {
     experienceType: {
       type: String,
@@ -184,7 +187,10 @@ export default {
     position: absolute;
     right: 25px;
     top: 25px;
+    width: 32px;
+    height: 32px;
     cursor: pointer;
+    color: $red;
   }
 }
 .field-title {

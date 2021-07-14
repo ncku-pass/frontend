@@ -12,7 +12,7 @@
           {{ resume.name || '請輸入名稱' }}
         </li>
         <li class="portfolio__main__tabs__add" @click="handleAddResume">
-          <img src="@/assets/add_circle.svg" alt="" />
+          <PlusCircleIcon />
         </li>
       </ul>
       <div v-if="showedResume" class="portfolio__main__content">
@@ -76,12 +76,14 @@ import { computed, ref } from 'vue'
 import { useStore } from 'vuex'
 import draggable from 'vuedraggable'
 import AbilityCard from '@/components/Portfolio/AbilityCard.vue'
+import { PlusCircleIcon } from '@heroicons/vue/outline'
 
 export default {
   name: 'PortfolioMain',
   components: {
     AbilityCard,
-    draggable
+    draggable,
+    PlusCircleIcon
   },
   setup () {
     const store = useStore()
@@ -180,6 +182,15 @@ export default {
       align-items: center;
       padding: 0 12px;
       cursor: pointer;
+      svg {
+        width: 24px;
+        height: 24px;
+        color: $red;
+        transition: all 0.3s;
+        &:hover {
+          transform: rotate(90deg)
+        }
+      }
     }
   }
   &__content {
