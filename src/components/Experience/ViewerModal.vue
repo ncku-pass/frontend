@@ -1,6 +1,12 @@
 <template>
   <div class="modal-bg" @click.self.stop="$emit('close')">
     <div class="viewer-modal">
+      <img
+        class="viewer-modal__close"
+        src="@/assets/delete.svg"
+        alt="delete"
+        @click.stop="$emit('close')"
+      />
       <div v-if="experience.name">
         <h3 class="field-title">
           {{ showedFieldText.name }}
@@ -163,6 +169,7 @@ export default {
 @import '~@/scss/mixins';
 
 .viewer-modal {
+  position: relative;
   width: 100%;
   max-width: 770px;
   max-height: 80vh;
@@ -173,6 +180,12 @@ export default {
   display: grid;
   grid-auto-flow: row;
   gap: 20px 0;
+  &__close {
+    position: absolute;
+    right: 25px;
+    top: 25px;
+    cursor: pointer;
+  }
 }
 .field-title {
   justify-content: flex-start;
