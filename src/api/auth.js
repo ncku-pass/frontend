@@ -8,6 +8,13 @@ export const login = ({ studentId, password }) => {
   })
 }
 
+export const checkNCKULogin = ({ key, keyval }) => {
+  return req.post('/auth/NCKUPortal-login', {
+    key,
+    keyVal: keyval
+  })
+}
+
 export const register = async ({
   email,
   name,
