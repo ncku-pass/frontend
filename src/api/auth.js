@@ -15,7 +15,7 @@ export const checkNCKULogin = ({ key, keyval }) => {
   })
 }
 
-export const register = async ({
+export const register = ({
   email,
   name,
   password,
@@ -35,6 +35,6 @@ export const register = async ({
   })
 }
 
-export const checkToken = async () => {
+export const checkToken = () => {
   return req.post('/auth/check-token')
 }

@@ -8,16 +8,16 @@ export const addTag = (newTag) => {
   return req.post('/tags/', [newTag])
 }
 
-export const getTag = async (tagId) => {
+export const getTag = (tagId) => {
   return req.get(`/tags/${tagId}`)
 }
 
-export const updateTag = async (tagId, data) => {
+export const updateTag = (tagId, data) => {
   return req.put(`/tags/${tagId}`, {
     data
   })
 }
 
-export const deleteTag = async (tagId) => {
+export const deleteTag = (tagId) => {
   return req.delete(`/tags/${tagId}`)
 }
