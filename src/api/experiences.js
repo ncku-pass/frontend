@@ -21,5 +21,5 @@ export const deleteExperience = (experienceId) => {
 }
 
 export const getExperienceTags = (experienceId) => {
-  return req.get(`/experiences/${experienceId}/Tags`)
+  return req.get(`/experiences/${experienceId}/tags`)
 }

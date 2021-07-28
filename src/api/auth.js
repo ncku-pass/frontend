@@ -9,7 +9,7 @@ export const login = ({ studentId, password }) => {
 }
 
 export const checkNCKULogin = ({ key, keyval }) => {
-  return req.post('/auth/NCKUPortal-login', {
+  return req.post('/auth/ncku-login', {
     key,
     keyVal: keyval
   })
