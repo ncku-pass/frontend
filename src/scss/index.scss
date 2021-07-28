@@ -14,7 +14,8 @@
 
 ::-webkit-scrollbar {
   -webkit-appearance: none;
-  width: 7px;
+  width: 6px;
+  height: 6px;
   margin-right: 4px;
 }
 ::-webkit-scrollbar {
@@ -22,8 +23,11 @@
 }
 ::-webkit-scrollbar-thumb {
   border-radius: 4px;
-  background-color: #ffffff66;
+  background-color: rgba($color: $gray-3, $alpha: .4);
   box-shadow: 0 0 1px #00000066;
+  &:hover {
+    background-color: rgba($color: $gray-3, $alpha: .5);
+  }
 }
 :-webkit-autofill {
   box-shadow: 0 0 0px 1000px #fff inset;
