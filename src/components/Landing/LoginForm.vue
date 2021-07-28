@@ -3,6 +3,7 @@
     <h2 class="login-form__title">
       登入E-portfolio
     </h2>
+    <a href="https://i.ncku.edu.tw/ncku/oauth/eportfolio/login.php">成功入口登入</a>
     <div>
       <label for="studentId" class="form-label">帳號</label>
       <input

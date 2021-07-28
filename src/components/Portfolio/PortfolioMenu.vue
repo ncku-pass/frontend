@@ -76,6 +76,9 @@ export default {
       semesters: {},
       tags: {}
     })
+    const someSemesterSelected = computed(() => Object.keys(filter.semesters).some(key => filter.semesters[key] === true))
+    const someTagSelected = computed(() => Object.keys(filter.tags).some(key => filter.tags[key] === true))
+
     watchEffect(() => {
       filter.semesters = semesters.value.reduce((obj, semester, index) => {
         return { ...obj, [semester]: index === 0 }
@@ -87,18 +90,20 @@ export default {
 
     const filteredExperienceArray = computed(() => {
       return experiencesArray.value.filter((experience) => {
-        let tagsFlag = false
-        for (const key in filter.semesters) {
-          if (!filter.semesters[key] && experience.semester === key) {
-            return false
+        if (someSemesterSelected.value) {
+          for (const key in filter.semesters) {
+            if (!filter.semesters[key] && experience.semester === key) {
+              return false
+            }
           }
         }
+        if (!someTagSelected.value) return true
         for (const key in filter.tags) {
           if (filter.tags[key] && experience.tags.some(tag => tag.name === key)) {
-            tagsFlag = true
+            return true
           }
         }
-        return tagsFlag
+        return false
       })
     })
 

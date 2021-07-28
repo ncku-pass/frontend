@@ -5,6 +5,8 @@ import Experience from '../views/Experience.vue'
 import Portfolio from '../views/Portfolio.vue'
 import Landing from '../views/Landing.vue'
 import Register from '../views/Register.vue'
+import AuthRedirect from '../views/AuthRedirect.vue'
+// import AuthRedirect from '../controllers/AuthRedirect.js'
 
 const tokenStr = computed(() => store.state.auth.tokenStr)
 
@@ -18,6 +20,11 @@ const routes = [
     path: '/register',
     name: 'Register',
     component: Register
+  },
+  {
+    path: '/auth/redirect',
+    name: 'Register',
+    component: AuthRedirect
   },
   {
     path: '/experience/:type?',

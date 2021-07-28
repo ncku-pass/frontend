@@ -1,10 +1,17 @@
 import router from '@/router/index'
-import { login as loginAPI, register as registerAPI, checkToken as checkTokenAPI } from '@/api/auth'
+import {
+  login as loginAPI,
+  register as registerAPI,
+  checkToken as checkTokenAPI,
+  checkNCKULogin as checkNCKULoginAPI
+} from '@/api/auth'
 
 const auth = {
   namespaced: true,
   state: () => ({
     tokenStr: localStorage.getItem('auth') || '',
+    key: '',
+    keyval: '',
     error: null,
     isPending: false
   }),
@@ -13,14 +20,19 @@ const auth = {
       state.tokenStr = token
       localStorage.setItem('auth', token)
     },
-    REMOVE_TOKEN (state) {
-      state.tokenStr = ''
-      localStorage.removeItem('auth')
-      router.push({ name: 'Landing' })
+    SET_NCKU_AUTH_KEY (state, { key = '', keyval = '' } = {}) {
+      state.key = key
+      state.keyval = keyval
     },
-    SET_STATUS (state, { error = null, isPending = false }) {
-      state.error = error
-      state.isPending = isPending
+    LOGOUT (state) {
+      state.tokenStr = ''
+      state.key = ''
+      state.keyval = ''
+      localStorage.removeItem('auth')
+    },
+    SET_STATUS (state, { error = undefined, isPending = undefined }) {
+      if (error !== undefined) state.error = error
+      if (isPending !== undefined) state.isPending = isPending
     }
   },
   actions: {
@@ -38,7 +50,8 @@ const auth = {
       }
     },
     logout ({ commit }) {
-      commit('REMOVE_TOKEN')
+      commit('LOGOUT')
+      window.location.href = '/'
     },
     async register ({ commit }, {
       email,
@@ -73,8 +86,25 @@ const auth = {
       try {
         await checkTokenAPI()
       } catch (error) {
-        commit('REMOVE_TOKEN')
+        commit('LOGOUT')
         router.push({ name: 'Landing' })
+      }
+    },
+    setNckuAuthKey ({ commit }, { key = '', keyval = '' }) {
+      commit('SET_NCKU_AUTH_KEY', { key, keyval })
+    },
+    async checkNCKULogin ({ commit }, { key = '', keyval = '' }) {
+      try {
+        commit('SET_STATUS', { isPending: true, error: null })
+
+        const { data } = await checkNCKULoginAPI({ key, keyval })
+
+        commit('SET_NCKU_AUTH_KEY', { key, keyval })
+        commit('SET_TOKEN', data.tokenStr)
+      } catch (error) {
+        commit('SET_STATUS', { error })
+      } finally {
+        commit('SET_STATUS', { isPending: false })
       }
     }
   },

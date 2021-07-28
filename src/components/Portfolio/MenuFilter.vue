@@ -67,13 +67,12 @@ export default {
   emits: ['selectAllTags', 'unSelectAllTags'],
   setup (props) {
     const allSelected = computed(() => {
-      let flag = true
       for (const tag in props.filter.tags) {
         if (props.filter.tags[tag] === false) {
-          flag = false
+          return false
         }
       }
-      return flag
+      return true
     })
 
     return {
