@@ -19,7 +19,7 @@
           <p class="template-modal__intro">
             {{ intro }}
           </p>
-          <div class="template-modal__preview">
+          <div ref="templatePreview" class="template-modal__preview">
             <div class="template-modal__preview__content">
               <img
                 v-show="selected === '升學備審'"
@@ -65,7 +65,7 @@
 </template>
 
 <script>
-import { computed, ref } from 'vue'
+import { computed, ref, watch } from 'vue'
 const options = ['升學備審', '工作履歷', '個人整理', '實習履歷']
 const intros = {
   升學備審: '自我介紹、必修優異課程、特殊經歷、研究計畫、語言證照',
@@ -107,8 +107,14 @@ export default {
   emits: ['close', 'choose'],
   setup (props, { emit }) {
     const selected = ref(options[0])
+    const templatePreview = ref(null)
+
     const intro = computed(() => {
       return intros[selected.value]
+    })
+
+    watch(selected, () => {
+      templatePreview.value.scrollTop = 0
     })
 
     const handleAddTemplate = () => {
@@ -119,6 +125,7 @@ export default {
     }
 
     return {
+      templatePreview,
       selected,
       options,
       intro,
