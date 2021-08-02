@@ -120,7 +120,7 @@ export default {
     const handleAddTemplate = () => {
       emit('choose', {
         name: selected.value,
-        topics: template[selected.value]
+        cards: template[selected.value]
       })
     }
 

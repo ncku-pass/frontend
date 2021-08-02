@@ -8,10 +8,10 @@ export const login = ({ studentId, password }) => {
   })
 }
 
-export const checkNCKULogin = ({ key, keyval }) => {
+export const checkNCKULogin = ({ key, keyVal }) => {
   return req.post('/auth/ncku-login', {
     key,
-    keyVal: keyval
+    keyVal
   })
 }
 
