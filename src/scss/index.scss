@@ -23,10 +23,9 @@
 }
 ::-webkit-scrollbar-thumb {
   border-radius: 4px;
-  background-color: rgba($color: $gray-3, $alpha: .4);
-  box-shadow: 0 0 1px #00000066;
+  background-color: rgba($color: $gray-3, $alpha: .2);
   &:hover {
-    background-color: rgba($color: $gray-3, $alpha: .5);
+    background-color: rgba($color: $gray-3, $alpha: .35);
   }
 }
 :-webkit-autofill {

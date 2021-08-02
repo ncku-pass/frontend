@@ -15,56 +15,64 @@
           <PlusCircleIcon />
         </li>
       </ul>
-      <div v-if="showedResume" class="portfolio__main__content">
-        <div class="content-header">
-          <input
-            v-model="showedResume.name"
-            placeholder="請輸入名稱"
-            class="content-header__title"
-            type="text"
-          />
-          <div class="content-header__btns">
-            <button class="btn--red">
-              刪除
-            </button>
-            <button
-              class="btn content-header__save"
-              :disabled="isPending"
-              @click="handleSave()"
-            >
-              {{ isPending ? '存檔中' : '存檔' }}
-              <!-- TODO: 顯示尚未存檔 -->
-              <!-- <div class="content-header__save__hint" /> -->
-            </button>
+      <div class="portfolio__main__content">
+        <template v-if="showedResume">
+          <div class="content-header">
+            <input
+              v-model="showedResume.name"
+              placeholder="請輸入名稱"
+              class="content-header__title"
+              type="text"
+            />
+            <div class="content-header__btns">
+              <button class="btn--red">
+                刪除
+              </button>
+              <button
+                class="btn content-header__save"
+                :disabled="isPending"
+                @click="handleSave()"
+              >
+                {{ isPending ? '存檔中' : '存檔' }}
+                <!-- TODO: 顯示尚未存檔 -->
+                <!-- <div class="content-header__save__hint" /> -->
+              </button>
+            </div>
           </div>
-        </div>
-        <div class="content-body">
-          <div class="content-body__card-list">
-            <draggable
-              :list="showedResume.topics"
-              :group="{ name: 'ability' }"
-              handle=".ability-card__grab-area"
-              item-key="id"
-            >
-              <template #item="{element, index}">
-                <AbilityCard
-                  v-model:abilityTopic="element.name"
-                  v-bind="element"
-                  @delete-experience="handleDeleteExperience(experienceIndex, element)"
-                  @delete-ability="handleDeleteCard(index)"
-                />
-              </template>
-            </draggable>
+          <div class="content-body">
+            <div class="content-body__card-list">
+              <draggable
+                :list="showedResume.cards"
+                :group="{ name: 'ability' }"
+                handle=".ability-card__grab-area"
+                item-key="id"
+              >
+                <template #item="{element, index}">
+                  <AbilityCard
+                    v-model:abilityTopic="element.name"
+                    v-bind="element"
+                    @delete-experience="handleDeleteExperience(experienceIndex, element)"
+                    @delete-ability="handleDeleteCard(index)"
+                  />
+                </template>
+              </draggable>
+              <div v-show="!showedResume.cards.length" class="content-body__card-list--empty">
+                <img src="@/assets/Portfolio/man-with-coffee.png" alt="man-with-coffee" />
+              </div>
+            </div>
+            <div class="content-body__btns">
+              <button class="content-body__add" @click="handleAddCard('experiences')">
+                + 新增經歷區塊
+              </button>
+              <button class="content-body__add" @click="handleAddCard('text')">
+                + 新增文字區塊
+              </button>
+            </div>
           </div>
-          <div class="content-body__btns">
-            <button class="content-body__add" @click="handleAddCard('experiences')">
-              + 新增經歷區塊
-            </button>
-            <button class="content-body__add" @click="handleAddCard('text')">
-              + 新增文字區塊
-            </button>
-          </div>
-        </div>
+        </template>
+        <template v-else>
+          尚未選擇履歷
+        </template>
       </div>
     </div>
     <!-- TODO: 顯示Loading -->
@@ -112,16 +120,16 @@ export default {
       // resumes.value.push({
       //   id: resumes.value.length,
       //   name: '新的履歷',
-      //   topics: []
+      //   cards: []
       // })
       showTemplateModal.value = true
     }
-    const handleAddResume = ({ name, topics }) => {
+    const handleAddResume = ({ name, cards }) => {
       showTemplateModal.value = false
       resumes.value.push({
         id: resumes.value.length,
         name,
-        topics
+        cards
       })
     }
     const handleCloseTemplateModal = () => {
@@ -131,16 +139,16 @@ export default {
     // === 新增 / 刪除卡片 ===
     const handleAddCard = (cardType = 'experiences') => {
       const card = {
-        id: showedResume.value.topics.length,
+        id: showedResume.value.cards.length,
         name: '',
         experiences: [],
         text: '',
         cardType
       }
-      showedResume.value.topics.push(card)
+      showedResume.value.cards.push(card)
     }
     const handleDeleteCard = (abilityIndex) => {
-      showedResume.value.topics.splice(abilityIndex, 1)
+      showedResume.value.cards.splice(abilityIndex, 1)
     }
 
     // === 刪除卡片內的經驗 ===
@@ -149,10 +157,10 @@ export default {
     }
 
     const handleSave = async () => {
-      const topics = showedResume.value.topics.map(topic => {
+      const cards = showedResume.value.cards.map(topic => {
         return { ...topic, experienceId: topic.experiences.map(exp => exp.id) }
       })
-      await saveResume(showedResume.value.id, { ...showedResume.value, topics })
+      await saveResume(showedResume.value.id, { ...showedResume.value, cards })
       if (!error.value) {
         console.log('儲存成功')
       } else {
@@ -185,6 +193,7 @@ export default {
 .portfolio__main {
   display: flex;
   flex-direction: column;
+  min-height: 100%;
   background-color: #fff;
   border-radius: 10px 10px 0 0;
   &-container {
@@ -276,6 +285,14 @@ export default {
     border-radius: 8px;
     background-color: $blue-dark;
     color: $white;
+  }
+  &__card-list--empty {
+    display: flex;
+    justify-content: center;
+    img {
+      margin: 40px;
+      height: 200px;
+    }
   }
 }
 </style>
