@@ -89,9 +89,6 @@ export default {
   setup (props) {
     const store = useStore()
 
-    store.dispatch('tags/initTags')
-    store.dispatch('experiences/initExperiences')
-
     const isPending = computed(() => store.state.experiences.isPending)
     const experiences = computed(() => store.state.experiences.experiences)
     const classifiedExperiences = computed(() => store.getters['experiences/classifiedExperiences'])
