@@ -121,7 +121,7 @@
         </details>
         <div>
           <label for="" class="form-label">獲得技能Tag</label>
-          <TagSelect v-model:tags="formData.tags" :options="tags" />
+          <TagSelect v-model:selectedTags="formData.tags" />
         </div>
         <div v-if="showedFieldText.feedback">
           <label for="experienceFeedback" class="form-label">{{
@@ -298,29 +298,6 @@ const fieldText = {
   }
 }
 
-const defaultAbilities = [
-  '人文素養',
-  '公民素養',
-  '國際視野',
-  '社會關懷',
-  '語文與溝通能力',
-  '思考與判斷能力',
-  '專業與跨域能力',
-  '思考與判斷能力',
-  '創新與領導能力',
-  '邏輯與分析能力',
-  '勇敢落實的能力',
-  '闡述與敘事能力',
-  '拆解問題的能力',
-  '人本關懷的能力'
-].map((ability, i) => {
-  return {
-    // TODO: 待後端確認id
-    id: `default_${i}`,
-    name: ability
-  }
-})
-
 export default {
   name: 'FormModal',
   components: { Multiselect, ConfirmModal, MessageModal, TagSelect },
@@ -369,7 +346,7 @@ export default {
       .flat()
 
     // === 產生所有的tag ===
-    const tags = computed(() => [...defaultAbilities, ...store.state.tags.tags])
+    const tags = computed(() => store.state.tags.tags)
 
     // 儲存填入的資料，若有傳入要編輯的資料，則設為預設值
     const formData = reactive({

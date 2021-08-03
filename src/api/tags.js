@@ -21,3 +21,11 @@ export const updateTag = (tagId, data) => {
 export const deleteTag = (tagId) => {
   return req.delete(`/tags/${tagId}`)
 }
+
+export const searchTag = (name) => {
+  return req.get('/tags/search', {
+    params: {
+      name
+    }
+  })
+}
