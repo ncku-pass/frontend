@@ -12,7 +12,7 @@
 import { computed } from 'vue'
 import { useStore } from 'vuex'
 import useGrab from '@/composables/useGrab'
-import { watchEffect } from '@vue/runtime-core'
+import { watch, watchEffect } from '@vue/runtime-core'
 import LayoutWrapper from '@/layouts/LayoutWrapper.vue'
 
 export default {
@@ -23,13 +23,14 @@ export default {
   setup () {
     const store = useStore()
     const tokenStr = computed(() => store.state.auth.tokenStr)
-    watchEffect(() => {
+
+    watch(tokenStr, () => {
       if (tokenStr.value) {
         store.dispatch('tags/initTags')
         store.dispatch('experiences/initExperiences')
         store.dispatch('resumes/initResumes')
       }
-    })
+    }, { immediate: true })
 
     const { isGrabbing } = useGrab()
     watchEffect(() => {
