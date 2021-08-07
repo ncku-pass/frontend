@@ -31,7 +31,7 @@ const errorHandler = (error) => {
 }
 
 export const req = axios.create({
-  baseURL: 'https://e-portfolio-ncku-dev.herokuapp.com/api',
+  baseURL: process.env.NODE_ENV === 'production' ? process.env.VUE_APP_API_URL : 'https://e-portfolio-ncku-dev.herokuapp.com/api',
   headers: { 'Content-Type': 'application/json' },
   timeout: 15000
 })
