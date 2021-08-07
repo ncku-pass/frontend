@@ -25,7 +25,7 @@
               type="text"
             />
             <div class="content-header__btns">
-              <button class="btn--red">
+              <button class="btn--red" @click="confirmDelete">
                 刪除
               </button>
               <button
@@ -75,12 +75,32 @@
         </template>
       </div>
     </div>
-    <!-- TODO: 顯示Loading -->
     <TemplateModal
       :show-modal="showTemplateModal"
       @close="handleCloseTemplateModal"
       @choose="handleAddResume"
     />
+    <ConfirmModal
+      v-if="showConfirmModal"
+      confirm-type="customize"
+      message="確定刪除此項履歷？"
+      @cancel="closeConfirmModal"
+    >
+      <button
+        v-show="!deleteStatus.isPending"
+        class="btn"
+        @click.stop="closeConfirmModal"
+      >
+        取消
+      </button>
+      <button
+        class="btn--red"
+        :disabled="deleteStatus.isPending"
+        @click.stop="handleDeleteResume(showedResume.id)"
+      >
+        {{ deleteStatus.isPending ? '刪除中' : '確定刪除' }}
+      </button>
+    </ConfirmModal>
   </div>
 </template>
 
@@ -91,10 +111,13 @@ import draggable from 'vuedraggable'
 import { PlusCircleIcon } from '@heroicons/vue/outline'
 import AbilityCard from '@/components/Portfolio/AbilityCard.vue'
 import TemplateModal from '@/components/Portfolio/TemplateModal.vue'
+import ConfirmModal from '@/components/ConfirmModal'
+import { useDeleteModal } from '@/composables/useDeleteModal'
 
 export default {
   name: 'PortfolioMain',
   components: {
+    ConfirmModal,
     AbilityCard,
     TemplateModal,
     draggable,
@@ -107,6 +130,7 @@ export default {
     const error = computed(() => store.state.resumes.error)
     const isPending = computed(() => store.state.resumes.isPending)
     const saveResume = () => store.dispatch('saveResume')
+    const deleteResume = ({ resumeId }) => store.dispatch('resumes/deleteResume', { resumeId })
 
     // === 顯示當前履歷 ===
     const selectedIndex = ref(0)
@@ -127,13 +151,32 @@ export default {
     const handleAddResume = ({ name, cards }) => {
       showTemplateModal.value = false
       resumes.value.push({
-        id: resumes.value.length,
+        id: 'local_' + `${Math.random()}`.slice(2, 7),
         name,
         cards
       })
     }
     const handleCloseTemplateModal = () => {
       showTemplateModal.value = false
+    }
+
+    // === 刪除履歷 ===
+    const { showConfirmModal, deleteStatus, closeConfirmModal, confirmDelete } = useDeleteModal()
+    const handleDeleteResume = async (resumeId) => {
+      if (resumeId.match(/local/)) {
+        resumes.value.splice(selectedIndex.value, 1)
+      } else {
+        try {
+          deleteStatus.isPending = true
+          deleteStatus.error = null
+          await deleteResume({ resumeId })
+        } catch (error) {
+          deleteStatus.error = error
+        } finally {
+          deleteStatus.isPending = false
+        }
+      }
+      showConfirmModal.value = false
     }
 
     // === 新增 / 刪除卡片 ===
@@ -174,8 +217,13 @@ export default {
       selectedIndex,
       showTemplateModal,
       openTemplateModal,
+      deleteStatus,
+      confirmDelete,
+      showConfirmModal,
+      closeConfirmModal,
       handleCloseTemplateModal,
       handleAddResume,
+      handleDeleteResume,
       handleAddCard,
       handleDeleteExperience,
       handleDeleteCard,

@@ -1,4 +1,8 @@
-import { getResumes as getResumesAPI, saveResume as saveResumeAPI } from '@/api/resumes'
+import {
+  getResumes as getResumesAPI,
+  saveResume as saveResumeAPI,
+  deleteResume as deleteResumeAPI
+} from '@/api/resumes'
 
 const resumes = {
   namespaced: true,
@@ -10,6 +14,9 @@ const resumes = {
   mutations: {
     SET_RESUMES (state, resumes) {
       state.resumes = resumes
+    },
+    DELETE_RESUME (state, { resumeId }) {
+      state.resumes = state.resumes.filter(resume => resume.id !== resumeId)
     },
     SET_STATUS (state, { error = null, isPending = false }) {
       state.error = error
@@ -46,6 +53,10 @@ const resumes = {
       } finally {
         commit('SET_STATUS', { isPending: false })
       }
+    },
+    async deleteResume ({ commit }, { resumeId }) {
+      await deleteResumeAPI(resumeId)
+      commit('DELETE_RESUME', { resumeId })
     }
   }
 }

@@ -1,22 +1,24 @@
 <template>
-  <div class="confirm-modal modal-bg" @click.self.stop="$emit('cancel')">
-    <div class="confirm-modal__content">
-      <span v-if="confirmType === 'customize'">{{ message }}</span>
-      <span v-else-if="confirmType === 'leave'">離開則無法儲存資料喔！</span>
-      <span v-else>確定要刪除<span class="text--red">{{ message }}</span>此項歷程？</span>
+  <teleport to="#app">
+    <div class="confirm-modal modal-bg" @click.self.stop="$emit('cancel')">
+      <div class="confirm-modal__content">
+        <span v-if="confirmType === 'customize'">{{ message }}</span>
+        <span v-else-if="confirmType === 'leave'">離開則無法儲存資料喔！</span>
+        <span v-else>確定要刪除<span class="text--red">{{ message }}</span>此項歷程？</span>
 
-      <div class="confirm-modal__content__btns">
-        <slot>
-          <button class="btn" @click.stop="$emit('cancel')">
-            {{ cancelMessage }}
-          </button>
-          <button class="btn--red" @click.stop="$emit('confirm')">
-            {{ confirmMessage }}
-          </button>
-        </slot>
+        <div class="confirm-modal__content__btns">
+          <slot>
+            <button class="btn" @click.stop="$emit('cancel')">
+              {{ cancelMessage }}
+            </button>
+            <button class="btn--red" @click.stop="$emit('confirm')">
+              {{ confirmMessage }}
+            </button>
+          </slot>
+        </div>
       </div>
     </div>
-  </div>
+  </teleport>
 </template>
 
 <script>

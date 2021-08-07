@@ -53,10 +53,10 @@
 </template>
 
 <script>
-import { reactive, ref } from 'vue'
 import ConfirmModal from '@/components/ConfirmModal'
 import { deleteExperience } from '@/api/experiences'
 import { PencilAltIcon, TrashIcon } from '@heroicons/vue/outline'
+import { useDeleteModal } from '@/composables/useDeleteModal'
 
 export default {
   components: {
@@ -74,23 +74,8 @@ export default {
   },
   emits: ['delete', 'edit'],
   setup (props, context) {
-    const showConfirmModal = ref(false)
-    const closeConfirmModal = () => {
-      if (deleteStatus.isPending) {
-        return
-      }
-      showConfirmModal.value = false
-    }
-
-    const confirmDelete = () => {
-      showConfirmModal.value = true
-    }
-
     // === 刪除經歷 ===
-    const deleteStatus = reactive({
-      isPending: false,
-      error: null
-    })
+    const { showConfirmModal, deleteStatus, closeConfirmModal, confirmDelete } = useDeleteModal()
     const handleDeleteExperience = async () => {
       try {
         deleteStatus.isPending = true

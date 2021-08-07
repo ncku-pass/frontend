@@ -7,3 +7,7 @@ export const getResumes = () => {
 export const saveResume = (resumeId, data) => {
   return req.post(`/resumes/${resumeId}/Save`, data)
 }
+
+export const deleteResume = (resumeId) => {
+  return req.delete(`/resumes/${resumeId}`)
+}
