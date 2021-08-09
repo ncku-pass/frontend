@@ -23,7 +23,7 @@ const routes = [
   },
   {
     path: '/auth/redirect',
-    name: 'Register',
+    name: 'AuthRedirect',
     component: AuthRedirect
   },
   {
