@@ -6,6 +6,7 @@
   border-radius: 5px;
   line-height: 24px;
   text-align: center;
+  user-select: none;
   &:disabled {
     background-color: $gray-4;
     border-color: $gray-4;
@@ -50,7 +51,11 @@
 .tab-link {
   display: block;
   padding: 8px 24px;
+  max-width: 200px;
   text-decoration: none;
+  text-overflow: ellipsis;
+  user-select: none;
+  overflow: hidden;
   color: $gray-4;
   letter-spacing: 0.05em;
   font-weight: $weight-medium;
@@ -61,7 +66,7 @@
   &.router-link-active,
   &.is-active {
     color: $gray-1;
-    box-shadow: 0px 3px 0px $red;
+    box-shadow: 0px -3px 0px $red inset;
   }
   &:hover {
     color: $gray-1;

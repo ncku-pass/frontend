@@ -2,18 +2,52 @@
   <div class="portfolio__main-container">
     <div v-if="resumes" class="portfolio__main">
       <ul class="portfolio__main__tabs">
-        <li
-          v-for="(resume, index) in resumes"
-          :key="resume.id"
-          class="tab-link"
-          :class="{ 'is-active': selectedIndex === index }"
-          @click="selectedIndex = index"
-        >
-          {{ resume.name || '請輸入名稱' }}
-        </li>
-        <li class="portfolio__main__tabs__add" @click="openTemplateModal">
-          <PlusCircleIcon />
-        </li>
+        <button class="scroll-left-btn" @click="scrollHorizontal(-200)">
+          <svg
+            width="9"
+            height="14"
+            viewBox="0 0 9 14"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M8 13L2 7L8 1"
+              stroke="black"
+              stroke-width="2"
+            />
+          </svg>
+        </button>
+        <div ref="tabWrapperRef" class="tabs-wrapper">
+          <li
+            v-for="(resume, index) in resumes"
+            :key="resume.id"
+            :ref="setTabRef"
+            class="tab-link"
+            :class="{ 'is-active': selectedIndex === index }"
+            :title="resume.name"
+            @click="handleSelectResume(index)"
+          >
+            {{ resume.name || '請輸入名稱' }}
+          </li>
+          <li class="portfolio__main__tabs__add" @click="openTemplateModal">
+            <PlusCircleIcon />
+          </li>
+        </div>
+        <button class="scroll-right-btn" @click="scrollHorizontal(200)">
+          <svg
+            width="9"
+            height="14"
+            viewBox="0 0 9 14"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M1 1L7 7L1 13"
+              stroke="black"
+              stroke-width="2"
+            />
+          </svg>
+        </button>
       </ul>
       <div class="portfolio__main__content">
         <template v-if="showedResume">
@@ -23,6 +57,7 @@
               placeholder="請輸入名稱"
               class="content-header__title"
               type="text"
+              maxlength="12"
             />
             <div class="content-header__btns">
               <button class="btn--red" @click="confirmDelete">
@@ -70,9 +105,10 @@
             </div>
           </div>
         </template>
-        <template v-else>
-          尚未選擇履歷
-        </template>
+        <div v-else class="content-body--empty">
+          <img src="@/assets/Portfolio/man-with-coffee.png" alt="man-with-coffee" />
+          <p>點擊上方 + 來新增第一份履歷吧</p>
+        </div>
       </div>
     </div>
     <TemplateModal
@@ -105,7 +141,7 @@
 </template>
 
 <script>
-import { computed, ref } from 'vue'
+import { computed, ref, onBeforeUpdate, nextTick } from 'vue'
 import { useStore } from 'vuex'
 import draggable from 'vuedraggable'
 import { PlusCircleIcon } from '@heroicons/vue/outline'
@@ -132,11 +168,34 @@ export default {
     const saveResume = () => store.dispatch('saveResume')
     const deleteResume = ({ resumeId }) => store.dispatch('resumes/deleteResume', { resumeId })
 
-    // === 顯示當前履歷 ===
+    // === 履歷的Tab ===
     const selectedIndex = ref(0)
+    const tabRefs = ref([])
+    const setTabRef = (el) => {
+      if (el) {
+        tabRefs.value.push(el)
+      }
+    }
+    onBeforeUpdate(() => {
+      tabRefs.value = []
+    })
+    const handleSelectResume = (index) => {
+      selectedIndex.value = index
+      if (index >= 0) {
+        tabRefs.value[index].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' })
+      }
+    }
     const showedResume = computed(() => {
       return resumes.value[selectedIndex.value]
     })
+    const tabWrapperRef = ref(null)
+    const scrollHorizontal = (pixel) => {
+      tabWrapperRef.value.scrollTo({
+        top: 0,
+        left: tabWrapperRef.value.scrollLeft + pixel,
+        behavior: 'smooth'
+      })
+    }
 
     // === 新增履歷 ===
     const showTemplateModal = ref(false)
@@ -148,13 +207,15 @@ export default {
       // })
       showTemplateModal.value = true
     }
-    const handleAddResume = ({ name, cards }) => {
+    const handleAddResume = async ({ name, cards }) => {
       showTemplateModal.value = false
       resumes.value.push({
         id: 'local_' + `${Math.random()}`.slice(2, 7),
         name,
         cards
       })
+      await nextTick()
+      handleSelectResume(resumes.value.length - 1)
     }
     const handleCloseTemplateModal = () => {
       showTemplateModal.value = false
@@ -175,6 +236,11 @@ export default {
         } finally {
           deleteStatus.isPending = false
         }
+      }
+      if (selectedIndex.value === resumes.value.length) {
+        handleSelectResume(resumes.value.length - 1)
+      } else {
+        handleSelectResume(selectedIndex.value)
       }
       showConfirmModal.value = false
     }
@@ -215,6 +281,11 @@ export default {
       resumes,
       showedResume,
       selectedIndex,
+      tabRefs,
+      setTabRef,
+      handleSelectResume,
+      tabWrapperRef,
+      scrollHorizontal,
       showTemplateModal,
       openTemplateModal,
       deleteStatus,
@@ -234,7 +305,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 @import '~@/scss/variables';
 @import '~@/scss/mixins';
 
@@ -255,9 +326,9 @@ export default {
   }
   &__tabs {
     display: flex;
-    justify-content: flex-start;
     flex-shrink: 0;
-    padding: 5px 0;
+    padding: 0 10px;
+    min-height: 48px;
     border-bottom: 2px solid $pink;
     overflow-x: auto;
     &__add {
@@ -282,6 +353,24 @@ export default {
     height: 100%;
     padding: 0 20px 20px;
   }
+}
+.tabs-wrapper {
+  position: relative;
+  display: flex;
+  justify-content: flex-start;
+  flex-shrink: 0;
+  flex: 1;
+  overflow: hidden;
+  padding: 6px 0;
+  &:hover {
+    overflow: scroll;
+    padding-bottom: 0;
+  }
+}
+.scroll-left-btn, .scroll-right-btn {
+  width: 30px;
+  background-color: transparent;
+  border: none;
 }
 
 .content-header {
@@ -320,6 +409,24 @@ export default {
 }
 
 .content-body {
+  &--empty {
+    margin: 0 auto;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    img {
+      width: 160px;
+      margin-bottom: 20px;
+    }
+    p {
+      padding: 10px 75px;
+      line-height: 26px;
+      color: $blue-dark;
+      background: $gray-blue;
+      border-radius: 8px;
+    }
+  }
   &__btns {
     display: flex;
     justify-content: center;
