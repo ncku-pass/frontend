@@ -72,7 +72,7 @@ const auth = {
           confirmPassword,
           studentId,
           major,
-          graduationYear: ~~graduationYear // ~~ 把string轉成number
+          graduationYear
         })
 
         commit('SET_TOKEN', data.tokenStr)

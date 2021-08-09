@@ -91,7 +91,7 @@
           <label for="graduationYear" class="form-label">系級</label>
           <Field
             id="graduationYear"
-            v-model="formData.graduationYear"
+            v-model.number="formData.graduationYear"
             name="graduationYear"
             as="select"
             class="form-control"
