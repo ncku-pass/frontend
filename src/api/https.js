@@ -14,7 +14,7 @@ const errorHandler = (error) => {
       // 若出現未授權的情況則把使用者登出
       case 401:
         console.error(error.response)
-        logout()
+        if (tokenStr.value) { logout() }
         break
       default:
         console.error(error.response)
