@@ -160,6 +160,7 @@ export default {
   padding: 26px 0;
   display: flex;
   justify-content: center;
+  color: $gray-1;
   &__loading {
     height: 100%;
     display: flex;

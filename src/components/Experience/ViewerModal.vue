@@ -183,6 +183,7 @@ export default {
   display: grid;
   grid-auto-flow: row;
   gap: 20px 0;
+  color: $gray-1;
   &__close {
     position: absolute;
     right: 25px;
