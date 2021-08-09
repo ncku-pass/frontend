@@ -112,8 +112,7 @@
       </template>
 
       <p v-if="registerError">
-        <!-- TODO: 等待後端修正錯誤格式 -->
-        {{ registerError.data.errorMessage }}
+        {{ registerError?.errorMessage || registerError?.errors }}
       </p>
 
       <div class="btns">
@@ -224,6 +223,7 @@ export default {
       }
       currentStep.value++
     }
+
     const prevStep = () => {
       if (currentStep.value === 0) {
         router.go(-1)
