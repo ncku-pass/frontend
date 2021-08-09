@@ -12,9 +12,9 @@ const experiences = {
     SET_EXPERIENCES (state, experiences) {
       state.experiences = experiences
     },
-    SET_STATUS (state, { error = null, isPending = false }) {
-      state.error = error
-      state.isPending = isPending
+    SET_STATUS (state, { error = undefined, isPending = undefined }) {
+      if (error !== undefined) state.error = error
+      if (isPending !== undefined) state.isPending = isPending
     }
   },
   actions: {

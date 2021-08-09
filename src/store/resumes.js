@@ -18,9 +18,9 @@ const resumes = {
     DELETE_RESUME (state, { resumeId }) {
       state.resumes = state.resumes.filter(resume => resume.id !== resumeId)
     },
-    SET_STATUS (state, { error = null, isPending = false }) {
-      state.error = error
-      state.isPending = isPending
+    SET_STATUS (state, { error = undefined, isPending = undefined }) {
+      if (error !== undefined) state.error = error
+      if (isPending !== undefined) state.isPending = isPending
     }
   },
   actions: {
