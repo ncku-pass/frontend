@@ -107,7 +107,6 @@ export default {
     // ===處理表單送出===
     const handleSubmit = () => {
       showFormModal.value = false
-      getExperiences()
     }
 
     // ===處理經驗刪除===

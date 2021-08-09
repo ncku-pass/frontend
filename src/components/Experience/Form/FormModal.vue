@@ -172,7 +172,7 @@
         </div>
         <div class="form-modal__content__btns">
           <button
-            v-show="!formStatus.isPending"
+            v-show="!isPending"
             class="btn"
             type="button"
             @click="leaveForm"
@@ -181,10 +181,10 @@
           </button>
           <button
             class="btn--red"
-            :disabled="formStatus.isPending"
+            :disabled="isPending"
             type="submit"
           >
-            {{ formStatus.isPending ? '儲存中' : '儲存' }}
+            {{ isPending ? '儲存中' : '儲存' }}
           </button>
         </div>
       </form>
@@ -211,7 +211,6 @@ import { useStore } from 'vuex'
 import Multiselect from '@vueform/multiselect'
 import ConfirmModal from '@/components/ConfirmModal.vue'
 import MessageModal from '@/components/MessageModal.vue'
-import { addExperience, updateExperience } from '@/api/experiences'
 import TagSelect from '@/components/Experience/Form/TagSelect.vue'
 
 const fieldText = {
@@ -324,13 +323,13 @@ export default {
     }
   },
   emits: ['close', 'submit'],
-  setup (props, context) {
+  setup (props, { emit }) {
     const store = useStore()
 
     // === 離開時跳出確認視窗 ===
     const showConfirmModal = ref(false)
     const leaveForm = () => {
-      if (formStatus.isPending) {
+      if (isPending.value) {
         return
       }
       showConfirmModal.value = true
@@ -358,6 +357,7 @@ export default {
     // 儲存填入的資料，若有傳入要編輯的資料，則設為預設值
     const todayString = new Date(+new Date() + 8 * 3600 * 1000).toISOString().substr(0, 10)
     const formData = reactive({
+      id: props.editData?.id || null,
       name: props.editData?.name || '',
       position: props.editData?.position || '',
       description: props.editData?.description || '',
@@ -373,38 +373,28 @@ export default {
       dateEnd: props.editData?.dateEnd?.slice(0, 10) || null
     })
 
-    const formStatus = reactive({
-      error: null,
-      isPending: false
-    })
+    const isPending = computed(() => store.state.experiences.isPending)
+    const addExperience = (experience) => store.dispatch('experiences/addExperience', experience)
+    const updateExperience = (id, experience) => store.dispatch('experiences/updateExperience', { id, experience })
+
     const handleFormSubmit = async () => {
-      try {
-        formStatus.isPending = true
-        formStatus.error = null
-        if (props.editData) {
-          // TODO: 處理編輯錯誤
-          const res = await updateExperience(props.editData.id, {
-            ...formData,
-            tags: formData.tags.map(tag => tag.id),
-            dateStart: new Date(formData.dateStart).toISOString(),
-            dateEnd: formData.dateEnd ? new Date(formData.dateEnd).toISOString() : null
-          })
-          console.log(res)
-        } else {
-          await addExperience({
-            ...formData,
-            tags: formData.tags.map(tag => tag.id),
-            dateStart: new Date(formData.dateStart).toISOString(),
-            dateEnd: formData.dateEnd ? new Date(formData.dateEnd).toISOString() : null
-          })
-        }
-        context.emit('submit')
-      } catch (error) {
-        console.log(error)
-        formStatus.error = error
-      } finally {
-        formStatus.isPending = false
+      if (props.editData) {
+        // TODO: 處理編輯錯誤
+        await updateExperience(formData.id, {
+          ...formData,
+          tags: formData.tags.map(tag => tag.id),
+          dateStart: new Date(formData.dateStart).toISOString(),
+          dateEnd: formData.dateEnd ? new Date(formData.dateEnd).toISOString() : null
+        })
+      } else {
+        await addExperience({
+          ...formData,
+          tags: formData.tags.map(tag => tag.id),
+          dateStart: new Date(formData.dateStart).toISOString(),
+          dateEnd: formData.dateEnd ? new Date(formData.dateEnd).toISOString() : null
+        })
       }
+      emit('submit')
     }
 
     const tagsMultiselect = ref(null)
@@ -424,7 +414,7 @@ export default {
       handleFormSubmit,
       tagsMultiselect,
       handleSelectTag,
-      formStatus
+      isPending
     }
   }
 }

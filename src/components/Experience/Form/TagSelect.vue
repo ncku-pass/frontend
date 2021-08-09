@@ -15,7 +15,7 @@
         viewBox="0 0 20 20"
         fill="currentColor"
         class="tag__delete"
-        @click="deleteTag(tag.id)"
+        @click="handleRemoveTag(tag.id)"
       >
         <path
           fill-rule="evenodd"
@@ -79,6 +79,20 @@
         @click="handleOptionClicked(tag)"
       >
         {{ tag.name }}
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="option__delete"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          @click.stop="handleDeleteTag(tag.id)"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M6 18L18 6M6 6l12 12"
+          />
+        </svg>
       </div>
     </div>
   </div>
@@ -137,7 +151,7 @@ export default {
     // ===== 下拉選單 =====
     const showDropdown = ref(false)
     const isChoosing = ref(false)
-    const tags = computed(() => store.state.tags.tags)
+    const tags = computed(() => store.state.tags.tags.filter(tag => tag.id > 14))
 
     const classifiedOptions = reactive({
       default: defaultAbilities,
@@ -200,18 +214,23 @@ export default {
     }
 
     // ===== 標籤 =====
-    const deleteTag = id => {
+    const handleRemoveTag = id => {
       emit(
         'update:selectedTags',
         props.selectedTags.filter(tag => tag.id !== id)
       )
+    }
+    const deleteTag = (tagId) => store.dispatch('tags/deleteTag', tagId)
+    const handleDeleteTag = (tagId) => {
+      deleteTag(tagId)
     }
 
     return {
       textInput,
       newTagName,
       createTag,
-      deleteTag,
+      handleRemoveTag,
+      handleDeleteTag,
       filteredOptions,
       showDropdown,
       isChoosing,
@@ -284,6 +303,7 @@ export default {
   overflow: auto;
 }
 .option {
+  position: relative;
   display: flex;
   justify-content: space-between;
   padding: 6px 24px;
@@ -295,6 +315,18 @@ export default {
   &-label {
     padding: 6px 12px;
     color: $gray-3;
+  }
+  &__delete {
+    padding: 6px;
+    width: 36px;
+    height: 36px;
+    position: absolute;
+    right: 0;
+    top: 0;
+    stroke: $red;
+    &:hover {
+      background-color: $red-light;
+    }
   }
 }
 </style>
