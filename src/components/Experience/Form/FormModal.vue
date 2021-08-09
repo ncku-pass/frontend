@@ -52,12 +52,19 @@
           <div v-else class="form-modal__time">
             <p>*開始時間</p>
             <input
+              v-model="formData.dateStart"
               type="date"
               class="form-control"
+              :max="todayString"
               required
             />
             <p>結束時間</p>
-            <input type="date" class="form-control" />
+            <input
+              v-model="formData.dateEnd"
+              type="date"
+              class="form-control"
+              :min="formData.dateStart"
+            />
           </div>
         </div>
         <div v-if="showedFieldText.type">
@@ -349,6 +356,7 @@ export default {
     const tags = computed(() => store.state.tags.tags)
 
     // 儲存填入的資料，若有傳入要編輯的資料，則設為預設值
+    const todayString = new Date(+new Date() + 8 * 3600 * 1000).toISOString().substr(0, 10)
     const formData = reactive({
       name: props.editData?.name || '',
       position: props.editData?.position || '',
@@ -360,7 +368,9 @@ export default {
       // tags: props.editData?.tags.map(tag => tag.id) || []
       tags: props.editData?.tags || [],
       // TODO: 新增開始/結束時間欄位、課程/活動類別欄位
-      type: props.editData?.type || []
+      type: props.editData?.type || [],
+      dateStart: props.editData?.dateStart?.slice(0, 10) || null,
+      dateEnd: props.editData?.dateEnd?.slice(0, 10) || null
     })
 
     const formStatus = reactive({
@@ -375,13 +385,17 @@ export default {
           // TODO: 處理編輯錯誤
           const res = await updateExperience(props.editData.id, {
             ...formData,
-            tags: formData.tags.map(tag => tag.id)
+            tags: formData.tags.map(tag => tag.id),
+            dateStart: new Date(formData.dateStart).toISOString(),
+            dateEnd: formData.dateEnd ? new Date(formData.dateEnd).toISOString() : null
           })
           console.log(res)
         } else {
           await addExperience({
             ...formData,
-            tags: formData.tags.map(tag => tag.id)
+            tags: formData.tags.map(tag => tag.id),
+            dateStart: new Date(formData.dateStart).toISOString(),
+            dateEnd: formData.dateEnd ? new Date(formData.dateEnd).toISOString() : null
           })
         }
         context.emit('submit')
@@ -403,6 +417,7 @@ export default {
       showConfirmModal,
       leaveForm,
       showMessageModal,
+      todayString,
       formData,
       showedFieldText,
       semesters,
