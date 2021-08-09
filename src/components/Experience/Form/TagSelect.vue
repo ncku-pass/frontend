@@ -107,7 +107,7 @@ const defaultAbilities = [
   '人本關懷的能力'
 ].map((ability, i) => {
   return {
-    id: 0,
+    id: i + 1,
     name: ability
   }
 })
