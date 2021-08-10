@@ -39,6 +39,13 @@
                 />
               </svg>
             </button>
+            <p
+              v-if="type === 'course' || type === 'activity'"
+              class="experience__window__table__import"
+              @click="handleImportNCKUData"
+            >
+              導入原有資料
+            </p>
           </div>
         </vueScrollShadow>
       </div>
@@ -57,6 +64,11 @@
     :experience="experienceToShow"
     @close="showViewerModal = false"
   />
+  <ImportModal
+    v-if="showImportModal"
+    :type="type"
+    @close="showImportModal = false"
+  />
 </template>
 
 <script>
@@ -67,6 +79,7 @@ import ExperienceListItem from '@/components/Experience/ExperienceListItem.vue'
 import ExperienceListBlock from '@/components/Experience/ExperienceListBlock.vue'
 import FormModal from '@/components/Experience/Form/FormModal.vue'
 import ViewerModal from '@/components/Experience/ViewerModal.vue'
+import ImportModal from '@/components/Experience/ImportModal.vue'
 import vueScrollShadow from 'vue3-scroll-shadow'
 
 export default {
@@ -77,6 +90,7 @@ export default {
     ExperienceListBlock,
     FormModal,
     ViewerModal,
+    ImportModal,
     vueScrollShadow
   },
   props: {
@@ -131,6 +145,11 @@ export default {
       experienceToShow.value = experience
       showViewerModal.value = true
     }
+    // === 匯入學校資料 ===
+    const showImportModal = ref(false)
+    const handleImportNCKUData = async ({ key, keyval, type }) => {
+      showImportModal.value = true
+    }
 
     return {
       isPending,
@@ -144,7 +163,9 @@ export default {
       experienceToEdit,
       showViewerModal,
       openViewerModal,
-      experienceToShow
+      experienceToShow,
+      showImportModal,
+      handleImportNCKUData
     }
   }
 }
@@ -195,7 +216,7 @@ export default {
   &__add {
     display: grid;
     place-items: center;
-    margin: 0 auto;
+    margin: 0 auto 14px;
     height: 60px;
     width: 60px;
     border: none;
@@ -205,6 +226,14 @@ export default {
     font-size: 42px;
     color: #fff;
     box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.25);
+  }
+  &__import {
+    display: block;
+    color: #4F4F4F;
+    width: fit-content;
+    margin: 0 auto;
+    border-bottom: 2px solid #4F4F4F;
+    cursor: pointer;
   }
 }
 

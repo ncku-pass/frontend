@@ -120,11 +120,11 @@
             :required="showedFieldText.description.required"
           />
         </div>
-        <details>
+        <details v-if="formData.coreAbilities">
           <summary title="（點擊展開/收合）">
             核心能力
           </summary>
-          <p>Epcot is a theme park at Walt Disney World Resort featuring exciting attractions, international pavilions, award-winning fireworks and seasonal special events.</p>
+          <p>{{ formData.coreAbilities }}</p>
         </details>
         <div>
           <label for="" class="form-label">獲得技能Tag</label>
@@ -365,9 +365,9 @@ export default {
       semester: props.editData?.semester || '',
       link: props.editData?.link || '',
       experienceType: props.formType,
+      coreAbilities: props.editData.coreAbilities || '',
       // tags: props.editData?.tags.map(tag => tag.id) || []
       tags: props.editData?.tags || [],
-      // TODO: 新增開始/結束時間欄位、課程/活動類別欄位
       type: props.editData?.type || [],
       dateStart: props.editData?.dateStart?.slice(0, 10) || null,
       dateEnd: props.editData?.dateEnd?.slice(0, 10) || null

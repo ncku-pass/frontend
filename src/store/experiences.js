@@ -1,9 +1,10 @@
 import {
   getExperiences as getExperiencesAPI,
   addExperience as addExperienceAPI,
-  updateExperience as updateExperienceAPI
+  updateExperience as updateExperienceAPI,
+  importExperiences as importExperiencesAPI
 } from '@/api/experiences'
-import { sortExperiences, classifySemester } from '@/helpers/index'
+import { sortExperiences, classifyBySemester } from '@/helpers/index'
 const experiences = {
   namespaced: true,
   state: () => ({
@@ -110,6 +111,22 @@ const experiences = {
       } finally {
         commit('SET_STATUS', { isPending: false })
       }
+    },
+    async importExperiences ({ commit }, experiences) {
+      try {
+        commit('SET_STATUS', { isPending: true, error: null })
+
+        const { data } = await importExperiencesAPI(experiences)
+        console.log('匯入完成：', data)
+
+        data.forEach(experience => {
+          commit('ADD_EXPERIENCE', { experienceType: experience.experienceType, experience })
+        })
+      } catch (error) {
+        commit('SET_STATUS', { error })
+      } finally {
+        commit('SET_STATUS', { isPending: false })
+      }
     }
   },
   getters: {
@@ -129,7 +146,7 @@ const experiences = {
     classifiedExperiences (state) {
       const experiences = {}
       for (const type in state.experiences) {
-        experiences[type] = classifySemester(state.experiences[type])
+        experiences[type] = classifyBySemester(state.experiences[type])
       }
       return experiences
     },

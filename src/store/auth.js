@@ -10,8 +10,8 @@ const auth = {
   namespaced: true,
   state: () => ({
     tokenStr: localStorage.getItem('auth') || '',
-    key: '',
-    keyval: '',
+    key: localStorage.getItem('key') || '',
+    keyval: localStorage.getItem('keyval') || '',
     error: null,
     isPending: false
   }),
@@ -23,12 +23,16 @@ const auth = {
     SET_NCKU_AUTH_KEY (state, { key = '', keyval = '' } = {}) {
       state.key = key
       state.keyval = keyval
+      localStorage.setItem('key', key)
+      localStorage.setItem('keyval', keyval)
     },
     LOGOUT (state) {
       state.tokenStr = ''
       state.key = ''
       state.keyval = ''
       localStorage.removeItem('auth')
+      localStorage.removeItem('key')
+      localStorage.removeItem('keyval')
     },
     SET_STATUS (state, { error = undefined, isPending = undefined }) {
       if (error !== undefined) state.error = error

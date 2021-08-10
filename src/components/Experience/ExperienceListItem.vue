@@ -73,16 +73,17 @@ export default {
     }
   },
   emits: ['delete', 'edit'],
-  setup (props, context) {
+  setup (props, { emit }) {
     // === 刪除經歷 ===
     const { showConfirmModal, deleteStatus, closeConfirmModal, confirmDelete } = useDeleteModal()
+    // TODO: 用vuex去處理
     const handleDeleteExperience = async () => {
       try {
         deleteStatus.isPending = true
         deleteStatus.error = null
         await deleteExperience(props.experience.id)
         showConfirmModal.value = false
-        context.emit('delete')
+        emit('delete')
       } catch (error) {
         deleteStatus.error = error
       } finally {
@@ -91,7 +92,7 @@ export default {
     }
 
     const handleEditExperience = async () => {
-      context.emit('edit', props.experience.id)
+      emit('edit', props.experience.id)
     }
 
     return { showConfirmModal, closeConfirmModal, confirmDelete, deleteStatus, handleDeleteExperience, handleEditExperience }

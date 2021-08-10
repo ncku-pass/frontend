@@ -23,3 +23,7 @@ export const deleteExperience = (experienceId) => {
 export const getExperienceTags = (experienceId) => {
   return req.get(`/experiences/${experienceId}/tags`)
 }
+
+export const importExperiences = (experiences) => {
+  return req.post('/experiences/import', experiences)
+}

@@ -23,7 +23,8 @@ module.exports = {
           void: 'always'
         }
       }
-    ]
+    ],
+    'vue/attribute-hyphenation': ['off']
   },
   overrides: [
     {
