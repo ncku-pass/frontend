@@ -69,8 +69,7 @@ export default {
     // ===經驗列表===
     const experiencesArray = computed(() => store.getters['experiences/experiencesArray'])
     const semesters = computed(() => store.getters['experiences/semesters'])
-
-    const tags = computed(() => store.state.tags.tags)
+    const tags = computed(() => store.getters['experiences/tags'])
 
     const filter = reactive({
       semesters: {},

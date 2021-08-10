@@ -136,14 +136,26 @@ const experiences = {
     /**
      * 取得不重複的所有學期
      */
-    semesters (state) {
-      const semesters = []
-      for (const type in state.experiences) {
-        semesters.push(...state.experiences[type].map(exp => exp.semester))
+    semesters (state, getters) {
+      const semesters = new Set()
+      for (const exp of getters.experiencesArray) {
+        semesters.add(exp.semester)
       }
-      return [...new Set(semesters)].sort((a, b) => {
+      return [...semesters].sort((a, b) => {
         return a > b ? -1 : 1 // 學期靠近的排在前面
       })
+    },
+    /**
+     * 取得有使用到，且不重複的所有Tag
+     */
+    tags (state, getters) {
+      const tags = new Set()
+      for (const exp of getters.experiencesArray) {
+        for (const tag of exp.tags) {
+          tags.add(tag)
+        }
+      }
+      return [...tags]
     }
   }
 }
