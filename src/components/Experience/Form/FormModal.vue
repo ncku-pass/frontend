@@ -365,7 +365,7 @@ export default {
       semester: props.editData?.semester || '',
       link: props.editData?.link || '',
       experienceType: props.formType,
-      coreAbilities: props.editData.coreAbilities || '',
+      coreAbilities: props.editData?.coreAbilities || '',
       // tags: props.editData?.tags.map(tag => tag.id) || []
       tags: props.editData?.tags || [],
       type: props.editData?.type || [],
