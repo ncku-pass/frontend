@@ -24,7 +24,7 @@
     </div>
     <hr />
     <ul class="ability-card__body">
-      <template v-if="cardType === 'experiences'">
+      <template v-if="type === 'experience'">
         <draggable
           :list="experiences"
           :group="draggableGroupOption"
@@ -94,8 +94,9 @@
       </template>
       <template v-else>
         <textarea
+          :value="text"
           class="ability-card__text"
-          @input="adjustSize"
+          @input="handleTextInput"
         />
       </template>
     </ul>
@@ -130,16 +131,20 @@ export default {
       type: String,
       default: ''
     },
-    cardType: {
+    type: {
       type: String,
-      default: 'experiences',
+      default: 'experience',
       validator (value) {
-        return ['experiences', 'text'].indexOf(value) !== -1
+        return ['experience', 'text'].indexOf(value) !== -1
       }
+    },
+    text: {
+      type: String,
+      default: ''
     }
   },
-  emits: ['update:abilityTopic', 'delete-experience', 'delete-ability'],
-  setup (props) {
+  emits: ['update:abilityTopic', 'update:text', 'delete-experience', 'delete-ability'],
+  setup (props, { emit }) {
     const { setIsGrabbing } = useGrab()
 
     const handleDrag = onDragging => {
@@ -155,14 +160,15 @@ export default {
       }
     }
 
-    const adjustSize = (e) => {
+    const handleTextInput = (e) => {
+      emit('update:text', e.target.value)
       if (e.target.scrollHeight > 80) {
         e.target.style.height = '5px'
         e.target.style.height = `${e.target.scrollHeight}px`
       }
     }
 
-    return { setIsGrabbing, handleDrag, draggableGroupOption, adjustSize }
+    return { setIsGrabbing, handleDrag, draggableGroupOption, handleTextInput }
   }
 }
 </script>

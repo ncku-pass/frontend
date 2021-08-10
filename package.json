@@ -15,6 +15,7 @@
     "axios": "^0.21.1",
     "core-js": "^3.16.1",
     "fullpage.js": "^3.1.2",
+    "lodash-es": "^4.17.21",
     "vee-validate": "^4.4.9",
     "vue": "^3.2.1",
     "vue-router": "^4.0.11",

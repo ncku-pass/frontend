@@ -30,7 +30,7 @@ export default {
   setup () {
     const store = useStore()
 
-    const resumesNotReady = computed(() => store.state.resumes.isPending)
+    const resumesNotReady = computed(() => store.state.resumes.isPending && !store.state.resumes.resumes)
     const tagsNotReady = computed(() => store.state.tags.isPending)
     const experiencesNotReady = computed(() => store.state.experiences.isPending)
 

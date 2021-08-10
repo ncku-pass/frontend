@@ -65,7 +65,7 @@
               </button>
               <button
                 class="btn content-header__save"
-                :disabled="isPending"
+                :disabled="isPending || !notSaved"
                 @click="handleSave()"
               >
                 {{ isPending ? '存檔中' : '存檔' }}
@@ -85,6 +85,7 @@
                 <template #item="{element, index}">
                   <AbilityCard
                     v-model:abilityTopic="element.name"
+                    v-model:text="element.text"
                     v-bind="element"
                     @delete-experience="handleDeleteExperience(experienceIndex, element)"
                     @delete-ability="handleDeleteCard(index)"
@@ -96,7 +97,7 @@
               </div>
             </div>
             <div class="content-body__btns">
-              <button class="content-body__add" @click="handleAddCard('experiences')">
+              <button class="content-body__add" @click="handleAddCard('experience')">
                 + 新增經歷區塊
               </button>
               <button class="content-body__add" @click="handleAddCard('text')">
@@ -132,7 +133,7 @@
       <button
         class="btn--red"
         :disabled="deleteStatus.isPending"
-        @click.stop="handleDeleteResume(showedResume.id)"
+        @click.stop="handleDeleteResume()"
       >
         {{ deleteStatus.isPending ? '刪除中' : '確定刪除' }}
       </button>
@@ -144,6 +145,7 @@
 import { computed, ref, onBeforeUpdate, nextTick } from 'vue'
 import { useStore } from 'vuex'
 import draggable from 'vuedraggable'
+import { isEqual } from 'lodash-es'
 import { PlusCircleIcon } from '@heroicons/vue/outline'
 import AbilityCard from '@/components/Portfolio/AbilityCard.vue'
 import TemplateModal from '@/components/Portfolio/TemplateModal.vue'
@@ -162,10 +164,11 @@ export default {
   setup () {
     const store = useStore()
 
-    const resumes = computed(() => store.state.resumes.resumes)
+    const originResumes = computed(() => store.state.resumes.resumes)
+    const resumes = computed(() => store.state.resumes.localResumes)
     const error = computed(() => store.state.resumes.error)
     const isPending = computed(() => store.state.resumes.isPending)
-    const saveResume = () => store.dispatch('saveResume')
+    const saveResume = (resume) => store.dispatch('resumes/saveResume', { resume })
     const deleteResume = ({ resumeId }) => store.dispatch('resumes/deleteResume', { resumeId })
 
     // === 履歷的Tab ===
@@ -200,19 +203,15 @@ export default {
     // === 新增履歷 ===
     const showTemplateModal = ref(false)
     const openTemplateModal = () => {
-      // resumes.value.push({
-      //   id: resumes.value.length,
-      //   name: '新的履歷',
-      //   cards: []
-      // })
       showTemplateModal.value = true
     }
     const handleAddResume = async ({ name, cards }) => {
       showTemplateModal.value = false
       resumes.value.push({
-        id: 'local_' + `${Math.random()}`.slice(2, 7),
+        id: `${Math.random()}`.slice(2, 7),
         name,
-        cards
+        cards,
+        isLocal: true
       })
       await nextTick()
       handleSelectResume(resumes.value.length - 1)
@@ -223,14 +222,14 @@ export default {
 
     // === 刪除履歷 ===
     const { showConfirmModal, deleteStatus, closeConfirmModal, confirmDelete } = useDeleteModal()
-    const handleDeleteResume = async (resumeId) => {
-      if (resumeId.match(/local/)) {
+    const handleDeleteResume = async () => {
+      if (showedResume.value.isLocal) {
         resumes.value.splice(selectedIndex.value, 1)
       } else {
         try {
           deleteStatus.isPending = true
           deleteStatus.error = null
-          await deleteResume({ resumeId })
+          await deleteResume({ resumeId: showedResume.value.id })
         } catch (error) {
           deleteStatus.error = error
         } finally {
@@ -246,13 +245,13 @@ export default {
     }
 
     // === 新增 / 刪除卡片 ===
-    const handleAddCard = (cardType = 'experiences') => {
+    const handleAddCard = (type = 'experiences') => {
       const card = {
-        id: showedResume.value.cards.length,
+        id: 0,
         name: '',
         experiences: [],
         text: '',
-        cardType
+        type
       }
       showedResume.value.cards.push(card)
     }
@@ -265,11 +264,15 @@ export default {
       topic.experiences.splice(experienceIndex, 1)
     }
 
+    // === 儲存履歷 ===
+    const notSaved = computed(() => {
+      if (showedResume.value.isLocal) {
+        return true
+      }
+      return !isEqual(showedResume.value, originResumes.value.find(res => res.id === showedResume.value.id))
+    })
     const handleSave = async () => {
-      const cards = showedResume.value.cards.map(topic => {
-        return { ...topic, experienceId: topic.experiences.map(exp => exp.id) }
-      })
-      await saveResume(showedResume.value.id, { ...showedResume.value, cards })
+      await saveResume({ ...showedResume.value })
       if (!error.value) {
         console.log('儲存成功')
       } else {
@@ -280,6 +283,7 @@ export default {
     return {
       resumes,
       showedResume,
+      notSaved,
       selectedIndex,
       tabRefs,
       setTabRef,

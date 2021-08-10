@@ -73,26 +73,22 @@ const intros = {
   個人整理: '行銷設計、創意執行能力、簡報力、語言能力證明',
   實習履歷: '自我介紹、設計軟體、產品規劃及表達、專案執行、課外活動、語言證照'
 }
-// 實習申請（個人特質、ＯＯ技能、課外活動、課程學習、證照）
-// 備審準備（自傳、個人特質、ＯＯ技能、印象深刻的課程、證照）
-// 打工簡歷（自傳、個人特質、ＯＯ技能、特殊經歷）
-// 整理自己 ( 個人特質Ａ、個人特質Ｂ、個人特質Ｃ、ＯＯ技能）
 const template = {
   升學備審: [
     ...generateCard('text', ['自我介紹']),
-    ...generateCard('experiences', ['必修優異課程', '特殊經歷', '研究計畫', '語言證照'])
+    ...generateCard('experience', ['必修優異課程', '特殊經歷', '研究計畫', '語言證照'])
   ],
   工作履歷: [
     ...generateCard('text', ['自我介紹']),
-    ...generateCard('experiences', ['專長科目', '特殊經歷', '英文教學經驗', '語言證照', '優異課程'])
+    ...generateCard('experience', ['專長科目', '特殊經歷', '英文教學經驗', '語言證照', '優異課程'])
   ],
   個人整理: [
     ...generateCard('text', ['行銷設計']),
-    ...generateCard('experiences', ['創意執行能力', '簡報力', '語言能力證明'])
+    ...generateCard('experience', ['創意執行能力', '簡報力', '語言能力證明'])
   ],
   實習履歷: [
     ...generateCard('text', ['自我介紹']),
-    ...generateCard('experiences', ['設計軟體', '產品規劃及表達', '專案執行', '課外活動', '語言證照'])
+    ...generateCard('experience', ['設計軟體', '產品規劃及表達', '專案執行', '課外活動', '語言證照'])
   ]
 }
 
@@ -134,14 +130,14 @@ export default {
   }
 }
 
-function generateCard (cardType = 'experiences', names = []) {
+function generateCard (type = 'experience', names = []) {
   return names.map(name => {
     return {
-      id: Math.random(),
+      id: 0,
       name,
       experiences: [],
       text: '',
-      cardType
+      type
     }
   })
 }
