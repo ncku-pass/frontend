@@ -1,63 +1,73 @@
 <template>
-  <div class="modal-bg" @click.self.stop="$emit('close')">
-    <div class="import-modal">
-      <h1 class="import-modal__title">
-        加入你想要呈現的經驗
-      </h1>
-      <div v-if="experiences" class="experiences__container">
-        <Disclosure
-          v-for="(_, semester) in experiences"
-          :key="semester"
-          v-slot="{ open }"
-          as="div"
-          :defaultOpen="true"
-          class="semester-block"
-        >
-          <DisclosureButton as="h2" class="semester-block__title">
-            {{ semester.replace('-1', '上學期').replace('-2', '下學期') }}
-            <ChevronDownIcon :class="{ 'opened': open }" />
-          </DisclosureButton>
-          <DisclosurePanel as="ul" class="semester-block__content">
-            <li
-              v-for="(exp, i) in experiences[semester]"
-              :key="exp.name"
-              class="experience-item"
+  <teleport to="#app">
+    <div class="modal-bg" @click.self.stop="$emit('close')">
+      <div class="import-modal">
+        <h1 class="import-modal__title">
+          加入你想要呈現的經驗
+        </h1>
+        <div v-if="nckuExperiencesError" class="import-modal__error">
+          成功入口時效過期，請重新登入
+          <a href="https://i.ncku.edu.tw/ncku/oauth/eportfolio/login.php" class="ncku-login">
+            使用<img src="@/assets/ncku_login.png" alt="ncku login" />登入
+          </a>
+        </div>
+        <template v-else-if="nckuExperiences">
+          <div class="experiences__container">
+            <Disclosure
+              v-for="(_, semester) in nckuExperiences"
+              :key="semester"
+              v-slot="{ open }"
+              as="div"
+              :defaultOpen="true"
+              class="semester-block"
             >
-              <input
-                :id="`${semester}-${i}`"
-                v-model="selectedExperiences"
-                :value="exp"
-                type="checkbox"
-              />
-              <label :for="`${semester}-${i}`">
-                【{{ chineseOfExperienceType[exp.experienceType] }}】{{ exp.name }}
-              </label>
-            </li>
-          </DisclosurePanel>
-        </Disclosure>
-      </div>
-      <div v-if="experiences" class="import-modal__btns">
-        <button
-          v-show="!isPending"
-          class="btn"
-          type="button"
-          @click="handleCloseModal"
-        >
-          取消
-        </button>
-        <button
-          class="btn--red"
-          :disabled="isPending"
-          @click="handleImportExperiences"
-        >
-          {{ isPending ? '儲存中' : '儲存' }}
-        </button>
-      </div>
-      <div v-else>
-        loading
+              <DisclosureButton as="h2" class="semester-block__title">
+                {{ semester.replace('-1', '上學期').replace('-2', '下學期') }}
+                <ChevronDownIcon :class="{ 'opened': open }" />
+              </DisclosureButton>
+              <DisclosurePanel as="ul" class="semester-block__content">
+                <li
+                  v-for="(exp, i) in nckuExperiences[semester]"
+                  :key="exp.name"
+                  class="experience-item"
+                >
+                  <input
+                    :id="`${semester}-${i}`"
+                    v-model="selectedExperiences"
+                    :value="exp"
+                    type="checkbox"
+                  />
+                  <label :for="`${semester}-${i}`">
+                    【{{ chineseOfExperienceType[exp.experienceType] }}】{{ exp.name }}
+                  </label>
+                </li>
+              </DisclosurePanel>
+            </Disclosure>
+          </div>
+          <div class="import-modal__btns">
+            <button
+              v-show="!isPending"
+              class="btn"
+              type="button"
+              @click="handleCloseModal"
+            >
+              取消
+            </button>
+            <button
+              class="btn--red"
+              :disabled="isPending || !selectedExperiences.length"
+              @click="handleImportExperiences"
+            >
+              {{ isPending ? '儲存中' : '儲存' }}
+            </button>
+          </div>
+        </template>
+        <div v-else class="import-modal__loading">
+          loading
+        </div>
       </div>
     </div>
-  </div>
+  </teleport>
 </template>
 
 <script>
@@ -69,12 +79,9 @@ import {
   DisclosurePanel
 } from '@headlessui/vue'
 import { ChevronDownIcon } from '@heroicons/vue/solid'
-import { getNCKUExperiences } from '@/api/ncku-portal'
 import {
   semesterToDate,
-  dateToSemester,
-  classifyBySemester,
-  orderBySemester
+  dateToSemester
 } from '@/helpers'
 import { chineseOfExperienceType } from '@/config'
 
@@ -99,9 +106,6 @@ export default {
   setup (props, { emit }) {
     const store = useStore()
 
-    const key = computed(() => store.state.auth.key)
-    const keyval = computed(() => store.state.auth.keyval)
-
     const handleCloseModal = () => {
       if (isPending.value) {
         return
@@ -110,32 +114,19 @@ export default {
     }
 
     // === 取得學校資料 ===
-    const experiences = ref(null)
+    const nckuExperiences = computed(() => store.state.experiences.nckuExperiences?.[props.type])
+    const getNckuExperiences = () => store.dispatch('experiences/getNckuExperiences')
+    const nckuExperiencesError = ref(null)
     const getData = async () => {
       try {
-        const res = await getNCKUExperiences({
-          key: key.value,
-          keyval: keyval.value
-        })
-        const data = res.data?.data
-        if (!data) {
-          throw res.data.msg
-        }
-
-        const activity = changeActivitiesToExperiences(
-          filterDuplicateActivity(data.activity)
-        )
-        const club = changeClubsToExperiences(data.club)
-        const course = changeCoursesToExperiences(data.course)
-        experiences.value = classifyBySemester(
-          orderBySemester([...activity, ...club, ...course])
-        )
-        console.log(experiences.value)
+        nckuExperiencesError.value = null
+        await getNckuExperiences()
       } catch (error) {
-        console.error(error)
+        nckuExperiencesError.value = error
+        console.error('請重新登入')
       }
     }
-    getData()
+    if (!nckuExperiences.value) getData()
 
     // === 要匯入的資料 ===
     const error = computed(() => store.state.experiences.error)
@@ -145,6 +136,8 @@ export default {
 
     const selectedExperiences = ref([])
     const handleImportExperiences = async () => {
+      if (!selectedExperiences.value.length) return
+
       await importExperiences(selectedExperiences.value)
       if (!error.value) {
         emit('close')
@@ -153,7 +146,8 @@ export default {
     return {
       handleCloseModal,
       chineseOfExperienceType,
-      experiences,
+      nckuExperiences,
+      nckuExperiencesError,
       semesterToDate,
       dateToSemester,
       selectedExperiences,
@@ -162,60 +156,6 @@ export default {
       isPending
     }
   }
-}
-
-const filterDuplicateActivity = activities => {
-  const record = new Set()
-  const res = []
-  activities.forEach(activity => {
-    if (!record.has(activity.activity_name)) {
-      res.push(activity)
-      record.add(activity.activity_name)
-    }
-  })
-  return res
-}
-
-const experience = {
-  name: '',
-  position: '',
-  semester: '',
-  link: '',
-  coreAbilities: '',
-  experienceType: null,
-  dateStart: null,
-  dateEnd: null
-}
-const changeActivitiesToExperiences = activities => {
-  return activities.map(activity => ({
-    ...experience,
-    name: activity.activity_name,
-    semester: dateToSemester(new Date(activity.active_start)),
-    link: activity.activity_url,
-    experienceType: 'activity',
-    dateStart: new Date(activity.active_start).toISOString()
-  }))
-}
-const changeClubsToExperiences = clubs => {
-  return clubs.map(club => ({
-    ...experience,
-    name: club.club_name,
-    position: club.position,
-    semester: `${club.syear}-${club.sem}`,
-    experienceType: 'activity',
-    dateStart: semesterToDate(`${club.syear}-${club.sem}`).toISOString()
-  }))
-}
-const changeCoursesToExperiences = courses => {
-  return courses.map(course => ({
-    ...experience,
-    name: course.course_name,
-    semester: `${course.syear}-${course.sem}`,
-    link: course.course_url,
-    coreAbilities: Object.values(course.core_abilities).join('、'),
-    experienceType: 'course',
-    dateStart: semesterToDate(`${course.syear}-${course.sem}`).toISOString()
-  }))
 }
 </script>
 
@@ -241,11 +181,36 @@ const changeCoursesToExperiences = courses => {
     font-weight: $weight-regular;
     margin-bottom: 25px;
   }
+  &__error {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    gap: 20px;
+  }
   &__btns {
     display: flex;
     justify-content: flex-end;
     gap: 12px;
   }
+  &__loading {
+    display: grid;
+    height: 100%;
+    place-items: center;
+  }
+}
+
+.ncku-login {
+  display: flex;
+  width: fit-content;
+  align-items: center;
+  background-color: $gray-6;
+  border: 1px solid $gray-4;
+  padding: 6px 12px;
+  border-radius: 5px;
+  text-decoration: none;
+  color: $gray-1;
 }
 
 .experiences__container {

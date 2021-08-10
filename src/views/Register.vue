@@ -214,7 +214,6 @@ export default {
 
     const nextStep = async () => {
       if (currentStep.value === 1) {
-        console.log('完成表單：', formData)
         await register(formData)
         if (!registerError.value) {
           router.push({ name: 'Experience' })

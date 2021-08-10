@@ -61,7 +61,6 @@ export default {
     })
     const error = computed(() => store.state.auth.error)
     const isPending = computed(() => store.state.auth.isPending)
-    const tokenStr = computed(() => store.state.auth.tokenStr)
     const login = (authData) => store.dispatch('auth/login', authData)
 
     const router = useRouter()
@@ -73,7 +72,6 @@ export default {
       await login(authData)
       if (!error.value) {
         router.push({ name: 'Experience' })
-        console.log('登入成功', tokenStr.value)
       }
     }
 

@@ -6,3 +6,10 @@ export const chineseOfExperienceType = {
   certificate: '外語能力或證照',
   other: '其他'
 }
+
+export class KeyNoPairedError extends Error {
+  constructor (message) {
+    super(message)
+    this.name = 'KeyNoPairedError'
+  }
+}

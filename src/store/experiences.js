@@ -4,17 +4,30 @@ import {
   updateExperience as updateExperienceAPI,
   importExperiences as importExperiencesAPI
 } from '@/api/experiences'
-import { sortExperiences, classifyBySemester } from '@/helpers/index'
+import { getNCKUExperiences as getNCKUExperiencesAPI } from '@/api/ncku-portal'
+import {
+  sortExperiences,
+  classifyBySemester,
+  semesterToDate,
+  dateToSemester,
+  orderBySemester
+} from '@/helpers/index'
+import { KeyNoPairedError } from '@/config'
+
 const experiences = {
   namespaced: true,
   state: () => ({
     experiences: null,
+    nckuExperiences: null,
     error: null,
     isPending: false
   }),
   mutations: {
     SET_EXPERIENCES (state, experiences) {
       state.experiences = experiences
+    },
+    SET_NCKU_EXPERIENCES (state, nckuExperiences) {
+      state.nckuExperiences = nckuExperiences
     },
     ADD_EXPERIENCE (state, { experienceType, experience }) {
       const expArray = state.experiences[experienceType]
@@ -117,15 +130,46 @@ const experiences = {
         commit('SET_STATUS', { isPending: true, error: null })
 
         const { data } = await importExperiencesAPI(experiences)
-        console.log('匯入完成：', data)
 
         data.forEach(experience => {
-          commit('ADD_EXPERIENCE', { experienceType: experience.experienceType, experience })
+          commit('ADD_EXPERIENCE', {
+            experienceType: experience.experienceType,
+            experience
+          })
         })
       } catch (error) {
         commit('SET_STATUS', { error })
       } finally {
         commit('SET_STATUS', { isPending: false })
+      }
+    },
+    async getNckuExperiences ({ commit, rootState }) {
+      try {
+        const res = await getNCKUExperiencesAPI({
+          key: rootState.auth.key,
+          keyval: rootState.auth.keyval
+        })
+        const data = res.data?.data
+        if (!data) {
+          throw new KeyNoPairedError(res.data.msg)
+        }
+
+        const course = changeCoursesToExperiences(data.course)
+        const club = changeClubsToExperiences(data.club)
+        const activity = changeActivitiesToExperiences(
+          filterDuplicateActivity(data.activity)
+        )
+
+        commit('SET_NCKU_EXPERIENCES', {
+          course: classifyBySemester(orderBySemester(course)),
+          activity: classifyBySemester(orderBySemester([...club, ...activity]))
+        })
+      } catch (error) {
+        if (error instanceof KeyNoPairedError) {
+          throw error
+        } else {
+          commit('SET_STATUS', { error })
+        }
       }
     }
   },
@@ -175,6 +219,59 @@ const experiences = {
       return [...tags]
     }
   }
+}
+
+const experience = {
+  name: '',
+  position: '',
+  semester: '',
+  link: '',
+  coreAbilities: '',
+  experienceType: null,
+  dateStart: null,
+  dateEnd: null
+}
+const changeActivitiesToExperiences = activities => {
+  return activities.map(activity => ({
+    ...experience,
+    name: activity.activity_name,
+    semester: dateToSemester(new Date(activity.active_start)),
+    link: activity.activity_url,
+    experienceType: 'activity',
+    dateStart: new Date(activity.active_start).toISOString()
+  }))
+}
+const changeClubsToExperiences = clubs => {
+  return clubs.map(club => ({
+    ...experience,
+    name: club.club_name,
+    position: club.position,
+    semester: `${club.syear}-${club.sem}`,
+    experienceType: 'activity',
+    dateStart: semesterToDate(`${club.syear}-${club.sem}`).toISOString()
+  }))
+}
+const changeCoursesToExperiences = courses => {
+  return courses.map(course => ({
+    ...experience,
+    name: course.course_name,
+    semester: `${course.syear}-${course.sem}`,
+    link: course.course_url,
+    coreAbilities: Object.values(course.core_abilities).join('、'),
+    experienceType: 'course',
+    dateStart: semesterToDate(`${course.syear}-${course.sem}`).toISOString()
+  }))
+}
+const filterDuplicateActivity = activities => {
+  const record = new Set()
+  const res = []
+  activities.forEach(activity => {
+    if (!record.has(activity.activity_name)) {
+      res.push(activity)
+      record.add(activity.activity_name)
+    }
+  })
+  return res
 }
 
 export default experiences
