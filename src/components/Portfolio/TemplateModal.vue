@@ -134,6 +134,7 @@ function generateCard (type = 'experience', names = []) {
   return names.map(name => {
     return {
       id: 0,
+      vForKey: `${Math.random()}`.slice(2, 7),
       name,
       experiences: [],
       text: '',

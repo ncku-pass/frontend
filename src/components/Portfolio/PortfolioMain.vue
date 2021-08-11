@@ -79,7 +79,7 @@
                 :list="showedResume.cards"
                 :group="{ name: 'ability' }"
                 handle=".ability-card__grab-area"
-                item-key="id"
+                :itemKey="(resume) => resume.id || resume.vForKey"
               >
                 <template #item="{element, index}">
                   <AbilityCard
@@ -248,6 +248,7 @@ export default {
     const handleAddCard = (type = 'experiences') => {
       const card = {
         id: 0,
+        vForKey: `${Math.random()}`.slice(2, 7),
         name: '',
         experiences: [],
         text: '',
