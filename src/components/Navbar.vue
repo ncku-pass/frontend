@@ -57,7 +57,7 @@ export default {
   align-items: center;
   height: $navbar-height;
   padding: 2px 24px 0;
-  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 2px 5px rgba(255, 155, 160, .1), 2px 2px 15px 0px rgba(255, 155, 160, .15);
   background-color: #fff;
   z-index: 10;
   &::after {
