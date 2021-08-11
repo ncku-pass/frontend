@@ -24,7 +24,7 @@
     </div>
     <hr />
     <ul class="ability-card__body">
-      <template v-if="type === 'experience'">
+      <template v-if="cardType === 'experience'">
         <draggable
           :list="experiences"
           :group="draggableGroupOption"
@@ -39,6 +39,9 @@
                 <h3 class="experience-card__name">
                   {{ element.name }}
                 </h3>
+                <span v-if="element.showPosition" class="experience-card__position">
+                  {{ element.experienceType === 'course' ? `學期成績${element.position}分` : element.position }}
+                </span>
                 <Menu as="div" class="experience-card__menu">
                   <MenuButton class="experience-card__menu-btn">
                     <DotsVerticalIcon
@@ -47,18 +50,21 @@
                   </MenuButton>
                   <MenuItems as="ul" class="experience-card__menu-items">
                     <MenuItem v-slot="{ active }">
-                      <li :class="{ 'experience-card__menu-item--active': active }" class="experience-card__menu-item">
-                        顯示成績
+                      <li
+                        :class="{ 'experience-card__menu-item--active': active }"
+                        class="experience-card__menu-item"
+                        @click="element.showPosition = !element.showPosition"
+                      >
+                        {{ element.showPosition ? '隱藏' : '顯示' }}{{ element.experienceType === 'course' ? '成績' : '職位/名次' }}
                       </li>
                     </MenuItem>
                     <MenuItem v-slot="{ active }">
-                      <li :class="{ 'experience-card__menu-item--active': active }" class="experience-card__menu-item">
-                        顯示心得
-                      </li>
-                    </MenuItem>
-                    <MenuItem v-slot="{ active }">
-                      <li :class="{ 'experience-card__menu-item--active': active }" class="experience-card__menu-item">
-                        顯示職稱
+                      <li
+                        :class="{ 'experience-card__menu-item--active': active }"
+                        class="experience-card__menu-item"
+                        @click="element.showFeedback = !element.showFeedback"
+                      >
+                        {{ element.showFeedback ? '隱藏心得' : '顯示心得' }}
                       </li>
                     </MenuItem>
                     <MenuItem v-slot="{ active }">
@@ -82,7 +88,7 @@
                   {{ tag.name }}
                 </div>
               </div>
-              <div class="experience-card__description">
+              <div v-if="element.showFeedback" class="experience-card__description">
                 {{ element.feedback }}
               </div>
             </li>
@@ -131,7 +137,7 @@ export default {
       type: String,
       default: ''
     },
-    type: {
+    cardType: {
       type: String,
       default: 'experience',
       validator (value) {
@@ -257,6 +263,7 @@ export default {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 15px;
   }
   &__menu {
     position: relative;
@@ -292,6 +299,10 @@ export default {
     line-height: 34px;
     color: $blue-dark;
     font-weight: normal;
+  }
+  &__position {
+    margin-right: auto;
+    color: $blue-dark;
   }
   &__delete {
     cursor: pointer;

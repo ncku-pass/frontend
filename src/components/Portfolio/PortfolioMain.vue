@@ -69,8 +69,7 @@
                 @click="handleSave()"
               >
                 {{ isPending ? '存檔中' : '存檔' }}
-                <!-- TODO: 顯示尚未存檔 -->
-                <!-- <div class="content-header__save__hint" /> -->
+                <div v-show="notSaved && !isPending" class="content-header__save__hint" />
               </button>
             </div>
           </div>
@@ -86,6 +85,7 @@
                   <AbilityCard
                     v-model:abilityTopic="element.name"
                     v-model:text="element.text"
+                    :cardType="element.type"
                     v-bind="element"
                     @delete-experience="handleDeleteExperience(experienceIndex, element)"
                     @delete-ability="handleDeleteCard(index)"

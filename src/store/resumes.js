@@ -70,6 +70,8 @@ const resumes = {
 
           const indexOfOriginResume = state.resumes.findIndex(originResume => originResume.id === resume.id)
           state.resumes[indexOfOriginResume] = cloneDeep(data)
+          const indexOfLocalResume = state.localResumes.findIndex(localResume => localResume.id === resume.id)
+          state.localResumes[indexOfLocalResume] = cloneDeep(data)
         }
       } catch (error) {
         commit('SET_STATUS', { error })
