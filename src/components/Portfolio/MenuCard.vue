@@ -60,6 +60,7 @@ export default {
     text-align: center;
     border-radius: 10px;
     color: $white;
+    flex-shrink: 0;
     &--course {
       background-color: $blue;
     }

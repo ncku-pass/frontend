@@ -55,24 +55,21 @@ const resumes = {
 
         if (resume.isLocal) {
           const { data } = await saveResumeAPI(0, resume)
-          const newId = data.id
-          state.resumes = [...state.resumes, cloneDeep({ ...resume, id: newId })]
+          state.resumes = [...state.resumes, cloneDeep(data)]
 
           const indexOfLocalResume = state.localResumes.findIndex(localResume => localResume.id === resume.id)
-          state.localResumes[indexOfLocalResume].id = newId
+          state.localResumes[indexOfLocalResume] = cloneDeep(data)
         } else {
           const originResume = state.resumes.find(res => res.id === resume.id)
 
           const originResumeCardsId = originResume.cards.map(card => card.id)
           const nowResumeCardsId = resume.cards.map(card => card.id)
-          const diff = [...originResumeCardsId].filter(id => !nowResumeCardsId.includes(id))
-          console.log('diff:', diff)
+          const deleteCardIds = [...originResumeCardsId].filter(id => !nowResumeCardsId.includes(id))
 
-          const { data } = await saveResumeAPI(resume.id, { ...resume, deleteCards: diff.map(id => ({ id })) })
-          console.log(data)
+          const { data } = await saveResumeAPI(resume.id, { ...resume, deleteCardIds })
 
           const indexOfOriginResume = state.resumes.findIndex(originResume => originResume.id === resume.id)
-          state.resumes[indexOfOriginResume] = cloneDeep(resume)
+          state.resumes[indexOfOriginResume] = cloneDeep(data)
         }
       } catch (error) {
         commit('SET_STATUS', { error })
