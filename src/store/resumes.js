@@ -4,6 +4,8 @@ import {
   saveResume as saveResumeAPI,
   deleteResume as deleteResumeAPI
 } from '@/api/resumes'
+import { useToast } from 'vue-toastification'
+const toast = useToast()
 
 const resumes = {
   namespaced: true,
@@ -74,6 +76,7 @@ const resumes = {
           state.localResumes[indexOfLocalResume] = cloneDeep(data)
         }
       } catch (error) {
+        toast.error(error.message)
         commit('SET_STATUS', { error })
       } finally {
         commit('SET_STATUS', { isPending: false })
