@@ -29,17 +29,17 @@
           {{ experience.semester }}
         </p>
       </div>
-      <div v-if="experience.type.length">
+      <div v-if="experience.categories.length">
         <h3 class="field-title">
-          {{ showedFieldText.type }}
+          {{ showedFieldText.categories }}
         </h3>
         <div class="field-value">
           <div
-            v-for="type in experience.type"
-            :key="type"
+            v-for="categories in experience.categories"
+            :key="categories"
             class="tag--large"
           >
-            {{ type }}
+            {{ categories }}
           </div>
         </div>
       </div>
@@ -98,7 +98,7 @@ import { XCircleIcon } from '@heroicons/vue/solid'
 const fieldText = {
   course: {
     name: '*課程名稱',
-    type: '課程類別',
+    categories: '課程類別',
     semester: '*課程時間',
     position: '課程分數',
     description: '課程簡介',
@@ -106,7 +106,7 @@ const fieldText = {
   },
   activity: {
     name: '*活動名稱',
-    type: '活動類別',
+    categories: '活動類別',
     semester: '*活動時間',
     position: '*活動擔任職位',
     description: '活動簡介',

@@ -28,8 +28,8 @@ const experiences = {
     SET_NCKU_EXPERIENCES (state, nckuExperiences) {
       state.nckuExperiences = nckuExperiences
     },
-    ADD_EXPERIENCE (state, { experienceType, experience }) {
-      const expArray = state.experiences[experienceType]
+    ADD_EXPERIENCE (state, { type, experience }) {
+      const expArray = state.experiences[type]
       let i = 0
       while (
         i < expArray.length &&
@@ -40,7 +40,7 @@ const experiences = {
       expArray.splice(i, 0, experience)
     },
     UPDATE_EXPERIENCE (state, { id, experience }) {
-      const expArray = state.experiences[experience.experienceType]
+      const expArray = state.experiences[experience.type]
       expArray.forEach((exp, i) => {
         if (exp.id === id) {
           expArray[i] = experience
@@ -80,9 +80,9 @@ const experiences = {
         feedback,
         semester,
         link,
-        experienceType,
-        tags,
         type,
+        tags,
+        categories,
         dateStart,
         dateEnd
       }
@@ -97,14 +97,14 @@ const experiences = {
           feedback,
           semester,
           link,
-          experienceType,
-          tags,
           type,
+          tags,
+          categories,
           dateStart,
           dateEnd
         })
 
-        commit('ADD_EXPERIENCE', { experienceType, experience: data })
+        commit('ADD_EXPERIENCE', { type, experience: data })
       } catch (error) {
         commit('SET_STATUS', { error })
       } finally {
@@ -132,7 +132,7 @@ const experiences = {
 
         data.forEach(experience => {
           commit('ADD_EXPERIENCE', {
-            experienceType: experience.experienceType,
+            type: experience.type,
             experience
           })
         })
@@ -226,7 +226,7 @@ const experience = {
   semester: '',
   link: '',
   coreAbilities: '',
-  experienceType: null,
+  type: null,
   dateStart: null,
   dateEnd: null
 }
@@ -236,7 +236,7 @@ const changeActivitiesToExperiences = activities => {
     name: activity.activity_name,
     semester: dateToSemester(new Date(activity.active_start)),
     link: activity.activity_url,
-    experienceType: 'activity',
+    type: 'activity',
     dateStart: new Date(activity.active_start).toISOString()
   }))
 }
@@ -246,7 +246,7 @@ const changeClubsToExperiences = clubs => {
     name: club.club_name,
     position: club.position,
     semester: `${club.syear}-${club.sem}`,
-    experienceType: 'activity',
+    type: 'activity',
     dateStart: semesterToDate(`${club.syear}-${club.sem}`).toISOString()
   }))
 }
@@ -257,7 +257,7 @@ const changeCoursesToExperiences = courses => {
     semester: `${course.syear}-${course.sem}`,
     link: course.course_url,
     coreAbilities: Object.values(course.core_abilities).join('、'),
-    experienceType: 'course',
+    type: 'course',
     dateStart: semesterToDate(`${course.syear}-${course.sem}`).toISOString()
   }))
 }

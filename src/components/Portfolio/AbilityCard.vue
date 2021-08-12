@@ -33,14 +33,14 @@
           @start="handleDrag(true)"
           @end="handleDrag(false)"
         >
-          <template #item="{element, index}">
-            <li class="experience-card" :data-id="element.id">
+          <template #item="{ element: experience, index }">
+            <li class="experience-card" :data-id="experience.id">
               <div class="experience-card__header">
                 <h3 class="experience-card__name">
-                  {{ element.name }}
+                  {{ experience.name }}
                 </h3>
-                <span v-if="element.showPosition" class="experience-card__position">
-                  {{ element.experienceType === 'course' ? `學期成績${element.position}分` : element.position }}
+                <span v-if="experience.showPosition" class="experience-card__position">
+                  {{ experience.type === 'course' ? `學期成績${experience.position}分` : experience.position }}
                 </span>
                 <Menu as="div" class="experience-card__menu">
                   <MenuButton class="experience-card__menu-btn">
@@ -53,18 +53,18 @@
                       <li
                         :class="{ 'experience-card__menu-item--active': active }"
                         class="experience-card__menu-item"
-                        @click="element.showPosition = !element.showPosition"
+                        @click="experience.showPosition = !experience.showPosition"
                       >
-                        {{ element.showPosition ? '隱藏' : '顯示' }}{{ element.experienceType === 'course' ? '成績' : '職位/名次' }}
+                        {{ experience.showPosition ? '隱藏' : '顯示' }}{{ experience.type === 'course' ? '成績' : '職位/名次' }}
                       </li>
                     </MenuItem>
                     <MenuItem v-slot="{ active }">
                       <li
                         :class="{ 'experience-card__menu-item--active': active }"
                         class="experience-card__menu-item"
-                        @click="element.showFeedback = !element.showFeedback"
+                        @click="experience.showFeedback = !experience.showFeedback"
                       >
-                        {{ element.showFeedback ? '隱藏心得' : '顯示心得' }}
+                        {{ experience.showFeedback ? '隱藏心得' : '顯示心得' }}
                       </li>
                     </MenuItem>
                     <MenuItem v-slot="{ active }">
@@ -81,15 +81,15 @@
               </div>
               <div class="experience-card__tags">
                 <div
-                  v-for="tag in element.tags"
+                  v-for="tag in experience.tags"
                   :key="tag"
                   class="tag"
                 >
                   {{ tag.name }}
                 </div>
               </div>
-              <div v-if="element.showFeedback" class="experience-card__description">
-                {{ element.feedback }}
+              <div v-if="experience.showFeedback" class="experience-card__description">
+                {{ experience.feedback }}
               </div>
             </li>
           </template>

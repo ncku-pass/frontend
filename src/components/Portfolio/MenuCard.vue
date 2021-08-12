@@ -2,9 +2,9 @@
   <li class="menu-card" :data-id="element.id">
     <div
       class="menu-card__type"
-      :class="`menu-card__type--${element.experienceType}`"
+      :class="`menu-card__type--${element.type}`"
     >
-      {{ typeChinese[element.experienceType] }}
+      {{ typeChinese[element.type] }}
     </div>
     <span class="menu-card__name">{{ element.name }}</span>
   </li>

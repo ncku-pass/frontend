@@ -38,7 +38,7 @@
                     type="checkbox"
                   />
                   <label :for="`${semester}-${i}`">
-                    【{{ chineseOfExperienceType[exp.experienceType] }}】{{ exp.name }}
+                    【{{ chineseOfExperienceType[exp.type] }}】{{ exp.name }}
                   </label>
                 </li>
               </DisclosurePanel>

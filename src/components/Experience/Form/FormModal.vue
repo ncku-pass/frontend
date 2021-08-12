@@ -67,12 +67,12 @@
             />
           </div>
         </div>
-        <div v-if="showedFieldText.type">
-          <label class="form-label" for="experienceType">{{ showedFieldText.type.text }}</label>
+        <div v-if="showedFieldText.categories">
+          <label class="form-label">{{ showedFieldText.categories.text }}</label>
           <Multiselect
-            v-model="formData.type"
-            :options="showedFieldText.type.options"
-            :required="showedFieldText.type.required"
+            v-model="formData.categories"
+            :options="showedFieldText.categories.options"
+            :required="showedFieldText.categories.required"
             mode="tags"
           >
             <template #tag="{ option, handleTagRemove, disabled }">
@@ -166,6 +166,7 @@
   <MessageModal
     v-show="showMessageModal"
     message="可以將更多相關資訊（ex.照片、PPT等等）統整到自己的連結裡頭喔！"
+    :duration="3000"
     :show="showMessageModal"
     @close="showMessageModal = false"
   />
@@ -183,7 +184,7 @@ import TagSelect from '@/components/Experience/Form/TagSelect.vue'
 const fieldText = {
   course: {
     name: { text: '*課程名稱', required: true },
-    type: { text: '課程類別', required: false, options: ['必修課程', '選修課程', '通識', '工作坊', '密集課程', '線上課程'] },
+    categories: { text: '課程類別', required: false, options: ['必修課程', '選修課程', '通識', '工作坊', '密集課程', '線上課程'] },
     semester: { text: '*課程時間', required: true },
     position: { text: '課程分數', required: false },
     description: {
@@ -200,7 +201,7 @@ const fieldText = {
   },
   activity: {
     name: { text: '*活動名稱', required: true },
-    type: { text: '活動類別', required: false, options: ['社團', '系內活動', '校內活動', '校外活動', '其他'] },
+    categories: { text: '活動類別', required: false, options: ['社團', '系內活動', '校內活動', '校外活動', '其他'] },
     semester: { text: '*活動時間', required: true },
     position: { text: '*活動擔任職位', required: true },
     description: {
@@ -331,11 +332,11 @@ export default {
       feedback: props.editData?.feedback || '',
       semester: props.editData?.semester || '',
       link: props.editData?.link || '',
-      experienceType: props.formType,
+      type: props.formType,
       coreAbilities: props.editData?.coreAbilities || '',
       // tags: props.editData?.tags.map(tag => tag.id) || []
       tags: props.editData?.tags || [],
-      type: props.editData?.type || [],
+      categories: props.editData?.categories || [],
       dateStart: props.editData?.dateStart?.slice(0, 10) || null,
       dateEnd: props.editData?.dateEnd?.slice(0, 10) || null
     })
