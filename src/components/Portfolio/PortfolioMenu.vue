@@ -80,11 +80,11 @@ export default {
 
     watchEffect(() => {
       filter.semesters = semesters.value.reduce((obj, semester, index) => {
-        return { ...obj, [semester]: index === 0 }
+        return { ...obj, [semester]: true }
       }, {})
     })
     watchEffect(() => {
-      filter.tags = tags.value.reduce((obj, tag) => ({ ...obj, [tag.name]: true }), {})
+      filter.tags = tags.value.reduce((obj, tag) => ({ ...obj, [tag.name]: false }), {})
     })
 
     const filteredExperienceArray = computed(() => {
