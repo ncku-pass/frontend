@@ -86,26 +86,6 @@
               </div>
             </template>
           </Multiselect>
-          <!-- <select
-            id="experienceType"
-            v-model="formData.type"
-            class="form-control"
-          >
-            <option
-              value=""
-              disabled
-              selected
-            >
-              請選擇類別
-            </option>
-            <option
-              v-for="type in showedFieldText.type.options"
-              :key="type"
-              :value="type"
-            >
-              {{ type }}
-            </option>
-          </select> -->
         </div>
         <div v-if="showedFieldText.description">
           <label for="experienceDescription" class="form-label">{{

@@ -5,13 +5,12 @@ import {
   importExperiences as importExperiencesAPI
 } from '@/api/experiences'
 import { getNCKUExperiences as getNCKUExperiencesAPI } from '@/api/ncku-portal'
+import { semesterToDate, dateToSemester } from '@/helpers/index'
 import {
   sortExperiences,
   classifyBySemester,
-  semesterToDate,
-  dateToSemester,
   orderBySemester
-} from '@/helpers/index'
+} from '@/helpers/experiences'
 import { KeyNoPairedError } from '@/config'
 
 const experiences = {
