@@ -29,7 +29,7 @@
           {{ experience.semester }}
         </p>
       </div>
-      <div v-if="experience.type">
+      <div v-if="experience.type.length">
         <h3 class="field-title">
           {{ showedFieldText.type }}
         </h3>
@@ -38,12 +38,13 @@
             v-for="type in experience.type"
             :key="type"
             class="tag--large"
-          />
-          {{ type }}
+          >
+            {{ type }}
+          </div>
         </div>
       </div>
       <!-- Tags -->
-      <div>
+      <div v-if="experience.tags.length">
         <h3 class="field-title">
           獲得技能Tag
         </h3>
@@ -78,9 +79,13 @@
         <h3 class="field-title">
           其他連結
         </h3>
-        <p class="field-value">
+        <a
+          class="field-value"
+          :href="experience.link"
+          target="_blank"
+        >
           {{ experience.link }}
-        </p>
+        </a>
       </div>
     </div>
   </div>
@@ -207,5 +212,8 @@ export default {
   display: flex;
   flex-wrap: wrap;
   gap: 5px;
+}
+a {
+  color: $blue-dark;
 }
 </style>
