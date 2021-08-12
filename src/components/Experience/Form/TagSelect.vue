@@ -2,7 +2,7 @@
   <div
     class="tag-select form-control"
     :class="{ active: showDropdown }"
-    @click.self="textInput.focus()"
+    @click.self="textInputRef.focus()"
   >
     <div
       v-for="tag in selectedTags"
@@ -10,22 +10,10 @@
       class="tag"
     >
       <span>{{ tag.name }}</span>
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 20 20"
-        fill="currentColor"
-        class="tag__delete"
-        @click="handleRemoveTag(tag.id)"
-      >
-        <path
-          fill-rule="evenodd"
-          d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-          clip-rule="evenodd"
-        />
-      </svg>
+      <XIcon class="tag__delete" @click="handleRemoveTag(tag.id)" />
     </div>
     <input
-      ref="textInput"
+      ref="textInputRef"
       v-model.trim="newTagName"
       class="text-input"
       type="text"
@@ -79,20 +67,7 @@
         @click="handleOptionClicked(tag)"
       >
         {{ tag.name }}
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          class="option__delete"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-          @click.stop="handleDeleteTag(tag.id)"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M6 18L18 6M6 6l12 12"
-          />
-        </svg>
+        <XIcon class="option__delete" @click.stop="handleDeleteTag(tag.id)" />
       </div>
     </div>
   </div>
@@ -101,6 +76,7 @@
 <script>
 import { computed, reactive, ref } from 'vue'
 import { useStore } from 'vuex'
+import { XIcon } from '@heroicons/vue/solid'
 import { searchTag } from '@/api/tags'
 import { debounce } from '@/helpers'
 
@@ -138,6 +114,9 @@ const filterSearchTag = (options, searchText) => {
 
 export default {
   name: 'TagSelect',
+  components: {
+    XIcon
+  },
   props: {
     selectedTags: {
       type: Array,
@@ -183,7 +162,7 @@ export default {
     }
 
     // ===== 輸入 =====
-    const textInput = ref(null) // dom
+    const textInputRef = ref(null)
     const newTagName = ref('')
     const addTag = (newTag) => store.dispatch('tags/addTag', newTag)
 
@@ -226,7 +205,7 @@ export default {
     }
 
     return {
-      textInput,
+      textInputRef,
       newTagName,
       createTag,
       handleRemoveTag,
@@ -317,16 +296,19 @@ export default {
     color: $gray-3;
   }
   &__delete {
+    display: none;
     padding: 6px;
     width: 36px;
     height: 36px;
     position: absolute;
     right: 0;
     top: 0;
-    stroke: $red;
     &:hover {
       background-color: $red-light;
     }
+  }
+  &:hover &__delete {
+    display: block;
   }
 }
 </style>

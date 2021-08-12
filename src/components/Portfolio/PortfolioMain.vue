@@ -3,19 +3,7 @@
     <div v-if="resumes" class="portfolio__main">
       <ul class="portfolio__main__tabs">
         <button class="scroll-left-btn" @click="scrollHorizontal(-200)">
-          <svg
-            width="9"
-            height="14"
-            viewBox="0 0 9 14"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M8 13L2 7L8 1"
-              stroke="black"
-              stroke-width="2"
-            />
-          </svg>
+          <ChevronLeftIcon />
         </button>
         <div ref="tabWrapperRef" class="tabs-wrapper">
           <li
@@ -34,19 +22,7 @@
           </li>
         </div>
         <button class="scroll-right-btn" @click="scrollHorizontal(200)">
-          <svg
-            width="9"
-            height="14"
-            viewBox="0 0 9 14"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M1 1L7 7L1 13"
-              stroke="black"
-              stroke-width="2"
-            />
-          </svg>
+          <ChevronRightIcon />
         </button>
       </ul>
       <div class="portfolio__main__content">
@@ -146,7 +122,7 @@ import { computed, ref, onBeforeUpdate, nextTick } from 'vue'
 import { useStore } from 'vuex'
 import draggable from 'vuedraggable'
 import { isEqual } from 'lodash-es'
-import { PlusCircleIcon } from '@heroicons/vue/outline'
+import { PlusCircleIcon, ChevronLeftIcon, ChevronRightIcon } from '@heroicons/vue/outline'
 import AbilityCard from '@/components/Portfolio/AbilityCard.vue'
 import TemplateModal from '@/components/Portfolio/TemplateModal.vue'
 import ConfirmModal from '@/components/ConfirmModal'
@@ -159,7 +135,9 @@ export default {
     AbilityCard,
     TemplateModal,
     draggable,
-    PlusCircleIcon
+    PlusCircleIcon,
+    ChevronLeftIcon,
+    ChevronRightIcon
   },
   setup () {
     const store = useStore()
