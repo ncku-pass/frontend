@@ -222,9 +222,6 @@ export default {
     border: none;
     border-radius: 50px;
     background-color: $red;
-    font-weight: $weight-bold;
-    font-size: 42px;
-    color: #fff;
     box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.25);
   }
   &__import {

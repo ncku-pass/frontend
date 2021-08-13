@@ -1,11 +1,11 @@
 <template>
   <div class="portfolio__main-container">
     <div v-if="resumes" class="portfolio__main">
-      <ul class="portfolio__main__tabs">
+      <div class="portfolio__main__tabs">
         <button class="scroll-left-btn" @click="scrollHorizontal(-200)">
           <ChevronLeftIcon />
         </button>
-        <div ref="tabWrapperRef" class="tabs-wrapper">
+        <ul ref="tabWrapperRef" class="tabs-wrapper">
           <li
             v-for="(resume, index) in resumes"
             :key="resume.id"
@@ -20,11 +20,11 @@
           <li class="portfolio__main__tabs__add" @click="openTemplateModal">
             <PlusCircleIcon />
           </li>
-        </div>
+        </ul>
         <button class="scroll-right-btn" @click="scrollHorizontal(200)">
           <ChevronRightIcon />
         </button>
-      </ul>
+      </div>
       <div class="portfolio__main__content">
         <template v-if="showedResume">
           <div class="content-header">
@@ -298,6 +298,9 @@ export default {
   min-height: 100%;
   background-color: #fff;
   border-radius: 10px 10px 0 0;
+  // 修復 ipad scroll 卡頓的問題
+  transform: translate3d(0, 0, 0);
+  -webkit-transform: translate3d(0, 0, 0);
   &-container {
     overflow-y: auto;
     padding: 26px 0;

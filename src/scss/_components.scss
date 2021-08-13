@@ -82,6 +82,7 @@
   z-index: 10;
   display: grid;
   place-items: center;
+  align-content: center; // for safari
   background-color: rgba(0, 0, 0, 0.25);
 }
 
