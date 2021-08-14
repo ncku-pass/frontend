@@ -311,8 +311,9 @@ export default {
     color: $gray-3;
   }
   &__tags {
-    @include grid(column, 0, 10px);
-    justify-content: start;
+    display: flex;
+    gap: 5px;
+    flex-wrap: wrap;
     padding: 10px 0;
     .tag {
       font-weight: $weight-light;
