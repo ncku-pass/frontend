@@ -10,7 +10,7 @@ const useScrollShadow = () => {
    *  不在頂端加上.off-top、
    *  不在底部加上.off-bottom
    */
-  const setShadows = (event) => {
+  const setShadows = event => {
     const shadowContainer = event.currentTarget
     const scrollContent = event.target
     if (!isScrolling.value) {
@@ -31,7 +31,7 @@ const useScrollShadow = () => {
     }
   }
 
-  const initShadows = (shadowContainer) => {
+  const initShadows = shadowContainer => {
     const scrollContent = shadowContainer.childNodes[0]
     if (scrollContent.offsetHeight + scrollContent.scrollTop < scrollContent.scrollHeight - 5) {
       shadowContainer.classList.add('off-bottom')

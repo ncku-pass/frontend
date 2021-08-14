@@ -1,8 +1,5 @@
 <template>
-  <div
-    class="message-modal modal-bg"
-    @click.self.stop="handleClick"
-  >
+  <div class="message-modal modal-bg" @click.self.stop="handleClick">
     <div class="message-modal__content">
       <slot />
     </div>

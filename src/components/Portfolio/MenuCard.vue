@@ -1,9 +1,6 @@
 <template>
   <li class="menu-card" :data-id="element.id">
-    <div
-      class="menu-card__type"
-      :class="`menu-card__type--${element.type}`"
-    >
+    <div class="menu-card__type" :class="`menu-card__type--${element.type}`">
       {{ typeChinese[element.type] }}
     </div>
     <span class="menu-card__name">{{ element.name }}</span>
@@ -35,7 +32,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import "~@/scss/variables";
+@import '~@/scss/variables';
 
 .menu-card {
   cursor: grab;
@@ -49,7 +46,7 @@ export default {
   &:hover {
     background-color: $gray-5;
   }
-  &[draggable="true"] {
+  &[draggable='true'] {
     cursor: grabbing;
   }
   &__type {
@@ -73,10 +70,10 @@ export default {
     &--work {
       background-color: $green;
     }
-    &--certificate{
+    &--certificate {
       background-color: $fuchsia;
     }
-    &--other{
+    &--other {
       background-color: $yellow;
     }
   }

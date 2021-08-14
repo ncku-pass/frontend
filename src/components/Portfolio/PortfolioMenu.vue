@@ -3,11 +3,7 @@
     <div class="portfolio__menu__header">
       <span>經驗列表</span>
       <div class="filter-btn" @click="showFilter = !showFilter">
-        <svg
-          viewBox="0 0 13 8"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
+        <svg viewBox="0 0 13 8" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path
             fill-rule="evenodd"
             clip-rule="evenodd"
@@ -25,11 +21,7 @@
       @select-all-tags="changeAllTags(true)"
       @un-select-all-tags="changeAllTags(false)"
     />
-    <div
-      ref="MenuShadowContainer"
-      class="shadow-container"
-      @scroll.capture="setShadows"
-    >
+    <div ref="MenuShadowContainer" class="shadow-container" @scroll.capture="setShadows">
       <ul class="portfolio__menu__body">
         <draggable
           v-model="filteredExperienceArray"
@@ -75,7 +67,9 @@ export default {
       semesters: {},
       tags: {}
     })
-    const someSemesterSelected = computed(() => Object.keys(filter.semesters).some(key => filter.semesters[key] === true))
+    const someSemesterSelected = computed(() =>
+      Object.keys(filter.semesters).some(key => filter.semesters[key] === true)
+    )
     const someTagSelected = computed(() => Object.keys(filter.tags).some(key => filter.tags[key] === true))
 
     watchEffect(() => {
@@ -88,7 +82,7 @@ export default {
     })
 
     const filteredExperienceArray = computed(() => {
-      return experiencesArray.value.filter((experience) => {
+      return experiencesArray.value.filter(experience => {
         if (someSemesterSelected.value) {
           for (const key in filter.semesters) {
             if (!filter.semesters[key] && experience.semester === key) {
@@ -121,13 +115,13 @@ export default {
     // })
 
     // ===打勾/取消篩選===
-    const toggleSemester = (semester) => {
+    const toggleSemester = semester => {
       filter.semesters[semester] = !filter.semesters[semester]
     }
-    const toggleTag = (tag) => {
+    const toggleTag = tag => {
       filter.tags[tag] = !filter.tags[tag]
     }
-    const changeAllTags = (toStatus) => {
+    const changeAllTags = toStatus => {
       for (const tag in filter.tags) {
         filter.tags[tag] = toStatus
       }
@@ -150,8 +144,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "~@/scss/variables";
-@import "~@/scss/mixins";
+@import '~@/scss/variables';
+@import '~@/scss/mixins';
 
 .portfolio__menu {
   display: flex;

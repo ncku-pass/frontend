@@ -23,16 +23,8 @@
                 @click="openViewerModal(experience)"
               />
             </ExperienceListBlock>
-            <button
-              class="experience__window__table__add"
-              @click="handleAddExperience"
-            >
-              <svg
-                width="22"
-                height="22"
-                viewBox="0 0 22 22"
-                xmlns="http://www.w3.org/2000/svg"
-              >
+            <button class="experience__window__table__add" @click="handleAddExperience">
+              <svg width="22" height="22" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
                 <path
                   d="M8.71431 22.3811H13.2913V13.4791H21.7733V9.0701H13.2913V0.126143H8.71431V9.0701H0.232251V13.4791H8.71431V22.3811Z"
                   fill="white"
@@ -64,11 +56,7 @@
     :experience="experienceToShow"
     @close="showViewerModal = false"
   />
-  <ImportModal
-    v-if="showImportModal"
-    :type="type"
-    @close="showImportModal = false"
-  />
+  <ImportModal v-if="showImportModal" :type="type" @close="showImportModal = false" />
 </template>
 
 <script>
@@ -141,7 +129,7 @@ export default {
     const showViewerModal = ref(false)
     const experienceToShow = ref(null)
 
-    const openViewerModal = (experience) => {
+    const openViewerModal = experience => {
       experienceToShow.value = experience
       showViewerModal.value = true
     }
@@ -195,8 +183,7 @@ export default {
   display: flex;
   flex-direction: column;
   background-color: #fff;
-  box-shadow: 0px 0px 30px rgba(241, 90, 96, 0.05),
-    0px 0px 25px rgba(241, 90, 96, 0.1);
+  box-shadow: 0px 0px 30px rgba(241, 90, 96, 0.05), 0px 0px 25px rgba(241, 90, 96, 0.1);
   width: 100%;
   max-width: 1110px;
 }
@@ -226,10 +213,10 @@ export default {
   }
   &__import {
     display: block;
-    color: #4F4F4F;
+    color: #4f4f4f;
     width: fit-content;
     margin: 0 auto;
-    border-bottom: 2px solid #4F4F4F;
+    border-bottom: 2px solid #4f4f4f;
     cursor: pointer;
   }
 }

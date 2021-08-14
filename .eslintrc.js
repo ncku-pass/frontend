@@ -13,7 +13,10 @@ module.exports = {
     'vue/max-attributes-per-line': [
       'error',
       {
-        singleline: 2
+        singleline: {
+          max: 5,
+          allowFirstLine: true
+        }
       }
     ],
     'vue/html-self-closing': [
@@ -28,10 +31,7 @@ module.exports = {
   },
   overrides: [
     {
-      files: [
-        '**/__tests__/*.{j,t}s?(x)',
-        '**/tests/unit/**/*.spec.{j,t}s?(x)'
-      ],
+      files: ['**/__tests__/*.{j,t}s?(x)', '**/tests/unit/**/*.spec.{j,t}s?(x)'],
       env: {
         jest: true
       }

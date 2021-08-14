@@ -1,18 +1,12 @@
 <template>
   <div class="modal-bg" @mousedown.self="leaveForm">
     <div class="form-modal">
-      <form
-        class="form-modal__content"
-        autocomplete="off"
-        @submit.prevent="handleFormSubmit"
-      >
+      <form class="form-modal__content" autocomplete="off" @submit.prevent="handleFormSubmit">
         <p class="form-modal__hint">
           有*欄位代表必填
         </p>
         <div v-if="showedFieldText.name">
-          <label for="experienceName" class="form-label">{{
-            showedFieldText.name.text
-          }}</label>
+          <label for="experienceName" class="form-label">{{ showedFieldText.name.text }}</label>
           <input
             id="experienceName"
             v-model="formData.name"
@@ -22,9 +16,7 @@
           />
         </div>
         <div v-if="showedFieldText.position">
-          <label for="experiencePosition" class="form-label">{{
-            showedFieldText.position.text
-          }}</label>
+          <label for="experiencePosition" class="form-label">{{ showedFieldText.position.text }}</label>
           <input
             id="experiencePosition"
             v-model="formData.position"
@@ -45,30 +37,15 @@
             <option value="" disabled>
               請選擇時間
             </option>
-            <option
-              v-for="semester in semesters"
-              :key="semester"
-              :value="semester"
-            >
+            <option v-for="semester in semesters" :key="semester" :value="semester">
               {{ semester }}
             </option>
           </select>
           <div v-else class="form-modal__time">
             <p>*開始時間</p>
-            <input
-              v-model="formData.dateStart"
-              type="date"
-              class="form-control"
-              :max="todayString"
-              required
-            />
+            <input v-model="formData.dateStart" type="date" class="form-control" :max="todayString" required />
             <p>結束時間</p>
-            <input
-              v-model="formData.dateEnd"
-              type="date"
-              class="form-control"
-              :min="formData.dateStart"
-            />
+            <input v-model="formData.dateEnd" type="date" class="form-control" :min="formData.dateStart" />
           </div>
         </div>
         <div v-if="showedFieldText.categories">
@@ -82,19 +59,13 @@
             <template #tag="{ option, handleTagRemove, disabled }">
               <div class="multiselect-tag tag--large">
                 {{ option.value }}
-                <i
-                  v-if="!disabled"
-                  @click.prevent
-                  @mousedown.prevent.stop="handleTagRemove(option, $event)"
-                />
+                <i v-if="!disabled" @click.prevent @mousedown.prevent.stop="handleTagRemove(option, $event)" />
               </div>
             </template>
           </Multiselect>
         </div>
         <div v-if="showedFieldText.description">
-          <label for="experienceDescription" class="form-label">{{
-            showedFieldText.description?.text
-          }}</label>
+          <label for="experienceDescription" class="form-label">{{ showedFieldText.description?.text }}</label>
           <textarea
             id="experienceDescription"
             v-model="formData.description"
@@ -116,9 +87,7 @@
           <TagSelect v-model:selectedTags="formData.tags" />
         </div>
         <div v-if="showedFieldText.feedback">
-          <label for="experienceFeedback" class="form-label">{{
-            showedFieldText.feedback.text
-          }}</label>
+          <label for="experienceFeedback" class="form-label">{{ showedFieldText.feedback.text }}</label>
           <textarea
             id="experienceFeedback"
             v-model="formData.feedback"
@@ -134,27 +103,13 @@
             <span>其他連結</span>
             <InformationCircleIcon class="form-label__info" @click.stop="showMessageModal = true" />
           </label>
-          <input
-            id="experienceLink"
-            v-model="formData.link"
-            type="text"
-            class="form-control"
-          />
+          <input id="experienceLink" v-model="formData.link" type="text" class="form-control" />
         </div>
         <div class="form-modal__content__btns">
-          <button
-            v-show="!requestStatus.isPending"
-            class="btn"
-            type="button"
-            @click="leaveForm"
-          >
+          <button v-show="!requestStatus.isPending" class="btn" type="button" @click="leaveForm">
             取消
           </button>
-          <button
-            class="btn--red"
-            :disabled="requestStatus.isPending"
-            type="submit"
-          >
+          <button class="btn--red" :disabled="requestStatus.isPending" type="submit">
             {{ requestStatus.isPending ? '儲存中' : '儲存' }}
           </button>
         </div>
@@ -168,12 +123,7 @@
     @cancel="showConfirmModal = false"
     @confirm="$emit('close')"
   />
-  <MessageModal
-    v-show="showMessageModal"
-    :duration="3000"
-    :show="showMessageModal"
-    @close="showMessageModal = false"
-  >
+  <MessageModal v-show="showMessageModal" :duration="3000" :show="showMessageModal" @close="showMessageModal = false">
     <p>可以將更多相關資訊（ex.照片、PPT等等）統整到自己的連結裡頭喔！</p>
     <p>若有多個連結，使用<code class="inline-code">,</code>將連結隔開</p>
   </MessageModal>
@@ -191,7 +141,11 @@ import TagSelect from '@/components/Experience/Form/TagSelect.vue'
 const fieldText = {
   course: {
     name: { text: '*課程名稱', required: true },
-    categories: { text: '課程類別', required: false, options: ['必修課程', '選修課程', '通識', '工作坊', '密集課程', '線上課程'] },
+    categories: {
+      text: '課程類別',
+      required: false,
+      options: ['必修課程', '選修課程', '通識', '工作坊', '密集課程', '線上課程']
+    },
     semester: { text: '*課程時間', required: true },
     position: { text: '課程分數', required: false },
     description: {
@@ -201,8 +155,7 @@ const fieldText = {
     },
     feedback: {
       text: '課程收穫及成就 (500字以內)',
-      placeholder:
-        '將課程中所得到的收穫及成就記錄下來，或是寫出課程內容的特色吧',
+      placeholder: '將課程中所得到的收穫及成就記錄下來，或是寫出課程內容的特色吧',
       required: false
     }
   },
@@ -303,7 +256,7 @@ export default {
 
     // === 離開時跳出確認視窗 ===
     const showConfirmModal = ref(false)
-    const leaveForm = (e) => {
+    const leaveForm = e => {
       if (requestStatus.isPending) {
         return
       }
@@ -352,7 +305,7 @@ export default {
       isPending: null
     })
 
-    const addExperience = (experience) => store.dispatch('experiences/addExperience', experience)
+    const addExperience = experience => store.dispatch('experiences/addExperience', experience)
     const updateExperience = (id, experience) => store.dispatch('experiences/updateExperience', { id, experience })
 
     const handleFormSubmit = async () => {
@@ -422,7 +375,7 @@ export default {
   }
   summary {
     cursor: pointer;
-    color: #1C7BA3;
+    color: #1c7ba3;
     line-height: 24px;
     font-weight: 500;
     letter-spacing: 0.05em;

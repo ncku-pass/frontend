@@ -57,15 +57,7 @@ const auth = {
       commit('LOGOUT')
       window.location.href = '/'
     },
-    async register ({ commit }, {
-      email,
-      name,
-      password,
-      confirmPassword,
-      studentId,
-      major,
-      graduationYear
-    }) {
+    async register ({ commit }, { email, name, password, confirmPassword, studentId, major, graduationYear }) {
       try {
         commit('SET_STATUS', { isPending: true, error: null })
 
@@ -112,8 +104,7 @@ const auth = {
       }
     }
   },
-  getters: {
-  }
+  getters: {}
 }
 
 export default auth

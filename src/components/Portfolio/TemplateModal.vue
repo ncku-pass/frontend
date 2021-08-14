@@ -1,18 +1,10 @@
 <template>
   <teleport to="#app">
-    <div
-      v-show="showModal"
-      class="modal-bg"
-      @click.self.stop="$emit('close')"
-    >
+    <div v-show="showModal" class="modal-bg" @click.self.stop="$emit('close')">
       <div class="template-modal">
         <div class="template-modal__content">
           <select v-model="selected" class="template-modal__select">
-            <option
-              v-for="option in options"
-              :key="option"
-              :value="option"
-            >
+            <option v-for="option in options" :key="option" :value="option">
               {{ option }}
             </option>
           </select>
@@ -146,7 +138,7 @@ function generateCard (type = 'experience', names = []) {
 
 <style lang="scss" scoped>
 @import '~@/scss/variables';
-@import "~@/scss/mixins";
+@import '~@/scss/mixins';
 
 .template-modal {
   display: flex;

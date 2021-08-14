@@ -11,7 +11,7 @@
               v-for="(checked, semester) in filter.semesters"
               :key="semester"
               class="filter-block__tags__tag"
-              :class="{'filter-block__tags__tag--selected': checked}"
+              :class="{ 'filter-block__tags__tag--selected': checked }"
               @click="toggleSemester(semester)"
             >
               {{ semester }}
@@ -29,7 +29,7 @@
               v-for="(checked, tag) in filter.tags"
               :key="tag"
               class="filter-block__tags__tag"
-              :class="{'filter-block__tags__tag--selected': checked}"
+              :class="{ 'filter-block__tags__tag--selected': checked }"
               @click="toggleTag(tag)"
             >
               {{ tag }}
@@ -83,8 +83,8 @@ export default {
 </script>
 
 <style lang="scss">
-@import "~@/scss/variables";
-@import "~@/scss/mixins";
+@import '~@/scss/variables';
+@import '~@/scss/mixins';
 
 .portfolio__menu__filter {
   max-height: 250px;

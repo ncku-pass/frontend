@@ -4,11 +4,7 @@
       {{ experience.name }}
     </h4>
     <ul class="experience-list-item__tags">
-      <li
-        v-for="tag in experience.tags"
-        :key="tag.id"
-        class="tag"
-      >
+      <li v-for="tag in experience.tags" :key="tag.id" class="tag">
         {{ tag.name }}
       </li>
     </ul>
@@ -28,24 +24,11 @@
         <span class="btn-pill__text">刪除</span>
       </button>
     </div>
-    <ConfirmModal
-      v-if="showConfirmModal"
-      :message="experience.name"
-      confirm-type="delete"
-      @cancel="closeConfirmModal"
-    >
-      <button
-        v-show="!deleteStatus.isPending"
-        class="btn"
-        @click.stop="closeConfirmModal"
-      >
+    <ConfirmModal v-if="showConfirmModal" :message="experience.name" confirm-type="delete" @cancel="closeConfirmModal">
+      <button v-show="!deleteStatus.isPending" class="btn" @click.stop="closeConfirmModal">
         取消
       </button>
-      <button
-        class="btn--red"
-        :disabled="deleteStatus.isPending"
-        @click.stop="handleDeleteExperience"
-      >
+      <button class="btn--red" :disabled="deleteStatus.isPending" @click.stop="handleDeleteExperience">
         {{ deleteStatus.isPending ? '刪除中' : '確定刪除' }}
       </button>
     </ConfirmModal>
@@ -95,7 +78,14 @@ export default {
       emit('edit', props.experience.id)
     }
 
-    return { showConfirmModal, closeConfirmModal, confirmDelete, deleteStatus, handleDeleteExperience, handleEditExperience }
+    return {
+      showConfirmModal,
+      closeConfirmModal,
+      confirmDelete,
+      deleteStatus,
+      handleDeleteExperience,
+      handleEditExperience
+    }
   }
 }
 </script>

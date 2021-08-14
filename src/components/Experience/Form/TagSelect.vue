@@ -1,14 +1,6 @@
 <template>
-  <div
-    class="tag-select form-control"
-    :class="{ active: showDropdown }"
-    @click.self="textInputRef.focus()"
-  >
-    <div
-      v-for="tag in selectedTags"
-      :key="tag.id"
-      class="tag"
-    >
+  <div class="tag-select form-control" :class="{ active: showDropdown }" @click.self="textInputRef.focus()">
+    <div v-for="tag in selectedTags" :key="tag.id" class="tag">
       <span>{{ tag.name }}</span>
       <XIcon class="tag__delete" @click="handleRemoveTag(tag.id)" />
     </div>
@@ -22,50 +14,24 @@
       @focus="showDropdown = true"
       @blur="!isChoosing && (showDropdown = false)"
     />
-    <div
-      v-show="showDropdown"
-      class="options"
-      @mousedown="isChoosing = true"
-      @mouseup="isChoosing = false"
-    >
-      <div
-        class="option-label"
-      >
+    <div v-show="showDropdown" class="options" @mousedown="isChoosing = true" @mouseup="isChoosing = false">
+      <div class="option-label">
         其他人也輸入的Tag
       </div>
-      <div
-        v-for="tag in filteredOptions.search"
-        :key="tag.name"
-        class="option"
-        @click="handleOptionClicked(tag)"
-      >
+      <div v-for="tag in filteredOptions.search" :key="tag.name" class="option" @click="handleOptionClicked(tag)">
         {{ tag.name }}
         <span>{{ tag.count }}次</span>
       </div>
-      <div
-        class="option-label"
-      >
+      <div class="option-label">
         預設Tag
       </div>
-      <div
-        v-for="tag in filteredOptions.default"
-        :key="tag.name"
-        class="option"
-        @click="handleOptionClicked(tag)"
-      >
+      <div v-for="tag in filteredOptions.default" :key="tag.name" class="option" @click="handleOptionClicked(tag)">
         {{ tag.name }}
       </div>
-      <div
-        class="option-label"
-      >
+      <div class="option-label">
         我的Tag
       </div>
-      <div
-        v-for="tag in filteredOptions.own"
-        :key="tag.id"
-        class="option"
-        @click="handleOptionClicked(tag)"
-      >
+      <div v-for="tag in filteredOptions.own" :key="tag.id" class="option" @click="handleOptionClicked(tag)">
         {{ tag.name }}
         <XIcon class="option__delete" @click.stop="handleDeleteTag(tag.id)" />
       </div>
@@ -163,11 +129,12 @@ export default {
     // ===== 輸入 =====
     const textInputRef = ref(null)
     const newTagName = ref('')
-    const addTag = (newTag) => store.dispatch('tags/addTag', newTag)
+    const addTag = newTag => store.dispatch('tags/addTag', newTag)
 
     const createTag = async () => {
       if (!newTagName.value) return
       if (tags.value.some(tag => tag.name === newTagName.value)) return
+      if (defaultAbilities.some(tag => tag.name === newTagName.value)) return
 
       const res = await addTag(newTagName.value)
       emit('update:selectedTags', [...props.selectedTags, res])
@@ -175,7 +142,7 @@ export default {
     }
 
     let lastRequest = 0 // 紀錄上次送出請求的時間，如果新的請求>舊的請求，忽略舊的回覆
-    const debouncedSearchTag = debounce(async (searchText) => {
+    const debouncedSearchTag = debounce(async searchText => {
       lastRequest = new Date()
       const reocrd = lastRequest
       const { data } = await searchTag(searchText)
@@ -198,8 +165,8 @@ export default {
         props.selectedTags.filter(tag => tag.id !== id)
       )
     }
-    const deleteTag = (tagId) => store.dispatch('tags/deleteTag', tagId)
-    const handleDeleteTag = (tagId) => {
+    const deleteTag = tagId => store.dispatch('tags/deleteTag', tagId)
+    const handleDeleteTag = tagId => {
       deleteTag(tagId)
     }
 

@@ -10,42 +10,27 @@
       </router-link>
     </li>
     <li>
-      <router-link
-        class="tab-link"
-        :to="{ name: 'Experience', params: { type: 'activity' } }"
-      >
+      <router-link class="tab-link" :to="{ name: 'Experience', params: { type: 'activity' } }">
         活動經驗
       </router-link>
     </li>
     <li>
-      <router-link
-        class="tab-link"
-        :to="{ name: 'Experience', params: { type: 'competition' } }"
-      >
+      <router-link class="tab-link" :to="{ name: 'Experience', params: { type: 'competition' } }">
         競賽經驗
       </router-link>
     </li>
     <li>
-      <router-link
-        class="tab-link"
-        :to="{ name: 'Experience', params: { type: 'work' } }"
-      >
+      <router-link class="tab-link" :to="{ name: 'Experience', params: { type: 'work' } }">
         工作經驗
       </router-link>
     </li>
     <li>
-      <router-link
-        class="tab-link"
-        :to="{ name: 'Experience', params: { type: 'certificate' } }"
-      >
+      <router-link class="tab-link" :to="{ name: 'Experience', params: { type: 'certificate' } }">
         外語能力或證照
       </router-link>
     </li>
     <li>
-      <router-link
-        class="tab-link"
-        :to="{ name: 'Experience', params: { type: 'other' } }"
-      >
+      <router-link class="tab-link" :to="{ name: 'Experience', params: { type: 'other' } }">
         其他
       </router-link>
     </li>

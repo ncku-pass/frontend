@@ -3,7 +3,7 @@ import { ref } from 'vue'
 const isGrabbing = ref(false)
 
 const useGrab = () => {
-  const setIsGrabbing = (toStatus) => {
+  const setIsGrabbing = toStatus => {
     isGrabbing.value = toStatus
   }
 

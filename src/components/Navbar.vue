@@ -1,25 +1,16 @@
 <template>
   <nav class="navbar">
     <h1 class="navbar__brand">
-      <a
-        href="/"
-        class="navbar__brand__link"
-      >E-portfolio</a>
+      <a href="/" class="navbar__brand__link">E-portfolio</a>
     </h1>
     <ul class="navbar__links">
       <li>
-        <router-link
-          class="navbar__links__link tab-link"
-          :to="{name: 'Experience'}"
-        >
+        <router-link class="navbar__links__link tab-link" :to="{ name: 'Experience' }">
           學習歷程
         </router-link>
       </li>
       <li>
-        <router-link
-          class="navbar__links__link tab-link"
-          :to="{name: 'Portfolio'}"
-        >
+        <router-link class="navbar__links__link tab-link" :to="{ name: 'Portfolio' }">
           Portfolio
         </router-link>
       </li>
@@ -47,8 +38,8 @@ export default {
 </script>
 
 <style lang="scss">
-@import "~@/scss/variables";
-@import "~@/scss/mixins";
+@import '~@/scss/variables';
+@import '~@/scss/mixins';
 
 .navbar {
   position: relative;
@@ -57,7 +48,7 @@ export default {
   align-items: center;
   height: $navbar-height;
   padding: 2px 24px 0;
-  box-shadow: 0 2px 5px rgba(255, 155, 160, .1), 2px 2px 15px 0px rgba(255, 155, 160, .15);
+  box-shadow: 0 2px 5px rgba(255, 155, 160, 0.1), 2px 2px 15px 0px rgba(255, 155, 160, 0.15);
   background-color: #fff;
   z-index: 10;
   &::after {
@@ -91,7 +82,7 @@ export default {
 }
 
 @media (max-width: 767px) {
-  .navbar__links__link[href="/portfolio"] {
+  .navbar__links__link[href='/portfolio'] {
     display: none;
   }
 }

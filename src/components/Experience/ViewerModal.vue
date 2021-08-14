@@ -1,10 +1,7 @@
 <template>
   <div class="modal-bg" @click.self.stop="$emit('close')">
     <div class="viewer-modal">
-      <XCircleIcon
-        class="viewer-modal__close"
-        @click.stop="$emit('close')"
-      />
+      <XCircleIcon class="viewer-modal__close" @click.stop="$emit('close')" />
       <div class="viewer-modal__content">
         <div v-if="experience.name">
           <h3 class="field-title">
@@ -35,11 +32,7 @@
             {{ showedFieldText.categories }}
           </h3>
           <div class="field-tags">
-            <div
-              v-for="categories in experience.categories"
-              :key="categories"
-              class="tag--large"
-            >
+            <div v-for="categories in experience.categories" :key="categories" class="tag--large">
               {{ categories }}
             </div>
           </div>
@@ -50,11 +43,7 @@
             獲得技能Tag
           </h3>
           <div class="field-tags">
-            <div
-              v-for="tag in experience.tags"
-              :key="tag.name"
-              class="tag--large"
-            >
+            <div v-for="tag in experience.tags" :key="tag.name" class="tag--large">
               {{ tag.name }}
             </div>
           </div>
@@ -81,15 +70,8 @@
             其他連結
           </h3>
           <ul class="field-links">
-            <li
-              v-for="link in experience.link.split(',')"
-              :key="link"
-            >
-              <a
-                class="field-value"
-                :href="link.trim()"
-                target="_blank"
-              >
+            <li v-for="link in experience.link.split(',')" :key="link">
+              <a class="field-value" :href="link.trim()" target="_blank">
                 {{ link.trim() }}
               </a>
             </li>

@@ -13,9 +13,9 @@ export const sortExperiences = experiences => {
 
 export const orderBySemester = (arr, order = 'desc') => {
   if (order === 'desc') {
-    return [...arr].sort((a, b) => a.semester < b.semester ? 1 : -1)
+    return [...arr].sort((a, b) => (a.semester < b.semester ? 1 : -1))
   } else {
-    return [...arr].sort((a, b) => a.semester < b.semester ? -1 : 1)
+    return [...arr].sort((a, b) => (a.semester < b.semester ? -1 : 1))
   }
 }
 

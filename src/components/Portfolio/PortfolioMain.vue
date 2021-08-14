@@ -39,11 +39,7 @@
               <button class="btn--red" @click="confirmDelete">
                 刪除
               </button>
-              <button
-                class="btn content-header__save"
-                :disabled="isPending || !notSaved"
-                @click="handleSave()"
-              >
+              <button class="btn content-header__save" :disabled="isPending || !notSaved" @click="handleSave()">
                 {{ isPending ? '存檔中' : '存檔' }}
                 <div v-show="notSaved && !isPending" class="content-header__save__hint" />
               </button>
@@ -55,7 +51,7 @@
                 :list="showedResume.cards"
                 :group="{ name: 'ability' }"
                 handle=".ability-card__grab-area"
-                :itemKey="(resume) => resume.id || resume.vForKey"
+                :itemKey="resume => resume.id || resume.vForKey"
               >
                 <template #item="{element, index}">
                   <AbilityCard
@@ -88,29 +84,17 @@
         </div>
       </div>
     </div>
-    <TemplateModal
-      :show-modal="showTemplateModal"
-      @close="handleCloseTemplateModal"
-      @choose="handleAddResume"
-    />
+    <TemplateModal :show-modal="showTemplateModal" @close="handleCloseTemplateModal" @choose="handleAddResume" />
     <ConfirmModal
       v-if="showConfirmModal"
       confirm-type="customize"
       message="確定刪除此項履歷？"
       @cancel="closeConfirmModal"
     >
-      <button
-        v-show="!deleteStatus.isPending"
-        class="btn"
-        @click.stop="closeConfirmModal"
-      >
+      <button v-show="!deleteStatus.isPending" class="btn" @click.stop="closeConfirmModal">
         取消
       </button>
-      <button
-        class="btn--red"
-        :disabled="deleteStatus.isPending"
-        @click.stop="handleDeleteResume()"
-      >
+      <button class="btn--red" :disabled="deleteStatus.isPending" @click.stop="handleDeleteResume()">
         {{ deleteStatus.isPending ? '刪除中' : '確定刪除' }}
       </button>
     </ConfirmModal>
@@ -146,13 +130,13 @@ export default {
     const resumes = computed(() => store.state.resumes.localResumes)
     const error = computed(() => store.state.resumes.error)
     const isPending = computed(() => store.state.resumes.isPending)
-    const saveResume = (resume) => store.dispatch('resumes/saveResume', { resume })
+    const saveResume = resume => store.dispatch('resumes/saveResume', { resume })
     const deleteResume = ({ resumeId }) => store.dispatch('resumes/deleteResume', { resumeId })
 
     // === 履歷的Tab ===
     const selectedIndex = ref(0)
     const tabRefs = ref([])
-    const setTabRef = (el) => {
+    const setTabRef = el => {
       if (el) {
         tabRefs.value.push(el)
       }
@@ -160,7 +144,7 @@ export default {
     onBeforeUpdate(() => {
       tabRefs.value = []
     })
-    const handleSelectResume = (index) => {
+    const handleSelectResume = index => {
       selectedIndex.value = index
       if (index >= 0) {
         tabRefs.value[index].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' })
@@ -170,7 +154,7 @@ export default {
       return resumes.value[selectedIndex.value]
     })
     const tabWrapperRef = ref(null)
-    const scrollHorizontal = (pixel) => {
+    const scrollHorizontal = pixel => {
       tabWrapperRef.value.scrollTo({
         top: 0,
         left: tabWrapperRef.value.scrollLeft + pixel,
@@ -234,7 +218,7 @@ export default {
       }
       showedResume.value.cards.push(card)
     }
-    const handleDeleteCard = (abilityIndex) => {
+    const handleDeleteCard = abilityIndex => {
       showedResume.value.cards.splice(abilityIndex, 1)
     }
 
@@ -248,7 +232,10 @@ export default {
       if (showedResume.value.isLocal) {
         return true
       }
-      return !isEqual(showedResume.value, originResumes.value.find(res => res.id === showedResume.value.id))
+      return !isEqual(
+        showedResume.value,
+        originResumes.value.find(res => res.id === showedResume.value.id)
+      )
     })
     const handleSave = async () => {
       if (showedResume.value.name.length > 25) {
@@ -308,8 +295,7 @@ export default {
   &-container {
     overflow-y: auto;
     padding: 26px 0;
-    filter: drop-shadow(-2px 4px 30px rgba(241, 90, 96, 0.05))
-      drop-shadow(-2px 4px 30px rgba(241, 90, 96, 0.1));
+    filter: drop-shadow(-2px 4px 30px rgba(241, 90, 96, 0.05)) drop-shadow(-2px 4px 30px rgba(241, 90, 96, 0.1));
     &::-webkit-scrollbar {
       display: none;
     }
@@ -332,7 +318,7 @@ export default {
         color: $red;
         transition: all 0.3s;
         &:hover {
-          transform: rotate(90deg)
+          transform: rotate(90deg);
         }
       }
     }
@@ -357,7 +343,8 @@ export default {
     padding-bottom: 0;
   }
 }
-.scroll-left-btn, .scroll-right-btn {
+.scroll-left-btn,
+.scroll-right-btn {
   width: 30px;
   background-color: transparent;
   border: none;

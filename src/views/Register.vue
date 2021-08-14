@@ -1,11 +1,6 @@
 <template>
   <div class="register">
-    <Form
-      class="register__form"
-      :validation-schema="currentSchema"
-      autocomplete="off"
-      @submit="nextStep"
-    >
+    <Form class="register__form" :validation-schema="currentSchema" autocomplete="off" @submit="nextStep">
       <h2 class="register__title">
         {{ currentStep === 0 ? '註冊帳號' : '個人資料' }}
       </h2>
@@ -13,32 +8,17 @@
       <template v-if="currentStep === 0">
         <div class="form-input-group">
           <label for="studentId" class="form-label">學號</label>
-          <Field
-            id="studentId"
-            v-model="formData.studentId"
-            name="studentId"
-            class="form-control"
-          />
+          <Field id="studentId" v-model="formData.studentId" name="studentId" class="form-control" />
           <ErrorMessage name="studentId" />
         </div>
         <div class="form-input-group">
           <label for="password" class="form-label">密碼</label>
-          <Field
-            id="password"
-            v-model="formData.password"
-            name="password"
-            class="form-control"
-          />
+          <Field id="password" v-model="formData.password" name="password" class="form-control" />
           <ErrorMessage name="password" />
         </div>
         <div class="form-input-group">
           <label for="confirmPassword" class="form-label">確認密碼</label>
-          <Field
-            id="confirmPassword"
-            v-model="formData.confirmPassword"
-            name="confirmPassword"
-            class="form-control"
-          />
+          <Field id="confirmPassword" v-model="formData.confirmPassword" name="confirmPassword" class="form-control" />
           <ErrorMessage name="confirmPassword" />
         </div>
       </template>
@@ -46,42 +26,21 @@
       <template v-if="currentStep === 1">
         <div class="form-input-group">
           <label for="name" class="form-label">姓名</label>
-          <Field
-            id="name"
-            v-model="formData.name"
-            name="name"
-            class="form-control"
-          />
+          <Field id="name" v-model="formData.name" name="name" class="form-control" />
           <ErrorMessage name="name" />
         </div>
         <div class="form-input-group">
           <label for="email" class="form-label">信箱</label>
-          <Field
-            id="email"
-            v-model="formData.email"
-            name="email"
-            type="email"
-            class="form-control"
-          />
+          <Field id="email" v-model="formData.email" name="email" type="email" class="form-control" />
           <ErrorMessage name="email" />
         </div>
         <div class="form-input-group">
           <label for="major" class="form-label">系所</label>
-          <Field
-            id="major"
-            v-model="formData.major"
-            name="major"
-            as="select"
-            class="form-control"
-          >
+          <Field id="major" v-model="formData.major" name="major" as="select" class="form-control">
             <option value="" disabled>
               請選擇
             </option>
-            <option
-              v-for="dep in departments"
-              :key="dep"
-              :value="dep"
-            >
+            <option v-for="dep in departments" :key="dep" :value="dep">
               {{ dep }}
             </option>
           </Field>
@@ -99,11 +58,7 @@
             <option value="" disabled>
               請選擇
             </option>
-            <option
-              v-for="year in yearOptions"
-              :key="year"
-              :value="year"
-            >
+            <option v-for="year in yearOptions" :key="year" :value="year">
               {{ year }}
             </option>
           </Field>
@@ -116,26 +71,13 @@
       </p>
 
       <div class="btns">
-        <button
-          class="btn"
-          type="button"
-          @click="prevStep"
-        >
+        <button class="btn" type="button" @click="prevStep">
           {{ currentStep === 0 ? '取消' : '上一步' }}
         </button>
-        <button
-          v-if="currentStep === 0"
-          class="btn--red"
-          type="submit"
-        >
+        <button v-if="currentStep === 0" class="btn--red" type="submit">
           下一步
         </button>
-        <button
-          v-else
-          class="btn--red"
-          type="submit"
-          :disabled="isPending"
-        >
+        <button v-else class="btn--red" type="submit" :disabled="isPending">
           {{ isPending ? '送出中' : '送出' }}
         </button>
       </div>
@@ -177,18 +119,11 @@ export default {
           .length(9, '請輸入正確學號格式'),
         password: string()
           .required('請輸入密碼')
-          .matches(
-            /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
-            '密碼需包含數字與字母'
-          )
+          .matches(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/, '密碼需包含數字與字母')
           .min(8, '密碼字元需大於8位'),
-        confirmPassword: string().test(
-          'passwords-match',
-          '與密碼不相符',
-          function (value) {
-            return this.parent.password === value
-          }
-        )
+        confirmPassword: string().test('passwords-match', '與密碼不相符', function (value) {
+          return this.parent.password === value
+        })
       }),
       object({
         name: string().required('請輸入姓名'),
@@ -210,7 +145,7 @@ export default {
     // 控制表單步驟
     const registerError = computed(() => store.state.auth.error)
     const isPending = computed(() => store.state.auth.isPending)
-    const register = (formData) => store.dispatch('auth/register', formData)
+    const register = formData => store.dispatch('auth/register', formData)
 
     const nextStep = async () => {
       if (currentStep.value === 1) {
@@ -264,8 +199,7 @@ export default {
     border-radius: 8px;
     display: grid;
     row-gap: 15px;
-    box-shadow: -2px 4px 25px rgba(241, 90, 96, 0.05),
-      2px -4px 20px rgba(241, 90, 96, 0.1);
+    box-shadow: -2px 4px 25px rgba(241, 90, 96, 0.05), 2px -4px 20px rgba(241, 90, 96, 0.1);
   }
 }
 .form-input-group {

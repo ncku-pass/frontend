@@ -4,7 +4,11 @@
       <div class="confirm-modal__content">
         <span v-if="confirmType === 'customize'">{{ message }}</span>
         <span v-else-if="confirmType === 'leave'">離開則無法儲存資料喔！</span>
-        <span v-else>確定要刪除<span class="text--red">{{ message }}</span>此項歷程？</span>
+        <span v-else>
+          確定要刪除
+          <span class="text--red">{{ message }}</span>
+          此項歷程？
+        </span>
 
         <div class="confirm-modal__content__btns">
           <slot>
@@ -53,7 +57,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import "~@/scss/mixins";
+@import '~@/scss/mixins';
 
 .confirm-modal__content {
   padding: 10px 24px;

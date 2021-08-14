@@ -30,11 +30,7 @@
     <p v-if="error">
       登入失敗，請重新嘗試
     </p>
-    <button
-      class="btn"
-      :disabled="isPending"
-      type="submit"
-    >
+    <button class="btn" :disabled="isPending" type="submit">
       {{ isPending ? '登入中' : '登入' }}
     </button>
     <router-link class="register" :to="{ name: 'Register' }">
@@ -58,7 +54,7 @@ export default {
     })
     const error = computed(() => store.state.auth.error)
     const isPending = computed(() => store.state.auth.isPending)
-    const login = (authData) => store.dispatch('auth/login', authData)
+    const login = authData => store.dispatch('auth/login', authData)
 
     const router = useRouter()
 
@@ -78,8 +74,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "~@/scss/mixins";
-@import "~@/scss/variables";
+@import '~@/scss/mixins';
+@import '~@/scss/variables';
 
 .login-form {
   @include grid(row, 20px, 0);
@@ -91,7 +87,8 @@ export default {
   label {
     color: #fff;
   }
-  .btn, .register {
+  .btn,
+  .register {
     justify-self: flex-end;
   }
   .register {

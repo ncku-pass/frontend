@@ -23,23 +23,12 @@
             >
               <DisclosureButton as="h2" class="semester-block__title">
                 {{ semester.replace('-1', '上學期').replace('-2', '下學期') }}
-                <ChevronDownIcon :class="{ 'opened': open }" />
+                <ChevronDownIcon :class="{ opened: open }" />
               </DisclosureButton>
               <DisclosurePanel as="ul" class="semester-block__content">
-                <li
-                  v-for="(exp, i) in nckuExperiences[semester]"
-                  :key="exp.name"
-                  class="experience-item"
-                >
-                  <input
-                    :id="`${semester}-${i}`"
-                    v-model="selectedExperiences"
-                    :value="exp"
-                    type="checkbox"
-                  />
-                  <label :for="`${semester}-${i}`">
-                    【{{ chineseOfExperienceType[exp.type] }}】{{ exp.name }}
-                  </label>
+                <li v-for="(exp, i) in nckuExperiences[semester]" :key="exp.name" class="experience-item">
+                  <input :id="`${semester}-${i}`" v-model="selectedExperiences" :value="exp" type="checkbox" />
+                  <label :for="`${semester}-${i}`"> 【{{ chineseOfExperienceType[exp.type] }}】{{ exp.name }} </label>
                 </li>
               </DisclosurePanel>
             </Disclosure>
@@ -48,12 +37,7 @@
             <button class="btn select-all" @click="toggleAllExperiences">
               全選
             </button>
-            <button
-              v-show="!isPending"
-              class="btn"
-              type="button"
-              @click="handleCloseModal"
-            >
+            <button v-show="!isPending" class="btn" type="button" @click="handleCloseModal">
               取消
             </button>
             <button
@@ -76,16 +60,9 @@
 <script>
 import { ref, computed } from 'vue'
 import { useStore } from 'vuex'
-import {
-  Disclosure,
-  DisclosureButton,
-  DisclosurePanel
-} from '@headlessui/vue'
+import { Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/vue'
 import { ChevronDownIcon } from '@heroicons/vue/solid'
-import {
-  semesterToDate,
-  dateToSemester
-} from '@/helpers'
+import { semesterToDate, dateToSemester } from '@/helpers'
 import { chineseOfExperienceType } from '@/config'
 
 export default {
@@ -133,8 +110,7 @@ export default {
     // === 要匯入的資料 ===
     const error = computed(() => store.state.experiences.error)
     const isPending = computed(() => store.state.experiences.isPending)
-    const importExperiences = experiences =>
-      store.dispatch('experiences/importExperiences', experiences)
+    const importExperiences = experiences => store.dispatch('experiences/importExperiences', experiences)
 
     const selectedExperiences = ref([])
     const handleImportExperiences = async () => {

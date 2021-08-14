@@ -6,11 +6,7 @@ import {
 } from '@/api/experiences'
 import { getNCKUExperiences as getNCKUExperiencesAPI } from '@/api/ncku-portal'
 import { semesterToDate, dateToSemester } from '@/helpers/index'
-import {
-  sortExperiences,
-  classifyBySemester,
-  orderBySemester
-} from '@/helpers/experiences'
+import { sortExperiences, classifyBySemester, orderBySemester } from '@/helpers/experiences'
 import { KeyNoPairedError } from '@/config'
 
 const experiences = {
@@ -31,10 +27,7 @@ const experiences = {
     ADD_EXPERIENCE (state, { type, experience }) {
       const expArray = state.experiences[type]
       let i = 0
-      while (
-        i < expArray.length &&
-        expArray[i].semester > experience.semester
-      ) {
+      while (i < expArray.length && expArray[i].semester > experience.semester) {
         i++
       }
       expArray.splice(i, 0, experience)
@@ -73,19 +66,7 @@ const experiences = {
     },
     async addExperience (
       { commit },
-      {
-        name,
-        position,
-        description,
-        feedback,
-        semester,
-        link,
-        type,
-        tags,
-        categories,
-        dateStart,
-        dateEnd
-      }
+      { name, position, description, feedback, semester, link, type, tags, categories, dateStart, dateEnd }
     ) {
       const { data } = await addExperienceAPI({
         name,
@@ -137,9 +118,7 @@ const experiences = {
 
         const course = changeCoursesToExperiences(data.course)
         const club = changeClubsToExperiences(data.club)
-        const activity = changeActivitiesToExperiences(
-          filterDuplicateActivity(data.activity)
-        )
+        const activity = changeActivitiesToExperiences(filterDuplicateActivity(data.activity))
 
         commit('SET_NCKU_EXPERIENCES', {
           course: classifyBySemester(orderBySemester(course)),

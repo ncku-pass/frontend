@@ -3,13 +3,10 @@
     <section class="hero">
       <div class="container hero__content">
         <div class="intro">
-          <img
-            class="intro__icon"
-            src="@/assets/brand_icon_white.svg"
-            alt="brand__icon"
-          />
+          <img class="intro__icon" src="@/assets/brand_icon_white.svg" alt="brand__icon" />
           <h1 class="intro__title">
-            幫助你整理經歷，<br />全方位展現個人特質
+            幫助你整理經歷，<br />
+            全方位展現個人特質
           </h1>
           <h2 class="intro__subtitle">
             E-portfolio 陪你整理學習經歷
@@ -32,11 +29,7 @@
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
       >
-        <path
-          d="M3 2L22 24L41 2"
-          stroke="white"
-          stroke-width="5"
-        />
+        <path d="M3 2L22 24L41 2" stroke="white" stroke-width="5" />
       </svg>
     </section>
     <div class="container">
@@ -46,31 +39,19 @@
         </h2>
         <ul class="features__list">
           <li class="features__item">
-            <img
-              src="@/assets/card-record.svg"
-              alt=""
-              class="features__item__img"
-            />
+            <img src="@/assets/card-record.svg" alt="" class="features__item__img" />
             <h3 class="features__item__title">
               紀錄大學各項經驗
             </h3>
           </li>
           <li class="features__item">
-            <img
-              src="@/assets/card-plan.svg"
-              alt=""
-              class="features__item__img"
-            />
+            <img src="@/assets/card-plan.svg" alt="" class="features__item__img" />
             <h3 class="features__item__title">
               以TAG 整理個人能力
             </h3>
           </li>
           <li class="features__item">
-            <img
-              src="@/assets/card-portfolio.svg"
-              alt=""
-              class="features__item__img"
-            />
+            <img src="@/assets/card-portfolio.svg" alt="" class="features__item__img" />
             <h3 class="features__item__title">
               簡易製作履歷
             </h3>
