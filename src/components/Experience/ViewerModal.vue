@@ -34,7 +34,7 @@
           <h3 class="field-title">
             {{ showedFieldText.categories }}
           </h3>
-          <div class="field-value">
+          <div class="field-tags">
             <div
               v-for="categories in experience.categories"
               :key="categories"
