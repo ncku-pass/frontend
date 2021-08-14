@@ -33,7 +33,7 @@
               placeholder="請輸入名稱"
               class="content-header__title"
               type="text"
-              maxlength="12"
+              maxlength="25"
             />
             <div class="content-header__btns">
               <button class="btn--red" @click="confirmDelete">
@@ -251,6 +251,10 @@ export default {
       return !isEqual(showedResume.value, originResumes.value.find(res => res.id === showedResume.value.id))
     })
     const handleSave = async () => {
+      if (showedResume.value.name.length > 25) {
+        console.log('超過了') // TODO: 新增toast
+        return
+      }
       await saveResume({ ...showedResume.value })
       if (!error.value) {
         console.log('儲存成功')
@@ -375,6 +379,7 @@ export default {
     text-overflow: ellipsis;
     border: none;
     outline: none;
+    flex: 1;
   }
   &__btns {
     @include grid(column, 0, 25px);

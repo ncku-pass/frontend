@@ -1,7 +1,11 @@
 <template>
-  <div class="modal-bg" @click.self="leaveForm">
+  <div class="modal-bg" @mousedown.self="leaveForm">
     <div class="form-modal">
-      <form class="form-modal__content" @submit.prevent="handleFormSubmit">
+      <form
+        class="form-modal__content"
+        autocomplete="off"
+        @submit.prevent="handleFormSubmit"
+      >
         <p class="form-modal__hint">
           有*欄位代表必填
         </p>
@@ -296,7 +300,8 @@ export default {
 
     // === 離開時跳出確認視窗 ===
     const showConfirmModal = ref(false)
-    const leaveForm = () => {
+    const leaveForm = (e) => {
+      console.log(e, e.type)
       if (isPending.value) {
         return
       }

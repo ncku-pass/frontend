@@ -107,6 +107,7 @@ export default {
 .experience-list-item {
   display: flex;
   align-items: center;
+  gap: 0 10px;
   padding: 10px 5px 10px 10px;
   border-radius: 5px;
   transition: background 0.3s;
@@ -114,16 +115,19 @@ export default {
     background-color: #f8f8f8;
   }
   &__title {
-    margin: 0;
-    margin-right: 15px;
     font-weight: $weight-medium;
+    flex-shrink: 0;
+    max-width: 200px;
   }
   &__tags {
-    @include grid(column, 0, 6px);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
   }
   &__btns {
     @include grid(column, 0, 10px);
     margin-left: auto;
+    flex-shrink: 0;
     &__edit {
       color: $gray-2;
       background-color: #fff;
