@@ -100,6 +100,7 @@
             v-model="formData.description"
             class="form-control"
             rows="2"
+            maxlength="500"
             :placeholder="showedFieldText.description?.placeholder"
             :required="showedFieldText.description.required"
           />
@@ -123,7 +124,7 @@
             v-model="formData.feedback"
             class="form-control"
             rows="3"
-            maxlength="150"
+            maxlength="500"
             :placeholder="showedFieldText.feedback.placeholder"
             :required="showedFieldText.feedback.required"
           />
@@ -142,7 +143,7 @@
         </div>
         <div class="form-modal__content__btns">
           <button
-            v-show="!isPending"
+            v-show="!requestStatus.isPending"
             class="btn"
             type="button"
             @click="leaveForm"
@@ -151,10 +152,10 @@
           </button>
           <button
             class="btn--red"
-            :disabled="isPending"
+            :disabled="requestStatus.isPending"
             type="submit"
           >
-            {{ isPending ? '儲存中' : '儲存' }}
+            {{ requestStatus.isPending ? '儲存中' : '儲存' }}
           </button>
         </div>
       </form>
@@ -194,12 +195,12 @@ const fieldText = {
     semester: { text: '*課程時間', required: true },
     position: { text: '課程分數', required: false },
     description: {
-      text: '課程簡介',
+      text: '課程簡介 (500字以內)',
       placeholder: '填寫課程簡介以便日後方便回想課程內容',
       required: false
     },
     feedback: {
-      text: '課程收穫及成就 (150字以內)',
+      text: '課程收穫及成就 (500字以內)',
       placeholder:
         '將課程中所得到的收穫及成就記錄下來，或是寫出課程內容的特色吧',
       required: false
@@ -211,12 +212,12 @@ const fieldText = {
     semester: { text: '*活動時間', required: true },
     position: { text: '*活動擔任職位', required: true },
     description: {
-      text: '活動簡介',
+      text: '活動簡介 (500字以內)',
       placeholder: '填寫活動簡介以便日後方便回想活動內容',
       required: false
     },
     feedback: {
-      text: '活動收穫及成就 (150字以內)',
+      text: '活動收穫及成就 (500字以內)',
       placeholder: '將活動中所得到的收穫及成就記錄下來吧~',
       required: false
     }
@@ -226,12 +227,12 @@ const fieldText = {
     semester: { text: '*競賽時間', required: true },
     position: { text: '*競賽得獎名次', required: true },
     description: {
-      text: '競賽簡介',
+      text: '競賽簡介 (500字以內)',
       placeholder: '填寫競賽簡介以便日後方便回想競賽內容',
       required: false
     },
     feedback: {
-      text: '競賽收穫及成就 (150字以內)',
+      text: '競賽收穫及成就 (500字以內)',
       placeholder: '將競賽中所得到的收穫及成就記錄下來吧~',
       required: false
     }
@@ -241,12 +242,12 @@ const fieldText = {
     semester: { text: '*實習 / 工作時間', required: true },
     position: { text: '*職位職位', required: true },
     description: {
-      text: '實習 / 工作內容',
+      text: '實習 / 工作內容 (500字以內)',
       placeholder: '填寫以便日後方便回想實習 / 工作內容',
       required: false
     },
     feedback: {
-      text: '收穫及成就 (150字以內)',
+      text: '收穫及成就 (500字以內)',
       placeholder: '將實習 / 工作中所得到的收穫及成就記錄下來吧~',
       required: false
     }
@@ -256,7 +257,7 @@ const fieldText = {
     semester: { text: '*考取時間', required: true },
     position: { text: '*證照分數或等級', required: true },
     feedback: {
-      text: '收穫及成就 (150字以內)',
+      text: '收穫及成就 (500字以內)',
       placeholder: '將過程中所得到的收穫及成就記錄下來吧~',
       required: false
     }
@@ -266,12 +267,12 @@ const fieldText = {
     semester: { text: '時間', required: false },
     position: { text: '*經歷職位、成就', required: true },
     description: {
-      text: '經歷簡介',
+      text: '經歷簡介 (500字以內)',
       placeholder: '填寫簡介以便日後方便回想經歷內容',
       required: false
     },
     feedback: {
-      text: '經歷收穫及成就 (150字以內)',
+      text: '經歷收穫及成就 (500字以內)',
       placeholder: '將過程中所得到的收穫及成就記錄下來吧~',
       required: false
     }
@@ -303,8 +304,7 @@ export default {
     // === 離開時跳出確認視窗 ===
     const showConfirmModal = ref(false)
     const leaveForm = (e) => {
-      console.log(e, e.type)
-      if (isPending.value) {
+      if (requestStatus.isPending) {
         return
       }
       showConfirmModal.value = true
@@ -347,34 +347,39 @@ export default {
       dateStart: props.editData?.dateStart?.slice(0, 10) || null,
       dateEnd: props.editData?.dateEnd?.slice(0, 10) || null
     })
+    const requestStatus = reactive({
+      error: null,
+      isPending: null
+    })
 
-    const isPending = computed(() => store.state.experiences.isPending)
     const addExperience = (experience) => store.dispatch('experiences/addExperience', experience)
     const updateExperience = (id, experience) => store.dispatch('experiences/updateExperience', { id, experience })
 
     const handleFormSubmit = async () => {
-      if (props.editData) {
-        // TODO: 處理編輯錯誤
-        await updateExperience(formData.id, {
-          ...formData,
-          tags: formData.tags.map(tag => tag.id),
-          dateStart: new Date(formData.dateStart).toISOString(),
-          dateEnd: formData.dateEnd ? new Date(formData.dateEnd).toISOString() : null
-        })
-      } else {
-        await addExperience({
-          ...formData,
-          tags: formData.tags.map(tag => tag.id),
-          dateStart: new Date(formData.dateStart).toISOString(),
-          dateEnd: formData.dateEnd ? new Date(formData.dateEnd).toISOString() : null
-        })
+      try {
+        requestStatus.isPending = true
+        requestStatus.error = null
+        if (props.editData) {
+          await updateExperience(formData.id, {
+            ...formData,
+            tags: formData.tags.map(tag => tag.id),
+            dateStart: new Date(formData.dateStart).toISOString(),
+            dateEnd: formData.dateEnd ? new Date(formData.dateEnd).toISOString() : null
+          })
+        } else {
+          await addExperience({
+            ...formData,
+            tags: formData.tags.map(tag => tag.id),
+            dateStart: new Date(formData.dateStart).toISOString(),
+            dateEnd: formData.dateEnd ? new Date(formData.dateEnd).toISOString() : null
+          })
+        }
+        emit('submit')
+      } catch (error) {
+        requestStatus.error = error // TODO: 用toast替代
+      } finally {
+        requestStatus.isPending = false
       }
-      emit('submit')
-    }
-
-    const tagsMultiselect = ref(null)
-    const handleSelectTag = () => {
-      tagsMultiselect.value.close()
     }
 
     return {
@@ -387,9 +392,7 @@ export default {
       showedFieldText,
       semesters,
       handleFormSubmit,
-      tagsMultiselect,
-      handleSelectTag,
-      isPending
+      requestStatus
     }
   }
 }

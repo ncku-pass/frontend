@@ -87,42 +87,24 @@ const experiences = {
         dateEnd
       }
     ) {
-      try {
-        commit('SET_STATUS', { isPending: true, error: null })
-
-        const { data } = await addExperienceAPI({
-          name,
-          position,
-          description,
-          feedback,
-          semester,
-          link,
-          type,
-          tags,
-          categories,
-          dateStart,
-          dateEnd
-        })
-
-        commit('ADD_EXPERIENCE', { type, experience: data })
-      } catch (error) {
-        commit('SET_STATUS', { error })
-      } finally {
-        commit('SET_STATUS', { isPending: false })
-      }
+      const { data } = await addExperienceAPI({
+        name,
+        position,
+        description,
+        feedback,
+        semester,
+        link,
+        type,
+        tags,
+        categories,
+        dateStart,
+        dateEnd
+      })
+      commit('ADD_EXPERIENCE', { type, experience: data })
     },
     async updateExperience ({ commit }, { id, experience }) {
-      try {
-        commit('SET_STATUS', { isPending: true, error: null })
-
-        const { data } = await updateExperienceAPI(id, experience)
-
-        commit('UPDATE_EXPERIENCE', { id: data.id, experience: data })
-      } catch (error) {
-        commit('SET_STATUS', { error })
-      } finally {
-        commit('SET_STATUS', { isPending: false })
-      }
+      const { data } = await updateExperienceAPI(id, experience)
+      commit('UPDATE_EXPERIENCE', { id: data.id, experience: data })
     },
     async importExperiences ({ commit }, experiences) {
       try {
