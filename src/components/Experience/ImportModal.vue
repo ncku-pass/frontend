@@ -45,6 +45,9 @@
             </Disclosure>
           </div>
           <div class="import-modal__btns">
+            <button class="btn select-all" @click="toggleAllExperiences">
+              全選
+            </button>
             <button
               v-show="!isPending"
               class="btn"
@@ -142,6 +145,18 @@ export default {
         emit('close')
       }
     }
+    const toggleAllExperiences = () => {
+      if (selectedExperiences.value.length) {
+        selectedExperiences.value.length = 0
+        return
+      }
+      const allExperiences = []
+      for (const semester in nckuExperiences.value) {
+        allExperiences.push(...nckuExperiences.value[semester])
+      }
+      selectedExperiences.value = allExperiences
+    }
+
     return {
       handleCloseModal,
       chineseOfExperienceType,
@@ -152,7 +167,8 @@ export default {
       selectedExperiences,
       handleImportExperiences,
       error,
-      isPending
+      isPending,
+      toggleAllExperiences
     }
   }
 }
@@ -168,17 +184,17 @@ export default {
   height: 100%;
   max-width: 770px;
   max-height: 80vh;
-  padding: 25px 25px 20px;
+  padding: 20px;
   background-color: #fff;
   border-radius: 8px;
   display: flex;
   flex-direction: column;
+  gap: 15px;
   color: $gray-1;
   &__title {
     font-size: 26px;
     line-height: 34px;
     font-weight: $weight-regular;
-    margin-bottom: 25px;
   }
   &__error {
     display: flex;
@@ -198,6 +214,10 @@ export default {
     height: 100%;
     place-items: center;
   }
+}
+
+.select-all {
+  margin-right: auto;
 }
 
 .ncku-login {
