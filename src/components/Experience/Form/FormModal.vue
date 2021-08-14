@@ -396,7 +396,7 @@ export default {
   width: 100%;
   max-width: 770px;
   max-height: 80vh;
-  padding: 25px 25px 20px;
+  padding: 20px;
   background-color: #fff;
   border-radius: 8px;
   display: flex;
@@ -421,9 +421,12 @@ export default {
 }
 
 .form-modal__content {
-  @include grid(row, 20px, 0);
+  display: flex;
+  flex-direction: column;
+  gap: 20px 0;
   width: 100%;
   overflow-y: auto;
+  padding: 5px;
   &::-webkit-scrollbar {
     display: none;
   }
@@ -437,7 +440,6 @@ export default {
   &__btns {
     @include grid(column, 0, 18px);
     justify-content: end;
-    padding-bottom: 5px;
   }
 }
 

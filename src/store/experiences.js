@@ -234,6 +234,7 @@ const changeActivitiesToExperiences = activities => {
   return activities.map(activity => ({
     ...experience,
     name: activity.activity_name,
+    position: '參與者',
     semester: dateToSemester(new Date(activity.active_start)),
     link: activity.activity_url,
     type: 'activity',

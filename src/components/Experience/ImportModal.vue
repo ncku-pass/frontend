@@ -123,7 +123,6 @@ export default {
         await getNckuExperiences()
       } catch (error) {
         nckuExperiencesError.value = error
-        console.error('請重新登入')
       }
     }
     if (!nckuExperiences.value) getData()

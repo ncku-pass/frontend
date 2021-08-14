@@ -5,87 +5,89 @@
         class="viewer-modal__close"
         @click.stop="$emit('close')"
       />
-      <div v-if="experience.name">
-        <h3 class="field-title">
-          {{ showedFieldText.name }}
-        </h3>
-        <p class="field-value">
-          {{ experience.name }}
-        </p>
-      </div>
-      <div v-if="experience.position">
-        <h3 class="field-title">
-          {{ showedFieldText.position }}
-        </h3>
-        <p class="field-value">
-          {{ experience.position }}
-        </p>
-      </div>
-      <div v-if="experience.semester">
-        <h3 class="field-title">
-          {{ showedFieldText.semester }}
-        </h3>
-        <p class="field-value">
-          {{ experience.semester }}
-        </p>
-      </div>
-      <div v-if="experience.categories.length">
-        <h3 class="field-title">
-          {{ showedFieldText.categories }}
-        </h3>
-        <div class="field-value">
-          <div
-            v-for="categories in experience.categories"
-            :key="categories"
-            class="tag--large"
-          >
-            {{ categories }}
+      <div class="viewer-modal__content">
+        <div v-if="experience.name">
+          <h3 class="field-title">
+            {{ showedFieldText.name }}
+          </h3>
+          <p class="field-value">
+            {{ experience.name }}
+          </p>
+        </div>
+        <div v-if="experience.position">
+          <h3 class="field-title">
+            {{ showedFieldText.position }}
+          </h3>
+          <p class="field-value">
+            {{ experience.position }}
+          </p>
+        </div>
+        <div v-if="experience.semester">
+          <h3 class="field-title">
+            {{ showedFieldText.semester }}
+          </h3>
+          <p class="field-value">
+            {{ experience.semester }}
+          </p>
+        </div>
+        <div v-if="experience.categories.length">
+          <h3 class="field-title">
+            {{ showedFieldText.categories }}
+          </h3>
+          <div class="field-value">
+            <div
+              v-for="categories in experience.categories"
+              :key="categories"
+              class="tag--large"
+            >
+              {{ categories }}
+            </div>
           </div>
         </div>
-      </div>
-      <!-- Tags -->
-      <div v-if="experience.tags.length">
-        <h3 class="field-title">
-          獲得技能Tag
-        </h3>
-        <div class="field-tags">
-          <div
-            v-for="tag in experience.tags"
-            :key="tag.name"
-            class="tag--large"
-          >
-            {{ tag.name }}
+        <!-- Tags -->
+        <div v-if="experience.tags.length">
+          <h3 class="field-title">
+            獲得技能Tag
+          </h3>
+          <div class="field-tags">
+            <div
+              v-for="tag in experience.tags"
+              :key="tag.name"
+              class="tag--large"
+            >
+              {{ tag.name }}
+            </div>
           </div>
         </div>
-      </div>
-      <div v-if="experience.description">
-        <h3 class="field-title">
-          {{ showedFieldText.description }}
-        </h3>
-        <p class="field-value">
-          {{ experience.description }}
-        </p>
-      </div>
-      <div v-if="experience.feedback">
-        <h3 class="field-title">
-          {{ showedFieldText.feedback }}
-        </h3>
-        <p class="field-value">
-          {{ experience.feedback }}
-        </p>
-      </div>
-      <!-- 其他連結 -->
-      <div v-if="experience.link">
-        <h3 class="field-title">
-          其他連結
-        </h3>
-        <a
-          class="field-value"
-          :href="experience.link"
-          target="_blank"
-        >
-          {{ experience.link }}
-        </a>
+        <div v-if="experience.description">
+          <h3 class="field-title">
+            {{ showedFieldText.description }}
+          </h3>
+          <p class="field-value">
+            {{ experience.description }}
+          </p>
+        </div>
+        <div v-if="experience.feedback">
+          <h3 class="field-title">
+            {{ showedFieldText.feedback }}
+          </h3>
+          <p class="field-value">
+            {{ experience.feedback }}
+          </p>
+        </div>
+        <!-- 其他連結 -->
+        <div v-if="experience.link">
+          <h3 class="field-title">
+            其他連結
+          </h3>
+          <a
+            class="field-value"
+            :href="experience.link"
+            target="_blank"
+          >
+            {{ experience.link }}
+          </a>
+        </div>
       </div>
     </div>
   </div>
@@ -178,16 +180,13 @@ export default {
 
 .viewer-modal {
   position: relative;
+  display: flex;
   width: 100%;
   max-width: 770px;
   max-height: 80vh;
-  padding: 25px 25px 20px;
+  padding: 20px;
   background-color: #fff;
   border-radius: 8px;
-  display: flex;
-  display: grid;
-  grid-auto-flow: row;
-  gap: 20px 0;
   color: $gray-1;
   &__close {
     position: absolute;
@@ -198,6 +197,13 @@ export default {
     cursor: pointer;
     color: $red;
   }
+  &__content {
+    display: flex;
+    flex-direction: column;
+    gap: 20px 0;
+    padding: 5px;
+    overflow: auto;
+  }
 }
 .field-title {
   justify-content: flex-start;
@@ -207,6 +213,9 @@ export default {
   font-weight: 500;
   letter-spacing: 0.05em;
   margin-bottom: 8px;
+}
+.field-value {
+  line-break: anywhere;
 }
 .field-tags {
   display: flex;
