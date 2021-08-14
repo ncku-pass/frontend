@@ -80,13 +80,20 @@
           <h3 class="field-title">
             其他連結
           </h3>
-          <a
-            class="field-value"
-            :href="experience.link"
-            target="_blank"
-          >
-            {{ experience.link }}
-          </a>
+          <ul class="field-links">
+            <li
+              v-for="link in experience.link.split(',')"
+              :key="link"
+            >
+              <a
+                class="field-value"
+                :href="link.trim()"
+                target="_blank"
+              >
+                {{ link.trim() }}
+              </a>
+            </li>
+          </ul>
         </div>
       </div>
     </div>
@@ -220,6 +227,11 @@ export default {
 .field-tags {
   display: flex;
   flex-wrap: wrap;
+  gap: 5px;
+}
+.field-links {
+  display: flex;
+  flex-direction: column;
   gap: 5px;
 }
 a {

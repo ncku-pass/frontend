@@ -4,7 +4,7 @@
     @click.self.stop="handleClick"
   >
     <div class="message-modal__content">
-      {{ message }}
+      <slot />
     </div>
   </div>
 </template>
@@ -14,10 +14,6 @@ import { ref, watchEffect } from '@vue/runtime-core'
 export default {
   name: 'MessageModal',
   props: {
-    message: {
-      type: String,
-      default: '訊息'
-    },
     duration: {
       type: Number,
       default: 1500
@@ -52,7 +48,7 @@ export default {
 <style lang="scss">
 .message-modal__content {
   padding: 11px 12px;
-  width: 230px;
+  width: 300px;
   line-height: 24px;
   text-align: center;
   background-color: #fff;

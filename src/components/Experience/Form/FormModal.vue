@@ -169,11 +169,13 @@
   />
   <MessageModal
     v-show="showMessageModal"
-    message="可以將更多相關資訊（ex.照片、PPT等等）統整到自己的連結裡頭喔！"
     :duration="3000"
     :show="showMessageModal"
     @close="showMessageModal = false"
-  />
+  >
+    <p>可以將更多相關資訊（ex.照片、PPT等等）統整到自己的連結裡頭喔！</p>
+    <p>若有多個連結，使用<code class="inline-code">,</code>將連結隔開</p>
+  </MessageModal>
 </template>
 
 <script>

@@ -6,3 +6,10 @@
     color: $blue-dark;  
   }
 }
+
+.inline-code {
+  padding: 0 7px;
+  background-color: $gray-6;
+  border-radius: 5px;
+  display: inline-block;
+}
