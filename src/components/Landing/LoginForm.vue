@@ -3,9 +3,6 @@
     <h2 class="login-form__title">
       登入E-portfolio
     </h2>
-    <a href="https://i.ncku.edu.tw/ncku/oauth/eportfolio/login.php" class="login-form__ncku-login">
-      使用<img src="@/assets/ncku_login.png" alt="ncku login" />登入
-    </a>
     <div>
       <label for="studentId" class="form-label">帳號</label>
       <input
@@ -90,16 +87,6 @@ export default {
   &__title {
     margin: 0;
     font-size: 26px;
-  }
-  &__ncku-login {
-    display: flex;
-    align-items: center;
-    background-color: $gray-6;
-    border: 1px solid $gray-4;
-    padding: 6px 12px;
-    border-radius: 5px;
-    text-decoration: none;
-    color: $gray-1;
   }
   label {
     color: #fff;
