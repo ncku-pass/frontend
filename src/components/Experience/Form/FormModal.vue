@@ -83,7 +83,10 @@
           <p>{{ formData.coreAbilities }}</p>
         </details>
         <div>
-          <label for="" class="form-label">獲得技能Tag</label>
+          <label for="" class="form-label">
+            <span>獲得技能Tag</span>
+            <InformationCircleIcon class="form-label__info" @click.stop="openMessageModal('tags')" />
+          </label>
           <TagSelect v-model:selectedTags="formData.tags" />
         </div>
         <div v-if="showedFieldText.feedback">
@@ -101,7 +104,7 @@
         <div>
           <label for="experienceLink" class="form-label">
             <span>其他連結</span>
-            <InformationCircleIcon class="form-label__info" @click.stop="showMessageModal = true" />
+            <InformationCircleIcon class="form-label__info" @click.stop="openMessageModal('link')" />
           </label>
           <input id="experienceLink" v-model="formData.link" type="text" class="form-control" />
         </div>
@@ -123,10 +126,7 @@
     @cancel="showConfirmModal = false"
     @confirm="$emit('close')"
   />
-  <MessageModal v-show="showMessageModal" :duration="3000" :show="showMessageModal" @close="showMessageModal = false">
-    <p>可以將更多相關資訊（ex.照片、PPT等等）統整到自己的連結裡頭喔！</p>
-    <p>若有多個連結，使用<code class="inline-code">,</code>將連結隔開</p>
-  </MessageModal>
+  <MessageModal :duration="3000" :show="showMessageModal" :messageType="messageType" @close="showMessageModal = false" />
 </template>
 
 <script>
@@ -265,6 +265,11 @@ export default {
 
     // === 顯示提示訊息 ===
     const showMessageModal = ref(false)
+    const messageType = ref('')
+    const openMessageModal = (type) => {
+      messageType.value = type
+      showMessageModal.value = true
+    }
 
     // === 顯示不同類型對應的文字 ===
     const showedFieldText = computed(() => {
@@ -340,6 +345,8 @@ export default {
       showConfirmModal,
       leaveForm,
       showMessageModal,
+      messageType,
+      openMessageModal,
       todayString,
       formData,
       showedFieldText,

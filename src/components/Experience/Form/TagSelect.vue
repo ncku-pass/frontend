@@ -9,8 +9,8 @@
       v-model.trim="newTagName"
       class="text-input"
       type="text"
-      @input="handleInput"
-      @keydown.enter.prevent="createTag"
+      @input="debouncedSearchTag(newTagName)"
+      @keydown.enter.prevent="createTag(newTagName)"
       @focus="showDropdown = true"
       @blur="!isChoosing && (showDropdown = false)"
     />
@@ -131,18 +131,21 @@ export default {
     const newTagName = ref('')
     const addTag = newTag => store.dispatch('tags/addTag', newTag)
 
-    const createTag = async () => {
-      if (!newTagName.value) return
-      if (tags.value.some(tag => tag.name === newTagName.value)) return
-      if (defaultAbilities.some(tag => tag.name === newTagName.value)) return
+    const createTag = async (tagName) => {
+      if (!tagName.match(/^#/)) return
+      tagName = tagName.slice(1).trim()
+      if (!tagName) return
+      if (tags.value.some(tag => tag.name === tagName)) return
+      if (defaultAbilities.some(tag => tag.name === tagName)) return
 
-      const res = await addTag(newTagName.value)
+      const res = await addTag(tagName)
       emit('update:selectedTags', [...props.selectedTags, res])
       newTagName.value = ''
     }
 
     let lastRequest = 0 // 紀錄上次送出請求的時間，如果新的請求>舊的請求，忽略舊的回覆
     const debouncedSearchTag = debounce(async searchText => {
+      if (searchText.match(/^#/)) return
       lastRequest = new Date()
       const reocrd = lastRequest
       const { data } = await searchTag(searchText)
@@ -150,13 +153,6 @@ export default {
         classifiedOptions.search = data
       }
     }, 500)
-
-    const handleInput = () => {
-      if (!newTagName.value) {
-        classifiedOptions.search = []
-      }
-      debouncedSearchTag(newTagName.value)
-    }
 
     // ===== 標籤 =====
     const handleRemoveTag = id => {
@@ -180,7 +176,7 @@ export default {
       showDropdown,
       isChoosing,
       handleOptionClicked,
-      handleInput
+      debouncedSearchTag
     }
   }
 }
