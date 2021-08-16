@@ -16,7 +16,7 @@
           <h2 class="login__title">
             登入E-portfolio
           </h2>
-          <a href="https://i.ncku.edu.tw/ncku/oauth/eportfolio/login.php" class="login__ncku-login">
+          <a href="https://i.ncku.edu.tw/ncku/oauth/eportfolio/login.php" class="ncku-login">
             使用<img src="@/assets/ncku_login.png" alt="ncku login" />登入
           </a>
         </div>
@@ -125,19 +125,10 @@ export default {
 .login {
   @include grid(row, 20px, 0);
   width: 350px;
+  margin-top: 50px;
   &__title {
     margin: 0;
     font-size: 26px;
-  }
-  &__ncku-login {
-    display: flex;
-    align-items: center;
-    background-color: $gray-6;
-    border: 1px solid $gray-4;
-    padding: 6px 12px;
-    border-radius: 5px;
-    text-decoration: none;
-    color: $gray-1;
   }
 }
 .intro {

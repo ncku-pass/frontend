@@ -196,18 +196,6 @@ export default {
   margin-right: auto;
 }
 
-.ncku-login {
-  display: flex;
-  width: fit-content;
-  align-items: center;
-  background-color: $gray-6;
-  border: 1px solid $gray-4;
-  padding: 6px 12px;
-  border-radius: 5px;
-  text-decoration: none;
-  color: $gray-1;
-}
-
 .experiences__container {
   overflow: auto;
   width: 100%;

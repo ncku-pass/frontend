@@ -149,3 +149,17 @@ select.form-control {
   border-radius: 8px;
   line-break: anywhere;
 }
+
+// 成功入口登入按鈕
+.ncku-login {
+  display: flex;
+  width: fit-content;
+  align-items: center;
+  background-color: $gray-6;
+  border: 1px solid $gray-4;
+  padding: 6px 12px;
+  border-radius: 5px;
+  text-decoration: none;
+  color: $gray-1;
+  font-size: 15px;
+}
