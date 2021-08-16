@@ -224,7 +224,6 @@ export default {
 
     // === 刪除卡片內的經驗 ===
     const handleDeleteExperience = (experienceIndex, card) => {
-      console.log(experienceIndex)
       card.experiences.splice(experienceIndex, 1)
     }
 

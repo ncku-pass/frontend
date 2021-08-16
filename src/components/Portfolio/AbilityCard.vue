@@ -47,7 +47,7 @@
                     <DotsVerticalIcon class="experience-card__delete" />
                   </MenuButton>
                   <MenuItems as="ul" class="experience-card__menu-items">
-                    <MenuItem v-slot="{ active }">
+                    <MenuItem v-if="experience.position" v-slot="{ active }">
                       <li
                         :class="{ 'experience-card__menu-item--active': active }"
                         class="experience-card__menu-item"
@@ -57,7 +57,7 @@
                         }}{{ experience.type === 'course' ? '成績' : '職位/名次' }}
                       </li>
                     </MenuItem>
-                    <MenuItem v-slot="{ active }">
+                    <MenuItem v-if="experience.feedback" v-slot="{ active }">
                       <li
                         :class="{ 'experience-card__menu-item--active': active }"
                         class="experience-card__menu-item"
@@ -314,6 +314,7 @@ export default {
   &__description {
     line-height: 24px;
     color: $gray-3;
+    white-space: pre;
   }
 }
 .experience-card[draggable='true'] {

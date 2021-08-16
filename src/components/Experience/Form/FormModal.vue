@@ -126,7 +126,7 @@
     @cancel="showConfirmModal = false"
     @confirm="$emit('close')"
   />
-  <MessageModal :duration="3000" :show="showMessageModal" :messageType="messageType" @close="showMessageModal = false" />
+  <MessageModal :duration="6000" :show="showMessageModal" :messageType="messageType" @close="showMessageModal = false" />
 </template>
 
 <script>
