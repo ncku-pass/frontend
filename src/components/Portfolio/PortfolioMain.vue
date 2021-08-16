@@ -59,7 +59,7 @@
                     v-model:text="element.text"
                     :cardType="element.type"
                     v-bind="element"
-                    @delete-experience="handleDeleteExperience(experienceIndex, element)"
+                    @delete-experience="handleDeleteExperience($event, element)"
                     @delete-ability="handleDeleteCard(index)"
                   />
                 </template>
@@ -223,8 +223,9 @@ export default {
     }
 
     // === 刪除卡片內的經驗 ===
-    const handleDeleteExperience = (experienceIndex, topic) => {
-      topic.experiences.splice(experienceIndex, 1)
+    const handleDeleteExperience = (experienceIndex, card) => {
+      console.log(experienceIndex)
+      card.experiences.splice(experienceIndex, 1)
     }
 
     // === 儲存履歷 ===
