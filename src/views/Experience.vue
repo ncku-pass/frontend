@@ -23,21 +23,9 @@
                 @click="openViewerModal(experience)"
               />
             </ExperienceListBlock>
-            <button class="experience__window__table__add" @click="handleAddExperience">
-              <svg width="22" height="22" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
-                <path
-                  d="M8.71431 22.3811H13.2913V13.4791H21.7733V9.0701H13.2913V0.126143H8.71431V9.0701H0.232251V13.4791H8.71431V22.3811Z"
-                  fill="white"
-                />
-              </svg>
-            </button>
-            <p
-              v-if="type === 'course' || type === 'activity'"
-              class="experience__window__table__import"
-              @click="handleImportNCKUData"
-            >
-              導入原有資料
-            </p>
+            <div class="add-btn__container">
+              <AddExperienceButton :type="type" @add-experience="handleAddExperience" @import-ncku-data="handleImportNCKUData" />
+            </div>
           </div>
         </vueScrollShadow>
       </div>
@@ -65,6 +53,7 @@ import { useStore } from 'vuex'
 import ExperienceWindowTabs from '@/components/Experience/ExperienceWindowTabs.vue'
 import ExperienceListItem from '@/components/Experience/ExperienceListItem.vue'
 import ExperienceListBlock from '@/components/Experience/ExperienceListBlock.vue'
+import AddExperienceButton from '@/components/Experience/AddExperienceButton.vue'
 import FormModal from '@/components/Experience/Form/FormModal.vue'
 import ViewerModal from '@/components/Experience/ViewerModal.vue'
 import ImportModal from '@/components/Experience/ImportModal.vue'
@@ -76,6 +65,7 @@ export default {
     ExperienceWindowTabs,
     ExperienceListItem,
     ExperienceListBlock,
+    AddExperienceButton,
     FormModal,
     ViewerModal,
     ImportModal,
@@ -135,7 +125,7 @@ export default {
     }
     // === 匯入學校資料 ===
     const showImportModal = ref(false)
-    const handleImportNCKUData = async ({ key, keyval, type }) => {
+    const handleImportNCKUData = async () => {
       showImportModal.value = true
     }
 
@@ -195,30 +185,16 @@ export default {
   flex-direction: column;
   &__wrapper {
     overflow-y: auto;
-    padding: 24px 96px;
+    padding: 24px 96px 100px;
     &::-webkit-scrollbar {
       display: none;
     }
   }
-  &__add {
-    display: grid;
-    place-items: center;
-    margin: 0 auto 14px;
-    height: 60px;
-    width: 60px;
-    border: none;
-    border-radius: 50px;
-    background-color: $red;
-    box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.25);
-  }
-  &__import {
-    display: block;
-    color: #4f4f4f;
-    width: fit-content;
-    margin: 0 auto;
-    border-bottom: 2px solid #4f4f4f;
-    cursor: pointer;
-  }
+}
+
+.add-btn__container {
+  display: flex;
+  justify-content: center;
 }
 
 .lds-dual-ring {
@@ -251,7 +227,7 @@ export default {
     max-width: 930px;
   }
   .experience__window__table__wrapper {
-    padding: 24px 80px;
+    padding: 24px 80px 100px;
   }
 }
 
@@ -261,7 +237,7 @@ export default {
   }
   .experience__window__table {
     &__wrapper {
-      padding: 12px 24px;
+      padding: 12px 24px 100px;
     }
   }
 }
