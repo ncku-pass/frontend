@@ -134,6 +134,7 @@ import { computed, reactive, ref } from 'vue'
 import { useStore } from 'vuex'
 import Multiselect from '@vueform/multiselect'
 import { InformationCircleIcon } from '@heroicons/vue/solid'
+import { useToast } from 'vue-toastification'
 import ConfirmModal from '@/components/ConfirmModal.vue'
 import MessageModal from '@/components/MessageModal.vue'
 import TagSelect from '@/components/Experience/Form/TagSelect.vue'
@@ -253,10 +254,11 @@ export default {
   emits: ['close', 'submit'],
   setup (props, { emit }) {
     const store = useStore()
+    const toast = useToast()
 
     // === 離開時跳出確認視窗 ===
     const showConfirmModal = ref(false)
-    const leaveForm = e => {
+    const leaveForm = () => {
       if (requestStatus.isPending) {
         return
       }
@@ -335,6 +337,7 @@ export default {
         emit('submit')
       } catch (error) {
         requestStatus.error = error // TODO: 用toast替代
+        toast.error('儲存出錯，請再次嘗試')
       } finally {
         requestStatus.isPending = false
       }
