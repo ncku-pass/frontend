@@ -301,7 +301,6 @@ export default {
       link: props.editData?.link || '',
       type: props.formType,
       coreAbilities: props.editData?.coreAbilities || '',
-      // tags: props.editData?.tags.map(tag => tag.id) || []
       tags: props.editData?.tags || [],
       categories: props.editData?.categories || [],
       dateStart: props.editData?.dateStart?.slice(0, 10) || null,
@@ -319,24 +318,20 @@ export default {
       try {
         requestStatus.isPending = true
         requestStatus.error = null
+        const newFormData = {
+          ...formData,
+          tags: formData.tags.map(tag => tag.id),
+          dateStart: new Date(formData.dateStart).toISOString(),
+          dateEnd: formData.dateEnd ? new Date(formData.dateEnd).toISOString() : null
+        }
         if (props.editData) {
-          await updateExperience(formData.id, {
-            ...formData,
-            tags: formData.tags.map(tag => tag.id),
-            dateStart: new Date(formData.dateStart).toISOString(),
-            dateEnd: formData.dateEnd ? new Date(formData.dateEnd).toISOString() : null
-          })
+          await updateExperience(formData.id, newFormData)
         } else {
-          await addExperience({
-            ...formData,
-            tags: formData.tags.map(tag => tag.id),
-            dateStart: new Date(formData.dateStart).toISOString(),
-            dateEnd: formData.dateEnd ? new Date(formData.dateEnd).toISOString() : null
-          })
+          await addExperience(newFormData)
         }
         emit('submit')
       } catch (error) {
-        requestStatus.error = error // TODO: 用toast替代
+        requestStatus.error = error
         toast.error('儲存出錯，請再次嘗試')
       } finally {
         requestStatus.isPending = false

@@ -15,24 +15,42 @@
         </router-link>
       </li>
       <li>
-        <a class="navbar__links__link tab-link" @click="logout">
+        <a class="navbar__links__link tab-link" @click="handleLogout">
           登出
         </a>
       </li>
     </ul>
+    <ConfirmModal
+      v-if="showConfirmModal"
+      message="確定要登出？"
+      confirmMessage="登出"
+      confirmType="customize"
+      @confirm="logout"
+      @cancel="showConfirmModal = false"
+    />
   </nav>
 </template>
 
 <script>
+import { ref } from 'vue'
 import { useStore } from 'vuex'
+import ConfirmModal from '@/components/ConfirmModal.vue'
 
 export default {
   name: 'Navbar',
+  components: {
+    ConfirmModal
+  },
   setup () {
     const store = useStore()
     const logout = () => store.dispatch('auth/logout')
 
-    return { logout }
+    const showConfirmModal = ref(false)
+    const handleLogout = () => {
+      showConfirmModal.value = true
+    }
+
+    return { showConfirmModal, logout, handleLogout }
   }
 }
 </script>
