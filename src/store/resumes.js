@@ -1,10 +1,12 @@
 import { cloneDeep } from 'lodash-es'
 import {
   getResumes as getResumesAPI,
+  addResume as addResumeAPI,
   saveResume as saveResumeAPI,
   deleteResume as deleteResumeAPI
 } from '@/api/resumes'
 import { useToast } from 'vue-toastification'
+
 const toast = useToast()
 
 const resumes = {
@@ -56,7 +58,7 @@ const resumes = {
         commit('SET_STATUS', { isPending: true, error: null })
 
         if (resume.isLocal) {
-          const { data } = await saveResumeAPI(0, resume)
+          const { data } = await addResumeAPI(resume)
           state.resumes = [...state.resumes, cloneDeep(data)]
 
           const indexOfLocalResume = state.localResumes.findIndex(localResume => localResume.id === resume.id)
@@ -64,9 +66,20 @@ const resumes = {
         } else {
           const originResume = state.resumes.find(res => res.id === resume.id)
 
+          // 檢查哪些卡片被刪掉了
           const originResumeCardsId = originResume.cards.map(card => card.id)
           const nowResumeCardsId = resume.cards.map(card => card.id)
           const deleteCardIds = [...originResumeCardsId].filter(id => !nowResumeCardsId.includes(id))
+
+          // 檢查還在的卡片中，哪些經歷被刪掉了
+          for (const card of resume.cards) {
+            if (card.id !== 0) {
+              const experiencesIdOfOriginCard = originResume.cards.find(({ id }) => id === card.id).experiences.map(exp => exp.id)
+              const experiencesIdOfNowCard = card.experiences.map(exp => exp.id)
+              const deleteExpIds = [...experiencesIdOfOriginCard].filter(id => !experiencesIdOfNowCard.includes(id))
+              card.deleteExpIds = deleteExpIds
+            }
+          }
 
           const { data } = await saveResumeAPI(resume.id, { ...resume, deleteCardIds })
 

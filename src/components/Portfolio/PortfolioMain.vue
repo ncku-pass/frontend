@@ -242,7 +242,7 @@ export default {
         console.log('超過了') // TODO: 新增toast
         return
       }
-      await saveResume({ ...showedResume.value })
+      await saveResume(showedResume.value)
       if (!error.value) {
         console.log('儲存成功')
       } else {
