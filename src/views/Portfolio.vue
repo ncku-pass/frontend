@@ -18,6 +18,8 @@
 <script>
 import { computed } from 'vue'
 import { useStore } from 'vuex'
+import { onBeforeRouteLeave } from 'vue-router'
+import { useToast } from 'vue-toastification'
 import PortfolioMain from '@/components/Portfolio/PortfolioMain'
 import PortfolioMenu from '@/components/Portfolio/PortfolioMenu'
 
@@ -29,12 +31,20 @@ export default {
   },
   setup () {
     const store = useStore()
+    const toast = useToast()
 
+    const someResumesNotSaved = computed(() => store.getters['resumes/someResumesNotSaved'])
     const resumesNotReady = computed(() => store.state.resumes.isPending && !store.state.resumes.resumes)
     const tagsNotReady = computed(() => store.state.tags.isPending)
     const experiencesNotReady = computed(() => store.state.experiences.isPending)
 
     const loading = computed(() => resumesNotReady.value || tagsNotReady.value || experiencesNotReady.value)
+
+    onBeforeRouteLeave((to, from) => {
+      if (someResumesNotSaved.value) {
+        toast.info('有尚未儲存的履歷喔！')
+      }
+    })
 
     return {
       loading

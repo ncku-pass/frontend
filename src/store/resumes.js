@@ -1,4 +1,4 @@
-import { cloneDeep } from 'lodash-es'
+import { cloneDeep, isEqual } from 'lodash-es'
 import {
   getResumes as getResumesAPI,
   addResume as addResumeAPI,
@@ -98,6 +98,11 @@ const resumes = {
     async deleteResume ({ commit }, { resumeId }) {
       await deleteResumeAPI(resumeId)
       commit('DELETE_RESUME', { resumeId })
+    }
+  },
+  getters: {
+    someResumesNotSaved (state) {
+      return !isEqual(state.resumes, state.localResumes)
     }
   }
 }
