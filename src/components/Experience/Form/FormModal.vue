@@ -241,7 +241,7 @@ export default {
       type: String,
       default: 'activity',
       validator (value) {
-        return ['course', 'activity', 'competition', 'work', 'certificate', 'other'].indexOf(value) !== -1
+        return ['course', 'activity', 'competition', 'work', 'certificate', 'other'].includes(value)
       }
     },
     editData: {

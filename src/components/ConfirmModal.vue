@@ -45,7 +45,7 @@ export default {
       type: String,
       default: 'leave',
       validator (value) {
-        return ['leave', 'delete', 'customize'].indexOf(value) !== -1
+        return ['leave', 'delete', 'customize'].includes(value)
       }
     }
   },

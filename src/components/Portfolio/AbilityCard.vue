@@ -133,7 +133,7 @@ export default {
       type: String,
       default: 'experience',
       validator (value) {
-        return ['experience', 'text'].indexOf(value) !== -1
+        return ['experience', 'text'].includes(value)
       }
     },
     text: {

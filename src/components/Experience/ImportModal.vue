@@ -78,7 +78,7 @@ export default {
       type: String,
       default: 'course',
       validator (value) {
-        return ['course', 'activity'].indexOf(value) !== -1
+        return ['course', 'activity'].includes(value)
       }
     }
   },

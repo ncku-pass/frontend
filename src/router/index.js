@@ -39,7 +39,7 @@ const routes = [
     props: route => {
       if (
         route.params.type &&
-        ['course', 'activity', 'competition', 'work', 'certificate', 'other'].indexOf(route.params.type) === -1
+        ['course', 'activity', 'competition', 'work', 'certificate', 'other'].includes(route.params.type)
       ) {
         return { type: 'course' }
       }

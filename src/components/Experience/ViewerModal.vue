@@ -142,7 +142,7 @@ export default {
       type: String,
       required: true,
       validator (value) {
-        return ['course', 'activity', 'competition', 'work', 'certificate', 'other'].indexOf(value) !== -1
+        return ['course', 'activity', 'competition', 'work', 'certificate', 'other'].includes(value)
       }
     },
     experience: {
