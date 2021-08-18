@@ -275,8 +275,6 @@ export default {
     background-color: #fff;
     border-radius: 5px;
     border: 1px solid $gray-6;
-    z-index: 1;
-    z-index: 10;
     color: $gray-1;
   }
   &__menu-item {

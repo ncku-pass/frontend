@@ -69,20 +69,20 @@ ul {
   position: absolute;
   border: 1px solid $gray-6;
   margin-top: 4px;
-  padding: 4px;
   display: flex;
   flex-direction: column;
-  gap: 2px;
   width: max-content;
   border-radius: 4px;
 }
 li {
   display: inline-block;
   padding: 8px 16px;
-  border-radius: 4px;
   cursor: pointer;
   &.active {
     background-color: $gray-6;
+  }
+  &:not(:last-child) {
+    border-bottom: 1px solid $gray-6;
   }
 }
 </style>
