@@ -34,9 +34,10 @@ const experiences = {
     },
     UPDATE_EXPERIENCE (state, { id, experience }) {
       const expArray = state.experiences[experience.type]
-      expArray.forEach((exp, i) => {
+      expArray.some((exp, i) => {
         if (exp.id === id) {
           expArray[i] = experience
+          return true
         }
       })
     },
@@ -83,9 +84,10 @@ const experiences = {
       })
       commit('ADD_EXPERIENCE', { type, experience: data })
     },
-    async updateExperience ({ commit }, { id, experience }) {
+    async updateExperience ({ commit, dispatch }, { id, experience }) {
       const { data } = await updateExperienceAPI(id, experience)
       commit('UPDATE_EXPERIENCE', { id: data.id, experience: data })
+      dispatch('resumes/getResumes', {}, { root: true })
     },
     async importExperiences ({ commit }, experiences) {
       try {

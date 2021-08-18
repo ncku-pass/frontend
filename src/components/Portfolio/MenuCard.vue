@@ -1,9 +1,9 @@
 <template>
-  <li class="menu-card" :data-id="element.id">
-    <div class="menu-card__type" :class="`menu-card__type--${element.type}`">
-      {{ typeChinese[element.type] }}
+  <li class="menu-card" :data-id="experience.id">
+    <div class="menu-card__type" :class="`menu-card__type--${experience.type}`">
+      {{ typeChinese[experience.type] }}
     </div>
-    <span class="menu-card__name">{{ element.name }}</span>
+    <span class="menu-card__name">{{ experience.name }}</span>
   </li>
 </template>
 
@@ -20,7 +20,7 @@ const typeChinese = {
 export default {
   name: 'MenuCard',
   props: {
-    element: {
+    experience: {
       type: Object,
       required: true
     }

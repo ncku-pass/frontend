@@ -23,12 +23,16 @@
       <XCircleIcon class="ability-card__delete" @click.stop="$emit('delete-ability')" />
     </div>
     <hr />
-    <ul class="ability-card__body">
+    <div class="ability-card__body">
       <template v-if="cardType === 'experience'">
+        <p v-if="experiences.length === 0" class="ability-card__body__tips">
+          由右方列表拉入適合課程
+        </p>
         <draggable
-          :list="experiences"
-          :group="draggableGroupOption"
           class="experience-list"
+          tag="ul"
+          :list="experiences"
+          v-bind="draggableOptions"
           item-key="id"
           @start="handleDrag(true)"
           @end="handleDrag(false)"
@@ -89,14 +93,11 @@
             </li>
           </template>
         </draggable>
-        <p v-if="experiences.length === 0" class="ability-card__body__tips">
-          由右方列表拉入適合課程
-        </p>
       </template>
       <template v-else>
         <textarea :value="text" class="ability-card__text" @input="handleTextInput" />
       </template>
-    </ul>
+    </div>
   </div>
 </template>
 
@@ -148,12 +149,15 @@ export default {
       setIsGrabbing(onDragging)
     }
 
-    const draggableGroupOption = {
-      name: 'experience',
-      put: function (to, from, item) {
-        if (from.options.group.name !== to.options.group.name) return false
-        // 重複的經驗無法放入
-        return !props.experiences.some(el => el.id === ~~item.dataset.id)
+    const draggableOptions = {
+      animation: 200,
+      group: {
+        name: 'experience',
+        put: function (to, from, item) {
+          if (from.options.group.name !== to.options.group.name) return false
+          // 重複的經驗無法放入
+          return !props.experiences.some(el => el.id === ~~item.dataset.id)
+        }
       }
     }
 
@@ -165,7 +169,7 @@ export default {
       }
     }
 
-    return { setIsGrabbing, handleDrag, draggableGroupOption, handleTextInput }
+    return { setIsGrabbing, handleDrag, draggableOptions, handleTextInput }
   }
 }
 </script>
@@ -214,8 +218,9 @@ export default {
   &__body {
     padding: 0 15px;
     &__tips {
-      margin: 0;
+      margin-bottom: -40px;
       padding: 10px;
+      line-height: 20px;
       text-align: center;
       color: $blue-dark;
       background: $gray-blue;
@@ -237,6 +242,9 @@ export default {
   }
 }
 .experience-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
   &:empty {
     padding: 20px 0;
   }
@@ -245,11 +253,7 @@ export default {
   cursor: grab;
   padding: 15px;
   border-radius: 8px;
-  margin: 12px 0 0 0;
   background-color: #fff;
-  &:first-child {
-    margin-top: 0;
-  }
   &__header {
     display: flex;
     justify-content: space-between;
@@ -272,6 +276,7 @@ export default {
     border-radius: 5px;
     border: 1px solid $gray-6;
     z-index: 1;
+    z-index: 10;
     color: $gray-1;
   }
   &__menu-item {

@@ -25,12 +25,11 @@
       <ul class="portfolio__menu__body">
         <draggable
           v-model="filteredExperienceArray"
-          :group="{ name: 'experience', pull: 'clone', put: false }"
+          v-bind="draggableOptions"
           item-key="id"
-          :sort="false"
         >
-          <template #item="{element}">
-            <MenuCard :element="element" />
+          <template #item="{ element }">
+            <MenuCard :experience="element" />
           </template>
         </draggable>
       </ul>
@@ -55,6 +54,12 @@ export default {
   },
   setup () {
     const store = useStore()
+
+    const draggableOptions = {
+      group: { name: 'experience', pull: 'clone', put: false },
+      sort: false
+    }
+
     // ===切換filter顯示===
     const showFilter = ref(true)
 
@@ -128,6 +133,7 @@ export default {
     }
 
     return {
+      draggableOptions,
       showFilter,
       experiencesArray,
       tags,

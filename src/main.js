@@ -9,7 +9,7 @@ import Toast from 'vue-toastification'
 
 const toastConfig = {
   transition: 'Vue-Toastification__fade',
-  timeout: 2500,
+  timeout: 4000,
   position: 'top-center',
   draggable: true
 }

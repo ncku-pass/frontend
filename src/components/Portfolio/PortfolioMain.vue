@@ -48,8 +48,8 @@
           <div class="content-body">
             <div class="content-body__card-list">
               <draggable
-                :list="showedResume.cards"
-                :group="{ name: 'ability' }"
+                v-model="showedResume.cards"
+                v-bind="draggableOptions"
                 handle=".ability-card__grab-area"
                 :itemKey="resume => resume.id || resume.vForKey"
               >
@@ -132,6 +132,11 @@ export default {
     const isPending = computed(() => store.state.resumes.isPending)
     const saveResume = resume => store.dispatch('resumes/saveResume', { resume })
     const deleteResume = ({ resumeId }) => store.dispatch('resumes/deleteResume', { resumeId })
+
+    const draggableOptions = {
+      animation: 200,
+      group: { name: 'ability' }
+    }
 
     // === 履歷的Tab ===
     const selectedIndex = ref(0)
@@ -255,6 +260,7 @@ export default {
       showedResume,
       notSaved,
       selectedIndex,
+      draggableOptions,
       tabRefs,
       setTabRef,
       handleSelectResume,
