@@ -4,18 +4,20 @@
       新增經驗
       <ChevronDownIcon />
     </MenuButton>
-    <MenuItems as="ul">
-      <MenuItem v-slot="{ active }">
-        <li :class="{ active }" @click="$emit('add-experience')">
-          新增校外或其他經驗
-        </li>
-      </MenuItem>
-      <MenuItem v-if="type === 'course' || type === 'activity'" v-slot="{ active }">
-        <li :class="{ active }" @click="$emit('import-ncku-data')">
-          匯入校內原有資料
-        </li>
-      </MenuItem>
-    </MenuItems>
+    <transition name="menu-fade">
+      <MenuItems as="ul">
+        <MenuItem v-slot="{ active }">
+          <li :class="{ active }" @click="$emit('add-experience')">
+            新增校外或其他經驗
+          </li>
+        </MenuItem>
+        <MenuItem v-if="type === 'course' || type === 'activity'" v-slot="{ active }">
+          <li :class="{ active }" @click="$emit('import-ncku-data')">
+            匯入校內原有資料
+          </li>
+        </MenuItem>
+      </MenuItems>
+    </transition>
   </Menu>
 </template>
 
@@ -67,12 +69,14 @@ export default {
 
 ul {
   position: absolute;
+  right: 0;
   border: 1px solid $gray-6;
   margin-top: 4px;
   display: flex;
   flex-direction: column;
   width: max-content;
   border-radius: 4px;
+  transform-origin: top right;
 }
 li {
   display: inline-block;

@@ -50,36 +50,38 @@
                   <MenuButton class="experience-card__menu-btn">
                     <DotsVerticalIcon class="experience-card__delete" />
                   </MenuButton>
-                  <MenuItems as="ul" class="experience-card__menu-items">
-                    <MenuItem v-if="experience.position" v-slot="{ active }">
-                      <li
-                        :class="{ 'experience-card__menu-item--active': active }"
-                        class="experience-card__menu-item"
-                        @click="experience.showPosition = !experience.showPosition"
-                      >
-                        {{ experience.showPosition ? '隱藏' : '顯示'
-                        }}{{ experience.type === 'course' ? '成績' : '職位/名次' }}
-                      </li>
-                    </MenuItem>
-                    <MenuItem v-if="experience.feedback" v-slot="{ active }">
-                      <li
-                        :class="{ 'experience-card__menu-item--active': active }"
-                        class="experience-card__menu-item"
-                        @click="experience.showFeedback = !experience.showFeedback"
-                      >
-                        {{ experience.showFeedback ? '隱藏心得' : '顯示心得' }}
-                      </li>
-                    </MenuItem>
-                    <MenuItem v-slot="{ active }">
-                      <li
-                        :class="{ 'experience-card__menu-item--active': active }"
-                        class="experience-card__menu-item"
-                        @click.stop="$emit('delete-experience', index)"
-                      >
-                        刪除此經驗
-                      </li>
-                    </MenuItem>
-                  </MenuItems>
+                  <transition name="menu-fade">
+                    <MenuItems as="ul" class="experience-card__menu-items">
+                      <MenuItem v-if="experience.position" v-slot="{ active }">
+                        <li
+                          :class="{ 'experience-card__menu-item--active': active }"
+                          class="experience-card__menu-item"
+                          @click="experience.showPosition = !experience.showPosition"
+                        >
+                          {{ experience.showPosition ? '隱藏' : '顯示'
+                          }}{{ experience.type === 'course' ? '成績' : '職位/名次' }}
+                        </li>
+                      </MenuItem>
+                      <MenuItem v-if="experience.feedback" v-slot="{ active }">
+                        <li
+                          :class="{ 'experience-card__menu-item--active': active }"
+                          class="experience-card__menu-item"
+                          @click="experience.showFeedback = !experience.showFeedback"
+                        >
+                          {{ experience.showFeedback ? '隱藏心得' : '顯示心得' }}
+                        </li>
+                      </MenuItem>
+                      <MenuItem v-slot="{ active }">
+                        <li
+                          :class="{ 'experience-card__menu-item--active': active }"
+                          class="experience-card__menu-item"
+                          @click.stop="$emit('delete-experience', index)"
+                        >
+                          刪除此經驗
+                        </li>
+                      </MenuItem>
+                    </MenuItems>
+                  </transition>
                 </Menu>
               </div>
               <div class="experience-card__tags">
@@ -271,6 +273,7 @@ export default {
     position: absolute;
     outline: none;
     right: 0;
+    transform-origin: top right;
     min-width: 150px;
     background-color: #fff;
     border-radius: 5px;

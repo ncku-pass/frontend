@@ -1,132 +1,134 @@
 <template>
-  <div class="modal-bg" @mousedown.self="leaveForm">
-    <div class="form-modal">
-      <form class="form-modal__content" autocomplete="off" @submit.prevent="handleFormSubmit">
-        <p class="form-modal__hint">
-          有*欄位代表必填
-        </p>
-        <div v-if="showedFieldText.name">
-          <label for="experienceName" class="form-label">{{ showedFieldText.name.text }}</label>
-          <input
-            id="experienceName"
-            v-model="formData.name"
-            type="text"
-            class="form-control"
-            :required="showedFieldText.name.required"
-          />
-        </div>
-        <div v-if="showedFieldText.position">
-          <label for="experiencePosition" class="form-label">{{ showedFieldText.position.text }}</label>
-          <input
-            id="experiencePosition"
-            v-model="formData.position"
-            type="text"
-            class="form-control"
-            :required="showedFieldText.position.required"
-          />
-        </div>
-        <div v-if="showedFieldText.semester">
-          <label class="form-label" for="experienceSemester">{{ showedFieldText.semester.text }}</label>
-          <select
-            v-if="formType === 'course'"
-            id="experienceSemester"
-            v-model="formData.semester"
-            class="form-control"
-            :required="showedFieldText.semester.required"
-          >
-            <option value="" disabled>
-              請選擇時間
-            </option>
-            <option v-for="semester in semesters" :key="semester" :value="semester">
-              {{ semester }}
-            </option>
-          </select>
-          <div v-else class="form-modal__time">
-            <p>*開始時間</p>
-            <input v-model="formData.dateStart" type="date" class="form-control" :max="todayString" required />
-            <p>結束時間</p>
-            <input v-model="formData.dateEnd" type="date" class="form-control" :min="formData.dateStart" />
+  <teleport to="#app">
+    <div class="modal-bg" @mousedown.self="leaveForm">
+      <div class="form-modal">
+        <form class="form-modal__content" autocomplete="off" @submit.prevent="handleFormSubmit">
+          <p class="form-modal__hint">
+            有*欄位代表必填
+          </p>
+          <div v-if="showedFieldText.name">
+            <label for="experienceName" class="form-label">{{ showedFieldText.name.text }}</label>
+            <input
+              id="experienceName"
+              v-model="formData.name"
+              type="text"
+              class="form-control"
+              :required="showedFieldText.name.required"
+            />
           </div>
-        </div>
-        <div v-if="showedFieldText.categories">
-          <label class="form-label">{{ showedFieldText.categories.text }}</label>
-          <Multiselect
-            v-model="formData.categories"
-            :options="showedFieldText.categories.options"
-            :required="showedFieldText.categories.required"
-            mode="tags"
-          >
-            <template #tag="{ option, handleTagRemove, disabled }">
-              <div class="multiselect-tag tag--large">
-                {{ option.value }}
-                <i v-if="!disabled" @click.prevent @mousedown.prevent.stop="handleTagRemove(option, $event)" />
-              </div>
-            </template>
-          </Multiselect>
-        </div>
-        <div v-if="showedFieldText.description">
-          <label for="experienceDescription" class="form-label">{{ showedFieldText.description?.text }}</label>
-          <textarea
-            id="experienceDescription"
-            v-model="formData.description"
-            class="form-control"
-            rows="2"
-            maxlength="500"
-            :placeholder="showedFieldText.description?.placeholder"
-            :required="showedFieldText.description.required"
-          />
-        </div>
-        <details v-if="formData.coreAbilities">
-          <summary title="（點擊展開/收合）">
-            核心能力
-          </summary>
-          <p>{{ formData.coreAbilities }}</p>
-        </details>
-        <div>
-          <label for="" class="form-label">
-            <span>獲得技能Tag</span>
-            <InformationCircleIcon class="form-label__info" @click.stop="openMessageModal('tags')" />
-          </label>
-          <TagSelect v-model:selectedTags="formData.tags" />
-        </div>
-        <div v-if="showedFieldText.feedback">
-          <label for="experienceFeedback" class="form-label">{{ showedFieldText.feedback.text }}</label>
-          <textarea
-            id="experienceFeedback"
-            v-model="formData.feedback"
-            class="form-control"
-            rows="3"
-            maxlength="500"
-            :placeholder="showedFieldText.feedback.placeholder"
-            :required="showedFieldText.feedback.required"
-          />
-        </div>
-        <div>
-          <label for="experienceLink" class="form-label">
-            <span>其他連結</span>
-            <InformationCircleIcon class="form-label__info" @click.stop="openMessageModal('link')" />
-          </label>
-          <input id="experienceLink" v-model="formData.link" type="text" class="form-control" />
-        </div>
-        <div class="form-modal__content__btns">
-          <button v-show="!requestStatus.isPending" class="btn" type="button" @click="leaveForm">
-            取消
-          </button>
-          <button class="btn--red" :disabled="requestStatus.isPending" type="submit">
-            {{ requestStatus.isPending ? '儲存中' : '儲存' }}
-          </button>
-        </div>
-      </form>
+          <div v-if="showedFieldText.position">
+            <label for="experiencePosition" class="form-label">{{ showedFieldText.position.text }}</label>
+            <input
+              id="experiencePosition"
+              v-model="formData.position"
+              type="text"
+              class="form-control"
+              :required="showedFieldText.position.required"
+            />
+          </div>
+          <div v-if="showedFieldText.semester">
+            <label class="form-label" for="experienceSemester">{{ showedFieldText.semester.text }}</label>
+            <select
+              v-if="formType === 'course'"
+              id="experienceSemester"
+              v-model="formData.semester"
+              class="form-control"
+              :required="showedFieldText.semester.required"
+            >
+              <option value="" disabled>
+                請選擇時間
+              </option>
+              <option v-for="semester in semesters" :key="semester" :value="semester">
+                {{ semester }}
+              </option>
+            </select>
+            <div v-else class="form-modal__time">
+              <p>*開始時間</p>
+              <input v-model="formData.dateStart" type="date" class="form-control" :max="todayString" required />
+              <p>結束時間</p>
+              <input v-model="formData.dateEnd" type="date" class="form-control" :min="formData.dateStart" />
+            </div>
+          </div>
+          <div v-if="showedFieldText.categories">
+            <label class="form-label">{{ showedFieldText.categories.text }}</label>
+            <Multiselect
+              v-model="formData.categories"
+              :options="showedFieldText.categories.options"
+              :required="showedFieldText.categories.required"
+              mode="tags"
+            >
+              <template #tag="{ option, handleTagRemove, disabled }">
+                <div class="multiselect-tag tag--large">
+                  {{ option.value }}
+                  <i v-if="!disabled" @click.prevent @mousedown.prevent.stop="handleTagRemove(option, $event)" />
+                </div>
+              </template>
+            </Multiselect>
+          </div>
+          <div v-if="showedFieldText.description">
+            <label for="experienceDescription" class="form-label">{{ showedFieldText.description?.text }}</label>
+            <textarea
+              id="experienceDescription"
+              v-model="formData.description"
+              class="form-control"
+              rows="2"
+              maxlength="500"
+              :placeholder="showedFieldText.description?.placeholder"
+              :required="showedFieldText.description.required"
+            />
+          </div>
+          <details v-if="formData.coreAbilities">
+            <summary title="（點擊展開/收合）">
+              核心能力
+            </summary>
+            <p>{{ formData.coreAbilities }}</p>
+          </details>
+          <div>
+            <label for="" class="form-label">
+              <span>獲得技能Tag</span>
+              <InformationCircleIcon class="form-label__info" @click.stop="openMessageModal('tags')" />
+            </label>
+            <TagSelect v-model:selectedTags="formData.tags" />
+          </div>
+          <div v-if="showedFieldText.feedback">
+            <label for="experienceFeedback" class="form-label">{{ showedFieldText.feedback.text }}</label>
+            <textarea
+              id="experienceFeedback"
+              v-model="formData.feedback"
+              class="form-control"
+              rows="3"
+              maxlength="500"
+              :placeholder="showedFieldText.feedback.placeholder"
+              :required="showedFieldText.feedback.required"
+            />
+          </div>
+          <div>
+            <label for="experienceLink" class="form-label">
+              <span>其他連結</span>
+              <InformationCircleIcon class="form-label__info" @click.stop="openMessageModal('link')" />
+            </label>
+            <input id="experienceLink" v-model="formData.link" type="text" class="form-control" />
+          </div>
+          <div class="form-modal__content__btns">
+            <button v-show="!requestStatus.isPending" class="btn" type="button" @click="leaveForm">
+              取消
+            </button>
+            <button class="btn--red" :disabled="requestStatus.isPending" type="submit">
+              {{ requestStatus.isPending ? '儲存中' : '儲存' }}
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
-  </div>
-  <ConfirmModal
-    v-if="showConfirmModal"
-    confirm-message="確定離開"
-    cancel-message="留下"
-    @cancel="showConfirmModal = false"
-    @confirm="$emit('close')"
-  />
-  <MessageModal :duration="6000" :show="showMessageModal" :messageType="messageType" @close="showMessageModal = false" />
+    <ConfirmModal
+      v-if="showConfirmModal"
+      confirm-message="確定離開"
+      cancel-message="留下"
+      @cancel="showConfirmModal = false"
+      @confirm="$emit('close')"
+    />
+    <MessageModal :duration="6000" :show="showMessageModal" :messageType="messageType" @close="showMessageModal = false" />
+  </teleport>
 </template>
 
 <script>
@@ -368,6 +370,8 @@ export default {
   background-color: #fff;
   border-radius: 8px;
   display: flex;
+  animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
+  animation: slideDown .3s;
   &__hint {
     color: $gray-3;
   }
@@ -450,5 +454,16 @@ export default {
 .multiselect-clear,
 .multiselect-caret {
   display: none;
+}
+
+@keyframes slideDown {
+  0% {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 </style>
