@@ -39,7 +39,7 @@ const routes = [
     props: route => {
       if (
         route.params.type &&
-        ['course', 'activity', 'competition', 'work', 'certificate', 'other'].includes(route.params.type)
+        !['course', 'activity', 'competition', 'work', 'certificate', 'other'].includes(route.params.type)
       ) {
         return { type: 'course' }
       }
