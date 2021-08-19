@@ -49,7 +49,9 @@ button {
   cursor: pointer;
   outline: none;
 }
-
+input {
+  -webkit-appearance: none;
+}
 textarea {
   resize: vertical;
   overflow-y: auto;

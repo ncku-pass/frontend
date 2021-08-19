@@ -35,10 +35,9 @@ export default {
 
     const someResumesNotSaved = computed(() => store.getters['resumes/someResumesNotSaved'])
     const resumesNotReady = computed(() => store.state.resumes.isPending && !store.state.resumes.resumes)
-    const tagsNotReady = computed(() => store.state.tags.isPending)
     const experiencesNotReady = computed(() => store.state.experiences.isPending)
 
-    const loading = computed(() => resumesNotReady.value || tagsNotReady.value || experiencesNotReady.value)
+    const loading = computed(() => resumesNotReady.value || experiencesNotReady.value)
 
     onBeforeRouteLeave((to, from) => {
       if (someResumesNotSaved.value) {

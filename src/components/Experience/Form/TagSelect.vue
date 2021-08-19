@@ -9,7 +9,7 @@
       v-model.trim="newTagName"
       class="text-input"
       type="text"
-      @input="debouncedSearchTag(newTagName)"
+      placeholder="建立一個新的tag..."
       @keydown.enter.prevent="createTag(newTagName)"
       @focus="showDropdown = true"
       @blur="!isChoosing && (showDropdown = false)"
@@ -18,7 +18,7 @@
       <div class="option-label">
         其他人也輸入的Tag
       </div>
-      <div v-for="tag in filteredOptions.search" :key="tag.name" class="option" @click="handleOptionClicked(tag)">
+      <div v-for="tag in filteredOptions.search" :key="tag.name" class="option" @click="handleSearchOptionClicked(tag)">
         {{ tag.name }}
         <span>{{ tag.count }}次</span>
       </div>
@@ -40,7 +40,7 @@
 </template>
 
 <script>
-import { computed, reactive, ref } from 'vue'
+import { computed, reactive, ref, watch } from 'vue'
 import { useStore } from 'vuex'
 import { XIcon } from '@heroicons/vue/solid'
 import { searchTag } from '@/api/tags'
@@ -74,6 +74,7 @@ const filterUnusedTag = (options, tags) => {
 }
 
 const filterSearchTag = (options, searchText) => {
+  searchText = searchText.replaceAll(/[^\u4e00-\u9fa5_a-zA-Z0-9\s-]+/g, '')
   return options.filter(opt => opt.name.includes(searchText))
 }
 
@@ -126,26 +127,52 @@ export default {
       newTagName.value = ''
     }
 
+    const handleSearchOptionClicked = tag => {
+      createTag(tag.name)
+      isChoosing.value = false
+      showDropdown.value = false
+      newTagName.value = ''
+    }
+
     // ===== 輸入 =====
     const textInputRef = ref(null)
     const newTagName = ref('')
     const addTag = newTag => store.dispatch('tags/addTag', newTag)
 
     const createTag = async (tagName) => {
-      if (!tagName.match(/^#/)) return
-      tagName = tagName.slice(1).trim()
       if (!tagName) return
-      if (tags.value.some(tag => tag.name === tagName)) return
-      if (defaultAbilities.some(tag => tag.name === tagName)) return
+      // 只允許中、英、數、底線 (_)、橫線(-)、空白( )
+      if (!tagName.match(/^[\u4e00-\u9fa5_a-zA-Z0-9\s-]+$/)) {
+        console.log('不准喔')
+        return
+      }
+      if (props.selectedTags.some(tag => tag.name === tagName)) {
+        console.log('已經有這個tag了!')
+        return
+      }
 
-      const res = await addTag(tagName)
-      emit('update:selectedTags', [...props.selectedTags, res])
+      const alreadyInDefaultTag = defaultAbilities.find(tag => tag.name === tagName)
+      if (alreadyInDefaultTag) {
+        emit('update:selectedTags', [...props.selectedTags, alreadyInDefaultTag])
+        newTagName.value = ''
+        return
+      }
+
+      const alreadyOwnedTag = tags.value.find(tag => tag.name === tagName)
+      if (alreadyOwnedTag) {
+        emit('update:selectedTags', [...props.selectedTags, alreadyOwnedTag])
+        newTagName.value = ''
+        return
+      }
+
+      const newTag = await addTag(tagName)
+      emit('update:selectedTags', [...props.selectedTags, newTag])
       newTagName.value = ''
     }
 
     let lastRequest = 0 // 紀錄上次送出請求的時間，如果新的請求>舊的請求，忽略舊的回覆
     const debouncedSearchTag = debounce(async searchText => {
-      if (searchText.match(/^#/)) return
+      searchText = searchText.replaceAll(/[^\u4e00-\u9fa5_a-zA-Z0-9\s-]+/g, '')
       lastRequest = new Date()
       const reocrd = lastRequest
       const { data } = await searchTag(searchText)
@@ -153,6 +180,9 @@ export default {
         classifiedOptions.search = data
       }
     }, 500)
+    watch(newTagName, (searchText) => {
+      debouncedSearchTag(searchText)
+    })
 
     // ===== 標籤 =====
     const handleRemoveTag = id => {
@@ -176,7 +206,7 @@ export default {
       showDropdown,
       isChoosing,
       handleOptionClicked,
-      debouncedSearchTag
+      handleSearchOptionClicked
     }
   }
 }

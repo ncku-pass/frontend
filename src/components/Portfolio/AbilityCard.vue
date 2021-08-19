@@ -279,6 +279,7 @@ export default {
     border-radius: 5px;
     border: 1px solid $gray-6;
     color: $gray-1;
+    z-index: 1;
   }
   &__menu-item {
     padding: 2px 5px;

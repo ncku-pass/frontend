@@ -86,7 +86,6 @@
           <div>
             <label for="" class="form-label">
               <span>獲得技能Tag</span>
-              <InformationCircleIcon class="form-label__info" @click.stop="openMessageModal('tags')" />
             </label>
             <TagSelect v-model:selectedTags="formData.tags" />
           </div>
