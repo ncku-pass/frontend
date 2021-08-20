@@ -30,6 +30,16 @@
 :-webkit-autofill {
   box-shadow: 0 0 0px 1000px #fff inset;
 }
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: $gray-3;
+  opacity: 1; /* Firefox */
+}
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+  color: $gray-3;
+}
+::-ms-input-placeholder { /* Microsoft Edge */
+  color: $gray-3;
+}
 
 html.draggable-cursor {
   cursor: grabbing;
@@ -48,9 +58,6 @@ ul {
 button {
   cursor: pointer;
   outline: none;
-}
-input {
-  -webkit-appearance: none;
 }
 textarea {
   resize: vertical;

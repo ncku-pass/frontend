@@ -33,6 +33,7 @@
               id="experienceSemester"
               v-model="formData.semester"
               class="form-control"
+              :class="{ 'not-selected': !formData.semester }"
               :required="showedFieldText.semester.required"
             >
               <option value="" disabled>

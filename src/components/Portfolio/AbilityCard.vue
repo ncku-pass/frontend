@@ -216,6 +216,7 @@ export default {
     padding: 10px 8px;
     flex: 1;
     font-size: 21px;
+    width: 100%;
   }
   &__body {
     padding: 0 15px;
@@ -321,7 +322,8 @@ export default {
   &__description {
     line-height: 24px;
     color: $gray-3;
-    white-space: pre;
+    white-space: pre-wrap;
+    line-break: anywhere;
   }
 }
 .experience-card[draggable='true'] {
