@@ -1,4 +1,4 @@
-import { createApp } from 'vue'
+import { createApp, computed } from 'vue'
 import '@vueform/multiselect/themes/default.css'
 import 'vue-toastification/dist/index.css'
 import '@/scss/index.scss'
@@ -12,6 +12,13 @@ const toastConfig = {
   timeout: 4000,
   position: 'top-center',
   draggable: true
+}
+
+const someResumesNotSaved = computed(() => store.getters['resumes/someResumesNotSaved'])
+window.onbeforeunload = () => {
+  if (someResumesNotSaved.value) {
+    return true
+  }
 }
 
 async function startApp () {

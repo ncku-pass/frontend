@@ -12,26 +12,35 @@
       <PortfolioMain />
       <PortfolioMenu />
     </template>
+    <ConfirmModal
+      v-if="showConfirmModal"
+      confirm-type="customize"
+      message="尚未儲存履歷，確定要離開嗎？"
+      cancelMessage="留下"
+      confirmMessage="離開"
+      @cancel="confirmLeaving(false)"
+      @confirm="confirmLeaving(true)"
+    />
   </div>
 </template>
 
 <script>
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import { useStore } from 'vuex'
 import { onBeforeRouteLeave } from 'vue-router'
-import { useToast } from 'vue-toastification'
 import PortfolioMain from '@/components/Portfolio/PortfolioMain'
 import PortfolioMenu from '@/components/Portfolio/PortfolioMenu'
+import ConfirmModal from '@/components/ConfirmModal'
 
 export default {
   name: 'Portfolio',
   components: {
     PortfolioMain,
-    PortfolioMenu
+    PortfolioMenu,
+    ConfirmModal
   },
   setup () {
     const store = useStore()
-    const toast = useToast()
 
     const someResumesNotSaved = computed(() => store.getters['resumes/someResumesNotSaved'])
     const resumesNotReady = computed(() => store.state.resumes.isPending && !store.state.resumes.resumes)
@@ -39,14 +48,29 @@ export default {
 
     const loading = computed(() => resumesNotReady.value || experiencesNotReady.value)
 
-    onBeforeRouteLeave((to, from) => {
+    // ===== 若未儲存時，跳出確認視窗 =====
+    const showConfirmModal = ref(false)
+    const confirmLeaving = ref(null)
+
+    const openConfirmModal = () => {
+      showConfirmModal.value = true
+      return new Promise((resolve) => {
+        confirmLeaving.value = resolve
+      })
+    }
+
+    onBeforeRouteLeave(async (to, from) => {
       if (someResumesNotSaved.value) {
-        toast.info('有尚未儲存的履歷喔！')
+        const confirm = await openConfirmModal()
+        showConfirmModal.value = false
+        return confirm
       }
     })
 
     return {
-      loading
+      loading,
+      showConfirmModal,
+      confirmLeaving
     }
   }
 }

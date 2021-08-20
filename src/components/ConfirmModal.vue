@@ -61,7 +61,7 @@ export default {
 
 .confirm-modal__content {
   padding: 10px 24px;
-  width: 240px;
+  max-width: 280px;
   line-height: 24px;
   text-align: center;
   background-color: #fff;
@@ -70,6 +70,7 @@ export default {
   &__btns {
     @include grid(column, 0, 10px);
     margin-top: 10px;
+    justify-content: center;
   }
 }
 </style>
