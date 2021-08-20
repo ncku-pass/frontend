@@ -1,4 +1,13 @@
-export const chineseOfExperienceType = {
+export const ExperienceTypes = [
+  'course',
+  'activity',
+  'competition',
+  'work',
+  'certificate',
+  'other'
+]
+
+export const chineseOfExperienceTypes = {
   course: '課程紀錄',
   activity: '活動經驗',
   competition: '競賽經驗',

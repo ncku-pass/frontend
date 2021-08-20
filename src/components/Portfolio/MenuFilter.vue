@@ -12,7 +12,7 @@
               :key="semester"
               class="filter-block__tags__tag"
               :class="{ 'filter-block__tags__tag--selected': checked }"
-              @click="toggleSemester(semester)"
+              @click="$emit('toggleSemester', semester)"
             >
               {{ semester }}
             </li>
@@ -30,9 +30,25 @@
               :key="tag"
               class="filter-block__tags__tag"
               :class="{ 'filter-block__tags__tag--selected': checked }"
-              @click="toggleTag(tag)"
+              @click="$emit('toggleTag', tag)"
             >
               {{ tag }}
+            </li>
+          </ul>
+        </div>
+        <div class="filter-block">
+          <div class="filter-block__title">
+            類別
+          </div>
+          <ul class="filter-block__tags">
+            <li
+              v-for="(checked, type) in filter.types"
+              :key="type"
+              class="filter-block__tags__tag"
+              :class="{ 'filter-block__tags__tag--selected': checked }"
+              @click="$emit('toggleType', type)"
+            >
+              {{ chineseOfExperienceTypes[type] }}
             </li>
           </ul>
         </div>
@@ -44,6 +60,7 @@
 <script>
 import { computed } from 'vue'
 import vueScrollShadow from 'vue3-scroll-shadow'
+import { chineseOfExperienceTypes } from '@/config'
 
 export default {
   name: 'MenuFilter',
@@ -51,20 +68,12 @@ export default {
     vueScrollShadow
   },
   props: {
-    toggleSemester: {
-      type: Function,
-      required: true
-    },
-    toggleTag: {
-      type: Function,
-      required: true
-    },
     filter: {
       type: Object,
       required: true
     }
   },
-  emits: ['selectAllTags', 'unSelectAllTags'],
+  emits: ['selectAllTags', 'unSelectAllTags', 'toggleSemester', 'toggleTag', 'toggleType'],
   setup (props) {
     const allSelected = computed(() => {
       for (const tag in props.filter.tags) {
@@ -76,7 +85,8 @@ export default {
     })
 
     return {
-      allSelected
+      allSelected,
+      chineseOfExperienceTypes
     }
   }
 }

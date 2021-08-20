@@ -28,7 +28,7 @@
               <DisclosurePanel as="ul" class="semester-block__content">
                 <li v-for="(exp, i) in nckuExperiences[semester]" :key="exp.name" class="experience-item">
                   <input :id="`${semester}-${i}`" v-model="selectedExperiences" :value="exp" type="checkbox" />
-                  <label :for="`${semester}-${i}`"> 【{{ chineseOfExperienceType[exp.type] }}】{{ exp.name }} </label>
+                  <label :for="`${semester}-${i}`"> 【{{ chineseOfExperienceTypes[exp.type] }}】{{ exp.name }} </label>
                 </li>
               </DisclosurePanel>
             </Disclosure>
@@ -63,7 +63,7 @@ import { useStore } from 'vuex'
 import { Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/vue'
 import { ChevronDownIcon } from '@heroicons/vue/solid'
 import { semesterToDate, dateToSemester } from '@/helpers'
-import { chineseOfExperienceType } from '@/config'
+import { chineseOfExperienceTypes } from '@/config'
 
 export default {
   name: 'ImportModal',
@@ -135,7 +135,7 @@ export default {
 
     return {
       handleCloseModal,
-      chineseOfExperienceType,
+      chineseOfExperienceTypes,
       nckuExperiences,
       nckuExperiencesError,
       semesterToDate,

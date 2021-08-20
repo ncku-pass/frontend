@@ -15,9 +15,10 @@
     </div>
     <MenuFilter
       v-show="showFilter"
-      :toggle-semester="toggleSemester"
-      :toggle-tag="toggleTag"
       :filter="filter"
+      @toggle-semester="toggleSemester"
+      @toggle-tag="toggleTag"
+      @toggle-type="toggleType"
       @select-all-tags="changeAllTags(true)"
       @un-select-all-tags="changeAllTags(false)"
     />
@@ -44,6 +45,7 @@ import useScrollShadow from '@/composables/useScrollShadow'
 import MenuFilter from '@/components/Portfolio/MenuFilter'
 import MenuCard from '@/components/Portfolio/MenuCard'
 import draggable from 'vuedraggable'
+import { ExperienceTypes } from '@/config'
 
 export default {
   name: 'PortfolioMenu',
@@ -60,25 +62,22 @@ export default {
       sort: false
     }
 
-    // ===切換filter顯示===
+    // === 切換filter顯示 ===
     const showFilter = ref(true)
 
-    // ===經驗列表===
+    // === 經驗列表 ===
     const experiencesArray = computed(() => store.getters['experiences/experiencesArray'])
     const semesters = computed(() => store.getters['experiences/semesters'])
     const tags = computed(() => store.getters['experiences/tags'])
 
+    // 初始化filter
     const filter = reactive({
       semesters: {},
-      tags: {}
+      tags: {},
+      types: ExperienceTypes.reduce((obj, type) => ({ ...obj, [type]: true }), {})
     })
-    const someSemesterSelected = computed(() =>
-      Object.keys(filter.semesters).some(key => filter.semesters[key] === true)
-    )
-    const someTagSelected = computed(() => Object.keys(filter.tags).some(key => filter.tags[key] === true))
-
     watchEffect(() => {
-      filter.semesters = semesters.value.reduce((obj, semester, index) => {
+      filter.semesters = semesters.value.reduce((obj, semester) => {
         return { ...obj, [semester]: true }
       }, {})
     })
@@ -86,8 +85,15 @@ export default {
       filter.tags = tags.value.reduce((obj, tag) => ({ ...obj, [tag.name]: false }), {})
     })
 
+    const someSemesterSelected = computed(() =>
+      Object.keys(filter.semesters).some(key => filter.semesters[key] === true)
+    )
+    const someTagSelected = computed(() => Object.keys(filter.tags).some(key => filter.tags[key] === true))
+    const someTypeSelected = computed(() => Object.keys(filter.types).some(key => filter.types[key] === true))
+
     const filteredExperienceArray = computed(() => {
       return experiencesArray.value.filter(experience => {
+        // 如果學期都沒選，就不篩選
         if (someSemesterSelected.value) {
           for (const key in filter.semesters) {
             if (!filter.semesters[key] && experience.semester === key) {
@@ -95,6 +101,15 @@ export default {
             }
           }
         }
+        // 如果類別都沒選，就不篩選
+        if (someTypeSelected.value) {
+          for (const key in filter.types) {
+            if (!filter.types[key] && experience.type === key) {
+              return false
+            }
+          }
+        }
+        // 如果 Tag 都沒選，就不篩選
         if (!someTagSelected.value) return true
         for (const key in filter.tags) {
           if (filter.tags[key] && experience.tags.some(tag => tag.name === key)) {
@@ -105,26 +120,25 @@ export default {
       })
     })
 
-    // ===列表開合時檢測是否加上列表陰影===
+    // === 設定滾動容器的陰影 ===
+    const { setShadows, initShadows } = useScrollShadow()
+    const MenuShadowContainer = ref(null)
+    // 列表開合時檢測是否加上列表陰影
     onMounted(() => {
       watch([showFilter, filteredExperienceArray], () => {
         requestAnimationFrame(() => initShadows(MenuShadowContainer.value))
       })
     })
 
-    // ===設定滾動容器的陰影===
-    const { setShadows, initShadows } = useScrollShadow()
-    const MenuShadowContainer = ref(null)
-    // onMounted(() => {
-    //   initShadows(MenuShadowContainer.value)
-    // })
-
-    // ===打勾/取消篩選===
+    // === 打勾/取消篩選 ===
     const toggleSemester = semester => {
       filter.semesters[semester] = !filter.semesters[semester]
     }
     const toggleTag = tag => {
       filter.tags[tag] = !filter.tags[tag]
+    }
+    const toggleType = type => {
+      filter.types[type] = !filter.types[type]
     }
     const changeAllTags = toStatus => {
       for (const tag in filter.tags) {
@@ -143,6 +157,7 @@ export default {
       MenuShadowContainer,
       toggleSemester,
       toggleTag,
+      toggleType,
       changeAllTags
     }
   }
