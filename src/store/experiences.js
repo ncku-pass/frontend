@@ -109,10 +109,14 @@ const experiences = {
     },
     async getNckuExperiences ({ commit, rootState }) {
       try {
+        if (!rootState.auth.key || !rootState.auth.keyval) {
+          throw new KeyNoPairedError('沒有key / keyval')
+        }
         const res = await getNCKUExperiencesAPI({
           key: rootState.auth.key,
           keyval: rootState.auth.keyval
         })
+        console.log(res)
         const data = res.data?.data
         if (!data) {
           throw new KeyNoPairedError(res.data.msg)
@@ -130,6 +134,7 @@ const experiences = {
         if (error instanceof KeyNoPairedError) {
           throw error
         } else {
+          console.error(error.stack)
           commit('SET_STATUS', { error })
         }
       }
@@ -201,7 +206,7 @@ const changeActivitiesToExperiences = activities => {
     semester: dateToSemester(new Date(activity.active_start)),
     link: activity.activity_url,
     type: 'activity',
-    dateStart: new Date(activity.active_start).toISOString()
+    dateStart: new Date(activity.active_start.replace(/\s/, 'T')).toISOString()
   }))
 }
 const changeClubsToExperiences = clubs => {
