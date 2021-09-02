@@ -16,11 +16,16 @@
       v-if="showConfirmModal"
       confirm-type="customize"
       message="尚未儲存履歷，確定要離開嗎？"
-      cancelMessage="留下"
-      confirmMessage="離開"
       @cancel="confirmLeaving(false)"
       @confirm="confirmLeaving(true)"
-    />
+    >
+      <button class="btn--red" @click.stop="confirmLeaving(false)">
+        留下存檔
+      </button>
+      <button class="btn" @click.stop="confirmLeaving(true)">
+        確定離開
+      </button>
+    </ConfirmModal>
   </div>
 </template>
 
