@@ -4,16 +4,23 @@
       <span>{{ tag.name }}</span>
       <XIcon class="tag__delete" @click="handleRemoveTag(tag.id)" />
     </div>
-    <input
-      ref="textInputRef"
-      v-model.trim="newTagName"
-      class="text-input"
-      type="text"
-      placeholder="建立一個新的tag..."
-      @keydown.enter.prevent="createTag(newTagName)"
-      @focus="showDropdown = true"
-      @blur="!isChoosing && (showDropdown = false)"
-    />
+    <div style="text-input-container">
+      <input
+        ref="textInputRef"
+        v-model.trim="newTagName"
+        class="text-input"
+        type="text"
+        placeholder="建立一個新的tag..."
+        @keydown.enter.prevent="createTag(newTagName)"
+        @focus="showDropdown = true"
+        @blur="!isChoosing && (showDropdown = false)"
+      />
+      <div v-if="showPopover" class="warnning-popover">
+        <p class="warnning-popover__text">
+          {{ showPopover }}
+        </p>
+      </div>
+    </div>
     <div v-show="showDropdown" class="options" @mousedown="isChoosing = true" @mouseup="isChoosing = false">
       <div class="option-label">
         其他人也輸入的Tag
@@ -138,16 +145,17 @@ export default {
     const textInputRef = ref(null)
     const newTagName = ref('')
     const addTag = newTag => store.dispatch('tags/addTag', newTag)
+    const showPopover = ref(false)
 
     const createTag = async (tagName) => {
       if (!tagName) return
       // 只允許中、英、數、底線 (_)、橫線(-)、空白( )
       if (!tagName.match(/^[\u4e00-\u9fa5_a-zA-Z0-9\s-]+$/)) {
-        console.log('不准喔')
+        showPopover.value = '只接受中、英、數、底線 (_)、橫線(-)哦！'
         return
       }
       if (props.selectedTags.some(tag => tag.name === tagName)) {
-        console.log('已經有這個tag了!')
+        showPopover.value = '已經有這個tag了！'
         return
       }
 
@@ -181,6 +189,7 @@ export default {
       }
     }, 500)
     watch(newTagName, (searchText) => {
+      showPopover.value = false
       debouncedSearchTag(searchText)
     })
 
@@ -199,6 +208,7 @@ export default {
     return {
       textInputRef,
       newTagName,
+      showPopover,
       createTag,
       handleRemoveTag,
       handleDeleteTag,
@@ -248,8 +258,12 @@ export default {
   border-radius: 10px;
   font-weight: 700;
   &:hover {
-    background-color: #fff;
+    background-color: $white;
   }
+}
+.text-input-container {
+  position: relative;
+  flex-grow: 1;
 }
 .text-input {
   font-size: 16px;
@@ -257,15 +271,35 @@ export default {
   padding: 5px;
   border: none;
   outline: none;
-  flex: 1;
+  width: 100%;
   min-width: 30%;
+}
+.warnning-popover {
+  position: absolute;
+  top: 100%;
+  background-color: $white;
+  padding: 4px 12px;
+  border-radius: 5px;
+  filter: drop-shadow(0 1px 4px rgba(241, 90, 96, 0.15));
+  z-index: 10;
+  &:before {
+    content: '';
+    position: absolute;
+    top: -12px;
+    left: 5%;
+    width: 0;
+    height: 0;
+    border-left: 12px solid transparent;
+    border-right: 12px solid transparent;
+    border-bottom: 12px solid $white;
+  }
 }
 .options {
   position: absolute;
   box-sizing: content-box;
   top: 100%;
   left: -1px;
-  background-color: white;
+  background-color: $white;
   border: 1px solid $gray-5;
   width: 100%;
   border-bottom-right-radius: 5px;
