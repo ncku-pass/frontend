@@ -15,11 +15,13 @@
         @focus="showDropdown = true"
         @blur="!isChoosing && (showDropdown = false)"
       />
-      <div v-if="showPopover" class="warnning-popover">
-        <p class="warnning-popover__text">
-          {{ showPopover }}
-        </p>
-      </div>
+      <transition name="menu-fade">
+        <div v-if="showPopover" class="warnning-popover">
+          <p class="warnning-popover__text">
+            {{ showPopover }}
+          </p>
+        </div>
+      </transition>
     </div>
     <div v-show="showDropdown" class="options" @mousedown="isChoosing = true" @mouseup="isChoosing = false">
       <div class="option-label">
