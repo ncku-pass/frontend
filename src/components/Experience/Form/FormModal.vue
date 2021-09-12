@@ -11,13 +11,17 @@
             <input
               id="experienceName"
               v-model="formData.name"
+              :placeholder="showedFieldText.name?.placeholder"
               type="text"
               class="form-control"
               :required="showedFieldText.name.required"
             />
           </div>
           <div v-if="showedFieldText.position">
-            <label for="experiencePosition" class="form-label">{{ showedFieldText.position.text }}</label>
+            <label for="experiencePosition" class="form-label">
+              {{ showedFieldText.position.text }}
+              <InformationCircleIcon class="form-label__info" @click.stop="openMessageModal('score')" />
+            </label>
             <input
               id="experiencePosition"
               v-model="formData.position"
@@ -104,7 +108,7 @@
           </div>
           <div>
             <label for="experienceLink" class="form-label">
-              <span>其他連結</span>
+              <span>{{ showedFieldText.link.text }}</span>
               <InformationCircleIcon class="form-label__info" @click.stop="openMessageModal('link')" />
             </label>
             <input id="experienceLink" v-model="formData.link" type="text" class="form-control" />
@@ -160,6 +164,9 @@ const fieldText = {
       text: '課程收穫及成就 (500字以內)',
       placeholder: '將課程中所得到的收穫及成就記錄下來，或是寫出課程內容的特色吧',
       required: false
+    },
+    link: {
+      text: '作品和相關證明'
     }
   },
   activity: {
@@ -174,14 +181,17 @@ const fieldText = {
     },
     feedback: {
       text: '活動收穫及成就 (500字以內)',
-      placeholder: '將活動中所得到的收穫及成就記錄下來吧~',
+      placeholder: '將活動中所得到的收穫及成就記錄下來吧～若有辦理相關活動也可紀錄下來唷',
       required: false
+    },
+    link: {
+      text: '作品和相關證明'
     }
   },
   competition: {
-    name: { text: '*競賽名稱', required: true },
+    name: { text: '*競賽名稱', required: true, placeholder: '可以填入競賽名稱、組別、獲獎類別（國內/國外）、類型（個人/團體）' },
     semester: { text: '*競賽時間', required: true },
-    position: { text: '*競賽得獎名次', required: true },
+    position: { text: '*競賽獲得獎項', required: true },
     description: {
       text: '競賽簡介 (500字以內)',
       placeholder: '填寫競賽簡介以便日後方便回想競賽內容',
@@ -191,6 +201,9 @@ const fieldText = {
       text: '競賽收穫及成就 (500字以內)',
       placeholder: '將競賽中所得到的收穫及成就記錄下來吧~',
       required: false
+    },
+    link: {
+      text: '作品和相關證明'
     }
   },
   work: {
@@ -206,16 +219,22 @@ const fieldText = {
       text: '收穫及成就 (500字以內)',
       placeholder: '將實習 / 工作中所得到的收穫及成就記錄下來吧~',
       required: false
+    },
+    link: {
+      text: '相關證明'
     }
   },
   certificate: {
-    name: { text: '*證照名稱', required: true },
+    name: { text: '*證照/檢定名稱', required: true },
     semester: { text: '*考取時間', required: true },
     position: { text: '*證照分數或等級', required: true },
     feedback: {
       text: '收穫及成就 (500字以內)',
       placeholder: '將過程中所得到的收穫及成就記錄下來吧~',
       required: false
+    },
+    link: {
+      text: '相關證明'
     }
   },
   other: {
@@ -231,6 +250,9 @@ const fieldText = {
       text: '經歷收穫及成就 (500字以內)',
       placeholder: '將過程中所得到的收穫及成就記錄下來吧~',
       required: false
+    },
+    link: {
+      text: '其他連結'
     }
   }
 }
