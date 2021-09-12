@@ -11,10 +11,10 @@
             使用<img src="@/assets/ncku_login.png" alt="ncku login" />登入
           </a>
         </div>
-        <template v-else-if="nckuExperiences">
+        <template v-else-if="classifiedNckuExperiences">
           <div class="experiences__container">
             <Disclosure
-              v-for="(_, semester) in nckuExperiences"
+              v-for="(_, semester) in classifiedNckuExperiences"
               :key="semester"
               v-slot="{ open }"
               as="div"
@@ -26,7 +26,7 @@
                 <ChevronDownIcon :class="{ opened: open }" />
               </DisclosureButton>
               <DisclosurePanel as="ul" class="semester-block__content">
-                <li v-for="(exp, i) in nckuExperiences[semester]" :key="exp.name" class="experience-item">
+                <li v-for="(exp, i) in classifiedNckuExperiences[semester]" :key="exp.name" class="experience-item">
                   <input :id="`${semester}-${i}`" v-model="selectedExperiences" :value="exp" type="checkbox" />
                   <label :for="`${semester}-${i}`"> 【{{ chineseOfExperienceTypes[exp.type] }}】{{ exp.name }} </label>
                 </li>
@@ -34,7 +34,7 @@
             </Disclosure>
           </div>
           <div class="import-modal__btns">
-            <button class="btn select-all" @click="toggleAllExperiences">
+            <button class="select-all btn" @click="toggleAllExperiences">
               全選
             </button>
             <button v-show="!isPending" class="btn" type="button" @click="handleCloseModal">
@@ -94,7 +94,9 @@ export default {
     }
 
     // === 取得學校資料 ===
-    const nckuExperiences = computed(() => store.state.experiences.nckuExperiences?.[props.type])
+    const classifiedNckuExperiences = computed(
+      () => store.getters['experiences/classifiedNckuExperiences']?.[props.type]
+    )
     const getNckuExperiences = () => store.dispatch('experiences/getNckuExperiences')
     const nckuExperiencesError = ref(null)
     const getData = async () => {
@@ -105,7 +107,7 @@ export default {
         nckuExperiencesError.value = error
       }
     }
-    if (!nckuExperiences.value) getData()
+    if (!classifiedNckuExperiences.value) getData()
 
     // === 要匯入的資料 ===
     const error = computed(() => store.state.experiences.error)
@@ -127,8 +129,8 @@ export default {
         return
       }
       const allExperiences = []
-      for (const semester in nckuExperiences.value) {
-        allExperiences.push(...nckuExperiences.value[semester])
+      for (const semester in classifiedNckuExperiences.value) {
+        allExperiences.push(...classifiedNckuExperiences.value[semester])
       }
       selectedExperiences.value = allExperiences
     }
@@ -136,7 +138,7 @@ export default {
     return {
       handleCloseModal,
       chineseOfExperienceTypes,
-      nckuExperiences,
+      classifiedNckuExperiences,
       nckuExperiencesError,
       semesterToDate,
       dateToSemester,

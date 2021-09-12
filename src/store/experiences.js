@@ -127,8 +127,8 @@ const experiences = {
         const activity = changeActivitiesToExperiences(filterDuplicateActivity(data.activity))
 
         commit('SET_NCKU_EXPERIENCES', {
-          course: classifyBySemester(orderBySemester(course)),
-          activity: classifyBySemester(orderBySemester([...club, ...activity]))
+          course: orderBySemester(course),
+          activity: orderBySemester([...club, ...activity])
         })
       } catch (error) {
         if (error instanceof KeyNoPairedError) {
@@ -160,6 +160,25 @@ const experiences = {
         experiences[type] = classifyBySemester(state.experiences[type])
       }
       return experiences
+    },
+    classifiedNckuExperiences (state) {
+      if (!state.nckuExperiences) {
+        return null
+      }
+      return {
+        course: classifyBySemester(
+          state.nckuExperiences.course.filter(nckuExp => {
+            return !state.experiences.course.find(exp => exp.name === nckuExp.name && exp.semester === nckuExp.semester)
+          })
+        ),
+        activity: classifyBySemester(
+          state.nckuExperiences.activity.filter(nckuExp => {
+            return !state.experiences.activity.find(
+              exp => exp.name === nckuExp.name && exp.semester === nckuExp.semester
+            )
+          })
+        )
+      }
     },
     /**
      * 取得不重複的所有學期
