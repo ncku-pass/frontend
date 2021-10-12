@@ -9,12 +9,12 @@
             全方位展現個人特質
           </h1>
           <h2 class="intro__subtitle">
-            E-portfolio 陪你整理學習經歷
+            NCKU Experience 陪你整理學習經歷
           </h2>
         </div>
         <div class="login">
           <h2 class="login__title">
-            登入E-portfolio
+            登入 NCKU Experience
           </h2>
           <a href="https://i.ncku.edu.tw/ncku/oauth/eportfolio/login.php" class="ncku-login">
             使用<img src="@/assets/ncku_login.png" alt="ncku login" />登入
@@ -35,7 +35,7 @@
     <div class="container">
       <section class="features">
         <h2 class="features__title">
-          E-portfolio 三大功能
+          NCKU Experience 三大功能
         </h2>
         <ul class="features__list">
           <li class="features__item">
@@ -87,7 +87,21 @@
         </div>
       </section>
     </div>
-    <footer />
+    <footer class="footer">
+      <div class="container">
+        <img class="footer__icon" src="@/assets/brand_icon_white.svg" alt="brand icon" />
+        <p class="footer__info">
+          © NCKU 教學發展中心版權所有<br /><br />
+          701 台南市大學路一號光復校區雲平大樓3樓<br />
+          Mail：<a href="mailto:nckuexperience@gmail.com">nckuexperience@gmail.com</a><br /><br />
+          [ 若有任何問題歡迎寄信與我們聯繫 ]
+        </p>
+        <div class="footer__links">
+          <a href="https://web.ncku.edu.tw/" target="_blank">國立成功大學 National Cheng Kung University</a>
+          <a href="https://ctld-acad.ncku.edu.tw/" target="_blank">教學發展中心</a>
+        </div>
+      </div>
+    </footer>
   </div>
 </template>
 
@@ -133,6 +147,7 @@ export default {
 }
 .intro {
   &__icon {
+    height: 60px;
     margin-bottom: 64px;
   }
   &__title {
@@ -209,9 +224,35 @@ export default {
   }
 }
 
-footer {
-  height: 250px;
+.footer {
+  padding: 40px;
   background: $red;
+  color: $white;
+  line-height: 26px;
+  .container {
+    display: flex;
+    margin: 0 auto;
+  }
+  &__icon {
+    height: 40px;
+    align-self: center;
+    margin-right: 30px;
+  }
+  &__info {
+    margin-right: auto;
+    a {
+      color: $white;
+    }
+  }
+  &__links {
+    text-align: right;
+    display: flex;
+    flex-direction: column;
+    a {
+      color: $white;
+      align-self: end;
+    }
+  }
 }
 
 @keyframes jump {
@@ -321,6 +362,17 @@ footer {
       h2 {
         margin-bottom: 20px;
       }
+    }
+  }
+  .footer {
+    padding: 20px;
+    text-align: center;
+    .container {
+      flex-direction: column;
+      gap: 20px;
+    }
+    &__links {
+      text-align: center;
     }
   }
 }

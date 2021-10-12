@@ -84,8 +84,8 @@ export default {
   margin: 0;
   &__link {
     display: block;
-    height: 32px;
-    width: 160px;
+    height: 40px;
+    width: 200px;
     background-image: url('../assets/brand_icon.svg');
     text-indent: 101%;
     overflow: hidden;
