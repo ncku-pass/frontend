@@ -85,8 +85,10 @@ export default {
   &__link {
     display: block;
     height: 40px;
-    width: 200px;
+    width: 210px;
     background-image: url('../assets/brand_icon.svg');
+    background-size: 210px;
+    background-repeat: no-repeat;
     text-indent: 101%;
     overflow: hidden;
   }

@@ -9,12 +9,12 @@
             全方位展現個人特質
           </h1>
           <h2 class="intro__subtitle">
-            NCKU Experience 陪你整理學習經歷
+            NCKU PASS 陪你整理學習經歷
           </h2>
         </div>
         <div class="login">
           <h2 class="login__title">
-            登入 NCKU Experience
+            登入 NCKU PASS
           </h2>
           <a href="https://i.ncku.edu.tw/ncku/oauth/eportfolio/login.php" class="ncku-login">
             使用<img src="@/assets/ncku_login.png" alt="ncku login" />登入
@@ -35,7 +35,7 @@
     <div class="container">
       <section class="features">
         <h2 class="features__title">
-          NCKU Experience 三大功能
+          NCKU PASS 三大功能
         </h2>
         <ul class="features__list">
           <li class="features__item">
