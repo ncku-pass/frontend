@@ -39,6 +39,7 @@ const experiences = {
           expArray[i] = experience
           return true
         }
+        return false
       })
     },
     SET_STATUS (state, { error = undefined, isPending = undefined }) {
