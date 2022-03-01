@@ -26,7 +26,7 @@
     "yup": "^0.32.11"
   },
   "engines": {
-    "node": ">=16.0.0",
+    "node": ">=14.0.0",
     "yarn": "!! Please use yarn instead of NPM to install dependencies !!",
     "npm": ">= 6.0.0"
   },
