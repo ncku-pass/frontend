@@ -5,7 +5,7 @@ module.exports = {
   },
   extends: ['plugin:vue/vue3-recommended', '@vue/standard'],
   parserOptions: {
-    parser: 'babel-eslint'
+    parser: '@babel/eslint-parser'
   },
   rules: {
     'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
@@ -14,8 +14,7 @@ module.exports = {
       'error',
       {
         singleline: {
-          max: 5,
-          allowFirstLine: true
+          max: 5
         }
       }
     ],
@@ -27,7 +26,8 @@ module.exports = {
         }
       }
     ],
-    'vue/attribute-hyphenation': ['off']
+    'vue/attribute-hyphenation': ['off'],
+    'vue/multi-word-component-names': ['off'],
   },
   overrides: [
     {
