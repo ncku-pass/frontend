@@ -5,7 +5,7 @@ export const ExperienceTypes = [
   'work',
   'certificate',
   'other'
-]
+];
 
 export const chineseOfExperienceTypes = {
   course: '課程紀錄',
@@ -14,11 +14,11 @@ export const chineseOfExperienceTypes = {
   work: '工作經驗',
   certificate: '外語能力或證照',
   other: '其他'
-}
+};
 
 export class KeyNoPairedError extends Error {
-  constructor (message) {
-    super(message)
-    this.name = 'KeyNoPairedError'
+  constructor(message) {
+    super(message);
+    this.name = 'KeyNoPairedError';
   }
 }

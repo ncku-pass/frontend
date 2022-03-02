@@ -1,21 +1,21 @@
 <template>
-  <teleport to="#app">
-    <div class="confirm-modal modal-bg" @click.self.stop="$emit('cancel')">
-      <div class="confirm-modal__content">
-        <span v-if="confirmType === 'customize'">{{ message }}</span>
-        <span v-else-if="confirmType === 'leave'">離開則無法儲存資料喔！</span>
+  <teleport to='#app'>
+    <div class='confirm-modal modal-bg' @click.self.stop='$emit(&apos;cancel&apos;)'>
+      <div class='confirm-modal__content'>
+        <span v-if='confirmType === &apos;customize&apos;'>{{ message }}</span>
+        <span v-else-if='confirmType === &apos;leave&apos;'>離開則無法儲存資料喔！</span>
         <span v-else>
           確定要刪除
-          <span class="text--red">{{ message }}</span>
+          <span class='text--red'>{{ message }}</span>
           此項歷程？
         </span>
 
-        <div class="confirm-modal__content__btns">
+        <div class='confirm-modal__content__btns'>
           <slot>
-            <button class="btn" @click.stop="$emit('cancel')">
+            <button class='btn' @click.stop='$emit(&apos;cancel&apos;)'>
               {{ cancelMessage }}
             </button>
-            <button class="btn--red" @click.stop="$emit('confirm')">
+            <button class='btn--red' @click.stop='$emit(&apos;confirm&apos;)'>
               {{ confirmMessage }}
             </button>
           </slot>
@@ -44,16 +44,16 @@ export default {
     confirmType: {
       type: String,
       default: 'leave',
-      validator (value) {
-        return ['leave', 'delete', 'customize'].includes(value)
+      validator(value) {
+        return ['leave', 'delete', 'customize'].includes(value);
       }
     }
   },
   emits: ['cancel', 'confirm'],
-  setup (props, context) {
-    return {}
+  setup(props, context) {
+    return {};
   }
-}
+};
 </script>
 
 <style lang="scss">

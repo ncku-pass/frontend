@@ -1,81 +1,81 @@
 <template>
-  <div class="ability-card">
-    <div class="ability-card__head">
+  <div class='ability-card'>
+    <div class='ability-card__head'>
       <svg
-        class="ability-card__grab-area"
-        width="10"
-        height="16"
-        viewBox="0 0 10 16"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
+        class='ability-card__grab-area'
+        width='10'
+        height='16'
+        viewBox='0 0 10 16'
+        fill='none'
+        xmlns='http://www.w3.org/2000/svg'
       >
         <path
-          d="M4 14C4 15.1 3.1 16 2 16C0.9 16 0 15.1 0 14C0 12.9 0.9 12 2 12C3.1 12 4 12.9 4 14ZM2 6C0.9 6 0 6.9 0 8C0 9.1 0.9 10 2 10C3.1 10 4 9.1 4 8C4 6.9 3.1 6 2 6ZM2 0C0.9 0 0 0.9 0 2C0 3.1 0.9 4 2 4C3.1 4 4 3.1 4 2C4 0.9 3.1 0 2 0ZM8 4C9.1 4 10 3.1 10 2C10 0.9 9.1 0 8 0C6.9 0 6 0.9 6 2C6 3.1 6.9 4 8 4ZM8 6C6.9 6 6 6.9 6 8C6 9.1 6.9 10 8 10C9.1 10 10 9.1 10 8C10 6.9 9.1 6 8 6ZM8 12C6.9 12 6 12.9 6 14C6 15.1 6.9 16 8 16C9.1 16 10 15.1 10 14C10 12.9 9.1 12 8 12Z"
-          fill="#828282"
+          d='M4 14C4 15.1 3.1 16 2 16C0.9 16 0 15.1 0 14C0 12.9 0.9 12 2 12C3.1 12 4 12.9 4 14ZM2 6C0.9 6 0 6.9 0 8C0 9.1 0.9 10 2 10C3.1 10 4 9.1 4 8C4 6.9 3.1 6 2 6ZM2 0C0.9 0 0 0.9 0 2C0 3.1 0.9 4 2 4C3.1 4 4 3.1 4 2C4 0.9 3.1 0 2 0ZM8 4C9.1 4 10 3.1 10 2C10 0.9 9.1 0 8 0C6.9 0 6 0.9 6 2C6 3.1 6.9 4 8 4ZM8 6C6.9 6 6 6.9 6 8C6 9.1 6.9 10 8 10C9.1 10 10 9.1 10 8C10 6.9 9.1 6 8 6ZM8 12C6.9 12 6 12.9 6 14C6 15.1 6.9 16 8 16C9.1 16 10 15.1 10 14C10 12.9 9.1 12 8 12Z'
+          fill='#828282'
         />
       </svg>
       <input
-        :value="abilityTopic"
-        class="ability-card__topic"
-        placeholder="為這些經歷訂定一個主題吧"
-        @input="$emit('update:abilityTopic', $event.target.value)"
+        :value='abilityTopic'
+        class='ability-card__topic'
+        placeholder='為這些經歷訂定一個主題吧'
+        @input='$emit(&apos;update:abilityTopic&apos;, $event.target.value)'
       />
-      <XCircleIcon class="ability-card__delete" @click.stop="$emit('delete-ability')" />
+      <XCircleIcon class='ability-card__delete' @click.stop='$emit(&apos;delete-ability&apos;)' />
     </div>
     <hr />
-    <div class="ability-card__body">
-      <template v-if="cardType === 'experience'">
-        <p v-if="experiences.length === 0" class="ability-card__body__tips">
+    <div class='ability-card__body'>
+      <template v-if='cardType === &apos;experience&apos;'>
+        <p v-if='experiences.length === 0' class='ability-card__body__tips'>
           由右方列表拉入適合課程
         </p>
         <draggable
-          class="experience-list"
-          tag="ul"
-          :list="experiences"
-          v-bind="draggableOptions"
-          item-key="id"
-          @start="handleDrag(true)"
-          @end="handleDrag(false)"
+          class='experience-list'
+          tag='ul'
+          :list='experiences'
+          v-bind='draggableOptions'
+          item-key='id'
+          @start='handleDrag(true)'
+          @end='handleDrag(false)'
         >
-          <template #item="{ element: experience, index }">
-            <li class="experience-card" :data-id="experience.id">
-              <div class="experience-card__header">
-                <h3 class="experience-card__name">
+          <template #item='{ element: experience, index }'>
+            <li class='experience-card' :data-id='experience.id'>
+              <div class='experience-card__header'>
+                <h3 class='experience-card__name'>
                   {{ experience.name }}
                 </h3>
-                <span v-if="experience.showPosition" class="experience-card__position">
+                <span v-if='experience.showPosition' class='experience-card__position'>
                   {{ experience.type === 'course' ? `學期成績${experience.position}分` : experience.position }}
                 </span>
-                <Menu as="div" class="experience-card__menu">
-                  <MenuButton class="experience-card__menu-btn">
-                    <DotsVerticalIcon class="experience-card__delete" />
+                <Menu as='div' class='experience-card__menu'>
+                  <MenuButton class='experience-card__menu-btn'>
+                    <DotsVerticalIcon class='experience-card__delete' />
                   </MenuButton>
-                  <transition name="menu-fade">
-                    <MenuItems as="ul" class="experience-card__menu-items">
-                      <MenuItem v-if="experience.position" v-slot="{ active }">
+                  <transition name='menu-fade'>
+                    <MenuItems as='ul' class='experience-card__menu-items'>
+                      <MenuItem v-if='experience.position' v-slot='{ active }'>
                         <li
-                          :class="{ 'experience-card__menu-item--active': active }"
-                          class="experience-card__menu-item"
-                          @click="experience.showPosition = !experience.showPosition"
+                          :class='{ &apos;experience-card__menu-item--active&apos;: active }'
+                          class='experience-card__menu-item'
+                          @click='experience.showPosition = !experience.showPosition'
                         >
                           {{ experience.showPosition ? '隱藏' : '顯示'
                           }}{{ experience.type === 'course' ? '成績' : '職位/名次' }}
                         </li>
                       </MenuItem>
-                      <MenuItem v-if="experience.feedback" v-slot="{ active }">
+                      <MenuItem v-if='experience.feedback' v-slot='{ active }'>
                         <li
-                          :class="{ 'experience-card__menu-item--active': active }"
-                          class="experience-card__menu-item"
-                          @click="experience.showFeedback = !experience.showFeedback"
+                          :class='{ &apos;experience-card__menu-item--active&apos;: active }'
+                          class='experience-card__menu-item'
+                          @click='experience.showFeedback = !experience.showFeedback'
                         >
                           {{ experience.showFeedback ? '隱藏心得' : '顯示心得' }}
                         </li>
                       </MenuItem>
-                      <MenuItem v-slot="{ active }">
+                      <MenuItem v-slot='{ active }'>
                         <li
-                          :class="{ 'experience-card__menu-item--active': active }"
-                          class="experience-card__menu-item"
-                          @click.stop="$emit('delete-experience', index)"
+                          :class='{ &apos;experience-card__menu-item--active&apos;: active }'
+                          class='experience-card__menu-item'
+                          @click.stop='$emit(&apos;delete-experience&apos;, index)'
                         >
                           刪除此經驗
                         </li>
@@ -84,12 +84,12 @@
                   </transition>
                 </Menu>
               </div>
-              <div class="experience-card__tags">
-                <div v-for="tag in experience.tags" :key="tag" class="tag">
+              <div class='experience-card__tags'>
+                <div v-for='tag in experience.tags' :key='tag' class='tag'>
                   {{ tag.name }}
                 </div>
               </div>
-              <div v-if="experience.showFeedback" class="experience-card__description">
+              <div v-if='experience.showFeedback' class='experience-card__description'>
                 {{ experience.feedback }}
               </div>
             </li>
@@ -97,17 +97,17 @@
         </draggable>
       </template>
       <template v-else>
-        <textarea :value="text" class="ability-card__text" @input="handleTextInput" />
+        <textarea :value='text' class='ability-card__text' @input='handleTextInput' />
       </template>
     </div>
   </div>
 </template>
 
 <script>
-import draggable from 'vuedraggable'
-import useGrab from '@/composables/useGrab'
-import { Menu, MenuButton, MenuItems, MenuItem } from '@headlessui/vue'
-import { XCircleIcon, DotsVerticalIcon } from '@heroicons/vue/solid'
+import draggable from 'vuedraggable';
+import useGrab from '@/composables/useGrab';
+import { Menu, MenuButton, MenuItems, MenuItem } from '@headlessui/vue';
+import { XCircleIcon, DotsVerticalIcon } from '@heroicons/vue/solid';
 
 export default {
   name: 'AbilityCard',
@@ -123,8 +123,8 @@ export default {
   props: {
     experiences: {
       type: Array,
-      default () {
-        return []
+      default() {
+        return [];
       }
     },
     abilityTopic: {
@@ -134,8 +134,8 @@ export default {
     cardType: {
       type: String,
       default: 'experience',
-      validator (value) {
-        return ['experience', 'text'].includes(value)
+      validator(value) {
+        return ['experience', 'text'].includes(value);
       }
     },
     text: {
@@ -144,36 +144,36 @@ export default {
     }
   },
   emits: ['update:abilityTopic', 'update:text', 'delete-experience', 'delete-ability'],
-  setup (props, { emit }) {
-    const { setIsGrabbing } = useGrab()
+  setup(props, { emit }) {
+    const { setIsGrabbing } = useGrab();
 
     const handleDrag = onDragging => {
-      setIsGrabbing(onDragging)
-    }
+      setIsGrabbing(onDragging);
+    };
 
     const draggableOptions = {
       animation: 200,
       group: {
         name: 'experience',
-        put: function (to, from, item) {
-          if (from.options.group.name !== to.options.group.name) return false
+        put: function(to, from, item) {
+          if (from.options.group.name !== to.options.group.name) return false;
           // 重複的經驗無法放入
-          return !props.experiences.some(el => el.id === ~~item.dataset.id)
+          return !props.experiences.some(el => el.id === ~~item.dataset.id);
         }
       }
-    }
+    };
 
     const handleTextInput = e => {
-      emit('update:text', e.target.value)
+      emit('update:text', e.target.value);
       if (e.target.scrollHeight > 80) {
-        e.target.style.height = '5px'
-        e.target.style.height = `${e.target.scrollHeight}px`
+        e.target.style.height = '5px';
+        e.target.style.height = `${e.target.scrollHeight}px`;
       }
-    }
+    };
 
-    return { setIsGrabbing, handleDrag, draggableOptions, handleTextInput }
+    return { setIsGrabbing, handleDrag, draggableOptions, handleTextInput };
   }
-}
+};
 </script>
 
 <style lang="scss" scoped>

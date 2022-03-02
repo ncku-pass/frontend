@@ -10,6 +10,9 @@ module.exports = {
   rules: {
     'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
+    'comma-dangle': ['off'],
+    semi: ['error', 'always'],
+    'space-before-function-paren': ['error', 'never'],
     'vue/max-attributes-per-line': [
       'error',
       {
@@ -18,6 +21,7 @@ module.exports = {
         }
       }
     ],
+    'vue/html-quotes': ['error', 'single'],
     'vue/html-self-closing': [
       'error',
       {
@@ -37,4 +41,4 @@ module.exports = {
       }
     }
   ]
-}
+};

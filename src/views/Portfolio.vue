@@ -1,28 +1,28 @@
 <template>
-  <div class="portfolio">
-    <template v-if="loading">
-      <div class="portfolio__loading">
+  <div class='portfolio'>
+    <template v-if='loading'>
+      <div class='portfolio__loading'>
         <p>Loading</p>
-        <div class="lds-dual-ring" />
+        <div class='lds-dual-ring' />
       </div>
-      <div class="portfolio__loading-left" />
-      <div class="portfolio__loading-right" />
+      <div class='portfolio__loading-left' />
+      <div class='portfolio__loading-right' />
     </template>
     <template v-else>
       <PortfolioMain />
       <PortfolioMenu />
     </template>
     <ConfirmModal
-      v-if="showConfirmModal"
-      confirm-type="customize"
-      message="尚未儲存履歷，確定要離開嗎？"
-      @cancel="confirmLeaving(false)"
-      @confirm="confirmLeaving(true)"
+      v-if='showConfirmModal'
+      confirm-type='customize'
+      message='尚未儲存履歷，確定要離開嗎？'
+      @cancel='confirmLeaving(false)'
+      @confirm='confirmLeaving(true)'
     >
-      <button class="btn--red" @click.stop="confirmLeaving(false)">
+      <button class='btn--red' @click.stop='confirmLeaving(false)'>
         留下存檔
       </button>
-      <button class="btn" @click.stop="confirmLeaving(true)">
+      <button class='btn' @click.stop='confirmLeaving(true)'>
         確定離開
       </button>
     </ConfirmModal>
@@ -30,12 +30,12 @@
 </template>
 
 <script>
-import { computed, ref } from 'vue'
-import { useStore } from 'vuex'
-import { onBeforeRouteLeave } from 'vue-router'
-import PortfolioMain from '@/components/Portfolio/PortfolioMain'
-import PortfolioMenu from '@/components/Portfolio/PortfolioMenu'
-import ConfirmModal from '@/components/ConfirmModal'
+import { computed, ref } from 'vue';
+import { useStore } from 'vuex';
+import { onBeforeRouteLeave } from 'vue-router';
+import PortfolioMain from '@/components/Portfolio/PortfolioMain';
+import PortfolioMenu from '@/components/Portfolio/PortfolioMenu';
+import ConfirmModal from '@/components/ConfirmModal';
 
 export default {
   name: 'Portfolio',
@@ -44,41 +44,41 @@ export default {
     PortfolioMenu,
     ConfirmModal
   },
-  setup () {
-    const store = useStore()
+  setup() {
+    const store = useStore();
 
-    const someResumesNotSaved = computed(() => store.getters['resumes/someResumesNotSaved'])
-    const resumesNotReady = computed(() => store.state.resumes.isPending && !store.state.resumes.resumes)
-    const experiencesNotReady = computed(() => store.state.experiences.isPending)
+    const someResumesNotSaved = computed(() => store.getters['resumes/someResumesNotSaved']);
+    const resumesNotReady = computed(() => store.state.resumes.isPending && !store.state.resumes.resumes);
+    const experiencesNotReady = computed(() => store.state.experiences.isPending);
 
-    const loading = computed(() => resumesNotReady.value || experiencesNotReady.value)
+    const loading = computed(() => resumesNotReady.value || experiencesNotReady.value);
 
     // ===== 若未儲存時，跳出確認視窗 =====
-    const showConfirmModal = ref(false)
-    const confirmLeaving = ref(null)
+    const showConfirmModal = ref(false);
+    const confirmLeaving = ref(null);
 
     const openConfirmModal = () => {
-      showConfirmModal.value = true
+      showConfirmModal.value = true;
       return new Promise((resolve) => {
-        confirmLeaving.value = resolve
-      })
-    }
+        confirmLeaving.value = resolve;
+      });
+    };
 
-    onBeforeRouteLeave(async (to, from) => {
+    onBeforeRouteLeave(async(to, from) => {
       if (someResumesNotSaved.value) {
-        const confirm = await openConfirmModal()
-        showConfirmModal.value = false
-        return confirm
+        const confirm = await openConfirmModal();
+        showConfirmModal.value = false;
+        return confirm;
       }
-    })
+    });
 
     return {
       loading,
       showConfirmModal,
       confirmLeaving
-    }
+    };
   }
-}
+};
 </script>
 
 <style lang="scss" scoped>

@@ -1,30 +1,30 @@
 <template>
-  <div class="experience">
-    <div class="experience__window">
-      <ExperienceWindowTabs :type="type" />
-      <div v-if="isPending" class="experience__loading">
+  <div class='experience'>
+    <div class='experience__window'>
+      <ExperienceWindowTabs :type='type' />
+      <div v-if='isPending' class='experience__loading'>
         <p>Loading</p>
-        <div class="lds-dual-ring" />
+        <div class='lds-dual-ring' />
       </div>
-      <div v-else class="experience__window__table">
+      <div v-else class='experience__window__table'>
         <vueScrollShadow>
-          <div class="experience__window__table__wrapper">
+          <div class='experience__window__table__wrapper'>
             <ExperienceListBlock
-              v-for="(semesterData, semester) in classifiedExperiences[type]"
-              :key="semester"
-              :semester="semester"
+              v-for='(semesterData, semester) in classifiedExperiences[type]'
+              :key='semester'
+              :semester='semester'
             >
               <ExperienceListItem
-                v-for="experience in semesterData"
-                :key="experience.id"
-                :experience="experience"
-                @delete="handleDelete"
-                @edit="handleEditExperience"
-                @click="openViewerModal(experience)"
+                v-for='experience in semesterData'
+                :key='experience.id'
+                :experience='experience'
+                @delete='handleDelete'
+                @edit='handleEditExperience'
+                @click='openViewerModal(experience)'
               />
             </ExperienceListBlock>
-            <div class="add-btn__container">
-              <AddExperienceButton :type="type" @add-experience="handleAddExperience" @import-ncku-data="handleImportNCKUData" />
+            <div class='add-btn__container'>
+              <AddExperienceButton :type='type' @add-experience='handleAddExperience' @import-ncku-data='handleImportNCKUData' />
             </div>
           </div>
         </vueScrollShadow>
@@ -32,32 +32,32 @@
     </div>
   </div>
   <FormModal
-    v-if="showFormModal"
-    :form-type="type"
-    :edit-data="experienceToEdit"
-    @close="showFormModal = false"
-    @submit="handleSubmit"
+    v-if='showFormModal'
+    :form-type='type'
+    :edit-data='experienceToEdit'
+    @close='showFormModal = false'
+    @submit='handleSubmit'
   />
   <ViewerModal
-    v-if="showViewerModal"
-    :experience-type="type"
-    :experience="experienceToShow"
-    @close="showViewerModal = false"
+    v-if='showViewerModal'
+    :experience-type='type'
+    :experience='experienceToShow'
+    @close='showViewerModal = false'
   />
-  <ImportModal v-if="showImportModal" :type="type" @close="showImportModal = false" />
+  <ImportModal v-if='showImportModal' :type='type' @close='showImportModal = false' />
 </template>
 
 <script>
-import { ref, computed } from 'vue'
-import { useStore } from 'vuex'
-import ExperienceWindowTabs from '@/components/Experience/ExperienceWindowTabs.vue'
-import ExperienceListItem from '@/components/Experience/ExperienceListItem.vue'
-import ExperienceListBlock from '@/components/Experience/ExperienceListBlock.vue'
-import AddExperienceButton from '@/components/Experience/AddExperienceButton.vue'
-import FormModal from '@/components/Experience/Form/FormModal.vue'
-import ViewerModal from '@/components/Experience/ViewerModal.vue'
-import ImportModal from '@/components/Experience/ImportModal.vue'
-import vueScrollShadow from 'vue3-scroll-shadow'
+import { ref, computed } from 'vue';
+import { useStore } from 'vuex';
+import ExperienceWindowTabs from '@/components/Experience/ExperienceWindowTabs.vue';
+import ExperienceListItem from '@/components/Experience/ExperienceListItem.vue';
+import ExperienceListBlock from '@/components/Experience/ExperienceListBlock.vue';
+import AddExperienceButton from '@/components/Experience/AddExperienceButton.vue';
+import FormModal from '@/components/Experience/Form/FormModal.vue';
+import ViewerModal from '@/components/Experience/ViewerModal.vue';
+import ImportModal from '@/components/Experience/ImportModal.vue';
+import vueScrollShadow from 'vue3-scroll-shadow';
 
 export default {
   name: 'Experience',
@@ -78,56 +78,56 @@ export default {
       default: 'course'
     }
   },
-  setup (props) {
-    const store = useStore()
+  setup(props) {
+    const store = useStore();
 
-    const isPending = computed(() => store.state.experiences.isPending)
-    const experiences = computed(() => store.state.experiences.experiences)
-    const classifiedExperiences = computed(() => store.getters['experiences/classifiedExperiences'])
-    const getExperiences = () => store.dispatch('experiences/getExperiences')
+    const isPending = computed(() => store.state.experiences.isPending);
+    const experiences = computed(() => store.state.experiences.experiences);
+    const classifiedExperiences = computed(() => store.getters['experiences/classifiedExperiences']);
+    const getExperiences = () => store.dispatch('experiences/getExperiences');
 
     // ===新增活動表單===
-    const showFormModal = ref(false)
+    const showFormModal = ref(false);
     const handleAddExperience = () => {
-      showFormModal.value = true
-      experienceToEdit.value = null
-    }
+      showFormModal.value = true;
+      experienceToEdit.value = null;
+    };
 
     // ===設定滾動容器陰影===
-    const shadowContainer = ref(null)
+    const shadowContainer = ref(null);
 
     // ===處理表單送出===
     const handleSubmit = () => {
-      showFormModal.value = false
-    }
+      showFormModal.value = false;
+    };
 
     // ===處理經驗刪除===
     const handleDelete = () => {
-      getExperiences()
-    }
+      getExperiences();
+    };
 
     // ===點擊編輯的按鈕時，抓出此筆經歷，傳入表單中===
-    const experienceToEdit = ref(null)
+    const experienceToEdit = ref(null);
     const handleEditExperience = experienceId => {
       showFormModal.value = true
       ;[experienceToEdit.value] = experiences.value[props.type].filter(exp => {
-        return exp.id === experienceId
-      })
-    }
+        return exp.id === experienceId;
+      });
+    };
 
     // === 點擊經歷時，跳出檢視視窗 ===
-    const showViewerModal = ref(false)
-    const experienceToShow = ref(null)
+    const showViewerModal = ref(false);
+    const experienceToShow = ref(null);
 
     const openViewerModal = experience => {
-      experienceToShow.value = experience
-      showViewerModal.value = true
-    }
+      experienceToShow.value = experience;
+      showViewerModal.value = true;
+    };
     // === 匯入學校資料 ===
-    const showImportModal = ref(false)
-    const handleImportNCKUData = async () => {
-      showImportModal.value = true
-    }
+    const showImportModal = ref(false);
+    const handleImportNCKUData = async() => {
+      showImportModal.value = true;
+    };
 
     return {
       isPending,
@@ -144,9 +144,9 @@ export default {
       experienceToShow,
       showImportModal,
       handleImportNCKUData
-    }
+    };
   }
-}
+};
 </script>
 
 <style lang="scss">

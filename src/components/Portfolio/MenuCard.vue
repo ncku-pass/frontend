@@ -1,9 +1,9 @@
 <template>
-  <li class="menu-card" :data-id="experience.id">
-    <div class="menu-card__type" :class="`menu-card__type--${experience.type}`">
+  <li class='menu-card' :data-id='experience.id'>
+    <div class='menu-card__type' :class='`menu-card__type--${experience.type}`'>
       {{ typeChinese[experience.type] }}
     </div>
-    <span class="menu-card__name">{{ experience.name }}</span>
+    <span class='menu-card__name'>{{ experience.name }}</span>
   </li>
 </template>
 
@@ -15,7 +15,7 @@ const typeChinese = {
   work: '工',
   certificate: '證',
   other: '其'
-}
+};
 
 export default {
   name: 'MenuCard',
@@ -25,10 +25,10 @@ export default {
       required: true
     }
   },
-  setup () {
-    return { typeChinese }
+  setup() {
+    return { typeChinese };
   }
-}
+};
 </script>
 
 <style lang="scss">

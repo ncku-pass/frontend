@@ -1,4 +1,4 @@
-import { req } from './https'
+import { req } from './https';
 
 export const getNCKUExperiences = ({ key, keyval, type = 'all' }) => {
   return req.post('/ncku-portal/experiences', {
@@ -8,5 +8,5 @@ export const getNCKUExperiences = ({ key, keyval, type = 'all' }) => {
     params: {
       type
     }
-  })
-}
+  });
+};

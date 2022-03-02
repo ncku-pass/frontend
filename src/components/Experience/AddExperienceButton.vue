@@ -1,18 +1,18 @@
 <template>
-  <Menu as="div" class="add-experience-button">
-    <MenuButton class="add-experience-button__btn">
+  <Menu as='div' class='add-experience-button'>
+    <MenuButton class='add-experience-button__btn'>
       新增經驗
       <ChevronDownIcon />
     </MenuButton>
-    <transition name="menu-fade">
-      <MenuItems as="ul">
-        <MenuItem v-slot="{ active }">
-          <li :class="{ active }" @click="$emit('add-experience')">
+    <transition name='menu-fade'>
+      <MenuItems as='ul'>
+        <MenuItem v-slot='{ active }'>
+          <li :class='{ active }' @click='$emit(&apos;add-experience&apos;)'>
             新增校外或其他經驗
           </li>
         </MenuItem>
-        <MenuItem v-if="type === 'course' || type === 'activity'" v-slot="{ active }">
-          <li :class="{ active }" @click="$emit('import-ncku-data')">
+        <MenuItem v-if='type === &apos;course&apos; || type === &apos;activity&apos;' v-slot='{ active }'>
+          <li :class='{ active }' @click='$emit(&apos;import-ncku-data&apos;)'>
             匯入校內原有資料
           </li>
         </MenuItem>
@@ -22,8 +22,8 @@
 </template>
 
 <script>
-import { Menu, MenuButton, MenuItems, MenuItem } from '@headlessui/vue'
-import { ChevronDownIcon } from '@heroicons/vue/solid'
+import { Menu, MenuButton, MenuItems, MenuItem } from '@headlessui/vue';
+import { ChevronDownIcon } from '@heroicons/vue/solid';
 
 export default {
   name: 'AddExperienceButton',
@@ -41,7 +41,7 @@ export default {
     }
   },
   emits: ['import-ncku-data', 'add-experience']
-}
+};
 </script>
 
 <style lang="scss" scoped>

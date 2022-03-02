@@ -1,34 +1,34 @@
 <template>
-  <li class="experience-list-item">
-    <h4 class="experience-list-item__title">
+  <li class='experience-list-item'>
+    <h4 class='experience-list-item__title'>
       {{ experience.name }}
     </h4>
-    <ul class="experience-list-item__tags">
-      <li v-for="tag in experience.tags" :key="tag.id" class="tag">
+    <ul class='experience-list-item__tags'>
+      <li v-for='tag in experience.tags' :key='tag.id' class='tag'>
         {{ tag.name }}
       </li>
     </ul>
-    <div class="experience-list-item__btns">
-      <button class="experience-list-item__btns__edit btn-pill" @click.stop="handleEditExperience">
+    <div class='experience-list-item__btns'>
+      <button class='experience-list-item__btns__edit btn-pill' @click.stop='handleEditExperience'>
         <PencilAltIcon />
-        <span class="btn-pill__text">編輯</span>
+        <span class='btn-pill__text'>編輯</span>
       </button>
       <!-- TODO:  寫死的資料改掉-->
       <button
-        class="experience-list-item__btns__delete btn-pill"
-        :class="{ disabled: false }"
-        :disabled="false"
-        @click.stop="confirmDelete"
+        class='experience-list-item__btns__delete btn-pill'
+        :class='{ disabled: false }'
+        :disabled='false'
+        @click.stop='confirmDelete'
       >
         <TrashIcon />
-        <span class="btn-pill__text">刪除</span>
+        <span class='btn-pill__text'>刪除</span>
       </button>
     </div>
-    <ConfirmModal v-if="showConfirmModal" :message="experience.name" confirm-type="delete" @cancel="closeConfirmModal">
-      <button v-show="!deleteStatus.isPending" class="btn" @click.stop="closeConfirmModal">
+    <ConfirmModal v-if='showConfirmModal' :message='experience.name' confirm-type='delete' @cancel='closeConfirmModal'>
+      <button v-show='!deleteStatus.isPending' class='btn' @click.stop='closeConfirmModal'>
         取消
       </button>
-      <button class="btn--red" :disabled="deleteStatus.isPending" @click.stop="handleDeleteExperience">
+      <button class='btn--red' :disabled='deleteStatus.isPending' @click.stop='handleDeleteExperience'>
         {{ deleteStatus.isPending ? '刪除中' : '確定刪除' }}
       </button>
     </ConfirmModal>
@@ -36,10 +36,10 @@
 </template>
 
 <script>
-import ConfirmModal from '@/components/ConfirmModal'
-import { deleteExperience } from '@/api/experiences'
-import { PencilAltIcon, TrashIcon } from '@heroicons/vue/outline'
-import { useDeleteModal } from '@/composables/useDeleteModal'
+import ConfirmModal from '@/components/ConfirmModal';
+import { deleteExperience } from '@/api/experiences';
+import { PencilAltIcon, TrashIcon } from '@heroicons/vue/outline';
+import { useDeleteModal } from '@/composables/useDeleteModal';
 
 export default {
   components: {
@@ -50,33 +50,33 @@ export default {
   props: {
     experience: {
       type: Object,
-      default () {
-        return {}
+      default() {
+        return {};
       }
     }
   },
   emits: ['delete', 'edit'],
-  setup (props, { emit }) {
+  setup(props, { emit }) {
     // === 刪除經歷 ===
-    const { showConfirmModal, deleteStatus, closeConfirmModal, confirmDelete } = useDeleteModal()
+    const { showConfirmModal, deleteStatus, closeConfirmModal, confirmDelete } = useDeleteModal();
     // TODO: 用vuex去處理
-    const handleDeleteExperience = async () => {
+    const handleDeleteExperience = async() => {
       try {
-        deleteStatus.isPending = true
-        deleteStatus.error = null
-        await deleteExperience(props.experience.id)
-        showConfirmModal.value = false
-        emit('delete')
+        deleteStatus.isPending = true;
+        deleteStatus.error = null;
+        await deleteExperience(props.experience.id);
+        showConfirmModal.value = false;
+        emit('delete');
       } catch (error) {
-        deleteStatus.error = error
+        deleteStatus.error = error;
       } finally {
-        deleteStatus.isPending = false
+        deleteStatus.isPending = false;
       }
-    }
+    };
 
-    const handleEditExperience = async () => {
-      emit('edit', props.experience.id)
-    }
+    const handleEditExperience = async() => {
+      emit('edit', props.experience.id);
+    };
 
     return {
       showConfirmModal,
@@ -85,9 +85,9 @@ export default {
       deleteStatus,
       handleDeleteExperience,
       handleEditExperience
-    }
+    };
   }
-}
+};
 </script>
 
 <style lang="scss" scoped>

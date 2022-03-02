@@ -1,14 +1,14 @@
 <template>
-  <component :is="layout">
+  <component :is='layout'>
     <slot />
   </component>
 </template>
 
 <script>
-import { computed } from 'vue'
-import { useRoute } from 'vue-router'
-import DefaultLayout from './DefaultLayout.vue'
-import AppLayout from './AppLayout.vue'
+import { computed } from 'vue';
+import { useRoute } from 'vue-router';
+import DefaultLayout from './DefaultLayout.vue';
+import AppLayout from './AppLayout.vue';
 
 export default {
   name: 'LayoutWrapper',
@@ -16,14 +16,14 @@ export default {
     DefaultLayout,
     AppLayout
   },
-  setup () {
-    const route = useRoute()
+  setup() {
+    const route = useRoute();
 
     const layout = computed(() => {
-      return route.meta.layout || 'DefaultLayout'
-    })
+      return route.meta.layout || 'DefaultLayout';
+    });
 
-    return { layout }
+    return { layout };
   }
-}
+};
 </script>
