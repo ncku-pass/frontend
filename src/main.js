@@ -7,7 +7,6 @@ import router from './router';
 import store from './store';
 import Toast from 'vue-toastification';
 import { Vue3Mq } from 'vue3-mq';
-// import { Vue3Mq } from 'vue3-mq';
 
 const toastConfig = {
   transition: 'Vue-Toastification__fade',
@@ -30,6 +29,13 @@ async function startApp() {
     .use(Toast, toastConfig)
     .use(store)
     .use(router)
+    .use(Vue3Mq, {
+      breakpoints: {
+        phone: 0,
+        tablet: 768,
+        desktop: 1370,
+      }
+    })
     .mount('#app');
 }
 
