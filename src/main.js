@@ -7,6 +7,7 @@ import router from './router';
 import store from './store';
 import Toast from 'vue-toastification';
 import { Vue3Mq } from 'vue3-mq';
+// import { Vue3Mq } from 'vue3-mq';
 
 const toastConfig = {
   transition: 'Vue-Toastification__fade',
