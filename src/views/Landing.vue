@@ -1,5 +1,5 @@
 <template>
-  <div class='landing'>
+  <div class='landing' :class='device'>
     <section class='hero'>
       <div class='container hero__content'>
         <div class='intro'>
@@ -109,18 +109,26 @@
 <script>
 export default {
   name: 'Landing',
+  inject: ['mq'],
+  computed: {
+    device() {
+      return this.mq.current;
+    }
+  }
 };
 </script>
 
 <style lang="scss" scoped>
 @import '~@/scss/mixins';
 @import '~@/scss/variables';
+
 .landing {
-  background-color: #faf5f5;
+  background-color: $gray-6;
 }
+
 .hero {
   position: relative;
-  color: #fff;
+  color: $white;
   height: 100vh;
   display: flex;
   align-items: center;
@@ -128,6 +136,7 @@ export default {
   background-position: center -50px;
   background-size: cover;
   background-repeat: no-repeat;
+
   &__content {
     display: flex;
     justify-content: space-between;
@@ -146,6 +155,7 @@ export default {
     font-size: 26px;
   }
 }
+
 .intro {
   &__icon {
     height: 60px;
@@ -160,6 +170,7 @@ export default {
     line-height: 34px;
   }
 }
+
 .scroll-arrow {
   position: absolute;
   bottom: 72px;
@@ -268,7 +279,7 @@ export default {
   }
 }
 
-@media (max-width: 1279px) {
+.laptop {
   .features {
     margin: 115px 0;
   }
@@ -289,18 +300,38 @@ export default {
   }
 }
 
-@media (max-width: 1023px) {
+.tablet, .phone {
+  .hero__content {
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+  }
   .intro {
     &__icon {
       margin-bottom: 32px;
     }
+  }
+  .features {
+    margin: 100px 0;
+  }
+  .feature {
+    flex-direction: column-reverse;
+    text-align: center;
+    padding: 65px 0;
+    &__text {
+      margin-bottom: 20px;
+    }
+  }
+}
+
+.tablet {
+  .intro {
     &__title {
       font-size: 52px;
       line-height: 70px;
     }
   }
   .features {
-    margin: 115px 0;
     &__title {
       font-size: 52px;
     }
@@ -314,105 +345,68 @@ export default {
     }
   }
   .feature {
-    flex-direction: column-reverse;
-    text-align: center;
-    padding: 65px 0;
-    &__img {
-      max-width: 720px;
-    }
     &__text {
       max-width: 720px;
       h2 {
-        margin-bottom: 20px;
         font-size: 52px;
+        line-height: 52px;
       }
+    }
+    &__img {
+      max-width: 720px;
     }
   }
 }
 
-@media (max-width: 767px) {
-  .hero__content {
-    flex-direction: column;
-    text-align: center;
-    align-items: center;
-  }
+.phone {
   .intro {
-    &__icon {
-      height: 48px;
-      display: inline-block;
-      margin: auto 0;
-    }
-  }
-  .features {
-    &__item {
-      &__img {
-        max-width: 115px;
-      }
-      &__title {
-        font-size: 20px;
-      }
-    }
-  }
-  .feature {
-    &__img {
-      max-width: 600px;
-    }
-    &__text {
-      max-width: 600px;
-      margin-bottom: 30px;
-      h2 {
-        margin-bottom: 20px;
-      }
-    }
-  }
-  .footer {
-    padding: 20px;
-    text-align: center;
-    .container {
-      flex-direction: column;
-      gap: 20px;
-    }
-    &__links {
-      text-align: center;
-    }
-  }
-}
-@media (max-width: 639px) {
-  .intro {
+    text-align: left;
     &__title {
       font-size: 44px;
       line-height: 70px;
     }
   }
-
+  .login {
+    text-align: left;
+  }
   .features {
     &__title {
-      font-size: 44px;
-    }
-    &__list {
-      flex-direction: column;
+      font-size: 48px;
     }
     &__item {
-      gap: 5px 0;
-      &:not(:last-child) {
-        margin-bottom: 40px;
-      }
+      gap: 20px 0;
       &__img {
-        max-width: 150px;
+        max-width: 100px;
       }
       &__title {
-        font-size: 26px;
+        font-size: 18px;
       }
     }
   }
-
   .feature {
     padding: 40px 20px;
     &__text h2 {
-      line-height: 52px;
+      font-size: 48px;
+      line-height: 48px;
     }
     &__img {
       max-width: 100%;
+    }
+  }
+  .footer {
+    font-size: 14px;
+    line-height: 18px;
+
+    .container {
+      display: grid;
+      grid-template-columns: 60% 1fr;
+    }
+
+    &__icon {
+      grid-column-start: 1;
+      grid-column-end: 3;
+      height: 30px;
+      margin-bottom: 20px;
     }
   }
 }

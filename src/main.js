@@ -33,6 +33,7 @@ async function startApp() {
       breakpoints: {
         phone: 0,
         tablet: 768,
+        laptop: 1280,
         desktop: 1370,
       }
     })
