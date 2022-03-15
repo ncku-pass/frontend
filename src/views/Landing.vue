@@ -361,9 +361,12 @@ export default {
 .phone {
   .intro {
     text-align: left;
-    &__title {
-      font-size: 44px;
-      line-height: 70px;
+    &__icon {
+      height: 50px;
+    }
+      &__title {
+      font-size: 38px;
+      line-height: 60px;
     }
   }
   .login {
@@ -373,31 +376,39 @@ export default {
     }
   }
   .features {
+    margin: 50px 0;
+
     &__title {
-      font-size: 48px;
+      font-size: 32px;
     }
     &__item {
       gap: 20px 0;
       &__img {
-        max-width: 100px;
+        max-width: 80px;
       }
       &__title {
-        font-size: 18px;
+        font-size: 14px;
       }
     }
   }
   .feature {
     padding: 40px 20px;
-    &__text h2 {
-      font-size: 48px;
-      line-height: 48px;
+    &__text {
+      h2 {
+        font-size: 32px;
+        line-height: 40px;
+      }
+      p {
+        font-size: 16px;
+        line-height: 24px;
+      }
     }
     &__img {
       max-width: 100%;
     }
   }
   .footer {
-    font-size: 14px;
+    font-size: 12px;
     line-height: 18px;
 
     .container {
