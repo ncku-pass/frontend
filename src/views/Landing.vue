@@ -166,7 +166,7 @@ export default {
     line-height: 97px;
   }
   &__subtitle {
-    font-size: 21px;
+    font-size: 22px;
     line-height: 34px;
   }
 }
@@ -368,6 +368,9 @@ export default {
   }
   .login {
     text-align: left;
+    &__title {
+      font-size: 18px;
+    }
   }
   .features {
     &__title {
