@@ -16,7 +16,7 @@ export default {
     semester: {
       type: String,
       default: '未知學期'
-    }
+    },
   },
   setup(props) {
     return {};

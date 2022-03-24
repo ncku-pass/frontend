@@ -3,7 +3,7 @@
     <h4 class='experience-list-item__title'>
       {{ experience.name }}
     </h4>
-    <ul class='experience-list-item__tags'>
+    <ul :id='getTagListId(experience.id)' class='experience-list-item__tags' :class='tagsWrapped.value ? "wrapped" : ""'>
       <li v-for='tag in experience.tags' :key='tag.id' class='tag'>
         {{ tag.name }}
       </li>
@@ -36,6 +36,8 @@
 </template>
 
 <script>
+import { onMounted, onUnmounted, reactive, ref } from 'vue';
+import { debounce } from 'lodash-es';
 import ConfirmModal from '@/components/ConfirmModal';
 import { deleteExperience } from '@/api/experiences';
 import { PencilAltIcon, TrashIcon } from '@heroicons/vue/outline';
@@ -53,7 +55,7 @@ export default {
       default() {
         return {};
       }
-    }
+    },
   },
   emits: ['delete', 'edit'],
   setup(props, { emit }) {
@@ -78,15 +80,48 @@ export default {
       emit('edit', props.experience.id);
     };
 
+    // === detect if tags are wrapped ===
+    const tagsWrapped = reactive({ value: false });
+    const container = ref(null);
+
+    const getTagListId = (id) => {
+      return `exp-tags-${id}`;
+    };
+
+    const onResize = debounce(() => {
+      if (container.value.children !== undefined && container.value.children.length > 2) {
+        // reset wrapped value
+        tagsWrapped.value = false;
+        for (const child of container.value.children) {
+          child.classList.remove('tag--wrapped');
+          if (child.offsetTop > container.value.offsetTop) {
+            child.classList.add('tag--wrapped');
+            tagsWrapped.value = true;
+          }
+        }
+      }
+    }, 500);
+
+    onMounted(async() => {
+      container.value = document.querySelector(`#${getTagListId(props.experience.id)}`);
+      window.addEventListener('resize', onResize);
+    });
+
+    onUnmounted(async() => {
+      window.removeEventListener('resize', onResize);
+    });
+
     return {
+      getTagListId,
       showConfirmModal,
       closeConfirmModal,
       confirmDelete,
       deleteStatus,
       handleDeleteExperience,
-      handleEditExperience
+      handleEditExperience,
+      tagsWrapped
     };
-  }
+  },
 };
 </script>
 
@@ -113,6 +148,13 @@ export default {
     display: flex;
     flex-wrap: wrap;
     gap: 6px;
+    max-height: 21px;
+    overflow: hidden;
+
+    &.wrapped::after {
+      min-width: 20px;
+      content: "...";
+    }
   }
   &__btns {
     @include grid(column, 0, 10px);
