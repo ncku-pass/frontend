@@ -39,13 +39,13 @@
 </template>
 
 <script>
-import { ref, onMounted, reactive, watchEffect, watch, computed } from 'vue';
-import { useStore } from 'vuex';
-import useScrollShadow from '@/composables/useScrollShadow';
-import MenuFilter from '@/components/Portfolio/MenuFilter';
-import MenuCard from '@/components/Portfolio/MenuCard';
-import draggable from 'vuedraggable';
-import { ExperienceTypes } from '@/config';
+import { ref, onMounted, reactive, watchEffect, watch, computed } from 'vue'
+import { useStore } from 'vuex'
+import useScrollShadow from '@/composables/useScrollShadow'
+import MenuFilter from '@/components/Portfolio/MenuFilter'
+import MenuCard from '@/components/Portfolio/MenuCard'
+import draggable from 'vuedraggable'
+import { ExperienceTypes } from '@/config'
 
 export default {
   name: 'PortfolioMenu',
@@ -55,41 +55,41 @@ export default {
     MenuCard
   },
   setup() {
-    const store = useStore();
+    const store = useStore()
 
     const draggableOptions = {
       group: { name: 'experience', pull: 'clone', put: false },
       sort: false
-    };
+    }
 
     // === 切換filter顯示 ===
-    const showFilter = ref(true);
+    const showFilter = ref(true)
 
     // === 經驗列表 ===
-    const experiencesArray = computed(() => store.getters['experiences/experiencesArray']);
-    const semesters = computed(() => store.getters['experiences/semesters']);
-    const tags = computed(() => store.getters['experiences/tags']);
+    const experiencesArray = computed(() => store.getters['experiences/experiencesArray'])
+    const semesters = computed(() => store.getters['experiences/semesters'])
+    const tags = computed(() => store.getters['experiences/tags'])
 
     // 初始化filter
     const filter = reactive({
       semesters: {},
       tags: {},
       types: ExperienceTypes.reduce((obj, type) => ({ ...obj, [type]: true }), {})
-    });
+    })
     watchEffect(() => {
       filter.semesters = semesters.value.reduce((obj, semester) => {
-        return { ...obj, [semester]: true };
-      }, {});
-    });
+        return { ...obj, [semester]: true }
+      }, {})
+    })
     watchEffect(() => {
-      filter.tags = tags.value.reduce((obj, tag) => ({ ...obj, [tag.name]: false }), {});
-    });
+      filter.tags = tags.value.reduce((obj, tag) => ({ ...obj, [tag.name]: false }), {})
+    })
 
     const someSemesterSelected = computed(() =>
       Object.keys(filter.semesters).some(key => filter.semesters[key] === true)
-    );
-    const someTagSelected = computed(() => Object.keys(filter.tags).some(key => filter.tags[key] === true));
-    const someTypeSelected = computed(() => Object.keys(filter.types).some(key => filter.types[key] === true));
+    )
+    const someTagSelected = computed(() => Object.keys(filter.tags).some(key => filter.tags[key] === true))
+    const someTypeSelected = computed(() => Object.keys(filter.types).some(key => filter.types[key] === true))
 
     const filteredExperienceArray = computed(() => {
       return experiencesArray.value.filter(experience => {
@@ -97,7 +97,7 @@ export default {
         if (someSemesterSelected.value) {
           for (const key in filter.semesters) {
             if (!filter.semesters[key] && experience.semester === key) {
-              return false;
+              return false
             }
           }
         }
@@ -105,46 +105,46 @@ export default {
         if (someTypeSelected.value) {
           for (const key in filter.types) {
             if (!filter.types[key] && experience.type === key) {
-              return false;
+              return false
             }
           }
         }
         // 如果 Tag 都沒選，就不篩選
-        if (!someTagSelected.value) return true;
+        if (!someTagSelected.value) return true
         for (const key in filter.tags) {
           if (filter.tags[key] && experience.tags.some(tag => tag.name === key)) {
-            return true;
+            return true
           }
         }
-        return false;
-      });
-    });
+        return false
+      })
+    })
 
     // === 設定滾動容器的陰影 ===
-    const { setShadows, initShadows } = useScrollShadow();
-    const MenuShadowContainer = ref(null);
+    const { setShadows, initShadows } = useScrollShadow()
+    const MenuShadowContainer = ref(null)
     // 列表開合時檢測是否加上列表陰影
     onMounted(() => {
       watch([showFilter, filteredExperienceArray], () => {
-        requestAnimationFrame(() => initShadows(MenuShadowContainer.value));
-      });
-    });
+        requestAnimationFrame(() => initShadows(MenuShadowContainer.value))
+      })
+    })
 
     // === 打勾/取消篩選 ===
     const toggleSemester = semester => {
-      filter.semesters[semester] = !filter.semesters[semester];
-    };
+      filter.semesters[semester] = !filter.semesters[semester]
+    }
     const toggleTag = tag => {
-      filter.tags[tag] = !filter.tags[tag];
-    };
+      filter.tags[tag] = !filter.tags[tag]
+    }
     const toggleType = type => {
-      filter.types[type] = !filter.types[type];
-    };
+      filter.types[type] = !filter.types[type]
+    }
     const changeAllTags = toStatus => {
       for (const tag in filter.tags) {
-        filter.tags[tag] = toStatus;
+        filter.tags[tag] = toStatus
       }
-    };
+    }
 
     return {
       draggableOptions,
@@ -159,9 +159,9 @@ export default {
       toggleTag,
       toggleType,
       changeAllTags
-    };
+    }
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>

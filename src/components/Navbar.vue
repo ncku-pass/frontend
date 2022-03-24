@@ -32,9 +32,9 @@
 </template>
 
 <script>
-import { ref } from 'vue';
-import { useStore } from 'vuex';
-import ConfirmModal from '@/components/ConfirmModal.vue';
+import { ref } from 'vue'
+import { useStore } from 'vuex'
+import ConfirmModal from '@/components/ConfirmModal.vue'
 
 export default {
   name: 'Navbar',
@@ -42,17 +42,17 @@ export default {
     ConfirmModal
   },
   setup() {
-    const store = useStore();
-    const logout = () => store.dispatch('auth/logout');
+    const store = useStore()
+    const logout = () => store.dispatch('auth/logout')
 
-    const showConfirmModal = ref(false);
+    const showConfirmModal = ref(false)
     const handleLogout = () => {
-      showConfirmModal.value = true;
-    };
+      showConfirmModal.value = true
+    }
 
-    return { showConfirmModal, logout, handleLogout };
+    return { showConfirmModal, logout, handleLogout }
   }
-};
+}
 </script>
 
 <style lang="scss">

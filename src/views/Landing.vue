@@ -112,10 +112,10 @@ export default {
   inject: ['mq'],
   computed: {
     device() {
-      return this.mq.current;
+      return this.mq.current
     }
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>

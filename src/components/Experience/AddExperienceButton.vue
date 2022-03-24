@@ -22,8 +22,8 @@
 </template>
 
 <script>
-import { Menu, MenuButton, MenuItems, MenuItem } from '@headlessui/vue';
-import { ChevronDownIcon } from '@heroicons/vue/solid';
+import { Menu, MenuButton, MenuItems, MenuItem } from '@headlessui/vue'
+import { ChevronDownIcon } from '@heroicons/vue/solid'
 
 export default {
   name: 'AddExperienceButton',
@@ -41,7 +41,7 @@ export default {
     }
   },
   emits: ['import-ncku-data', 'add-experience']
-};
+}
 </script>
 
 <style lang="scss" scoped>

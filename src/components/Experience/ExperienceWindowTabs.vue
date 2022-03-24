@@ -46,7 +46,7 @@ export default {
       default: 'course'
     }
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>

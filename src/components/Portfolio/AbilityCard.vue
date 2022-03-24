@@ -104,10 +104,10 @@
 </template>
 
 <script>
-import draggable from 'vuedraggable';
-import useGrab from '@/composables/useGrab';
-import { Menu, MenuButton, MenuItems, MenuItem } from '@headlessui/vue';
-import { XCircleIcon, DotsVerticalIcon } from '@heroicons/vue/solid';
+import draggable from 'vuedraggable'
+import useGrab from '@/composables/useGrab'
+import { Menu, MenuButton, MenuItems, MenuItem } from '@headlessui/vue'
+import { XCircleIcon, DotsVerticalIcon } from '@heroicons/vue/solid'
 
 export default {
   name: 'AbilityCard',
@@ -124,7 +124,7 @@ export default {
     experiences: {
       type: Array,
       default() {
-        return [];
+        return []
       }
     },
     abilityTopic: {
@@ -135,7 +135,7 @@ export default {
       type: String,
       default: 'experience',
       validator(value) {
-        return ['experience', 'text'].includes(value);
+        return ['experience', 'text'].includes(value)
       }
     },
     text: {
@@ -145,35 +145,35 @@ export default {
   },
   emits: ['update:abilityTopic', 'update:text', 'delete-experience', 'delete-ability'],
   setup(props, { emit }) {
-    const { setIsGrabbing } = useGrab();
+    const { setIsGrabbing } = useGrab()
 
     const handleDrag = onDragging => {
-      setIsGrabbing(onDragging);
-    };
+      setIsGrabbing(onDragging)
+    }
 
     const draggableOptions = {
       animation: 200,
       group: {
         name: 'experience',
         put: function(to, from, item) {
-          if (from.options.group.name !== to.options.group.name) return false;
+          if (from.options.group.name !== to.options.group.name) return false
           // 重複的經驗無法放入
-          return !props.experiences.some(el => el.id === ~~item.dataset.id);
+          return !props.experiences.some(el => el.id === ~~item.dataset.id)
         }
       }
-    };
+    }
 
     const handleTextInput = e => {
-      emit('update:text', e.target.value);
+      emit('update:text', e.target.value)
       if (e.target.scrollHeight > 80) {
-        e.target.style.height = '5px';
-        e.target.style.height = `${e.target.scrollHeight}px`;
+        e.target.style.height = '5px'
+        e.target.style.height = `${e.target.scrollHeight}px`
       }
-    };
+    }
 
-    return { setIsGrabbing, handleDrag, draggableOptions, handleTextInput };
+    return { setIsGrabbing, handleDrag, draggableOptions, handleTextInput }
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>

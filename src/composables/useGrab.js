@@ -1,13 +1,13 @@
-import { ref } from 'vue';
+import { ref } from 'vue'
 
-const isGrabbing = ref(false);
+const isGrabbing = ref(false)
 
 const useGrab = () => {
   const setIsGrabbing = toStatus => {
-    isGrabbing.value = toStatus;
-  };
+    isGrabbing.value = toStatus
+  }
 
-  return { isGrabbing, setIsGrabbing };
-};
+  return { isGrabbing, setIsGrabbing }
+}
 
-export default useGrab;
+export default useGrab

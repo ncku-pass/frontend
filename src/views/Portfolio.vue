@@ -30,12 +30,12 @@
 </template>
 
 <script>
-import { computed, ref } from 'vue';
-import { useStore } from 'vuex';
-import { onBeforeRouteLeave } from 'vue-router';
-import PortfolioMain from '@/components/Portfolio/PortfolioMain';
-import PortfolioMenu from '@/components/Portfolio/PortfolioMenu';
-import ConfirmModal from '@/components/ConfirmModal';
+import { computed, ref } from 'vue'
+import { useStore } from 'vuex'
+import { onBeforeRouteLeave } from 'vue-router'
+import PortfolioMain from '@/components/Portfolio/PortfolioMain'
+import PortfolioMenu from '@/components/Portfolio/PortfolioMenu'
+import ConfirmModal from '@/components/ConfirmModal'
 
 export default {
   name: 'Portfolio',
@@ -45,40 +45,40 @@ export default {
     ConfirmModal
   },
   setup() {
-    const store = useStore();
+    const store = useStore()
 
-    const someResumesNotSaved = computed(() => store.getters['resumes/someResumesNotSaved']);
-    const resumesNotReady = computed(() => store.state.resumes.isPending && !store.state.resumes.resumes);
-    const experiencesNotReady = computed(() => store.state.experiences.isPending);
+    const someResumesNotSaved = computed(() => store.getters['resumes/someResumesNotSaved'])
+    const resumesNotReady = computed(() => store.state.resumes.isPending && !store.state.resumes.resumes)
+    const experiencesNotReady = computed(() => store.state.experiences.isPending)
 
-    const loading = computed(() => resumesNotReady.value || experiencesNotReady.value);
+    const loading = computed(() => resumesNotReady.value || experiencesNotReady.value)
 
     // ===== 若未儲存時，跳出確認視窗 =====
-    const showConfirmModal = ref(false);
-    const confirmLeaving = ref(null);
+    const showConfirmModal = ref(false)
+    const confirmLeaving = ref(null)
 
     const openConfirmModal = () => {
-      showConfirmModal.value = true;
+      showConfirmModal.value = true
       return new Promise((resolve) => {
-        confirmLeaving.value = resolve;
-      });
-    };
+        confirmLeaving.value = resolve
+      })
+    }
 
     onBeforeRouteLeave(async(to, from) => {
       if (someResumesNotSaved.value) {
-        const confirm = await openConfirmModal();
-        showConfirmModal.value = false;
-        return confirm;
+        const confirm = await openConfirmModal()
+        showConfirmModal.value = false
+        return confirm
       }
-    });
+    })
 
     return {
       loading,
       showConfirmModal,
       confirmLeaving
-    };
+    }
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>

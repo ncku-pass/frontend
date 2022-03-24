@@ -40,37 +40,37 @@
 </template>
 
 <script>
-import { reactive, computed } from 'vue';
-import { useStore } from 'vuex';
-import { useRouter } from 'vue-router';
+import { reactive, computed } from 'vue'
+import { useStore } from 'vuex'
+import { useRouter } from 'vue-router'
 
 export default {
   setup() {
-    const store = useStore();
+    const store = useStore()
 
     const authData = reactive({
       studentId: '',
       password: ''
-    });
-    const error = computed(() => store.state.auth.error);
-    const isPending = computed(() => store.state.auth.isPending);
-    const login = authData => store.dispatch('auth/login', authData);
+    })
+    const error = computed(() => store.state.auth.error)
+    const isPending = computed(() => store.state.auth.isPending)
+    const login = authData => store.dispatch('auth/login', authData)
 
-    const router = useRouter();
+    const router = useRouter()
 
     const handleSubmit = async() => {
       if (isPending.value) {
-        return;
+        return
       }
-      await login(authData);
+      await login(authData)
       if (!error.value) {
-        router.push({ name: 'Experience' });
+        router.push({ name: 'Experience' })
       }
-    };
+    }
 
-    return { authData, handleSubmit, error, isPending };
+    return { authData, handleSubmit, error, isPending }
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>

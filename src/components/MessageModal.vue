@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import { ref, watchEffect } from '@vue/runtime-core';
+import { ref, watchEffect } from '@vue/runtime-core'
 export default {
   name: 'MessageModal',
   props: {
@@ -43,24 +43,24 @@ export default {
   },
   emits: ['close'],
   setup(props, context) {
-    const timer = ref(null);
+    const timer = ref(null)
 
     const handleClick = () => {
-      clearTimeout(timer.value);
-      context.emit('close');
-    };
+      clearTimeout(timer.value)
+      context.emit('close')
+    }
 
     watchEffect(() => {
       if (props.show) {
         timer.value = setTimeout(() => {
-          context.emit('close');
-        }, props.duration);
+          context.emit('close')
+        }, props.duration)
       }
-    });
+    })
 
-    return { handleClick };
+    return { handleClick }
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>

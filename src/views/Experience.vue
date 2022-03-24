@@ -48,16 +48,16 @@
 </template>
 
 <script>
-import { ref, computed } from 'vue';
-import { useStore } from 'vuex';
-import ExperienceWindowTabs from '@/components/Experience/ExperienceWindowTabs.vue';
-import ExperienceListItem from '@/components/Experience/ExperienceListItem.vue';
-import ExperienceListBlock from '@/components/Experience/ExperienceListBlock.vue';
-import AddExperienceButton from '@/components/Experience/AddExperienceButton.vue';
-import FormModal from '@/components/Experience/Form/FormModal.vue';
-import ViewerModal from '@/components/Experience/ViewerModal.vue';
-import ImportModal from '@/components/Experience/ImportModal.vue';
-import vueScrollShadow from 'vue3-scroll-shadow';
+import { ref, computed } from 'vue'
+import { useStore } from 'vuex'
+import ExperienceWindowTabs from '@/components/Experience/ExperienceWindowTabs.vue'
+import ExperienceListItem from '@/components/Experience/ExperienceListItem.vue'
+import ExperienceListBlock from '@/components/Experience/ExperienceListBlock.vue'
+import AddExperienceButton from '@/components/Experience/AddExperienceButton.vue'
+import FormModal from '@/components/Experience/Form/FormModal.vue'
+import ViewerModal from '@/components/Experience/ViewerModal.vue'
+import ImportModal from '@/components/Experience/ImportModal.vue'
+import vueScrollShadow from 'vue3-scroll-shadow'
 
 export default {
   name: 'Experience',
@@ -79,55 +79,55 @@ export default {
     }
   },
   setup(props) {
-    const store = useStore();
+    const store = useStore()
 
-    const isPending = computed(() => store.state.experiences.isPending);
-    const experiences = computed(() => store.state.experiences.experiences);
-    const classifiedExperiences = computed(() => store.getters['experiences/classifiedExperiences']);
-    const getExperiences = () => store.dispatch('experiences/getExperiences');
+    const isPending = computed(() => store.state.experiences.isPending)
+    const experiences = computed(() => store.state.experiences.experiences)
+    const classifiedExperiences = computed(() => store.getters['experiences/classifiedExperiences'])
+    const getExperiences = () => store.dispatch('experiences/getExperiences')
 
     // ===新增活動表單===
-    const showFormModal = ref(false);
+    const showFormModal = ref(false)
     const handleAddExperience = () => {
-      showFormModal.value = true;
-      experienceToEdit.value = null;
-    };
+      showFormModal.value = true
+      experienceToEdit.value = null
+    }
 
     // ===設定滾動容器陰影===
-    const shadowContainer = ref(null);
+    const shadowContainer = ref(null)
 
     // ===處理表單送出===
     const handleSubmit = () => {
-      showFormModal.value = false;
-    };
+      showFormModal.value = false
+    }
 
     // ===處理經驗刪除===
     const handleDelete = () => {
-      getExperiences();
-    };
+      getExperiences()
+    }
 
     // ===點擊編輯的按鈕時，抓出此筆經歷，傳入表單中===
-    const experienceToEdit = ref(null);
+    const experienceToEdit = ref(null)
     const handleEditExperience = experienceId => {
       showFormModal.value = true
       ;[experienceToEdit.value] = experiences.value[props.type].filter(exp => {
-        return exp.id === experienceId;
-      });
-    };
+        return exp.id === experienceId
+      })
+    }
 
     // === 點擊經歷時，跳出檢視視窗 ===
-    const showViewerModal = ref(false);
-    const experienceToShow = ref(null);
+    const showViewerModal = ref(false)
+    const experienceToShow = ref(null)
 
     const openViewerModal = experience => {
-      experienceToShow.value = experience;
-      showViewerModal.value = true;
-    };
+      experienceToShow.value = experience
+      showViewerModal.value = true
+    }
     // === 匯入學校資料 ===
-    const showImportModal = ref(false);
+    const showImportModal = ref(false)
     const handleImportNCKUData = async() => {
-      showImportModal.value = true;
-    };
+      showImportModal.value = true
+    }
 
     return {
       isPending,
@@ -144,9 +144,9 @@ export default {
       experienceToShow,
       showImportModal,
       handleImportNCKUData
-    };
+    }
   }
-};
+}
 </script>
 
 <style lang="scss">

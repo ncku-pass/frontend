@@ -1,46 +1,46 @@
-import { ref } from 'vue';
+import { ref } from 'vue'
 /**
  * 用來取得設置在.shadow-container上的Event Handler (setShadows)
  * @example <div class="shadow-container" v-on:scroll.capture="setShadows">
  */
 const useScrollShadow = () => {
-  const isScrolling = ref(false);
+  const isScrolling = ref(false)
   /**
    * 設定滾動容器的上下陰影。
    *  不在頂端加上.off-top、
    *  不在底部加上.off-bottom
    */
   const setShadows = event => {
-    const shadowContainer = event.currentTarget;
-    const scrollContent = event.target;
+    const shadowContainer = event.currentTarget
+    const scrollContent = event.target
     if (!isScrolling.value) {
       window.requestAnimationFrame(() => {
         if (scrollContent.scrollTop > 0) {
-          shadowContainer.classList.add('off-top');
+          shadowContainer.classList.add('off-top')
         } else {
-          shadowContainer.classList.remove('off-top');
+          shadowContainer.classList.remove('off-top')
         }
         if (scrollContent.offsetHeight + scrollContent.scrollTop < scrollContent.scrollHeight - 5) {
-          shadowContainer.classList.add('off-bottom');
+          shadowContainer.classList.add('off-bottom')
         } else {
-          shadowContainer.classList.remove('off-bottom');
+          shadowContainer.classList.remove('off-bottom')
         }
-        isScrolling.value = false;
-      });
-      isScrolling.value = true;
+        isScrolling.value = false
+      })
+      isScrolling.value = true
     }
-  };
+  }
 
   const initShadows = shadowContainer => {
-    const scrollContent = shadowContainer.childNodes[0];
+    const scrollContent = shadowContainer.childNodes[0]
     if (scrollContent.offsetHeight + scrollContent.scrollTop < scrollContent.scrollHeight - 5) {
-      shadowContainer.classList.add('off-bottom');
+      shadowContainer.classList.add('off-bottom')
     } else {
-      shadowContainer.classList.remove('off-bottom');
+      shadowContainer.classList.remove('off-bottom')
     }
-  };
+  }
 
-  return { setShadows, initShadows };
-};
+  return { setShadows, initShadows }
+}
 
-export default useScrollShadow;
+export default useScrollShadow

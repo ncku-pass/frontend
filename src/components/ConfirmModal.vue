@@ -45,15 +45,15 @@ export default {
       type: String,
       default: 'leave',
       validator(value) {
-        return ['leave', 'delete', 'customize'].includes(value);
+        return ['leave', 'delete', 'customize'].includes(value)
       }
     }
   },
   emits: ['cancel', 'confirm'],
   setup(props, context) {
-    return {};
+    return {}
   }
-};
+}
 </script>
 
 <style lang="scss">

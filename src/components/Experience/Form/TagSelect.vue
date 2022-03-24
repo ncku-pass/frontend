@@ -49,11 +49,11 @@
 </template>
 
 <script>
-import { computed, reactive, ref, watch } from 'vue';
-import { useStore } from 'vuex';
-import { XIcon } from '@heroicons/vue/solid';
-import { searchTag } from '@/api/tags';
-import { debounce } from '@/helpers';
+import { computed, reactive, ref, watch } from 'vue'
+import { useStore } from 'vuex'
+import { XIcon } from '@heroicons/vue/solid'
+import { searchTag } from '@/api/tags'
+import { debounce } from '@/helpers'
 
 const defaultAbilities = [
   '人文素養',
@@ -73,19 +73,19 @@ const defaultAbilities = [
   return {
     id: i + 1,
     name: ability
-  };
-});
+  }
+})
 
 const filterUnusedTag = (options, tags) => {
   return options.filter(opt => {
-    return !tags.some(tag => opt.id === tag.id);
-  });
-};
+    return !tags.some(tag => opt.id === tag.id)
+  })
+}
 
 const filterSearchTag = (options, searchText) => {
-  searchText = searchText.replaceAll(/[^\u4e00-\u9fa5_a-zA-Z0-9\s-]+/g, '');
-  return options.filter(opt => opt.name.includes(searchText));
-};
+  searchText = searchText.replaceAll(/[^\u4e00-\u9fa5_a-zA-Z0-9\s-]+/g, '')
+  return options.filter(opt => opt.name.includes(searchText))
+}
 
 export default {
   name: 'TagSelect',
@@ -100,112 +100,112 @@ export default {
   },
   emits: ['update:selectedTags'],
   setup(props, { emit }) {
-    const store = useStore();
+    const store = useStore()
 
     // ===== 下拉選單 =====
-    const showDropdown = ref(false);
-    const isChoosing = ref(false);
-    const tags = computed(() => store.state.tags.tags.filter(tag => tag.id > 14));
+    const showDropdown = ref(false)
+    const isChoosing = ref(false)
+    const tags = computed(() => store.state.tags.tags.filter(tag => tag.id > 14))
 
     const classifiedOptions = reactive({
       default: defaultAbilities,
       own: tags,
       search: []
-    });
+    })
 
     const unusedOptions = computed(() => {
       return {
         default: filterUnusedTag(classifiedOptions.default, props.selectedTags),
         own: filterUnusedTag(classifiedOptions.own, props.selectedTags),
         search: filterUnusedTag(classifiedOptions.search, props.selectedTags)
-      };
-    });
+      }
+    })
 
     const filteredOptions = computed(() => {
       return {
         default: filterSearchTag(unusedOptions.value.default, newTagName.value),
         own: filterSearchTag(unusedOptions.value.own, newTagName.value),
         search: filterSearchTag(unusedOptions.value.search, newTagName.value)
-      };
-    });
+      }
+    })
 
     const handleOptionClicked = tag => {
-      emit('update:selectedTags', [...props.selectedTags, tag]);
-      isChoosing.value = false;
-      showDropdown.value = false;
-      newTagName.value = '';
-    };
+      emit('update:selectedTags', [...props.selectedTags, tag])
+      isChoosing.value = false
+      showDropdown.value = false
+      newTagName.value = ''
+    }
 
     const handleSearchOptionClicked = tag => {
-      createTag(tag.name);
-      isChoosing.value = false;
-      showDropdown.value = false;
-      newTagName.value = '';
-    };
+      createTag(tag.name)
+      isChoosing.value = false
+      showDropdown.value = false
+      newTagName.value = ''
+    }
 
     // ===== 輸入 =====
-    const textInputRef = ref(null);
-    const newTagName = ref('');
-    const addTag = newTag => store.dispatch('tags/addTag', newTag);
-    const showPopover = ref(false);
+    const textInputRef = ref(null)
+    const newTagName = ref('')
+    const addTag = newTag => store.dispatch('tags/addTag', newTag)
+    const showPopover = ref(false)
 
     const createTag = async(tagName) => {
-      if (!tagName) return;
+      if (!tagName) return
       // 只允許中、英、數、底線 (_)、橫線(-)、空白( )
       if (!tagName.match(/^[\u4e00-\u9fa5_a-zA-Z0-9\s-]+$/)) {
-        showPopover.value = '只接受中、英、數、底線 (_)、橫線(-)哦！';
-        return;
+        showPopover.value = '只接受中、英、數、底線 (_)、橫線(-)哦！'
+        return
       }
       if (props.selectedTags.some(tag => tag.name === tagName)) {
-        showPopover.value = '已經有這個tag了！';
-        return;
+        showPopover.value = '已經有這個tag了！'
+        return
       }
 
-      const alreadyInDefaultTag = defaultAbilities.find(tag => tag.name === tagName);
+      const alreadyInDefaultTag = defaultAbilities.find(tag => tag.name === tagName)
       if (alreadyInDefaultTag) {
-        emit('update:selectedTags', [...props.selectedTags, alreadyInDefaultTag]);
-        newTagName.value = '';
-        return;
+        emit('update:selectedTags', [...props.selectedTags, alreadyInDefaultTag])
+        newTagName.value = ''
+        return
       }
 
-      const alreadyOwnedTag = tags.value.find(tag => tag.name === tagName);
+      const alreadyOwnedTag = tags.value.find(tag => tag.name === tagName)
       if (alreadyOwnedTag) {
-        emit('update:selectedTags', [...props.selectedTags, alreadyOwnedTag]);
-        newTagName.value = '';
-        return;
+        emit('update:selectedTags', [...props.selectedTags, alreadyOwnedTag])
+        newTagName.value = ''
+        return
       }
 
-      const newTag = await addTag(tagName);
-      emit('update:selectedTags', [...props.selectedTags, newTag]);
-      newTagName.value = '';
-    };
+      const newTag = await addTag(tagName)
+      emit('update:selectedTags', [...props.selectedTags, newTag])
+      newTagName.value = ''
+    }
 
-    let lastRequest = 0; // 紀錄上次送出請求的時間，如果新的請求>舊的請求，忽略舊的回覆
+    let lastRequest = 0 // 紀錄上次送出請求的時間，如果新的請求>舊的請求，忽略舊的回覆
     const debouncedSearchTag = debounce(async searchText => {
-      searchText = searchText.replaceAll(/[^\u4e00-\u9fa5_a-zA-Z0-9\s-]+/g, '');
-      lastRequest = new Date();
-      const reocrd = lastRequest;
-      const { data } = await searchTag(searchText);
+      searchText = searchText.replaceAll(/[^\u4e00-\u9fa5_a-zA-Z0-9\s-]+/g, '')
+      lastRequest = new Date()
+      const reocrd = lastRequest
+      const { data } = await searchTag(searchText)
       if (lastRequest === reocrd) {
-        classifiedOptions.search = data;
+        classifiedOptions.search = data
       }
-    }, 500);
+    }, 500)
     watch(newTagName, (searchText) => {
-      showPopover.value = false;
-      debouncedSearchTag(searchText);
-    });
+      showPopover.value = false
+      debouncedSearchTag(searchText)
+    })
 
     // ===== 標籤 =====
     const handleRemoveTag = id => {
       emit(
         'update:selectedTags',
         props.selectedTags.filter(tag => tag.id !== id)
-      );
-    };
-    const deleteTag = tagId => store.dispatch('tags/deleteTag', tagId);
+      )
+    }
+    const deleteTag = tagId => store.dispatch('tags/deleteTag', tagId)
     const handleDeleteTag = tagId => {
-      deleteTag(tagId);
-    };
+      deleteTag(tagId)
+    }
 
     return {
       textInputRef,
@@ -219,9 +219,9 @@ export default {
       isChoosing,
       handleOptionClicked,
       handleSearchOptionClicked
-    };
+    }
   }
-};
+}
 </script>
 
 <style scoped lang="scss">

@@ -83,8 +83,8 @@
 </template>
 
 <script>
-import { computed } from 'vue';
-import { XCircleIcon } from '@heroicons/vue/solid';
+import { computed } from 'vue'
+import { XCircleIcon } from '@heroicons/vue/solid'
 
 const fieldText = {
   course: {
@@ -130,7 +130,7 @@ const fieldText = {
     description: '經歷簡介',
     feedback: '經歷收穫及成就'
   }
-};
+}
 
 export default {
   name: 'ViewerModal',
@@ -142,7 +142,7 @@ export default {
       type: String,
       required: true,
       validator(value) {
-        return ['course', 'activity', 'competition', 'work', 'certificate', 'other'].includes(value);
+        return ['course', 'activity', 'competition', 'work', 'certificate', 'other'].includes(value)
       }
     },
     experience: {
@@ -153,14 +153,14 @@ export default {
   emits: ['close'],
   setup(props) {
     const showedFieldText = computed(() => {
-      return fieldText[props.experienceType];
-    });
+      return fieldText[props.experienceType]
+    })
 
     return {
       showedFieldText
-    };
+    }
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>

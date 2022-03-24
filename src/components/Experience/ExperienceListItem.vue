@@ -36,12 +36,12 @@
 </template>
 
 <script>
-import { onMounted, onUnmounted, reactive, ref } from 'vue';
-import { debounce } from 'lodash-es';
-import ConfirmModal from '@/components/ConfirmModal';
-import { deleteExperience } from '@/api/experiences';
-import { PencilAltIcon, TrashIcon } from '@heroicons/vue/outline';
-import { useDeleteModal } from '@/composables/useDeleteModal';
+import { onMounted, onUnmounted, reactive, ref } from 'vue'
+import { debounce } from 'lodash-es'
+import ConfirmModal from '@/components/ConfirmModal'
+import { deleteExperience } from '@/api/experiences'
+import { PencilAltIcon, TrashIcon } from '@heroicons/vue/outline'
+import { useDeleteModal } from '@/composables/useDeleteModal'
 
 export default {
   components: {
@@ -53,63 +53,63 @@ export default {
     experience: {
       type: Object,
       default() {
-        return {};
+        return {}
       }
     },
   },
   emits: ['delete', 'edit'],
   setup(props, { emit }) {
     // === 刪除經歷 ===
-    const { showConfirmModal, deleteStatus, closeConfirmModal, confirmDelete } = useDeleteModal();
+    const { showConfirmModal, deleteStatus, closeConfirmModal, confirmDelete } = useDeleteModal()
     // TODO: 用vuex去處理
     const handleDeleteExperience = async() => {
       try {
-        deleteStatus.isPending = true;
-        deleteStatus.error = null;
-        await deleteExperience(props.experience.id);
-        showConfirmModal.value = false;
-        emit('delete');
+        deleteStatus.isPending = true
+        deleteStatus.error = null
+        await deleteExperience(props.experience.id)
+        showConfirmModal.value = false
+        emit('delete')
       } catch (error) {
-        deleteStatus.error = error;
+        deleteStatus.error = error
       } finally {
-        deleteStatus.isPending = false;
+        deleteStatus.isPending = false
       }
-    };
+    }
 
     const handleEditExperience = async() => {
-      emit('edit', props.experience.id);
-    };
+      emit('edit', props.experience.id)
+    }
 
     // === detect if tags are wrapped ===
-    const tagsWrapped = reactive({ value: false });
-    const container = ref(null);
+    const tagsWrapped = reactive({ value: false })
+    const container = ref(null)
 
     const getTagListId = (id) => {
-      return `exp-tags-${id}`;
-    };
+      return `exp-tags-${id}`
+    }
 
     const onResize = debounce(() => {
       if (container.value.children !== undefined && container.value.children.length > 2) {
         // reset wrapped value
-        tagsWrapped.value = false;
+        tagsWrapped.value = false
         for (const child of container.value.children) {
-          child.classList.remove('tag--wrapped');
+          child.classList.remove('tag--wrapped')
           if (child.offsetTop > container.value.offsetTop) {
-            child.classList.add('tag--wrapped');
-            tagsWrapped.value = true;
+            child.classList.add('tag--wrapped')
+            tagsWrapped.value = true
           }
         }
       }
-    }, 500);
+    }, 500)
 
     onMounted(async() => {
-      container.value = document.querySelector(`#${getTagListId(props.experience.id)}`);
-      window.addEventListener('resize', onResize);
-    });
+      container.value = document.querySelector(`#${getTagListId(props.experience.id)}`)
+      window.addEventListener('resize', onResize)
+    })
 
     onUnmounted(async() => {
-      window.removeEventListener('resize', onResize);
-    });
+      window.removeEventListener('resize', onResize)
+    })
 
     return {
       getTagListId,
@@ -120,9 +120,9 @@ export default {
       handleDeleteExperience,
       handleEditExperience,
       tagsWrapped
-    };
+    }
   },
-};
+}
 </script>
 
 <style lang="scss" scoped>

@@ -58,9 +58,9 @@
 </template>
 
 <script>
-import { computed } from 'vue';
-import vueScrollShadow from 'vue3-scroll-shadow';
-import { chineseOfExperienceTypes } from '@/config';
+import { computed } from 'vue'
+import vueScrollShadow from 'vue3-scroll-shadow'
+import { chineseOfExperienceTypes } from '@/config'
 
 export default {
   name: 'MenuFilter',
@@ -78,18 +78,18 @@ export default {
     const allSelected = computed(() => {
       for (const tag in props.filter.tags) {
         if (props.filter.tags[tag] === false) {
-          return false;
+          return false
         }
       }
-      return true;
-    });
+      return true
+    })
 
     return {
       allSelected,
       chineseOfExperienceTypes
-    };
+    }
   }
-};
+}
 </script>
 
 <style lang="scss">

@@ -15,7 +15,7 @@ const typeChinese = {
   work: '工',
   certificate: '證',
   other: '其'
-};
+}
 
 export default {
   name: 'MenuCard',
@@ -26,9 +26,9 @@ export default {
     }
   },
   setup() {
-    return { typeChinese };
+    return { typeChinese }
   }
-};
+}
 </script>
 
 <style lang="scss">

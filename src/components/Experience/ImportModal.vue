@@ -58,12 +58,12 @@
 </template>
 
 <script>
-import { ref, computed } from 'vue';
-import { useStore } from 'vuex';
-import { Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/vue';
-import { ChevronDownIcon } from '@heroicons/vue/solid';
-import { semesterToDate, dateToSemester } from '@/helpers';
-import { chineseOfExperienceTypes } from '@/config';
+import { ref, computed } from 'vue'
+import { useStore } from 'vuex'
+import { Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/vue'
+import { ChevronDownIcon } from '@heroicons/vue/solid'
+import { semesterToDate, dateToSemester } from '@/helpers'
+import { chineseOfExperienceTypes } from '@/config'
 
 export default {
   name: 'ImportModal',
@@ -78,62 +78,62 @@ export default {
       type: String,
       default: 'course',
       validator(value) {
-        return ['course', 'activity'].includes(value);
+        return ['course', 'activity'].includes(value)
       }
     }
   },
   emits: ['close'],
   setup(props, { emit }) {
-    const store = useStore();
+    const store = useStore()
 
     const handleCloseModal = () => {
       if (isPending.value) {
-        return;
+        return
       }
-      emit('close');
-    };
+      emit('close')
+    }
 
     // === 取得學校資料 ===
     const classifiedNckuExperiences = computed(
       () => store.getters['experiences/classifiedNckuExperiences']?.[props.type]
-    );
-    const getNckuExperiences = () => store.dispatch('experiences/getNckuExperiences');
-    const nckuExperiencesError = ref(null);
+    )
+    const getNckuExperiences = () => store.dispatch('experiences/getNckuExperiences')
+    const nckuExperiencesError = ref(null)
     const getData = async() => {
       try {
-        nckuExperiencesError.value = null;
-        await getNckuExperiences();
+        nckuExperiencesError.value = null
+        await getNckuExperiences()
       } catch (error) {
-        nckuExperiencesError.value = error;
+        nckuExperiencesError.value = error
       }
-    };
-    if (!classifiedNckuExperiences.value) getData();
+    }
+    if (!classifiedNckuExperiences.value) getData()
 
     // === 要匯入的資料 ===
-    const error = computed(() => store.state.experiences.error);
-    const isPending = computed(() => store.state.experiences.isPending);
-    const importExperiences = experiences => store.dispatch('experiences/importExperiences', experiences);
+    const error = computed(() => store.state.experiences.error)
+    const isPending = computed(() => store.state.experiences.isPending)
+    const importExperiences = experiences => store.dispatch('experiences/importExperiences', experiences)
 
-    const selectedExperiences = ref([]);
+    const selectedExperiences = ref([])
     const handleImportExperiences = async() => {
-      if (!selectedExperiences.value.length) return;
+      if (!selectedExperiences.value.length) return
 
-      await importExperiences(selectedExperiences.value);
+      await importExperiences(selectedExperiences.value)
       if (!error.value) {
-        emit('close');
+        emit('close')
       }
-    };
+    }
     const toggleAllExperiences = () => {
       if (selectedExperiences.value.length) {
-        selectedExperiences.value.length = 0;
-        return;
+        selectedExperiences.value.length = 0
+        return
       }
-      const allExperiences = [];
+      const allExperiences = []
       for (const semester in classifiedNckuExperiences.value) {
-        allExperiences.push(...classifiedNckuExperiences.value[semester]);
+        allExperiences.push(...classifiedNckuExperiences.value[semester])
       }
-      selectedExperiences.value = allExperiences;
-    };
+      selectedExperiences.value = allExperiences
+    }
 
     return {
       handleCloseModal,
@@ -147,9 +147,9 @@ export default {
       error,
       isPending,
       toggleAllExperiences
-    };
+    }
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>

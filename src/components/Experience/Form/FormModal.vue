@@ -136,14 +136,14 @@
 </template>
 
 <script>
-import { computed, reactive, ref } from 'vue';
-import { useStore } from 'vuex';
-import Multiselect from '@vueform/multiselect';
-import { InformationCircleIcon } from '@heroicons/vue/solid';
-import { useToast } from 'vue-toastification';
-import ConfirmModal from '@/components/ConfirmModal.vue';
-import MessageModal from '@/components/MessageModal.vue';
-import TagSelect from '@/components/Experience/Form/TagSelect.vue';
+import { computed, reactive, ref } from 'vue'
+import { useStore } from 'vuex'
+import Multiselect from '@vueform/multiselect'
+import { InformationCircleIcon } from '@heroicons/vue/solid'
+import { useToast } from 'vue-toastification'
+import ConfirmModal from '@/components/ConfirmModal.vue'
+import MessageModal from '@/components/MessageModal.vue'
+import TagSelect from '@/components/Experience/Form/TagSelect.vue'
 
 const fieldText = {
   course: {
@@ -255,7 +255,7 @@ const fieldText = {
       text: '其他連結'
     }
   }
-};
+}
 
 export default {
   name: 'FormModal',
@@ -265,56 +265,56 @@ export default {
       type: String,
       default: 'activity',
       validator(value) {
-        return ['course', 'activity', 'competition', 'work', 'certificate', 'other'].includes(value);
+        return ['course', 'activity', 'competition', 'work', 'certificate', 'other'].includes(value)
       }
     },
     editData: {
       type: Object,
       default() {
-        return {};
+        return {}
       }
     }
   },
   emits: ['close', 'submit'],
   setup(props, { emit }) {
-    const store = useStore();
-    const toast = useToast();
+    const store = useStore()
+    const toast = useToast()
 
     // === 離開時跳出確認視窗 ===
-    const showConfirmModal = ref(false);
+    const showConfirmModal = ref(false)
     const leaveForm = () => {
       if (requestStatus.isPending) {
-        return;
+        return
       }
-      showConfirmModal.value = true;
-    };
+      showConfirmModal.value = true
+    }
 
     // === 顯示提示訊息 ===
-    const showMessageModal = ref(false);
-    const messageType = ref('');
+    const showMessageModal = ref(false)
+    const messageType = ref('')
     const openMessageModal = (type) => {
-      messageType.value = type;
-      showMessageModal.value = true;
-    };
+      messageType.value = type
+      showMessageModal.value = true
+    }
 
     // === 顯示不同類型對應的文字 ===
     const showedFieldText = computed(() => {
-      return fieldText[props.formType];
-    });
+      return fieldText[props.formType]
+    })
 
     // === 產生學期選項（往前5個學期） ===
-    const year = new Date().getFullYear() - 1911;
+    const year = new Date().getFullYear() - 1911
     const semesters = [...Array(5).keys()]
       .map((_, i) => {
-        return [`${year - i}-2`, `${year - i}-1`];
+        return [`${year - i}-2`, `${year - i}-1`]
       })
-      .flat();
+      .flat()
 
     // === 產生所有的tag ===
-    const tags = computed(() => store.state.tags.tags);
+    const tags = computed(() => store.state.tags.tags)
 
     // 儲存填入的資料，若有傳入要編輯的資料，則設為預設值
-    const todayString = new Date(+new Date() + 8 * 3600 * 1000).toISOString().substr(0, 10);
+    const todayString = new Date(+new Date() + 8 * 3600 * 1000).toISOString().substr(0, 10)
     const formData = reactive({
       id: props.editData?.id || null,
       name: props.editData?.name || '',
@@ -329,38 +329,38 @@ export default {
       categories: props.editData?.categories || [],
       dateStart: props.editData?.dateStart?.slice(0, 10) || null,
       dateEnd: props.editData?.dateEnd?.slice(0, 10) || null
-    });
+    })
     const requestStatus = reactive({
       error: null,
       isPending: null
-    });
+    })
 
-    const addExperience = experience => store.dispatch('experiences/addExperience', experience);
-    const updateExperience = (id, experience) => store.dispatch('experiences/updateExperience', { id, experience });
+    const addExperience = experience => store.dispatch('experiences/addExperience', experience)
+    const updateExperience = (id, experience) => store.dispatch('experiences/updateExperience', { id, experience })
 
     const handleFormSubmit = async() => {
       try {
-        requestStatus.isPending = true;
-        requestStatus.error = null;
+        requestStatus.isPending = true
+        requestStatus.error = null
         const newFormData = {
           ...formData,
           tags: formData.tags.map(tag => tag.id),
           dateStart: new Date(formData.dateStart).toISOString(),
           dateEnd: formData.dateEnd ? new Date(formData.dateEnd).toISOString() : null
-        };
-        if (props.editData) {
-          await updateExperience(formData.id, newFormData);
-        } else {
-          await addExperience(newFormData);
         }
-        emit('submit');
+        if (props.editData) {
+          await updateExperience(formData.id, newFormData)
+        } else {
+          await addExperience(newFormData)
+        }
+        emit('submit')
       } catch (error) {
-        requestStatus.error = error;
-        toast.error('儲存出錯，請再次嘗試');
+        requestStatus.error = error
+        toast.error('儲存出錯，請再次嘗試')
       } finally {
-        requestStatus.isPending = false;
+        requestStatus.isPending = false
       }
-    };
+    }
 
     return {
       tags,
@@ -375,9 +375,9 @@ export default {
       semesters,
       handleFormSubmit,
       requestStatus
-    };
+    }
   }
-};
+}
 </script>
 
 <style lang="scss">

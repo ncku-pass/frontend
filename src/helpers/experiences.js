@@ -4,20 +4,20 @@
  * @returns {object} 排序完的資料
  */
 export const sortExperiences = experiences => {
-  const obj = Object.assign(experiences);
+  const obj = Object.assign(experiences)
   for (const type in obj) {
-    obj[type] = orderBySemester(obj[type], 'desc');
+    obj[type] = orderBySemester(obj[type], 'desc')
   }
-  return obj;
-};
+  return obj
+}
 
 export const orderBySemester = (arr, order = 'desc') => {
   if (order === 'desc') {
-    return [...arr].sort((a, b) => (a.semester < b.semester ? 1 : -1));
+    return [...arr].sort((a, b) => (a.semester < b.semester ? 1 : -1))
   } else {
-    return [...arr].sort((a, b) => (a.semester < b.semester ? -1 : 1));
+    return [...arr].sort((a, b) => (a.semester < b.semester ? -1 : 1))
   }
-};
+}
 
 /**
  * 把活動經驗依照學期分類
@@ -27,10 +27,10 @@ export const orderBySemester = (arr, order = 'desc') => {
 export const classifyBySemester = arr => {
   return arr.reduce((obj, experience) => {
     if (Array.isArray(obj[experience.semester])) {
-      obj[experience.semester].push(experience);
+      obj[experience.semester].push(experience)
     } else {
-      obj[experience.semester] = [experience];
+      obj[experience.semester] = [experience]
     }
-    return obj;
-  }, {});
-};
+    return obj
+  }, {})
+}

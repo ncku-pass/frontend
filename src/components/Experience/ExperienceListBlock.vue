@@ -19,9 +19,9 @@ export default {
     },
   },
   setup(props) {
-    return {};
+    return {}
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>

@@ -1,25 +1,25 @@
-import { ref, reactive } from 'vue';
+import { ref, reactive } from 'vue'
 
 export const useDeleteModal = () => {
-  const showConfirmModal = ref(false);
+  const showConfirmModal = ref(false)
   const deleteStatus = reactive({
     isPending: false,
     error: null
-  });
+  })
   const closeConfirmModal = () => {
     if (deleteStatus.isPending) {
-      return;
+      return
     }
-    showConfirmModal.value = false;
-  };
+    showConfirmModal.value = false
+  }
   const confirmDelete = () => {
-    showConfirmModal.value = true;
-  };
+    showConfirmModal.value = true
+  }
 
   return {
     showConfirmModal,
     deleteStatus,
     closeConfirmModal,
     confirmDelete
-  };
-};
+  }
+}

@@ -86,12 +86,12 @@
 </template>
 
 <script>
-import { ref, reactive, computed } from 'vue';
-import { useStore } from 'vuex';
-import { useRouter } from 'vue-router';
-import { object, string, number } from 'yup';
-import { Form, Field, ErrorMessage } from 'vee-validate';
-import departments from '@/assets/departments.json';
+import { ref, reactive, computed } from 'vue'
+import { useStore } from 'vuex'
+import { useRouter } from 'vue-router'
+import { object, string, number } from 'yup'
+import { Form, Field, ErrorMessage } from 'vee-validate'
+import departments from '@/assets/departments.json'
 
 export default {
   name: 'Register',
@@ -101,14 +101,14 @@ export default {
     ErrorMessage
   },
   setup() {
-    const store = useStore();
-    const router = useRouter();
+    const store = useStore()
+    const router = useRouter()
 
-    const currentStep = ref(0);
-    const formData = reactive({});
+    const currentStep = ref(0)
+    const formData = reactive({})
 
-    const thisYear = new Date().getFullYear() - 1911;
-    const yearOptions = Array.from({ length: 11 }, (v, i) => thisYear - 5 + i);
+    const thisYear = new Date().getFullYear() - 1911
+    const yearOptions = Array.from({ length: 11 }, (v, i) => thisYear - 5 + i)
 
     // 每一個步驟的資料驗證
     const schemas = [
@@ -122,7 +122,7 @@ export default {
           .matches(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/, '密碼需包含數字與字母')
           .min(8, '密碼字元需大於8位'),
         confirmPassword: string().test('passwords-match', '與密碼不相符', function(value) {
-          return this.parent.password === value;
+          return this.parent.password === value
         })
       }),
       object({
@@ -137,33 +137,33 @@ export default {
           .required()
           .oneOf(yearOptions, '請選擇系級')
       })
-    ];
+    ]
     const currentSchema = computed(() => {
-      return schemas[currentStep.value];
-    });
+      return schemas[currentStep.value]
+    })
 
     // 控制表單步驟
-    const registerError = computed(() => store.state.auth.error);
-    const isPending = computed(() => store.state.auth.isPending);
-    const register = formData => store.dispatch('auth/register', formData);
+    const registerError = computed(() => store.state.auth.error)
+    const isPending = computed(() => store.state.auth.isPending)
+    const register = formData => store.dispatch('auth/register', formData)
 
     const nextStep = async() => {
       if (currentStep.value === 1) {
-        await register(formData);
+        await register(formData)
         if (!registerError.value) {
-          router.push({ name: 'Experience' });
+          router.push({ name: 'Experience' })
         }
-        return;
+        return
       }
-      currentStep.value++;
-    };
+      currentStep.value++
+    }
 
     const prevStep = () => {
       if (currentStep.value === 0) {
-        router.go(-1);
+        router.go(-1)
       }
-      currentStep.value--;
-    };
+      currentStep.value--
+    }
 
     return {
       departments,
@@ -175,9 +175,9 @@ export default {
       prevStep,
       registerError,
       isPending
-    };
+    }
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>
