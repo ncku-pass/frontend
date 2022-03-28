@@ -3,9 +3,10 @@
     <div class='modal-bg' @mousedown.self='leaveForm'>
       <div class='form-modal'>
         <form class='form-modal__content' autocomplete='off' @submit.prevent='handleFormSubmit'>
-          <p class='form-modal__hint'>
-            有*欄位代表必填
-          </p>
+          <div class='form-modal__hint'>
+            <p>有*欄位代表必填</p>
+            <mdicon name='close' @click='leaveForm' />
+          </div>
           <div v-if='showedFieldText.name'>
             <label for='experienceName' class='form-label'>{{ showedFieldText.name.text }}</label>
             <input
@@ -374,7 +375,7 @@ export default {
       showedFieldText,
       semesters,
       handleFormSubmit,
-      requestStatus
+      requestStatus,
     }
   }
 }
@@ -396,6 +397,8 @@ export default {
   animation: slideDown .3s;
   &__hint {
     color: $gray-3;
+    display: flex;
+    justify-content: space-between;
   }
   &__time {
     display: grid;

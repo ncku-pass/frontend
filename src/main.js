@@ -7,6 +7,8 @@ import router from './router'
 import store from './store'
 import Toast from 'vue-toastification'
 import { Vue3Mq } from 'vue3-mq'
+import mdiVue from 'mdi-vue/v3'
+import * as mdijs from '@mdi/js'
 
 const toastConfig = {
   transition: 'Vue-Toastification__fade',
@@ -37,6 +39,7 @@ async function startApp() {
         desktop: 1370,
       }
     })
+    .use(mdiVue, { icons: mdijs })
     .mount('#app')
 }
 
