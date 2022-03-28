@@ -28,6 +28,7 @@
         viewBox='0 0 44 29'
         fill='none'
         xmlns='http://www.w3.org/2000/svg'
+        @click='scrollToFeatures'
       >
         <path d='M3 2L22 24L41 2' stroke='white' stroke-width='5' />
       </svg>
@@ -114,6 +115,12 @@ export default {
     device() {
       return this.mq.current
     }
+  },
+  methods: {
+    scrollToFeatures: () => {
+      const features = document.getElementsByClassName('features')[0]
+      features.scrollIntoView({ behavior: 'smooth', block: 'center' })
+    }
   }
 }
 </script>
@@ -159,7 +166,6 @@ export default {
 .intro {
   &__icon {
     height: 60px;
-    margin-bottom: 64px;
   }
   &__title {
     font-size: 60px;
@@ -177,6 +183,7 @@ export default {
   left: 50%;
   transform: translateX(-50%);
   animation: jump 1.5s infinite;
+  cursor: pointer;
 }
 
 .features {
@@ -304,11 +311,11 @@ export default {
   .hero__content {
     flex-direction: column;
     text-align: center;
-    align-items: center;
   }
   .intro {
     &__icon {
-      margin-bottom: 32px;
+      display: inline;
+      margin-bottom: 20px;
     }
   }
   .features {
