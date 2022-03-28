@@ -39,8 +39,6 @@ export const req = axios.create({
 // 送出請求時加上Auth Token
 req.interceptors.request.use(
   (config) => {
-    console.log(process.env.NODE_ENV)
-    console.log(process.env.NODE_ENV === 'production' ? process.env.VUE_APP_API_URL : 'https://api.e-portfolio.dev-box.site/api')
     config.headers.Authorization = `Bearer ${tokenStr.value}`
     return config
   },
