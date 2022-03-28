@@ -7,6 +7,7 @@ import router from './router'
 import store from './store'
 import Toast from 'vue-toastification'
 import { Vue3Mq } from 'vue3-mq'
+import VueGtag from 'vue-gtag'
 
 const toastConfig = {
   transition: 'Vue-Toastification__fade',
@@ -37,6 +38,14 @@ async function startApp() {
         desktop: 1370,
       }
     })
+    .use(VueGtag, {
+      appName: process.env.VUE_APP_GA_APP_NAME,
+      pageTrackerEnabled: true,
+      pageTrackerScreenviewEnabled: true,
+      config: {
+        id: process.env.VUE_APP_GA_ID,
+      }
+    }, router)
     .mount('#app')
 }
 
