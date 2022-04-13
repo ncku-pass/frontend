@@ -313,6 +313,7 @@ export default {
     }
   }
   .footer {
+    @include font-format('b4');
     padding: 32px 100px;
     &__icon {
       margin-right: 45px;
