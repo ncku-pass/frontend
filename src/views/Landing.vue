@@ -4,18 +4,18 @@
       <div class='container hero__content'>
         <div class='intro'>
           <img class='intro__icon' src='@/assets/brand_icon_white.svg' alt='brand__icon' />
-          <h1 class='intro__title'>
+          <h2 class='intro__title'>
             幫助你整理經歷，<br />
             全方位展現個人特質
-          </h1>
-          <h2 class='intro__subtitle'>
-            NCKU PASS 陪你整理學習經歷
           </h2>
+          <p class='intro__subtitle'>
+            NCKU PASS 陪你整理學習經歷
+          </p>
         </div>
         <div class='login'>
-          <h2 class='login__title'>
+          <p class='login__title'>
             登入 NCKU PASS
-          </h2>
+          </p>
           <a href='https://i.ncku.edu.tw/ncku/oauth/eportfolio/login.php' class='ncku-login'>
             使用<img src='@/assets/ncku_login.png' alt='ncku login' />登入
           </a>
@@ -35,35 +35,37 @@
     </section>
     <div class='container'>
       <section class='features'>
-        <h2 class='features__title'>
+        <h1 class='features__title'>
           NCKU PASS 三大功能
-        </h2>
+        </h1>
         <ul class='features__list'>
           <li class='features__item'>
             <img src='@/assets/card-record.svg' alt='' class='features__item__img' />
-            <h3 class='features__item__title'>
+            <p class='features__item__title'>
               紀錄大學各項經驗
-            </h3>
+            </p>
           </li>
           <li class='features__item'>
             <img src='@/assets/card-plan.svg' alt='' class='features__item__img' />
-            <h3 class='features__item__title'>
+            <p class='features__item__title'>
               以TAG 整理個人能力
-            </h3>
+            </p>
           </li>
           <li class='features__item'>
             <img src='@/assets/card-portfolio.svg' alt='' class='features__item__img' />
-            <h3 class='features__item__title'>
+            <p class='features__item__title'>
               簡易製作履歷
-            </h3>
+            </p>
           </li>
         </ul>
       </section>
       <section class='feature'>
         <img class='feature__img' src='@/assets/landing-1.png' />
         <div class='feature__text'>
-          <h2>個人化紀錄</h2>
-          <p>
+          <h2 class='feature__text__title'>
+            紀錄大學各項經驗
+          </h2>
+          <p class='feature__text__content'>
             內建校內學習紀錄，以簡潔快速的方式一覽大學學習歷程，可以即時的在已修習過的課程進行紀錄，更能透過自行增減不同的學習紀錄，來增添你精彩大學的學習經歷。
           </p>
         </div>
@@ -71,8 +73,10 @@
       <section class='feature feature--reverse'>
         <img class='feature__img' src='@/assets/landing-2.png' />
         <div class='feature__text'>
-          <h2>以TAG整理個人能力</h2>
-          <p>
+          <h2 class='feature__text__title'>
+            以TAG整理個人能力
+          </h2>
+          <p class='feature__text__content'>
             提供個人專屬的分類工具，以TAG 來標示課程所得到的能力，透過分類 TAG
             歸納出個人的關鍵技能，快速歸納自身特質及專長，精準統整，侃侃而談個人能力不再是難事。
           </p>
@@ -81,27 +85,27 @@
       <section class='feature'>
         <img class='feature__img' src='@/assets/landing-3.png' />
         <div class='feature__text'>
-          <h2>簡易製作履歷</h2>
-          <p>
+          <h2 class='feature__text__title'>
+            簡易製作履歷
+          </h2>
+          <p class='feature__text__content'>
             可以針對履歷、研究所備審等編排不同版本，在各版本中能主題式的展現個人能力，不再擔心不會排版，只需拉入各項經驗即可，最後一鍵即能輸出簡潔的個人履歷。
           </p>
         </div>
       </section>
     </div>
     <footer class='footer'>
-      <div class='container'>
-        <img class='footer__icon' src='@/assets/brand_icon_white.svg' alt='brand icon' />
-        <p class='footer__info'>
-          © NCKU 教學發展中心版權所有<br /><br />
-          701 台南市大學路一號光復校區雲平大樓3樓<br />
-          Mail：<a href='mailto:nckuexperience@gmail.com'>nckuexperience@gmail.com</a><br /><br />
-          [ 若有任何問題歡迎寄信與我們聯繫或填寫以下表單 ]<br />
-          <a href='https://forms.gle/tSSNHvQERSyVsHMJ6' target='_blank'>回饋表單</a>
-        </p>
-        <div class='footer__links'>
-          <a href='https://web.ncku.edu.tw/' target='_blank'>國立成功大學 National Cheng Kung University</a>
-          <a href='https://ctld-acad.ncku.edu.tw/' target='_blank'>教學發展中心</a>
-        </div>
+      <img class='footer__icon' src='@/assets/brand_icon_white.svg' alt='brand icon' />
+      <p class='footer__info'>
+        © NCKU 教學發展中心版權所有<br /><br />
+        701 台南市大學路一號光復校區雲平大樓3樓<br />
+        Mail：<a href='mailto:nckuexperience@gmail.com'>nckuexperience@gmail.com</a><br /><br />
+        [ 若有任何問題歡迎寄信與我們聯繫或填寫以下表單 ]<br />
+        <a href='https://forms.gle/tSSNHvQERSyVsHMJ6' target='_blank'>回饋表單</a>
+      </p>
+      <div class='footer__links'>
+        <a href='https://web.ncku.edu.tw/' target='_blank'>國立成功大學 National Cheng Kung University</a>
+        <a href='https://ctld-acad.ncku.edu.tw/' target='_blank'>教學發展中心</a>
       </div>
     </footer>
   </div>
@@ -158,22 +162,20 @@ export default {
   width: 350px;
   margin-top: 50px;
   &__title {
-    margin: 0;
-    font-size: 26px;
+    @include font-format('b2')
   }
 }
 
 .intro {
   &__icon {
     height: 60px;
+    margin-bottom: 21px;
   }
   &__title {
-    font-size: 60px;
-    line-height: 97px;
+    @include font-format('h2')
   }
   &__subtitle {
-    font-size: 22px;
-    line-height: 34px;
+    @include font-format('b2')
   }
 }
 
@@ -187,14 +189,11 @@ export default {
 }
 
 .features {
-  @include grid(row, 45px, 0);
+  @include grid(row, 30px, 0);
   text-align: center;
   margin: 115px 0 45px;
   &__title {
-    color: $red-light;
-    font-weight: $weight-black;
-    font-size: 60px;
-    line-height: 97px;
+    @include font-format('h1', 100px, $red-light);
   }
   &__list {
     display: flex;
@@ -208,9 +207,7 @@ export default {
       width: 150px;
     }
     &__title {
-      font-size: 32px;
-      line-height: 52px;
-      color: $gray-1;
+      @include font-format($type: 'b2', $color: $gray-1);
     }
   }
 }
@@ -219,58 +216,51 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 135px 0;
+  padding: 100px 0;
   &--reverse {
     flex-direction: row-reverse;
   }
   &__img {
-    max-width: 500px;
+    max-width: 540px;
+    min-height: 300px;
+    margin: 0 24px;
   }
   &__text {
-    max-width: 540px;
-    h2 {
-      margin-bottom: 50px;
-      color: $red-light;
-      font-weight: $weight-black;
-      font-size: 60px;
-      line-height: 97px;
+    min-width: 540px;
+    max-width: 620px;
+    &__title {
+      @include font-format('h2', 20px, $red-light);
+      text-align: center;
     }
-    p {
-      font-size: 21px;
-      line-height: 34px;
-      color: $gray-2;
+    &__content {
+      @include font-format($type: 'b2', $color: $gray-2);
     }
   }
 }
 
 .footer {
-  padding: 40px;
+  @include font-format($type: 'b3', $color: $white);
+  height: 250px;
+  padding: 32px 140px;
   background: $red;
-  color: $white;
-  line-height: 26px;
-  .container {
-    display: flex;
-    margin: 0 auto;
+  display: flex;
+
+  a {
+    color: $white;
   }
+
   &__icon {
-    height: 40px;
+    height: 64px;
     align-self: center;
-    margin-right: 30px;
+    margin-right: 76px;
   }
   &__info {
     margin-right: auto;
-    a {
-      color: $white;
-    }
   }
   &__links {
     text-align: right;
     display: flex;
     flex-direction: column;
-    a {
-      color: $white;
-      align-self: end;
-    }
   }
 }
 
@@ -286,44 +276,57 @@ export default {
   }
 }
 
-.laptop {
-  .features {
-    margin: 115px 0;
+.laptop, .tablet, .mobile {
+  .hero__content {
+    flex-direction: column;
+  }
+  .intro {
+    align-self: flex-start;
   }
   .feature {
     flex-direction: column-reverse;
     text-align: center;
-    padding: 65px 0;
     &__img {
-      max-width: 800px;
-    }
-    &__text {
-      max-width: 800px;
-      margin-bottom: 20px;
-      h2 {
-        margin-bottom: 20px;
-      }
+      max-width: 100%;
     }
   }
 }
 
-.tablet, .phone {
-  .hero__content {
-    flex-direction: column;
-    text-align: center;
-  }
-  .intro {
-    &__icon {
-      display: inline;
-      margin-bottom: 20px;
-    }
+.laptop {
+  .intro__subtitle {
+    margin-bottom: 120px;
   }
   .features {
-    margin: 100px 0;
+    margin: 68px 0 90px 0;
+    &__title {
+      margin-bottom: 42px;
+    }
   }
   .feature {
-    flex-direction: column-reverse;
-    text-align: center;
+    padding: 70px 0;
+    &__text {
+      max-width: 100%;
+      margin-bottom: 48px;
+      &__title {
+        margin-bottom: 48px;
+      }
+    }
+  }
+  .footer {
+    padding: 32px 100px;
+    &__icon {
+      margin-right: 45px;
+    }
+  }
+}
+
+.tablet, .mobile {
+  .intro {
+    &__subtitle {
+      margin-bottom: 45px;
+    }
+  }
+  .feature {
     padding: 65px 0;
     &__text {
       margin-bottom: 20px;
@@ -332,102 +335,109 @@ export default {
 }
 
 .tablet {
+  .hero__content {
+    margin-bottom: 200px;
+  }
   .intro {
-    &__title {
-      font-size: 52px;
-      line-height: 70px;
+    &__icon {
+      height: 56px;
+      margin-bottom: 10px;
     }
   }
   .features {
+    margin: 80px 0;
     &__title {
-      font-size: 52px;
+      margin-bottom: 24px;
     }
-    &__item {
-      &__img {
-        max-width: 135px;
-      }
-      &__title {
-        font-size: 26px;
-      }
+    &__item_img {
+      max-width: 135px;
     }
   }
   .feature {
+    padding: 40px 0;
     &__text {
-      max-width: 720px;
-      h2 {
-        font-size: 52px;
-        line-height: 52px;
+      &__title {
+        margin-bottom: 24px;
+      }
+      &__content {
+        @include font-format('b2');
       }
     }
-    &__img {
-      max-width: 720px;
+  }
+  .footer {
+    height: 160px;
+    padding: 20px 80px;
+    &__icon {
+      height: 48px;
+      margin-right: 30px;
     }
   }
 }
 
-.phone {
-  .intro {
-    text-align: left;
-    &__icon {
-      height: 50px;
+.mobile {
+  .hero {
+    height: calc(100vh - 200px);
+    &__content {
+      margin-bottom: 250px;
     }
-      &__title {
-      font-size: 38px;
-      line-height: 60px;
+  }
+  .intro {
+    margin-left: 40px;
+    &__icon {
+      height: 30px;
+      margin-bottom: 5px;
+    }
+    &__subtitle {
+      @include font-format('b1');
+      margin-bottom: 42px;
     }
   }
   .login {
-    text-align: left;
-    &__title {
-      font-size: 18px;
+    @include font-format('b4', $mb: 0px);
+    justify-content: center;
+    margin-top: 0;
+    @include grid(row, 0, 0);
+    img {
+      width: 188px;
     }
   }
   .features {
-    margin: 50px 0;
-
+    @include grid(row, 14px, 0);
+    margin: 45px 0;
     &__title {
-      font-size: 32px;
+      margin-bottom: 14px;
     }
     &__item {
       gap: 20px 0;
       &__img {
         max-width: 80px;
       }
-      &__title {
-        font-size: 14px;
-      }
     }
   }
   .feature {
-    padding: 40px 20px;
+    padding: 20px 0;
     &__text {
-      h2 {
-        font-size: 32px;
-        line-height: 40px;
+      padding: 0 40px;
+      max-width: unset;
+      min-width: unset;
+      &__title {
+        margin-bottom: 20px;
       }
-      p {
-        font-size: 16px;
-        line-height: 24px;
+      &__content {
+        @include font-format('b4')
       }
     }
     &__img {
-      max-width: 100%;
+      min-height: unset;
     }
   }
   .footer {
-    font-size: 12px;
-    line-height: 18px;
-
-    .container {
-      display: grid;
-      grid-template-columns: 60% 1fr;
-    }
-
+    @include font-format('b6');
+    height: 90px;
+    padding: 24px 30px;
     &__icon {
-      grid-column-start: 1;
-      grid-column-end: 3;
-      height: 30px;
-      margin-bottom: 20px;
+      height: 18px;
+      margin-right: 10px;
     }
   }
 }

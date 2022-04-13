@@ -33,10 +33,10 @@ async function startApp() {
     .use(router)
     .use(Vue3Mq, {
       breakpoints: {
-        phone: 0,
+        mobile: 0,
         tablet: 768,
         laptop: 1280,
-        desktop: 1370,
+        desktop: 1440,
       }
     })
     .use(mdiVue, { icons: mdijs })
