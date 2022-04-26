@@ -30,8 +30,8 @@ $weight-medium: 500;
 $weight-bold: 700;
 $weight-black: 900;
 
-// ===== Min screen size =====
-$mobile: 0px;
-$tablet: 768px;
-$laptop: 1280px;
-$desktop: 1440px;
+// ===== screen size =====
+$mobile_max_width: 767px;
+$tablet_max_width: 1279px;
+$laptop_max_width: 1439px;
+$desktop_min_width: 1440px;

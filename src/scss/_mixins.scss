@@ -19,7 +19,7 @@
   }
 
   // Desktop
-  @media screen and (min-width: $desktop) {
+  @media screen and (min-width: $desktop_min_width) {
     @if ($type == 'h1') {
       font-weight: 900;
       font-size: 80px;
@@ -50,7 +50,7 @@
   }
 
   // Laptop
-  @media screen and (max-width: $desktop) {
+  @media screen and (max-width: $laptop_max_width) {
     @if ($type == 'h1') {
       font-weight: 900;
       font-size: 80px;
@@ -86,7 +86,7 @@
   }
 
   // Tablet
-  @media screen and (max-width: $laptop){
+  @media screen and (max-width: $tablet_max_width){
     @if ($type == 'h1') {
       font-weight: 900;
       font-size: 54px;
@@ -118,7 +118,7 @@
   }
 
   // Mobile
-  @media screen and (max-width: $tablet) {
+  @media screen and (max-width: $mobile_max_width) {
     @if ($type == 'h1') {
       font-weight: 900;
       font-size: 30px;

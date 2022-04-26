@@ -70,25 +70,25 @@ textarea {
   margin: 0 auto;
 }
 
-@media (min-width: $desktop) {
+@media (min-width: $desktop_min_width) {
   .container {
     max-width: 1150px;
   }
 }
 
-@media (max-width: $desktop) {
+@media (max-width: $laptop_max_width) {
   .container {
     max-width: 930px;
   }
 }
 
-@media (max-width: $laptop) {
+@media (max-width: $tablet_max_width) {
   .container {
     max-width: 680px;
   }
 }
 
-@media (max-width: $tablet) {
+@media (max-width: $mobile_max_width) {
   .container {
     max-width: 100%;
   }

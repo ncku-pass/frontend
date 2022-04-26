@@ -378,9 +378,6 @@ export default {
 .mobile {
   .hero {
     height: calc(100vh - 200px);
-    &__content {
-      margin-bottom: 250px;
-    }
   }
   .intro {
     margin-left: 40px;
