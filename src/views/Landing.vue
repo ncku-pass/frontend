@@ -99,7 +99,7 @@
       <p class='footer__info'>
         © NCKU 教學發展中心版權所有<br /><br />
         701 台南市大學路一號光復校區雲平大樓3樓<br />
-        Mail：<a href='mailto:nckuexperience@gmail.com'>nckuexperience@gmail.com</a><br /><br />
+        Mail：<a href='mailto:ncku.pass@gmail.com'>ncku.pass@gmail.com</a><br /><br />
         [ 若有任何問題歡迎寄信與我們聯繫或填寫以下表單 ]<br />
         <a href='https://forms.gle/tSSNHvQERSyVsHMJ6' target='_blank'>回饋表單</a>
       </p>
