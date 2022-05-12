@@ -1,9 +1,9 @@
 <template>
-  <div class="experience-list-block">
-    <h3 class="experience-list-block__semester">
+  <div class='experience-list-block'>
+    <h3 class='experience-list-block__semester'>
       {{ semester }}
     </h3>
-    <ul class="experience-list-block__list">
+    <ul class='experience-list-block__list'>
       <slot />
     </ul>
   </div>
@@ -16,9 +16,9 @@ export default {
     semester: {
       type: String,
       default: '未知學期'
-    }
+    },
   },
-  setup (props) {
+  setup(props) {
     return {}
   }
 }

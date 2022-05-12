@@ -1,8 +1,8 @@
 <template>
   <LayoutWrapper>
-    <router-view v-slot="{ Component }">
-      <keep-alive :include="['Portfolio', 'Experience']">
-        <component :is="Component" />
+    <router-view v-slot='{ Component }'>
+      <keep-alive :include='[&apos;Portfolio&apos;, &apos;Experience&apos;]'>
+        <component :is='Component' />
       </keep-alive>
     </router-view>
   </LayoutWrapper>
@@ -20,7 +20,7 @@ export default {
   components: {
     LayoutWrapper
   },
-  setup () {
+  setup() {
     const store = useStore()
     const tokenStr = computed(() => store.state.auth.tokenStr)
 

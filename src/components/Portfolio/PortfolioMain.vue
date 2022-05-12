@@ -1,100 +1,100 @@
 <template>
-  <div class="portfolio__main-container">
-    <div v-if="resumes" class="portfolio__main">
-      <div class="portfolio__main__tabs">
-        <button class="scroll-left-btn" @click="scrollHorizontal(-200)">
+  <div class='portfolio__main-container'>
+    <div v-if='resumes' class='portfolio__main'>
+      <div class='portfolio__main__tabs'>
+        <button class='scroll-left-btn' @click='scrollHorizontal(-200)'>
           <ChevronLeftIcon />
         </button>
-        <ul ref="tabWrapperRef" class="tabs-wrapper">
+        <ul ref='tabWrapperRef' class='tabs-wrapper'>
           <li
-            v-for="(resume, index) in resumes"
-            :key="resume.id"
-            :ref="setTabRef"
-            class="tab-link"
-            :class="{ 'is-active': selectedIndex === index }"
-            :title="resume.name"
-            @click="handleSelectResume(index)"
+            v-for='(resume, index) in resumes'
+            :key='resume.id'
+            :ref='setTabRef'
+            class='tab-link'
+            :class='{ &apos;is-active&apos;: selectedIndex === index }'
+            :title='resume.name'
+            @click='handleSelectResume(index)'
           >
             {{ resume.name || '請輸入名稱' }}
           </li>
-          <li class="portfolio__main__tabs__add" @click="openTemplateModal">
+          <li class='portfolio__main__tabs__add' @click='openTemplateModal'>
             <PlusCircleIcon />
           </li>
         </ul>
-        <button class="scroll-right-btn" @click="scrollHorizontal(200)">
+        <button class='scroll-right-btn' @click='scrollHorizontal(200)'>
           <ChevronRightIcon />
         </button>
       </div>
-      <div class="portfolio__main__content">
-        <template v-if="showedResume">
-          <div class="content-header">
+      <div class='portfolio__main__content'>
+        <template v-if='showedResume'>
+          <div class='content-header'>
             <input
-              v-model="showedResume.name"
-              placeholder="請輸入名稱"
-              class="content-header__title"
-              type="text"
-              maxlength="25"
+              v-model='showedResume.name'
+              placeholder='請輸入名稱'
+              class='content-header__title'
+              type='text'
+              maxlength='25'
             />
-            <div class="content-header__btns">
-              <button class="btn--red" @click="confirmDelete">
+            <div class='content-header__btns'>
+              <button class='btn--red' @click='confirmDelete'>
                 刪除
               </button>
-              <button class="btn content-header__save" :disabled="isPending || !notSaved" @click="handleSave()">
+              <button class='btn content-header__save' :disabled='isPending || !notSaved' @click='handleSave()'>
                 {{ isPending ? '存檔中' : '存檔' }}
-                <div v-show="notSaved && !isPending" class="content-header__save__hint" />
+                <div v-show='notSaved && !isPending' class='content-header__save__hint' />
               </button>
             </div>
           </div>
-          <div class="content-body">
-            <div class="content-body__card-list">
+          <div class='content-body'>
+            <div class='content-body__card-list'>
               <draggable
-                v-model="showedResume.cards"
-                v-bind="draggableOptions"
-                handle=".ability-card__grab-area"
-                :itemKey="resume => resume.id || resume.vForKey"
+                v-model='showedResume.cards'
+                v-bind='draggableOptions'
+                handle='.ability-card__grab-area'
+                :itemKey='resume => resume.id || resume.vForKey'
               >
-                <template #item="{element, index}">
+                <template #item='{element, index}'>
                   <AbilityCard
-                    v-model:abilityTopic="element.name"
-                    v-model:text="element.text"
-                    :cardType="element.type"
-                    v-bind="element"
-                    @delete-experience="handleDeleteExperience($event, element)"
-                    @delete-ability="handleDeleteCard(index)"
+                    v-model:abilityTopic='element.name'
+                    v-model:text='element.text'
+                    :cardType='element.type'
+                    v-bind='element'
+                    @delete-experience='handleDeleteExperience($event, element)'
+                    @delete-ability='handleDeleteCard(index)'
                   />
                 </template>
               </draggable>
-              <div v-show="!showedResume.cards.length" class="content-body__card-list--empty">
-                <img src="@/assets/Portfolio/man-with-coffee.png" alt="man-with-coffee" />
+              <div v-show='!showedResume.cards.length' class='content-body__card-list--empty'>
+                <img src='@/assets/Portfolio/man-with-coffee.png' alt='man-with-coffee' />
               </div>
             </div>
-            <div class="content-body__btns">
-              <button class="content-body__add" @click="handleAddCard('experience')">
+            <div class='content-body__btns'>
+              <button class='content-body__add' @click='handleAddCard(&apos;experience&apos;)'>
                 + 新增經歷區塊
               </button>
-              <button class="content-body__add" @click="handleAddCard('text')">
+              <button class='content-body__add' @click='handleAddCard(&apos;text&apos;)'>
                 + 新增文字區塊
               </button>
             </div>
           </div>
         </template>
-        <div v-else class="content-body--empty">
-          <img src="@/assets/Portfolio/man-with-coffee.png" alt="man-with-coffee" />
+        <div v-else class='content-body--empty'>
+          <img src='@/assets/Portfolio/man-with-coffee.png' alt='man-with-coffee' />
           <p>點擊上方 + 來新增第一份履歷吧</p>
         </div>
       </div>
     </div>
-    <TemplateModal :show-modal="showTemplateModal" @close="handleCloseTemplateModal" @choose="handleAddResume" />
+    <TemplateModal :show-modal='showTemplateModal' @close='handleCloseTemplateModal' @choose='handleAddResume' />
     <ConfirmModal
-      v-if="showConfirmModal"
-      confirm-type="customize"
-      message="確定刪除此項履歷？"
-      @cancel="closeConfirmModal"
+      v-if='showConfirmModal'
+      confirm-type='customize'
+      message='確定刪除此項履歷？'
+      @cancel='closeConfirmModal'
     >
-      <button v-show="!deleteStatus.isPending" class="btn" @click.stop="closeConfirmModal">
+      <button v-show='!deleteStatus.isPending' class='btn' @click.stop='closeConfirmModal'>
         取消
       </button>
-      <button class="btn--red" :disabled="deleteStatus.isPending" @click.stop="handleDeleteResume()">
+      <button class='btn--red' :disabled='deleteStatus.isPending' @click.stop='handleDeleteResume()'>
         {{ deleteStatus.isPending ? '刪除中' : '確定刪除' }}
       </button>
     </ConfirmModal>
@@ -123,7 +123,7 @@ export default {
     ChevronLeftIcon,
     ChevronRightIcon
   },
-  setup () {
+  setup() {
     const store = useStore()
 
     const originResumes = computed(() => store.state.resumes.resumes)
@@ -172,7 +172,7 @@ export default {
     const openTemplateModal = () => {
       showTemplateModal.value = true
     }
-    const handleAddResume = async ({ name, cards }) => {
+    const handleAddResume = async({ name, cards }) => {
       showTemplateModal.value = false
       resumes.value.push({
         id: `${Math.random()}`.slice(2, 7),
@@ -189,7 +189,7 @@ export default {
 
     // === 刪除履歷 ===
     const { showConfirmModal, deleteStatus, closeConfirmModal, confirmDelete } = useDeleteModal()
-    const handleDeleteResume = async () => {
+    const handleDeleteResume = async() => {
       if (showedResume.value.isLocal) {
         resumes.value.splice(selectedIndex.value, 1)
       } else {
@@ -242,7 +242,7 @@ export default {
         originResumes.value.find(res => res.id === showedResume.value.id)
       )
     })
-    const handleSave = async () => {
+    const handleSave = async() => {
       if (showedResume.value.name.length > 25) {
         console.log('超過了') // TODO: 新增toast
         return

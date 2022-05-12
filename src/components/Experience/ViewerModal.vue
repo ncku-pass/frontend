@@ -1,77 +1,77 @@
 <template>
-  <div class="modal-bg" @click.self.stop="$emit('close')">
-    <div class="viewer-modal">
-      <XCircleIcon class="viewer-modal__close" @click.stop="$emit('close')" />
-      <div class="viewer-modal__content">
-        <div v-if="experience.name">
-          <h3 class="field-title">
+  <div class='modal-bg' @click.self.stop='$emit(&apos;close&apos;)'>
+    <div class='viewer-modal'>
+      <XCircleIcon class='viewer-modal__close' @click.stop='$emit(&apos;close&apos;)' />
+      <div class='viewer-modal__content'>
+        <div v-if='experience.name'>
+          <h3 class='field-title'>
             {{ showedFieldText.name }}
           </h3>
-          <p class="field-value">
+          <p class='field-value'>
             {{ experience.name }}
           </p>
         </div>
-        <div v-if="experience.position">
-          <h3 class="field-title">
+        <div v-if='experience.position'>
+          <h3 class='field-title'>
             {{ showedFieldText.position }}
           </h3>
-          <p class="field-value">
+          <p class='field-value'>
             {{ experience.position }}
           </p>
         </div>
-        <div v-if="experience.semester">
-          <h3 class="field-title">
+        <div v-if='experience.semester'>
+          <h3 class='field-title'>
             {{ showedFieldText.semester }}
           </h3>
-          <p class="field-value">
+          <p class='field-value'>
             {{ experience.semester }}
           </p>
         </div>
-        <div v-if="experience.categories.length">
-          <h3 class="field-title">
+        <div v-if='experience.categories.length'>
+          <h3 class='field-title'>
             {{ showedFieldText.categories }}
           </h3>
-          <div class="field-tags">
-            <div v-for="categories in experience.categories" :key="categories" class="tag--large">
+          <div class='field-tags'>
+            <div v-for='categories in experience.categories' :key='categories' class='tag--large'>
               {{ categories }}
             </div>
           </div>
         </div>
         <!-- Tags -->
-        <div v-if="experience.tags.length">
-          <h3 class="field-title">
+        <div v-if='experience.tags.length'>
+          <h3 class='field-title'>
             獲得技能Tag
           </h3>
-          <div class="field-tags">
-            <div v-for="tag in experience.tags" :key="tag.name" class="tag--large">
+          <div class='field-tags'>
+            <div v-for='tag in experience.tags' :key='tag.name' class='tag--large'>
               {{ tag.name }}
             </div>
           </div>
         </div>
-        <div v-if="experience.description">
-          <h3 class="field-title">
+        <div v-if='experience.description'>
+          <h3 class='field-title'>
             {{ showedFieldText.description }}
           </h3>
-          <p class="field-value">
+          <p class='field-value'>
             {{ experience.description }}
           </p>
         </div>
-        <div v-if="experience.feedback">
-          <h3 class="field-title">
+        <div v-if='experience.feedback'>
+          <h3 class='field-title'>
             {{ showedFieldText.feedback }}
           </h3>
-          <p class="field-value">
+          <p class='field-value'>
             {{ experience.feedback }}
           </p>
         </div>
         <!-- 其他連結 -->
-        <div v-if="experience.link">
-          <h3 class="field-title">
+        <div v-if='experience.link'>
+          <h3 class='field-title'>
             其他連結
           </h3>
-          <ul class="field-links">
-            <li v-for="link in experience.link.split(',')" :key="link">
-              <a class="field-value" :href="link.trim()" target="_blank">
+          <ul class='field-links'>
+            <li v-for='link in experience.link.split(&apos;,&apos;)' :key='link'>
+              <a class='field-value' :href='link.trim()' target='_blank'>
                 {{ link.trim() }}
               </a>
             </li>
@@ -141,7 +141,7 @@ export default {
     experienceType: {
       type: String,
       required: true,
-      validator (value) {
+      validator(value) {
         return ['course', 'activity', 'competition', 'work', 'certificate', 'other'].includes(value)
       }
     },
@@ -151,7 +151,7 @@ export default {
     }
   },
   emits: ['close'],
-  setup (props) {
+  setup(props) {
     const showedFieldText = computed(() => {
       return fieldText[props.experienceType]
     })

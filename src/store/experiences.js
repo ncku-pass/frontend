@@ -18,13 +18,13 @@ const experiences = {
     isPending: false
   }),
   mutations: {
-    SET_EXPERIENCES (state, experiences) {
+    SET_EXPERIENCES(state, experiences) {
       state.experiences = experiences
     },
-    SET_NCKU_EXPERIENCES (state, nckuExperiences) {
+    SET_NCKU_EXPERIENCES(state, nckuExperiences) {
       state.nckuExperiences = nckuExperiences
     },
-    ADD_EXPERIENCE (state, { type, experience }) {
+    ADD_EXPERIENCE(state, { type, experience }) {
       const expArray = state.experiences[type]
       let i = 0
       while (i < expArray.length && expArray[i].semester > experience.semester) {
@@ -32,7 +32,7 @@ const experiences = {
       }
       expArray.splice(i, 0, experience)
     },
-    UPDATE_EXPERIENCE (state, { id, experience }) {
+    UPDATE_EXPERIENCE(state, { id, experience }) {
       const expArray = state.experiences[experience.type]
       expArray.some((exp, i) => {
         if (exp.id === id) {
@@ -42,18 +42,18 @@ const experiences = {
         return false
       })
     },
-    SET_STATUS (state, { error = undefined, isPending = undefined }) {
+    SET_STATUS(state, { error = undefined, isPending = undefined }) {
       if (error !== undefined) state.error = error
       if (isPending !== undefined) state.isPending = isPending
     }
   },
   actions: {
-    initExperiences ({ state, dispatch }) {
+    initExperiences({ state, dispatch }) {
       if (!state.experiences) {
         dispatch('getExperiences')
       }
     },
-    async getExperiences ({ commit }) {
+    async getExperiences({ commit }) {
       try {
         commit('SET_STATUS', { isPending: true, error: null })
 
@@ -66,7 +66,7 @@ const experiences = {
         commit('SET_STATUS', { isPending: false })
       }
     },
-    async addExperience (
+    async addExperience(
       { commit },
       { name, position, description, feedback, semester, link, type, tags, categories, dateStart, dateEnd }
     ) {
@@ -85,12 +85,12 @@ const experiences = {
       })
       commit('ADD_EXPERIENCE', { type, experience: data })
     },
-    async updateExperience ({ commit, dispatch }, { id, experience }) {
+    async updateExperience({ commit, dispatch }, { id, experience }) {
       const { data } = await updateExperienceAPI(id, experience)
       commit('UPDATE_EXPERIENCE', { id: data.id, experience: data })
       dispatch('resumes/getResumes', {}, { root: true })
     },
-    async importExperiences ({ commit }, experiences) {
+    async importExperiences({ commit }, experiences) {
       try {
         commit('SET_STATUS', { isPending: true, error: null })
 
@@ -108,7 +108,7 @@ const experiences = {
         commit('SET_STATUS', { isPending: false })
       }
     },
-    async getNckuExperiences ({ commit, rootState }) {
+    async getNckuExperiences({ commit, rootState }) {
       try {
         if (!rootState.auth.key || !rootState.auth.keyval) {
           throw new KeyNoPairedError('沒有key / keyval')
@@ -145,7 +145,7 @@ const experiences = {
     /**
      * 把所有經驗整合到同一個array
      */
-    experiencesArray (state) {
+    experiencesArray(state) {
       const arr = []
       for (const type in state.experiences) {
         arr.push(...state.experiences[type])
@@ -155,14 +155,14 @@ const experiences = {
     /**
      * 將每個活動類別內的資料，依照學期分類好
      */
-    classifiedExperiences (state) {
+    classifiedExperiences(state) {
       const experiences = {}
       for (const type in state.experiences) {
         experiences[type] = classifyBySemester(state.experiences[type])
       }
       return experiences
     },
-    classifiedNckuExperiences (state) {
+    classifiedNckuExperiences(state) {
       if (!state.nckuExperiences) {
         return null
       }
@@ -184,7 +184,7 @@ const experiences = {
     /**
      * 取得不重複的所有學期
      */
-    semesters (state, getters) {
+    semesters(state, getters) {
       const semesters = new Set()
       for (const exp of getters.experiencesArray) {
         semesters.add(exp.semester)
@@ -196,7 +196,7 @@ const experiences = {
     /**
      * 取得有使用到，且不重複的所有Tag
      */
-    tags (state, getters) {
+    tags(state, getters) {
       const tags = new Set()
       for (const exp of getters.experiencesArray) {
         for (const tag of exp.tags) {

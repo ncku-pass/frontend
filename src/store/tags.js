@@ -8,21 +8,21 @@ const tags = {
     isPending: false
   }),
   mutations: {
-    SET_TAGS (state, tags) {
+    SET_TAGS(state, tags) {
       state.tags = tags
     },
-    SET_STATUS (state, { error = undefined, isPending = undefined }) {
+    SET_STATUS(state, { error = undefined, isPending = undefined }) {
       if (error !== undefined) state.error = error
       if (isPending !== undefined) state.isPending = isPending
     }
   },
   actions: {
-    initTags ({ dispatch, state }) {
+    initTags({ dispatch, state }) {
       if (!state.tags.length) {
         dispatch('getTags')
       }
     },
-    async getTags ({ commit }) {
+    async getTags({ commit }) {
       try {
         commit('SET_STATUS', { isPending: true, error: null })
 
@@ -35,7 +35,7 @@ const tags = {
         commit('SET_STATUS', { isPending: false })
       }
     },
-    async addTag ({ commit, state }, newTag) {
+    async addTag({ commit, state }, newTag) {
       let res
       try {
         commit('SET_STATUS', { isPending: true, error: null })
@@ -50,7 +50,7 @@ const tags = {
       }
       return res.data[0]
     },
-    async deleteTag ({ dispatch, commit, state }, tagId) {
+    async deleteTag({ dispatch, commit, state }, tagId) {
       let res
       try {
         commit('SET_STATUS', { isPending: true, error: null })

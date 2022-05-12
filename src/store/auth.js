@@ -16,17 +16,17 @@ const auth = {
     isPending: false
   }),
   mutations: {
-    SET_TOKEN (state, token) {
+    SET_TOKEN(state, token) {
       state.tokenStr = token
       localStorage.setItem('auth', token)
     },
-    SET_NCKU_AUTH_KEY (state, { key = '', keyval = '' } = {}) {
+    SET_NCKU_AUTH_KEY(state, { key = '', keyval = '' } = {}) {
       state.key = key
       state.keyval = keyval
       localStorage.setItem('key', key)
       localStorage.setItem('keyval', keyval)
     },
-    LOGOUT (state) {
+    LOGOUT(state) {
       state.tokenStr = ''
       state.key = ''
       state.keyval = ''
@@ -34,13 +34,13 @@ const auth = {
       localStorage.removeItem('key')
       localStorage.removeItem('keyval')
     },
-    SET_STATUS (state, { error = undefined, isPending = undefined }) {
+    SET_STATUS(state, { error = undefined, isPending = undefined }) {
       if (error !== undefined) state.error = error
       if (isPending !== undefined) state.isPending = isPending
     }
   },
   actions: {
-    async login ({ commit }, { studentId, password }) {
+    async login({ commit }, { studentId, password }) {
       try {
         commit('SET_STATUS', { isPending: true, error: null })
 
@@ -53,11 +53,11 @@ const auth = {
         commit('SET_STATUS', { isPending: false })
       }
     },
-    logout ({ commit }) {
+    logout({ commit }) {
       commit('LOGOUT')
       window.location.href = '/'
     },
-    async register ({ commit }, { email, name, password, confirmPassword, studentId, major, graduationYear }) {
+    async register({ commit }, { email, name, password, confirmPassword, studentId, major, graduationYear }) {
       try {
         commit('SET_STATUS', { isPending: true, error: null })
 
@@ -78,7 +78,7 @@ const auth = {
         commit('SET_STATUS', { isPending: false })
       }
     },
-    async checkToken ({ commit }) {
+    async checkToken({ commit }) {
       try {
         await checkTokenAPI()
       } catch (error) {
@@ -86,10 +86,10 @@ const auth = {
         router.push({ name: 'Landing' })
       }
     },
-    setNckuAuthKey ({ commit }, { key = '', keyval = '' }) {
+    setNckuAuthKey({ commit }, { key = '', keyval = '' }) {
       commit('SET_NCKU_AUTH_KEY', { key, keyval })
     },
-    async checkNCKULogin ({ commit }, { key = '', keyval = '' }) {
+    async checkNCKULogin({ commit }, { key = '', keyval = '' }) {
       try {
         commit('SET_STATUS', { isPending: true, error: null })
 

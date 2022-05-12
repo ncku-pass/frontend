@@ -1,28 +1,28 @@
 <template>
-  <div class="portfolio">
-    <template v-if="loading">
-      <div class="portfolio__loading">
+  <div class='portfolio'>
+    <template v-if='loading'>
+      <div class='portfolio__loading'>
         <p>Loading</p>
-        <div class="lds-dual-ring" />
+        <div class='lds-dual-ring' />
       </div>
-      <div class="portfolio__loading-left" />
-      <div class="portfolio__loading-right" />
+      <div class='portfolio__loading-left' />
+      <div class='portfolio__loading-right' />
     </template>
     <template v-else>
       <PortfolioMain />
       <PortfolioMenu />
     </template>
     <ConfirmModal
-      v-if="showConfirmModal"
-      confirm-type="customize"
-      message="尚未儲存履歷，確定要離開嗎？"
-      @cancel="confirmLeaving(false)"
-      @confirm="confirmLeaving(true)"
+      v-if='showConfirmModal'
+      confirm-type='customize'
+      message='尚未儲存履歷，確定要離開嗎？'
+      @cancel='confirmLeaving(false)'
+      @confirm='confirmLeaving(true)'
     >
-      <button class="btn--red" @click.stop="confirmLeaving(false)">
+      <button class='btn--red' @click.stop='confirmLeaving(false)'>
         留下存檔
       </button>
-      <button class="btn" @click.stop="confirmLeaving(true)">
+      <button class='btn' @click.stop='confirmLeaving(true)'>
         確定離開
       </button>
     </ConfirmModal>
@@ -44,7 +44,7 @@ export default {
     PortfolioMenu,
     ConfirmModal
   },
-  setup () {
+  setup() {
     const store = useStore()
 
     const someResumesNotSaved = computed(() => store.getters['resumes/someResumesNotSaved'])
@@ -64,7 +64,7 @@ export default {
       })
     }
 
-    onBeforeRouteLeave(async (to, from) => {
+    onBeforeRouteLeave(async(to, from) => {
       if (someResumesNotSaved.value) {
         const confirm = await openConfirmModal()
         showConfirmModal.value = false

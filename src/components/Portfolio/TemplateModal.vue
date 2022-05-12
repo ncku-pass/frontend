@@ -1,52 +1,52 @@
 <template>
-  <teleport to="#app">
-    <div v-show="showModal" class="modal-bg" @click.self.stop="$emit('close')">
-      <div class="template-modal">
-        <div class="template-modal__content">
-          <select v-model="selected" class="template-modal__select">
-            <option v-for="option in options" :key="option" :value="option">
+  <teleport to='#app'>
+    <div v-show='showModal' class='modal-bg' @click.self.stop='$emit(&apos;close&apos;)'>
+      <div class='template-modal'>
+        <div class='template-modal__content'>
+          <select v-model='selected' class='template-modal__select'>
+            <option v-for='option in options' :key='option' :value='option'>
               {{ option }}
             </option>
           </select>
-          <p class="template-modal__intro">
+          <p class='template-modal__intro'>
             {{ intro }}
           </p>
-          <div ref="templatePreview" class="template-modal__preview">
-            <div class="template-modal__preview__content">
+          <div ref='templatePreview' class='template-modal__preview'>
+            <div class='template-modal__preview__content'>
               <img
-                v-show="selected === '升學備審'"
-                src="@/assets/Portfolio/升學備審.png"
-                alt="升學備審範本"
-                rel="preload"
+                v-show='selected === &apos;升學備審&apos;'
+                src='@/assets/Portfolio/升學備審.png'
+                alt='升學備審範本'
+                rel='preload'
               />
               <img
-                v-show="selected === '工作履歷'"
-                src="@/assets/Portfolio/工作履歷.png"
-                alt="工作履歷範本"
-                rel="preload"
+                v-show='selected === &apos;工作履歷&apos;'
+                src='@/assets/Portfolio/工作履歷.png'
+                alt='工作履歷範本'
+                rel='preload'
               />
               <img
-                v-show="selected === '個人整理'"
-                src="@/assets/Portfolio/個人整理.png"
-                alt="個人整理範本"
-                rel="preload"
+                v-show='selected === &apos;個人整理&apos;'
+                src='@/assets/Portfolio/個人整理.png'
+                alt='個人整理範本'
+                rel='preload'
               />
               <img
-                v-show="selected === '實習履歷'"
-                src="@/assets/Portfolio/實習履歷.png"
-                alt="實習履歷範本"
-                rel="preload"
+                v-show='selected === &apos;實習履歷&apos;'
+                src='@/assets/Portfolio/實習履歷.png'
+                alt='實習履歷範本'
+                rel='preload'
               />
             </div>
           </div>
-          <p class="template-modal__hint">
+          <p class='template-modal__hint'>
             模板樣本
           </p>
-          <div class="template-modal__btns">
-            <button class="btn" @click.stop="$emit('close')">
+          <div class='template-modal__btns'>
+            <button class='btn' @click.stop='$emit(&apos;close&apos;)'>
               取消
             </button>
-            <button class="btn--red" @click.stop="handleAddTemplate">
+            <button class='btn--red' @click.stop='handleAddTemplate'>
               確認
             </button>
           </div>
@@ -93,7 +93,7 @@ export default {
     }
   },
   emits: ['close', 'choose'],
-  setup (props, { emit }) {
+  setup(props, { emit }) {
     const selected = ref(options[0])
     const templatePreview = ref(null)
 
@@ -122,7 +122,7 @@ export default {
   }
 }
 
-function generateCard (type = 'experience', names = []) {
+function generateCard(type = 'experience', names = []) {
   return names.map(name => {
     return {
       id: 0,

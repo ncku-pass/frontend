@@ -6,6 +6,9 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import Toast from 'vue-toastification'
+import { Vue3Mq } from 'vue3-mq'
+import mdiVue from 'mdi-vue/v3'
+import * as mdijs from '@mdi/js'
 
 const toastConfig = {
   transition: 'Vue-Toastification__fade',
@@ -13,7 +16,6 @@ const toastConfig = {
   position: 'top-center',
   draggable: true
 }
-
 const someResumesNotSaved = computed(() => store.getters['resumes/someResumesNotSaved'])
 window.onbeforeunload = () => {
   if (someResumesNotSaved.value) {
@@ -21,7 +23,7 @@ window.onbeforeunload = () => {
   }
 }
 
-async function startApp () {
+async function startApp() {
   if (localStorage.getItem('auth')) {
     await store.dispatch('auth/checkToken')
   }
@@ -29,6 +31,15 @@ async function startApp () {
     .use(Toast, toastConfig)
     .use(store)
     .use(router)
+    .use(Vue3Mq, {
+      breakpoints: {
+        mobile: 0,
+        tablet: 768,
+        laptop: 1280,
+        desktop: 1440,
+      }
+    })
+    .use(mdiVue, { icons: mdijs })
     .mount('#app')
 }
 

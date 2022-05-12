@@ -1,5 +1,5 @@
 <template>
-  <component :is="layout">
+  <component :is='layout'>
     <slot />
   </component>
 </template>
@@ -16,7 +16,7 @@ export default {
     DefaultLayout,
     AppLayout
   },
-  setup () {
+  setup() {
     const route = useRoute()
 
     const layout = computed(() => {

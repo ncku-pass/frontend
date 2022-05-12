@@ -18,28 +18,28 @@ const resumes = {
     isPending: false
   }),
   mutations: {
-    SET_RESUMES (state, resumes) {
+    SET_RESUMES(state, resumes) {
       state.resumes = resumes
     },
-    SET_LOCAL_RESUMES (state, resumes) {
+    SET_LOCAL_RESUMES(state, resumes) {
       state.localResumes = resumes
     },
-    DELETE_RESUME (state, { resumeId }) {
+    DELETE_RESUME(state, { resumeId }) {
       state.resumes = state.resumes.filter(resume => resume.id !== resumeId)
       state.localResumes = state.localResumes.filter(resume => resume.id !== resumeId)
     },
-    SET_STATUS (state, { error = undefined, isPending = undefined }) {
+    SET_STATUS(state, { error = undefined, isPending = undefined }) {
       if (error !== undefined) state.error = error
       if (isPending !== undefined) state.isPending = isPending
     }
   },
   actions: {
-    initResumes ({ state, dispatch }) {
+    initResumes({ state, dispatch }) {
       if (!state.resumes) {
         dispatch('getResumes')
       }
     },
-    async getResumes ({ commit }) {
+    async getResumes({ commit }) {
       try {
         commit('SET_STATUS', { isPending: true, error: null })
 
@@ -53,7 +53,7 @@ const resumes = {
         commit('SET_STATUS', { isPending: false })
       }
     },
-    async saveResume ({ commit, state }, { resume }) {
+    async saveResume({ commit, state }, { resume }) {
       try {
         commit('SET_STATUS', { isPending: true, error: null })
 
@@ -95,13 +95,13 @@ const resumes = {
         commit('SET_STATUS', { isPending: false })
       }
     },
-    async deleteResume ({ commit }, { resumeId }) {
+    async deleteResume({ commit }, { resumeId }) {
       await deleteResumeAPI(resumeId)
       commit('DELETE_RESUME', { resumeId })
     }
   },
   getters: {
-    someResumesNotSaved (state) {
+    someResumesNotSaved(state) {
       return !isEqual(state.resumes, state.localResumes)
     }
   }

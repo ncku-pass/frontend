@@ -1,32 +1,32 @@
 <template>
-  <nav class="navbar">
-    <h1 class="navbar__brand">
-      <a href="/" class="navbar__brand__link">E-portfolio</a>
+  <nav class='navbar'>
+    <h1 class='navbar__brand'>
+      <a href='/' class='navbar__brand__link'>E-portfolio</a>
     </h1>
-    <ul class="navbar__links">
+    <ul class='navbar__links'>
       <li>
-        <router-link class="navbar__links__link tab-link" :to="{ name: 'Experience' }">
+        <router-link class='navbar__links__link tab-link' :to='{ name: &apos;Experience&apos; }'>
           學習歷程
         </router-link>
       </li>
       <li>
-        <router-link class="navbar__links__link tab-link" :to="{ name: 'Portfolio' }">
+        <router-link class='navbar__links__link tab-link' :to='{ name: &apos;Portfolio&apos; }'>
           Portfolio
         </router-link>
       </li>
       <li>
-        <a class="navbar__links__link tab-link" @click="handleLogout">
+        <a class='navbar__links__link tab-link' @click='handleLogout'>
           登出
         </a>
       </li>
     </ul>
     <ConfirmModal
-      v-if="showConfirmModal"
-      message="確定要登出？"
-      confirmMessage="登出"
-      confirmType="customize"
-      @confirm="logout"
-      @cancel="showConfirmModal = false"
+      v-if='showConfirmModal'
+      message='確定要登出？'
+      confirmMessage='登出'
+      confirmType='customize'
+      @confirm='logout'
+      @cancel='showConfirmModal = false'
     />
   </nav>
 </template>
@@ -41,7 +41,7 @@ export default {
   components: {
     ConfirmModal
   },
-  setup () {
+  setup() {
     const store = useStore()
     const logout = () => store.dispatch('auth/logout')
 

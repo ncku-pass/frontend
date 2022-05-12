@@ -1,34 +1,34 @@
 <template>
-  <li class="experience-list-item">
-    <h4 class="experience-list-item__title">
+  <li class='experience-list-item'>
+    <h4 class='experience-list-item__title'>
       {{ experience.name }}
     </h4>
-    <ul class="experience-list-item__tags">
-      <li v-for="tag in experience.tags" :key="tag.id" class="tag">
+    <ul :id='getTagListId(experience.id)' class='experience-list-item__tags' :class='tagsWrapped.value ? "wrapped" : ""'>
+      <li v-for='tag in experience.tags' :key='tag.id' class='tag'>
         {{ tag.name }}
       </li>
     </ul>
-    <div class="experience-list-item__btns">
-      <button class="experience-list-item__btns__edit btn-pill" @click.stop="handleEditExperience">
+    <div class='experience-list-item__btns'>
+      <button class='experience-list-item__btns__edit btn-pill' @click.stop='handleEditExperience'>
         <PencilAltIcon />
-        <span class="btn-pill__text">編輯</span>
+        <span class='btn-pill__text'>編輯</span>
       </button>
       <!-- TODO:  寫死的資料改掉-->
       <button
-        class="experience-list-item__btns__delete btn-pill"
-        :class="{ disabled: false }"
-        :disabled="false"
-        @click.stop="confirmDelete"
+        class='experience-list-item__btns__delete btn-pill'
+        :class='{ disabled: false }'
+        :disabled='false'
+        @click.stop='confirmDelete'
       >
         <TrashIcon />
-        <span class="btn-pill__text">刪除</span>
+        <span class='btn-pill__text'>刪除</span>
       </button>
     </div>
-    <ConfirmModal v-if="showConfirmModal" :message="experience.name" confirm-type="delete" @cancel="closeConfirmModal">
-      <button v-show="!deleteStatus.isPending" class="btn" @click.stop="closeConfirmModal">
+    <ConfirmModal v-if='showConfirmModal' :message='experience.name' confirm-type='delete' @cancel='closeConfirmModal'>
+      <button v-show='!deleteStatus.isPending' class='btn' @click.stop='closeConfirmModal'>
         取消
       </button>
-      <button class="btn--red" :disabled="deleteStatus.isPending" @click.stop="handleDeleteExperience">
+      <button class='btn--red' :disabled='deleteStatus.isPending' @click.stop='handleDeleteExperience'>
         {{ deleteStatus.isPending ? '刪除中' : '確定刪除' }}
       </button>
     </ConfirmModal>
@@ -36,6 +36,8 @@
 </template>
 
 <script>
+import { onMounted, onUnmounted, reactive, ref } from 'vue'
+import { debounce } from 'lodash-es'
 import ConfirmModal from '@/components/ConfirmModal'
 import { deleteExperience } from '@/api/experiences'
 import { PencilAltIcon, TrashIcon } from '@heroicons/vue/outline'
@@ -50,17 +52,17 @@ export default {
   props: {
     experience: {
       type: Object,
-      default () {
+      default() {
         return {}
       }
-    }
+    },
   },
   emits: ['delete', 'edit'],
-  setup (props, { emit }) {
+  setup(props, { emit }) {
     // === 刪除經歷 ===
     const { showConfirmModal, deleteStatus, closeConfirmModal, confirmDelete } = useDeleteModal()
     // TODO: 用vuex去處理
-    const handleDeleteExperience = async () => {
+    const handleDeleteExperience = async() => {
       try {
         deleteStatus.isPending = true
         deleteStatus.error = null
@@ -74,19 +76,52 @@ export default {
       }
     }
 
-    const handleEditExperience = async () => {
+    const handleEditExperience = async() => {
       emit('edit', props.experience.id)
     }
 
+    // === detect if tags are wrapped ===
+    const tagsWrapped = reactive({ value: false })
+    const container = ref(null)
+
+    const getTagListId = (id) => {
+      return `exp-tags-${id}`
+    }
+
+    const onResize = debounce(() => {
+      if (container.value.children !== undefined && container.value.children.length > 2) {
+        // reset wrapped value
+        tagsWrapped.value = false
+        for (const child of container.value.children) {
+          child.classList.remove('tag--wrapped')
+          if (child.offsetTop > container.value.offsetTop) {
+            child.classList.add('tag--wrapped')
+            tagsWrapped.value = true
+          }
+        }
+      }
+    }, 500)
+
+    onMounted(async() => {
+      container.value = document.querySelector(`#${getTagListId(props.experience.id)}`)
+      window.addEventListener('resize', onResize)
+    })
+
+    onUnmounted(async() => {
+      window.removeEventListener('resize', onResize)
+    })
+
     return {
+      getTagListId,
       showConfirmModal,
       closeConfirmModal,
       confirmDelete,
       deleteStatus,
       handleDeleteExperience,
-      handleEditExperience
+      handleEditExperience,
+      tagsWrapped
     }
-  }
+  },
 }
 </script>
 
@@ -113,6 +148,13 @@ export default {
     display: flex;
     flex-wrap: wrap;
     gap: 6px;
+    max-height: 21px;
+    overflow: hidden;
+
+    &.wrapped::after {
+      min-width: 20px;
+      content: "...";
+    }
   }
   &__btns {
     @include grid(column, 0, 10px);

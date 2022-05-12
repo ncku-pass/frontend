@@ -1,48 +1,54 @@
 <template>
-  <div class="tag-select form-control" :class="{ active: showDropdown }" @click.self="textInputRef.focus()">
-    <div v-for="tag in selectedTags" :key="tag.id" class="tag">
+  <div class='tag-select form-control' :class='{ active: showDropdown }' @click.self='textInputRef.focus()'>
+    <div v-for='tag in selectedTags' :key='tag.id' class='tag'>
       <span>{{ tag.name }}</span>
-      <XIcon class="tag__delete" @click="handleRemoveTag(tag.id)" />
+      <XIcon class='tag__delete' @click='handleRemoveTag(tag.id)' />
     </div>
-    <div style="text-input-container">
+    <div class='text-input-container'>
       <input
-        ref="textInputRef"
-        v-model.trim="newTagName"
-        class="text-input"
-        type="text"
-        placeholder="建立一個新的tag..."
-        @keydown.enter.prevent="createTag(newTagName)"
-        @focus="showDropdown = true"
-        @blur="!isChoosing && (showDropdown = false)"
+        ref='textInputRef'
+        v-model.trim='newTagName'
+        class='text-input'
+        type='text'
+        placeholder='建立一個新的tag...'
+        @keydown.enter.prevent='createTag(newTagName)'
+        @focus='showDropdown = true'
+        @blur='!isChoosing && (showDropdown = false)'
       />
-      <transition name="menu-fade">
-        <div v-if="showPopover" class="warnning-popover">
-          <p class="warnning-popover__text">
+      <transition name='menu-fade'>
+        <div v-if='showPopover' class='warning-popover'>
+          <p class='warning-popover__text'>
             {{ showPopover }}
           </p>
         </div>
       </transition>
     </div>
-    <div v-show="showDropdown" class="options" @mousedown="isChoosing = true" @mouseup="isChoosing = false">
-      <div class="option-label">
-        其他人也輸入的Tag
+    <div v-show='showDropdown' class='options' @mousedown='isChoosing = true' @mouseup='isChoosing = false'>
+      <div v-if='filteredOptions.own?.length > 0'>
+        <div class='option-label'>
+          我的Tag
+        </div>
+        <div v-for='tag in filteredOptions.own' :key='tag.id' class='option' @click='handleOptionClicked(tag)'>
+        {{ tag.name }}
+        <XIcon class='option__delete' @click.stop='handleDeleteTag(tag.id)' />
       </div>
-      <div v-for="tag in filteredOptions.search" :key="tag.name" class="option" @click="handleSearchOptionClicked(tag)">
+      </div>
+      <div v-if='filteredOptions.default?.length > 0'>
+        <div class='option-label'>
+          預設Tag
+        </div>
+        <div v-for='tag in filteredOptions.default' :key='tag.name' class='option' @click='handleOptionClicked(tag)'>
+          {{ tag.name }}
+        </div>
+      </div>
+      <div v-if='filteredOptions.search?.length > 0'>
+        <div class='option-label'>
+          其他人也輸入的Tag
+        </div>
+        <div v-for='tag in filteredOptions.search' :key='tag.name' class='option' @click='handleSearchOptionClicked(tag)'>
         {{ tag.name }}
         <span>{{ tag.count }}次</span>
       </div>
-      <div class="option-label">
-        預設Tag
-      </div>
-      <div v-for="tag in filteredOptions.default" :key="tag.name" class="option" @click="handleOptionClicked(tag)">
-        {{ tag.name }}
-      </div>
-      <div class="option-label">
-        我的Tag
-      </div>
-      <div v-for="tag in filteredOptions.own" :key="tag.id" class="option" @click="handleOptionClicked(tag)">
-        {{ tag.name }}
-        <XIcon class="option__delete" @click.stop="handleDeleteTag(tag.id)" />
       </div>
     </div>
   </div>
@@ -99,7 +105,7 @@ export default {
     }
   },
   emits: ['update:selectedTags'],
-  setup (props, { emit }) {
+  setup(props, { emit }) {
     const store = useStore()
 
     // ===== 下拉選單 =====
@@ -149,7 +155,7 @@ export default {
     const addTag = newTag => store.dispatch('tags/addTag', newTag)
     const showPopover = ref(false)
 
-    const createTag = async (tagName) => {
+    const createTag = async(tagName) => {
       if (!tagName) return
       // 只允許中、英、數、底線 (_)、橫線(-)、空白( )
       if (!tagName.match(/^[\u4e00-\u9fa5_a-zA-Z0-9\s-]+$/)) {
@@ -276,7 +282,7 @@ export default {
   width: 100%;
   min-width: 30%;
 }
-.warnning-popover {
+.warning-popover {
   position: absolute;
   top: 100%;
   background-color: $white;

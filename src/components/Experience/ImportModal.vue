@@ -1,55 +1,55 @@
 <template>
-  <teleport to="#app">
-    <div class="modal-bg" @click.self.stop="$emit('close')">
-      <div class="import-modal">
-        <h1 class="import-modal__title">
+  <teleport to='#app'>
+    <div class='modal-bg' @click.self.stop='$emit(&apos;close&apos;)'>
+      <div class='import-modal'>
+        <h1 class='import-modal__title'>
           加入你想要呈現的經驗
         </h1>
-        <div v-if="nckuExperiencesError" class="import-modal__error">
+        <div v-if='nckuExperiencesError' class='import-modal__error'>
           成功入口時效過期，請重新登入
-          <a href="https://i.ncku.edu.tw/ncku/oauth/eportfolio/login.php" class="ncku-login">
-            使用<img src="@/assets/ncku_login.png" alt="ncku login" />登入
+          <a href='https://i.ncku.edu.tw/ncku/oauth/eportfolio/login.php' class='ncku-login'>
+            使用<img src='@/assets/ncku_login.png' alt='ncku login' />登入
           </a>
         </div>
-        <template v-else-if="classifiedNckuExperiences">
-          <div class="experiences__container">
+        <template v-else-if='classifiedNckuExperiences'>
+          <div class='experiences__container'>
             <Disclosure
-              v-for="(_, semester) in classifiedNckuExperiences"
-              :key="semester"
-              v-slot="{ open }"
-              as="div"
-              :defaultOpen="true"
-              class="semester-block"
+              v-for='(_, semester) in classifiedNckuExperiences'
+              :key='semester'
+              v-slot='{ open }'
+              as='div'
+              :defaultOpen='true'
+              class='semester-block'
             >
-              <DisclosureButton as="h2" class="semester-block__title">
+              <DisclosureButton as='h2' class='semester-block__title'>
                 {{ semester.replace('-1', '上學期').replace('-2', '下學期') }}
-                <ChevronDownIcon :class="{ opened: open }" />
+                <ChevronDownIcon :class='{ opened: open }' />
               </DisclosureButton>
-              <DisclosurePanel as="ul" class="semester-block__content">
-                <li v-for="(exp, i) in classifiedNckuExperiences[semester]" :key="exp.name" class="experience-item">
-                  <input :id="`${semester}-${i}`" v-model="selectedExperiences" :value="exp" type="checkbox" />
-                  <label :for="`${semester}-${i}`"> 【{{ chineseOfExperienceTypes[exp.type] }}】{{ exp.name }} </label>
+              <DisclosurePanel as='ul' class='semester-block__content'>
+                <li v-for='(exp, i) in classifiedNckuExperiences[semester]' :key='exp.name' class='experience-item'>
+                  <input :id='`${semester}-${i}`' v-model='selectedExperiences' :value='exp' type='checkbox' />
+                  <label :for='`${semester}-${i}`'> 【{{ chineseOfExperienceTypes[exp.type] }}】{{ exp.name }} </label>
                 </li>
               </DisclosurePanel>
             </Disclosure>
           </div>
-          <div class="import-modal__btns">
-            <button class="select-all btn" @click="toggleAllExperiences">
+          <div class='import-modal__btns'>
+            <button class='select-all btn' @click='toggleAllExperiences'>
               全選
             </button>
-            <button v-show="!isPending" class="btn" type="button" @click="handleCloseModal">
+            <button v-show='!isPending' class='btn' type='button' @click='handleCloseModal'>
               取消
             </button>
             <button
-              class="btn--red"
-              :disabled="isPending || !selectedExperiences.length"
-              @click="handleImportExperiences"
+              class='btn--red'
+              :disabled='isPending || !selectedExperiences.length'
+              @click='handleImportExperiences'
             >
               {{ isPending ? '儲存中' : '儲存' }}
             </button>
           </div>
         </template>
-        <div v-else class="import-modal__loading">
+        <div v-else class='import-modal__loading'>
           loading
         </div>
       </div>
@@ -77,13 +77,13 @@ export default {
     type: {
       type: String,
       default: 'course',
-      validator (value) {
+      validator(value) {
         return ['course', 'activity'].includes(value)
       }
     }
   },
   emits: ['close'],
-  setup (props, { emit }) {
+  setup(props, { emit }) {
     const store = useStore()
 
     const handleCloseModal = () => {
@@ -99,7 +99,7 @@ export default {
     )
     const getNckuExperiences = () => store.dispatch('experiences/getNckuExperiences')
     const nckuExperiencesError = ref(null)
-    const getData = async () => {
+    const getData = async() => {
       try {
         nckuExperiencesError.value = null
         await getNckuExperiences()
@@ -115,7 +115,7 @@ export default {
     const importExperiences = experiences => store.dispatch('experiences/importExperiences', experiences)
 
     const selectedExperiences = ref([])
-    const handleImportExperiences = async () => {
+    const handleImportExperiences = async() => {
       if (!selectedExperiences.value.length) return
 
       await importExperiences(selectedExperiences.value)

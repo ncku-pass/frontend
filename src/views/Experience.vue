@@ -1,30 +1,30 @@
 <template>
-  <div class="experience">
-    <div class="experience__window">
-      <ExperienceWindowTabs :type="type" />
-      <div v-if="isPending" class="experience__loading">
+  <div class='experience'>
+    <div class='experience__window'>
+      <ExperienceWindowTabs :type='type' />
+      <div v-if='isPending' class='experience__loading'>
         <p>Loading</p>
-        <div class="lds-dual-ring" />
+        <div class='lds-dual-ring' />
       </div>
-      <div v-else class="experience__window__table">
+      <div v-else class='experience__window__table'>
         <vueScrollShadow>
-          <div class="experience__window__table__wrapper">
+          <div class='experience__window__table__wrapper'>
             <ExperienceListBlock
-              v-for="(semesterData, semester) in classifiedExperiences[type]"
-              :key="semester"
-              :semester="semester"
+              v-for='(semesterData, semester) in classifiedExperiences[type]'
+              :key='semester'
+              :semester='semester'
             >
               <ExperienceListItem
-                v-for="experience in semesterData"
-                :key="experience.id"
-                :experience="experience"
-                @delete="handleDelete"
-                @edit="handleEditExperience"
-                @click="openViewerModal(experience)"
+                v-for='experience in semesterData'
+                :key='experience.id'
+                :experience='experience'
+                @delete='handleDelete'
+                @edit='handleEditExperience'
+                @click='openViewerModal(experience)'
               />
             </ExperienceListBlock>
-            <div class="add-btn__container">
-              <AddExperienceButton :type="type" @add-experience="handleAddExperience" @import-ncku-data="handleImportNCKUData" />
+            <div class='add-btn__container'>
+              <AddExperienceButton :type='type' @add-experience='handleAddExperience' @import-ncku-data='handleImportNCKUData' />
             </div>
           </div>
         </vueScrollShadow>
@@ -32,19 +32,19 @@
     </div>
   </div>
   <FormModal
-    v-if="showFormModal"
-    :form-type="type"
-    :edit-data="experienceToEdit"
-    @close="showFormModal = false"
-    @submit="handleSubmit"
+    v-if='showFormModal'
+    :form-type='type'
+    :edit-data='experienceToEdit'
+    @close='showFormModal = false'
+    @submit='handleSubmit'
   />
   <ViewerModal
-    v-if="showViewerModal"
-    :experience-type="type"
-    :experience="experienceToShow"
-    @close="showViewerModal = false"
+    v-if='showViewerModal'
+    :experience-type='type'
+    :experience='experienceToShow'
+    @close='showViewerModal = false'
   />
-  <ImportModal v-if="showImportModal" :type="type" @close="showImportModal = false" />
+  <ImportModal v-if='showImportModal' :type='type' @close='showImportModal = false' />
 </template>
 
 <script>
@@ -78,7 +78,7 @@ export default {
       default: 'course'
     }
   },
-  setup (props) {
+  setup(props) {
     const store = useStore()
 
     const isPending = computed(() => store.state.experiences.isPending)
@@ -125,7 +125,7 @@ export default {
     }
     // === 匯入學校資料 ===
     const showImportModal = ref(false)
-    const handleImportNCKUData = async () => {
+    const handleImportNCKUData = async() => {
       showImportModal.value = true
     }
 

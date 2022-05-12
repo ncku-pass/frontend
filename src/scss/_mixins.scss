@@ -1,5 +1,165 @@
+@import './variables';
+
 @mixin grid($orientation: column, $row-gap: 0, $col-gap: 0) {
   display: grid;
   grid-auto-flow: $orientation;
   gap: $row-gap $col-gap;
+}
+
+@mixin font-format($type: 'b1', $mb: -1, $color: null) {
+  font-family: 'Noto Sans TC', sans-serif;
+  letter-spacing: 0.03em;
+
+  @if($mb != -1) {
+    margin-bottom: $mb;
+  }
+
+  @if($color != null) {
+    color: $color
+  }
+
+  // Desktop
+  @media screen and (min-width: $desktop_min_width) {
+    @if ($type == 'h1') {
+      font-weight: 900;
+      font-size: 80px;
+      line-height: 97px;
+      letter-spacing: 1px;
+
+    } @else if ($type == 'h2') {
+      font-weight: 900;
+      font-size: 60px;
+      line-height: 97px;
+      letter-spacing: 1px;
+
+    } @else if ($type == 'b1') {
+      font-weight: 400;
+      font-size: 35px;
+      line-height: 56px;
+
+    } @else if ($type == 'b2') {
+      font-weight: 400;
+      font-size: 24px;
+      line-height: 34px;
+
+    } @else if ($type == 'b3') {
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 26px;
+    }
+  }
+
+  // Laptop
+  @media screen and (max-width: $laptop_max_width) {
+    @if ($type == 'h1') {
+      font-weight: 900;
+      font-size: 80px;
+      line-height: 97px;
+      letter-spacing: 1px;
+
+    } @else if ($type == 'h2') {
+      font-weight: 900;
+      font-size: 72px;
+      line-height: 97px;
+      letter-spacing: 1px;
+
+    } @else if ($type == 'b1') {
+      font-weight: 400;
+      font-size: 34px;
+      line-height: 54px;
+
+    } @else if ($type == 'b2') {
+      font-weight: 400;
+      font-size: 32px;
+      line-height: 47px;
+
+    } @else if ($type == 'b3') {
+      font-weight: 500;
+      font-size: 16px;
+      line-height: 26px;
+
+    } @else if ($type == 'b4') {
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 26px;
+    }
+  }
+
+  // Tablet
+  @media screen and (max-width: $tablet_max_width){
+    @if ($type == 'h1') {
+      font-weight: 900;
+      font-size: 54px;
+      line-height: 77px;
+      letter-spacing: 0.964132px;
+
+    } @else if ($type == 'h2') {
+      font-weight: 900;
+      font-size: 48px;
+      line-height: 75px;
+      letter-spacing: 0.77597px;
+
+    } @else if ($type == 'b1') {
+      font-weight: 500;
+      font-size: 21px;
+      line-height: 40px;
+
+    } @else if ($type == 'b2') {
+      font-weight: 400;
+      font-size: 21px;
+      line-height: 32px;
+
+    } @else if ($type == 'b3') {
+      font-weight: 400;
+      font-size: 10px;
+      line-height: 15px;
+
+    }
+  }
+
+  // Mobile
+  @media screen and (max-width: $mobile_max_width) {
+    @if ($type == 'h1') {
+      font-weight: 900;
+      font-size: 30px;
+      line-height: 43px;
+      letter-spacing: 0.538091px;
+
+    } @else if ($type == 'h2') {
+      font-weight: 900;
+      font-size: 28px;
+      line-height: 44px;
+      letter-spacing: 0.452489px;
+
+    } @else if ($type == 'b1') {
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 24px;
+
+    } @else if ($type == 'b2') {
+      font-weight: 400;
+      font-size: 12px;
+      line-height: 20px;
+
+    } @else if ($type == 'b3') {
+      font-weight: 500;
+      font-size: 11px;
+      line-height: 21px;
+
+    } @else if ($type == 'b4') {
+      font-weight: 400;
+      font-size: 11px;
+      line-height: 18px;
+
+    } @else if ($type == 'b5') {
+      font-weight: 400;
+      font-size: 10px;
+      line-height: 14px;
+
+    } @else if ($type == 'b6') {
+      font-weight: 400;
+      font-size: 5px;
+      line-height: 6px;
+    }
+  }
 }

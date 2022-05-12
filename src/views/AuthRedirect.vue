@@ -1,5 +1,5 @@
 <template>
-  <div class="auth-redirect">
+  <div class='auth-redirect'>
     redirecting...
   </div>
 </template>
@@ -11,7 +11,7 @@ import { useStore } from 'vuex'
 
 export default {
   name: 'AuthRedirect',
-  setup () {
+  setup() {
     const router = useRouter()
     const route = useRoute()
     if (!route.query.param) {
@@ -23,7 +23,7 @@ export default {
       const store = useStore()
       const error = computed(() => store.state.auth.error)
 
-      onMounted(async () => {
+      onMounted(async() => {
         await store.dispatch('auth/checkNCKULogin', { key, keyval })
 
         if (error.value) {

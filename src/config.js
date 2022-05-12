@@ -17,7 +17,7 @@ export const chineseOfExperienceTypes = {
 }
 
 export class KeyNoPairedError extends Error {
-  constructor (message) {
+  constructor(message) {
     super(message)
     this.name = 'KeyNoPairedError'
   }

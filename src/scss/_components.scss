@@ -34,6 +34,9 @@
     line-height: 1.5;
     padding: 4px 8px;
   }
+  &--wrapped {
+    display: none;
+  }
 }
 
 .btn-pill {
@@ -162,4 +165,8 @@
   text-decoration: none;
   color: $gray-1;
   font-size: 15px;
+}
+
+.mdi {
+   cursor: pointer;
 }

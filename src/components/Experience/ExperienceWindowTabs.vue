@@ -1,36 +1,36 @@
 <template>
-  <ul class="experience__window__tabs">
+  <ul class='experience__window__tabs'>
     <li>
       <router-link
-        class="tab-link"
-        :class="{ 'router-link-active': type === 'course' }"
-        :to="{ name: 'Experience', params: { type: 'course' } }"
+        class='tab-link'
+        :class='{ &apos;router-link-active&apos;: type === &apos;course&apos; }'
+        :to='{ name: &apos;Experience&apos;, params: { type: &apos;course&apos; } }'
       >
         課程紀錄
       </router-link>
     </li>
     <li>
-      <router-link class="tab-link" :to="{ name: 'Experience', params: { type: 'activity' } }">
+      <router-link class='tab-link' :to='{ name: &apos;Experience&apos;, params: { type: &apos;activity&apos; } }'>
         活動經驗
       </router-link>
     </li>
     <li>
-      <router-link class="tab-link" :to="{ name: 'Experience', params: { type: 'competition' } }">
+      <router-link class='tab-link' :to='{ name: &apos;Experience&apos;, params: { type: &apos;competition&apos; } }'>
         競賽經驗
       </router-link>
     </li>
     <li>
-      <router-link class="tab-link" :to="{ name: 'Experience', params: { type: 'work' } }">
+      <router-link class='tab-link' :to='{ name: &apos;Experience&apos;, params: { type: &apos;work&apos; } }'>
         工作經驗
       </router-link>
     </li>
     <li>
-      <router-link class="tab-link" :to="{ name: 'Experience', params: { type: 'certificate' } }">
+      <router-link class='tab-link' :to='{ name: &apos;Experience&apos;, params: { type: &apos;certificate&apos; } }'>
         外語能力或證照
       </router-link>
     </li>
     <li>
-      <router-link class="tab-link" :to="{ name: 'Experience', params: { type: 'other' } }">
+      <router-link class='tab-link' :to='{ name: &apos;Experience&apos;, params: { type: &apos;other&apos; } }'>
         其他
       </router-link>
     </li>

@@ -1,52 +1,52 @@
 <template>
-  <div class="portfolio__menu__filter">
+  <div class='portfolio__menu__filter'>
     <vueScrollShadow>
-      <div class="portfolio__menu__filter__container">
-        <div class="filter-block">
-          <div class="filter-block__title">
+      <div class='portfolio__menu__filter__container'>
+        <div class='filter-block'>
+          <div class='filter-block__title'>
             學期
           </div>
-          <ul class="filter-block__tags">
+          <ul class='filter-block__tags'>
             <li
-              v-for="(checked, semester) in filter.semesters"
-              :key="semester"
-              class="filter-block__tags__tag"
-              :class="{ 'filter-block__tags__tag--selected': checked }"
-              @click="$emit('toggleSemester', semester)"
+              v-for='(checked, semester) in filter.semesters'
+              :key='semester'
+              class='filter-block__tags__tag'
+              :class='{ &apos;filter-block__tags__tag--selected&apos;: checked }'
+              @click='$emit(&apos;toggleSemester&apos;, semester)'
             >
               {{ semester }}
             </li>
           </ul>
         </div>
-        <div class="filter-block">
-          <div class="filter-block__title filter-block__title--tag">
+        <div class='filter-block'>
+          <div class='filter-block__title filter-block__title--tag'>
             標籤
-            <span v-if="allSelected" @click="$emit('unSelectAllTags')">取消全選</span>
-            <span v-else @click="$emit('selectAllTags')">全選</span>
+            <span v-if='allSelected' @click='$emit(&apos;unSelectAllTags&apos;)'>取消全選</span>
+            <span v-else @click='$emit(&apos;selectAllTags&apos;)'>全選</span>
           </div>
-          <ul class="filter-block__tags">
+          <ul class='filter-block__tags'>
             <li
-              v-for="(checked, tag) in filter.tags"
-              :key="tag"
-              class="filter-block__tags__tag"
-              :class="{ 'filter-block__tags__tag--selected': checked }"
-              @click="$emit('toggleTag', tag)"
+              v-for='(checked, tag) in filter.tags'
+              :key='tag'
+              class='filter-block__tags__tag'
+              :class='{ &apos;filter-block__tags__tag--selected&apos;: checked }'
+              @click='$emit(&apos;toggleTag&apos;, tag)'
             >
               {{ tag }}
             </li>
           </ul>
         </div>
-        <div class="filter-block">
-          <div class="filter-block__title">
+        <div class='filter-block'>
+          <div class='filter-block__title'>
             類別
           </div>
-          <ul class="filter-block__tags">
+          <ul class='filter-block__tags'>
             <li
-              v-for="(checked, type) in filter.types"
-              :key="type"
-              class="filter-block__tags__tag"
-              :class="{ 'filter-block__tags__tag--selected': checked }"
-              @click="$emit('toggleType', type)"
+              v-for='(checked, type) in filter.types'
+              :key='type'
+              class='filter-block__tags__tag'
+              :class='{ &apos;filter-block__tags__tag--selected&apos;: checked }'
+              @click='$emit(&apos;toggleType&apos;, type)'
             >
               {{ chineseOfExperienceTypes[type] }}
             </li>
@@ -74,7 +74,7 @@ export default {
     }
   },
   emits: ['selectAllTags', 'unSelectAllTags', 'toggleSemester', 'toggleTag', 'toggleType'],
-  setup (props) {
+  setup(props) {
     const allSelected = computed(() => {
       for (const tag in props.filter.tags) {
         if (props.filter.tags[tag] === false) {
