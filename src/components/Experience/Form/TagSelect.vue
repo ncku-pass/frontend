@@ -29,9 +29,9 @@
           我的Tag
         </div>
         <div v-for='tag in filteredOptions.own' :key='tag.id' class='option' @click='handleOptionClicked(tag)'>
-        {{ tag.name }}
-        <XIcon class='option__delete' @click.stop='handleDeleteTag(tag.id)' />
-      </div>
+          {{ tag.name }}
+          <XIcon class='option__delete' @click.stop='handleDeleteTag(tag.id)' />
+        </div>
       </div>
       <div v-if='filteredOptions.default?.length > 0'>
         <div class='option-label'>
@@ -46,9 +46,9 @@
           其他人也輸入的Tag
         </div>
         <div v-for='tag in filteredOptions.search' :key='tag.name' class='option' @click='handleSearchOptionClicked(tag)'>
-        {{ tag.name }}
-        <span>{{ tag.count }}次</span>
-      </div>
+          {{ tag.name }}
+          <span>{{ tag.count }}次</span>
+        </div>
       </div>
     </div>
   </div>
@@ -230,7 +230,7 @@ export default {
 }
 </script>
 
-<style scoped lang="scss">
+<style lang="scss" scoped>
 @import '~@/scss/variables';
 
 .tag-select {
