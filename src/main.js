@@ -8,6 +8,8 @@ import store from './store'
 import Toast from 'vue-toastification'
 import { Vue3Mq } from 'vue3-mq'
 import VueGtag from 'vue-gtag'
+import mdiVue from 'mdi-vue/v3'
+import * as mdijs from '@mdi/js'
 
 const toastConfig = {
   transition: 'Vue-Toastification__fade',
@@ -32,12 +34,13 @@ async function startApp() {
     .use(router)
     .use(Vue3Mq, {
       breakpoints: {
-        phone: 0,
+        mobile: 0,
         tablet: 768,
         laptop: 1280,
-        desktop: 1370,
+        desktop: 1440,
       }
     })
+    .use(mdiVue, { icons: mdijs })
     .use(VueGtag, {
       appName: process.env.VUE_APP_GA_APP_NAME,
       pageTrackerEnabled: true,

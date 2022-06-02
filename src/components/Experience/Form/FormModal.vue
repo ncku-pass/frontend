@@ -3,9 +3,10 @@
     <div class='modal-bg' @mousedown.self='leaveForm'>
       <div class='form-modal'>
         <form class='form-modal__content' autocomplete='off' @submit.prevent='handleFormSubmit'>
-          <p class='form-modal__hint'>
-            有*欄位代表必填
-          </p>
+          <div class='form-modal__hint'>
+            <p>有*欄位代表必填</p>
+            <mdicon name='close' @click='leaveForm' />
+          </div>
           <div v-if='showedFieldText.name'>
             <label for='experienceName' class='form-label'>{{ showedFieldText.name.text }}</label>
             <input
@@ -20,12 +21,12 @@
           <div v-if='showedFieldText.position'>
             <label for='experiencePosition' class='form-label'>
               {{ showedFieldText.position.text }}
-              <InformationCircleIcon class='form-label__info' @click.stop='openMessageModal(&apos;score&apos;)' />
+              <InformationCircleIcon class='form-label__info' @click.stop='openMessageModal("score")' />
             </label>
             <input
               id='experiencePosition'
               v-model='formData.position'
-              type='text'
+              :type='get(showedFieldText, "position.type", "text")'
               class='form-control'
               :required='showedFieldText.position.required'
             />
@@ -33,11 +34,11 @@
           <div v-if='showedFieldText.semester'>
             <label class='form-label' for='experienceSemester'>{{ showedFieldText.semester.text }}</label>
             <select
-              v-if='formType === &apos;course&apos;'
+              v-if='formType === "course"'
               id='experienceSemester'
               v-model='formData.semester'
               class='form-control'
-              :class='{ &apos;not-selected&apos;: !formData.semester }'
+              :class='{ "not-selected": !formData.semester }'
               :required='showedFieldText.semester.required'
             >
               <option value='' disabled>
@@ -89,7 +90,7 @@
             <p>{{ formData.coreAbilities }}</p>
           </details>
           <div>
-            <label for='' class='form-label'>
+            <label class='form-label'>
               <span>獲得技能Tag</span>
             </label>
             <TagSelect v-model:selectedTags='formData.tags' />
@@ -109,7 +110,7 @@
           <div>
             <label for='experienceLink' class='form-label'>
               <span>{{ showedFieldText.link.text }}</span>
-              <InformationCircleIcon class='form-label__info' @click.stop='openMessageModal(&apos;link&apos;)' />
+              <InformationCircleIcon class='form-label__info' @click.stop='openMessageModal("link")' />
             </label>
             <input id='experienceLink' v-model='formData.link' type='text' class='form-control' />
           </div>
@@ -129,7 +130,7 @@
       confirm-message='確定離開'
       cancel-message='留下'
       @cancel='showConfirmModal = false'
-      @confirm='$emit(&apos;close&apos;)'
+      @confirm='$emit("close")'
     />
     <MessageModal :duration='6000' :show='showMessageModal' :messageType='messageType' @close='showMessageModal = false' />
   </teleport>
@@ -141,6 +142,7 @@ import { useStore } from 'vuex'
 import Multiselect from '@vueform/multiselect'
 import { InformationCircleIcon } from '@heroicons/vue/solid'
 import { useToast } from 'vue-toastification'
+import { get } from 'lodash-es'
 import ConfirmModal from '@/components/ConfirmModal.vue'
 import MessageModal from '@/components/MessageModal.vue'
 import TagSelect from '@/components/Experience/Form/TagSelect.vue'
@@ -154,7 +156,7 @@ const fieldText = {
       options: ['必修課程', '選修課程', '通識', '工作坊', '密集課程', '線上課程']
     },
     semester: { text: '*課程時間', required: true },
-    position: { text: '課程分數', required: false },
+    position: { text: '課程分數', required: false, type: 'number' },
     description: {
       text: '課程簡介 (500字以內)',
       placeholder: '填寫課程簡介以便日後方便回想課程內容',
@@ -314,7 +316,7 @@ export default {
     const tags = computed(() => store.state.tags.tags)
 
     // 儲存填入的資料，若有傳入要編輯的資料，則設為預設值
-    const todayString = new Date(+new Date() + 8 * 3600 * 1000).toISOString().substr(0, 10)
+    const todayString = new Date(+new Date() + 8 * 3600 * 1000).toISOString().substring(0, 10)
     const formData = reactive({
       id: props.editData?.id || null,
       name: props.editData?.name || '',
@@ -363,6 +365,7 @@ export default {
     }
 
     return {
+      get,
       tags,
       showConfirmModal,
       leaveForm,
@@ -374,7 +377,7 @@ export default {
       showedFieldText,
       semesters,
       handleFormSubmit,
-      requestStatus
+      requestStatus,
     }
   }
 }
@@ -396,6 +399,8 @@ export default {
   animation: slideDown .3s;
   &__hint {
     color: $gray-3;
+    display: flex;
+    justify-content: space-between;
   }
   &__time {
     display: grid;
