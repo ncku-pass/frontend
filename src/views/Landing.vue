@@ -198,7 +198,7 @@ export default {
   padding: 0 92px;
 
   &__title {
-    @include font-format('h1', 56px, $red-light);
+    @include font-format('h2', 56px, $red-light, true);
   }
   &__list {
     display: flex;
@@ -233,7 +233,7 @@ export default {
     min-width: 540px;
     max-width: 630px;
     &__title {
-      @include font-format('h2', 24px, $red-light, ture);
+      @include font-format('h2', 24px, $red-light, true);
       text-align: center;
     }
     &__content {
@@ -301,30 +301,45 @@ export default {
 }
 
 .laptop {
-  .intro__subtitle {
-    margin-bottom: 120px;
-  }
-  .features {
-    margin: 68px 0 90px 0;
+  .intro {
     &__title {
-      margin-bottom: 42px;
+      @include font-format($type: 'h1', $bold: true);
+    }
+    &__subtitle {
+      @include font-format($type: 'b1');
+      margin-bottom: 137px;
+    }
+  }
+
+  .login {
+    margin-top: 0;
+    &__title {
+      @include font-format($type: 'b2')
+    }
+  }
+
+  .features {
+    margin: 104px 0 152px 0;
+    padding: 0;
+    &__title {
+      margin-bottom: 48px;
     }
   }
   .feature {
-    padding: 70px 0;
+    padding: 0 80px 160px 80px;
     &__text {
       max-width: 100%;
-      margin-bottom: 48px;
+      margin-bottom: 32px;
       &__title {
-        margin-bottom: 48px;
+        margin-bottom: 32px;
       }
     }
   }
   .footer {
-    @include font-format('b4');
-    padding: 32px 100px;
+    padding: 40px 90px;
     &__icon {
-      margin-right: 45px;
+      height: 60px;
+      margin-right: 96px;
     }
   }
 }
@@ -338,7 +353,9 @@ export default {
   .feature {
     padding: 65px 0;
     &__text {
-      margin-bottom: 20px;
+      &__content {
+        @include font-format($type: 'b2', $color: $gray-2, $line-height: 48px);
+      }
     }
   }
 }
