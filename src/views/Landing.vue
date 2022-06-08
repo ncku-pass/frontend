@@ -299,6 +299,7 @@ export default {
   }
   .login {
     margin-top: 0;
+    justify-content: center;
     &__title {
       @include font-format($type: 'b2')
     }
@@ -418,47 +419,50 @@ export default {
   .intro {
     margin-left: 40px;
     &__icon {
-      height: 30px;
-      margin-bottom: 5px;
+      height: 28px;
+      margin-bottom: 16px;
     }
     &__subtitle {
-      @include font-format('b1');
+      @include font-format('b3');
       margin-bottom: 42px;
     }
   }
   .login {
-    @include font-format('b4', $mb: 0px);
-    justify-content: center;
-    margin-top: 0;
     @include grid(row, 0, 0);
+    &__title {
+      @include font-format('b3', $mb: 8px, $bold: false);
+    }
     img {
-      width: 188px;
+      width: 160px;
     }
   }
   .features {
-    @include grid(row, 14px, 0);
-    margin: 45px 0;
+    @include grid(row, 16px, 0);
+    margin: 20px 30px 48px 30px;
     &__title {
-      margin-bottom: 14px;
+      margin-bottom: 16px;
     }
     &__item {
-      gap: 20px 0;
+      gap: 10px 0;
+      &__title {
+        @include font-format($type: 'b3', $color: $gray-1);
+      }
       &__img {
-        max-width: 80px;
+        max-width: 60px;
       }
     }
   }
   .feature {
-    padding: 20px 0;
+    padding: 0 40px 40px 40px;
     &__text {
-      padding: 0 40px;
       max-width: unset;
       min-width: unset;
+      margin-bottom: 16px;
       &__title {
-        margin-bottom: 20px;
+        margin-bottom: 16px;
       }
       &__content {
-        @include font-format('b4')
+        @include font-format('b3', $line-height: 16px)
       }
     }
     &__img {
@@ -466,12 +470,12 @@ export default {
     }
   }
   .footer {
-    @include font-format('b6');
+    @include font-format('b5');
     height: 90px;
-    padding: 24px 30px;
+    padding: 12px;
     &__icon {
-      height: 18px;
-      margin-right: 10px;
+      width: 60px;
+      margin-right: 24px;
     }
   }
 }

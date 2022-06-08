@@ -141,7 +141,7 @@
   @media screen and (max-width: $mobile_max_width) {
     @if ($type == 'h1') {
       font-size: 30px;
-      line-height: 33px;
+      line-height: 48px;
 
     } @else if ($type == 'h2') {
       font-size: 24px;
