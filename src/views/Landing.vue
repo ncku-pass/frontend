@@ -97,11 +97,14 @@
     <footer class='footer'>
       <img class='footer__icon' src='@/assets/brand_icon_white.svg' alt='brand icon' />
       <p class='footer__info'>
-        © NCKU 教學發展中心版權所有<br /><br />
-        701 台南市大學路一號光復校區雲平大樓3樓<br />
-        Mail：<a href='mailto:ncku.pass@gmail.com'>ncku.pass@gmail.com</a><br /><br />
-        [ 若有任何問題歡迎寄信與我們聯繫或填寫以下表單 ]<br />
-        <a href='https://forms.gle/tSSNHvQERSyVsHMJ6' target='_blank'>回饋表單</a>
+        <span>© NCKU 教學發展中心版權所有</span>
+        <span>701 台南市大學路一號光復校區雲平大樓3樓</span>
+        <br />
+        <span>Design by NCKU PASS 製作團隊</span>
+        <span>Mail：<a href='mailto:ncku.pass@gmail.com'>ncku.pass@gmail.com</a></span>
+        <br />
+        <span>[ 若有任何問題歡迎寄信與我們聯繫或填寫以下表單 ]</span>
+        <span><a href='https://forms.gle/tSSNHvQERSyVsHMJ6' target='_blank'>回饋表單</a></span>
       </p>
       <div class='footer__links'>
         <a href='https://web.ncku.edu.tw/' target='_blank'>國立成功大學 National Cheng Kung University</a>
@@ -162,7 +165,7 @@ export default {
   width: 350px;
   margin-top: 50px;
   &__title {
-    @include font-format('b2')
+    @include font-format($type: 'b3', $bold: true)
   }
 }
 
@@ -172,7 +175,7 @@ export default {
     margin-bottom: 21px;
   }
   &__title {
-    @include font-format('h2')
+    @include font-format($type: 'h2', $mb: 12px, $bold: true)
   }
   &__subtitle {
     @include font-format('b2')
@@ -189,16 +192,17 @@ export default {
 }
 
 .features {
-  @include grid(row, 30px, 0);
+  @include grid($orientation: row, $row-gap: 20px);
   text-align: center;
-  margin: 115px 0 45px;
+  margin: 150px 0;
+  padding: 0 92px;
+
   &__title {
-    @include font-format('h1', 100px, $red-light);
+    @include font-format('h1', 56px, $red-light);
   }
   &__list {
     display: flex;
     justify-content: space-between;
-    padding: 0 20px;
   }
   &__item {
     @include grid(row, 40px, 0);
@@ -216,7 +220,7 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 100px 0;
+  padding: 0 0 160px 0;
   &--reverse {
     flex-direction: row-reverse;
   }
@@ -227,21 +231,21 @@ export default {
   }
   &__text {
     min-width: 540px;
-    max-width: 620px;
+    max-width: 630px;
     &__title {
-      @include font-format('h2', 20px, $red-light);
+      @include font-format('h2', 24px, $red-light, ture);
       text-align: center;
     }
     &__content {
-      @include font-format($type: 'b2', $color: $gray-2);
+      @include font-format($type: 'b2', $color: $gray-2, $line-height: 56px);
     }
   }
 }
 
 .footer {
-  @include font-format($type: 'b3', $color: $white);
-  height: 250px;
-  padding: 32px 140px;
+  @include font-format($type: 'b5', $color: $white);
+  height: 252px;
+  padding: 40px 120px;
   background: $red;
   display: flex;
 
@@ -256,11 +260,15 @@ export default {
   }
   &__info {
     margin-right: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
   }
   &__links {
     text-align: right;
     display: flex;
     flex-direction: column;
+    justify-content: center;
   }
 }
 
