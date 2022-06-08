@@ -171,8 +171,8 @@ export default {
 
 .intro {
   &__icon {
-    height: 60px;
-    margin-bottom: 21px;
+    height: 96px;
+    margin-bottom: 40px;
   }
   &__title {
     @include font-format($type: 'h2', $mb: 12px, $bold: true)
@@ -254,7 +254,7 @@ export default {
   }
 
   &__icon {
-    height: 64px;
+    width: 276px;
     align-self: center;
     margin-right: 76px;
   }
@@ -290,6 +290,21 @@ export default {
   }
   .intro {
     align-self: flex-start;
+    &__title {
+      @include font-format($type: 'h1', $mb: 12px, $bold: true)
+    }
+    &__subtitle {
+      @include font-format($type: 'b1');
+    }
+  }
+  .login {
+    margin-top: 0;
+    &__title {
+      @include font-format($type: 'b2')
+    }
+  }
+  .features {
+    padding: 0;
   }
   .feature {
     flex-direction: column-reverse;
@@ -302,25 +317,15 @@ export default {
 
 .laptop {
   .intro {
-    &__title {
-      @include font-format($type: 'h1', $bold: true);
+    &__icon {
+      height: 76px;
     }
     &__subtitle {
-      @include font-format($type: 'b1');
       margin-bottom: 137px;
     }
   }
-
-  .login {
-    margin-top: 0;
-    &__title {
-      @include font-format($type: 'b2')
-    }
-  }
-
   .features {
     margin: 104px 0 152px 0;
-    padding: 0;
     &__title {
       margin-bottom: 48px;
     }
@@ -338,7 +343,7 @@ export default {
   .footer {
     padding: 40px 90px;
     &__icon {
-      height: 60px;
+      width: 276px;
       margin-right: 96px;
     }
   }
@@ -367,35 +372,41 @@ export default {
   .intro {
     &__icon {
       height: 56px;
-      margin-bottom: 10px;
+      margin-bottom: 32px;
+    }
+    &__subtitle {
+      margin-bottom: 100px;
     }
   }
   .features {
-    margin: 80px 0;
+    margin: 80px 0 96px 0;
+    padding: 0;
+
     &__title {
-      margin-bottom: 24px;
+      @include font-format($type: 'h1', $mb: 32px, $bold: true)
     }
-    &__item_img {
-      max-width: 135px;
+    &__item__img {
+      max-width: 120px;
     }
   }
   .feature {
-    padding: 40px 0;
+    padding: 0 0 96px 0;
     &__text {
       &__title {
-        margin-bottom: 24px;
+        @include font-format($type: 'h1', $mb: 24px, $bold: true)
       }
       &__content {
-        @include font-format('b2');
+        @include font-format('b2', $line-height: 40px);
+        margin-bottom: 24px;
       }
     }
   }
   .footer {
-    height: 160px;
-    padding: 20px 80px;
+    height: 176px;
+    padding: 36px 48px;
     &__icon {
-      height: 48px;
-      margin-right: 30px;
+      width: 176px;
+      margin-right: 40px;
     }
   }
 }

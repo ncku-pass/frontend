@@ -105,15 +105,15 @@
   @media screen and (max-width: $tablet_max_width){
     @if ($type == 'h1') {
       font-size: 54px;
-      line-height: 59px;
+      line-height: 80px;
 
     } @else if ($type == 'h2') {
       font-size: 40px;
-      line-height: 45px;
+      line-height: 80px;
 
     } @else if ($type == 'b1') {
       font-size: 30px;
-      line-height: 35px;
+      line-height: 40px;
 
     } @else if ($type == 'b2') {
       font-size: 22px;
