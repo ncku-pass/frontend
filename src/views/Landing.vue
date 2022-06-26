@@ -95,10 +95,9 @@
       </section>
     </div>
     <footer class='footer'>
-      <img class='footer__icon' src='@/assets/brand_icon_white.svg' alt='brand icon' />
+      <img v-if='device !== "mobile"' class='footer__icon' src='@/assets/brand_icon_white.svg' alt='brand icon' />
       <p class='footer__info'>
         <span>© NCKU 教學發展中心版權所有</span>
-        <span>701 台南市大學路一號光復校區雲平大樓3樓</span>
         <br />
         <span>Design by NCKU PASS 製作團隊</span>
         <span>Mail：<a href='mailto:ncku.pass@gmail.com'>ncku.pass@gmail.com</a></span>
@@ -109,6 +108,7 @@
       <div class='footer__links'>
         <a href='https://web.ncku.edu.tw/' target='_blank'>國立成功大學 National Cheng Kung University</a>
         <a href='https://ctld-acad.ncku.edu.tw/' target='_blank'>教學發展中心</a>
+        <img class='footer__icon' src='@/assets/brand_icon_white.svg' alt='brand icon' />
       </div>
     </footer>
   </div>
@@ -470,12 +470,16 @@ export default {
     }
   }
   .footer {
-    @include font-format('b5');
-    height: 90px;
-    padding: 12px;
+    @include font-format('b4');
+    height: 110px;
+    padding: 20px 28px;
+    &__info {
+
+    }
     &__icon {
-      width: 60px;
-      margin-right: 24px;
+      width: 96px;
+      margin: 12px 0 0 0;
+      align-self: flex-end;
     }
   }
 }
