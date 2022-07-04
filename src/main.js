@@ -7,6 +7,7 @@ import router from './router'
 import store from './store'
 import Toast from 'vue-toastification'
 import { Vue3Mq } from 'vue3-mq'
+import VueGtag from 'vue-gtag'
 import mdiVue from 'mdi-vue/v3'
 import * as mdijs from '@mdi/js'
 
@@ -40,6 +41,14 @@ async function startApp() {
       }
     })
     .use(mdiVue, { icons: mdijs })
+    .use(VueGtag, {
+      appName: process.env.VUE_APP_GA_APP_NAME,
+      pageTrackerEnabled: true,
+      pageTrackerScreenviewEnabled: true,
+      config: {
+        id: process.env.VUE_APP_GA_ID,
+      }
+    }, router)
     .mount('#app')
 }
 
