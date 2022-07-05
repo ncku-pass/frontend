@@ -1,16 +1,16 @@
 <template>
-  <nav class='navbar'>
+  <nav class='navbar' :class='device'>
     <h1 class='navbar__brand'>
       <a href='/' class='navbar__brand__link'>E-portfolio</a>
     </h1>
     <ul class='navbar__links'>
       <li>
-        <router-link class='navbar__links__link tab-link' :to='{ name: &apos;Experience&apos; }'>
+        <router-link class='navbar__links__link tab-link' :to='{ name: "Experience" }'>
           學習歷程
         </router-link>
       </li>
       <li>
-        <router-link class='navbar__links__link tab-link' :to='{ name: &apos;Portfolio&apos; }'>
+        <router-link class='navbar__links__link tab-link' :to='{ name: "Portfolio" }'>
           Portfolio
         </router-link>
       </li>
@@ -41,6 +41,7 @@ export default {
   components: {
     ConfirmModal
   },
+  inject: ['mq'],
   setup() {
     const store = useStore()
     const logout = () => store.dispatch('auth/logout')
@@ -51,6 +52,11 @@ export default {
     }
 
     return { showConfirmModal, logout, handleLogout }
+  },
+  computed: {
+    device() {
+      return this.mq.current
+    }
   }
 }
 </script>
@@ -66,7 +72,7 @@ export default {
   align-items: center;
   height: $navbar-height;
   padding: 2px 24px 0;
-  box-shadow: 0 2px 5px rgba(255, 155, 160, 0.1), 2px 2px 15px 0px rgba(255, 155, 160, 0.15);
+  box-shadow: 0 2px 5px rgba(255, 155, 160, 0.1), 2px 2px 15px 0 rgba(255, 155, 160, 0.15);
   background-color: #fff;
   z-index: 10;
   &::after {
@@ -101,9 +107,12 @@ export default {
   list-style: none;
 }
 
-@media (max-width: 767px) {
-  .navbar__links__link[href='/portfolio'] {
-    display: none;
+.mobile {
+  @include grid(column, 0, 0);
+  .navbar__brand__link {
+    background-image: url('../assets/brand_icon_small.svg');
+    background-size: 65px;
+    width: 80px;
   }
 }
 </style>
