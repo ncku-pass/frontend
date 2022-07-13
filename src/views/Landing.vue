@@ -143,11 +143,10 @@ export default {
 .hero {
   position: relative;
   color: $white;
-  height: 100vh;
   display: flex;
   align-items: center;
   background-image: url('~@/assets/landing_bg.svg');
-  background-position: center -50px;
+  background-position: center -100px;
   background-size: cover;
   background-repeat: no-repeat;
 
@@ -155,7 +154,8 @@ export default {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 100px;
+    margin-top: 50px;
+    margin-bottom: 300px;
     width: 100%;
   }
 }
@@ -184,7 +184,7 @@ export default {
 
 .scroll-arrow {
   position: absolute;
-  bottom: 72px;
+  bottom: 110px;
   left: 50%;
   transform: translateX(-50%);
   animation: jump 1.5s infinite;
@@ -351,6 +351,10 @@ export default {
 }
 
 .tablet, .mobile {
+  .scroll-arrow {
+    width: 30px;
+  }
+
   .intro {
     &__subtitle {
       margin-bottom: 45px;
@@ -414,19 +418,25 @@ export default {
 
 .mobile {
   .hero {
-    height: calc(100vh - 200px);
-  }
-  .intro {
-    margin-left: 40px;
-    &__icon {
-      height: 28px;
-      margin-bottom: 16px;
+    &__content {
+      margin-bottom: 200px;
+
+      .intro {
+        margin-left: 40px;
+
+        &__icon {
+          height: 28px;
+          margin-bottom: 16px;
+        }
+
+        &__subtitle {
+          @include font-format('b3');
+          margin-bottom: 42px;
+        }
+      }
     }
-    &__subtitle {
-      @include font-format('b3');
-      margin-bottom: 42px;
-    }
   }
+
   .login {
     @include grid(row, 0, 0);
     &__title {
@@ -473,9 +483,7 @@ export default {
     @include font-format('b4');
     height: 110px;
     padding: 20px 28px;
-    &__info {
 
-    }
     &__icon {
       width: 96px;
       margin: 12px 0 0 0;
