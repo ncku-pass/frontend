@@ -108,7 +108,7 @@
       <div class='footer__links'>
         <a href='https://web.ncku.edu.tw/' target='_blank'>國立成功大學 National Cheng Kung University</a>
         <a href='https://ctld-acad.ncku.edu.tw/' target='_blank'>教學發展中心</a>
-        <img class='footer__icon' src='@/assets/brand_icon_white.svg' alt='brand icon' />
+        <img v-if='device === "mobile"' class='footer__icon' src='@/assets/brand_icon_white.svg' alt='brand icon' />
       </div>
     </footer>
   </div>
