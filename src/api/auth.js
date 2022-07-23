@@ -15,26 +15,6 @@ export const checkNCKULogin = ({ key, keyval }) => {
   })
 }
 
-export const register = ({
-  email,
-  name,
-  password,
-  confirmPassword,
-  studentId,
-  major,
-  graduationYear
-}) => {
-  return req.post('/auth/register', {
-    email,
-    name,
-    password,
-    confirmPassword,
-    studentId,
-    major,
-    graduationYear
-  })
-}
-
 export const checkToken = () => {
   return req.post('/auth/check-token')
 }

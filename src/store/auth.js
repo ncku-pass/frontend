@@ -1,7 +1,6 @@
 import router from '@/router/index'
 import {
   login as loginAPI,
-  register as registerAPI,
   checkToken as checkTokenAPI,
   checkNCKULogin as checkNCKULoginAPI
 } from '@/api/auth'
@@ -56,27 +55,6 @@ const auth = {
     logout({ commit }) {
       commit('LOGOUT')
       window.location.href = '/'
-    },
-    async register({ commit }, { email, name, password, confirmPassword, studentId, major, graduationYear }) {
-      try {
-        commit('SET_STATUS', { isPending: true, error: null })
-
-        const { data } = await registerAPI({
-          email,
-          name,
-          password,
-          confirmPassword,
-          studentId,
-          major,
-          graduationYear
-        })
-
-        commit('SET_TOKEN', data.tokenStr)
-      } catch (error) {
-        commit('SET_STATUS', { error })
-      } finally {
-        commit('SET_STATUS', { isPending: false })
-      }
     },
     async checkToken({ commit }) {
       try {

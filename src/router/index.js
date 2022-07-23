@@ -5,7 +5,6 @@ import Experience from '../views/Experience.vue'
 import Portfolio from '../views/Portfolio.vue'
 import Landing from '../views/Landing.vue'
 import LoginForm from '../components/Landing/LoginForm.vue'
-import Register from '../views/Register.vue'
 import AuthRedirect from '../views/AuthRedirect.vue'
 // import AuthRedirect from '../controllers/AuthRedirect.js'
 
@@ -21,11 +20,6 @@ const routes = [
     path: '/login',
     name: 'Login',
     component: LoginForm
-  },
-  {
-    path: '/register',
-    name: 'Register',
-    component: Register
   },
   {
     path: '/auth/redirect',

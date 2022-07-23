@@ -33,9 +33,6 @@
     <button class='btn' :disabled='isPending' type='submit'>
       {{ isPending ? '登入中' : '登入' }}
     </button>
-    <router-link class='register' :to='{ name: "Register" }'>
-      還沒註冊嗎，點我立即註冊
-    </router-link>
   </form>
 </template>
 
@@ -80,32 +77,14 @@ export default {
 .login-form {
   @include grid(row, 20px, 0);
   width: 350px;
-  &__title {
-    margin: 0;
-    font-size: 26px;
-  }
-  label {
-    color: #fff;
-  }
-  .btn,
-  .register {
-    justify-self: flex-end;
-  }
-  .register {
-    color: #fff;
-    text-decoration-line: underline;
-  }
-}
+  padding: 50px;
 
-@media (max-width: 1023px) {
-  .login-form {
-    width: 250px;
+  * {
+    color: $gray-1;
   }
-}
-@media (max-width: 767px) {
-  .login-form {
-    margin-top: 60px;
-    width: 350px;
+
+  .btn {
+    justify-self: flex-end;
   }
 }
 </style>
