@@ -31,7 +31,7 @@ const errorHandler = (error) => {
 }
 
 export const req = axios.create({
-  baseURL: process.env.NODE_ENV === 'production' ? process.env.VUE_APP_API_URL : 'https://api.e-portfolio.dev-box.site/api',
+  baseURL: process.env.VUE_APP_API_URL,
   headers: { 'Content-Type': 'application/json' },
   timeout: 15000
 })
