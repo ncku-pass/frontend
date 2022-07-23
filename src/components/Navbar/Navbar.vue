@@ -1,17 +1,12 @@
 <template>
-  <nav class='navbar' :class='device'>
+  <nav class='navbar'>
     <h1 class='navbar__brand'>
       <a href='/' class='navbar__brand__link'>E-portfolio</a>
     </h1>
     <ul class='navbar__links'>
-      <li>
-        <router-link class='navbar__links__link tab-link' :to='{ name: "Experience" }'>
-          學習歷程
-        </router-link>
-      </li>
-      <li>
-        <router-link class='navbar__links__link tab-link' :to='{ name: "Portfolio" }'>
-          Portfolio
+      <li v-for='(link, idx) in navbarLinks' :key='`navbar-${idx}`'>
+        <router-link class='navbar__links__link tab-link' :to='{ name: link.dest }'>
+          {{ link.name }}
         </router-link>
       </li>
       <li>
@@ -35,13 +30,13 @@
 import { ref } from 'vue'
 import { useStore } from 'vuex'
 import ConfirmModal from '@/components/ConfirmModal.vue'
+import { navbarLinks } from '@/config'
 
 export default {
   name: 'Navbar',
   components: {
     ConfirmModal
   },
-  inject: ['mq'],
   setup() {
     const store = useStore()
     const logout = () => store.dispatch('auth/logout')
@@ -50,20 +45,14 @@ export default {
     const handleLogout = () => {
       showConfirmModal.value = true
     }
-
-    return { showConfirmModal, logout, handleLogout }
+    return { navbarLinks, showConfirmModal, logout, handleLogout }
   },
-  computed: {
-    device() {
-      return this.mq.current
-    }
-  }
 }
 </script>
 
 <style lang="scss" scoped>
-@import '~@/scss/variables';
-@import '~@/scss/mixins';
+@import '~@/scss/_variables';
+@import '~@/scss/_mixins';
 
 .navbar {
   position: relative;
@@ -72,7 +61,7 @@ export default {
   align-items: center;
   height: $navbar-height;
   padding: 2px 24px 0;
-  box-shadow: 0 2px 5px rgba(255, 155, 160, 0.1), 2px 2px 15px 0 rgba(255, 155, 160, 0.15);
+  box-shadow: 0 2px 5px #8e3438;
   background-color: #fff;
   z-index: 10;
   &::after {
@@ -92,7 +81,7 @@ export default {
     display: block;
     height: 40px;
     width: 200px;
-    background-image: url('../assets/brand_icon.svg');
+    background-image: url('../../assets/brand_icon.svg');
     background-size: 200px;
     background-repeat: no-repeat;
     text-indent: 101%;
@@ -105,14 +94,5 @@ export default {
   margin: 0;
   padding: 0;
   list-style: none;
-}
-
-.mobile {
-  @include grid(column, 0, 0);
-  .navbar__brand__link {
-    background-image: url('../assets/brand_icon_small.svg');
-    background-size: 65px;
-    width: 80px;
-  }
 }
 </style>

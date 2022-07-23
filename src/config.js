@@ -22,3 +22,13 @@ export class KeyNoPairedError extends Error {
     this.name = 'KeyNoPairedError'
   }
 }
+
+export const navbarLinks = [{
+  dest: 'Experience',
+  icon: 'shoePrint',
+  name: '學習歷程'
+}, {
+  dest: 'Portfolio',
+  icon: 'badgeAccount',
+  name: '經歷整合'
+}]
