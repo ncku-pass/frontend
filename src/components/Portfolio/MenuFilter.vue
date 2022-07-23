@@ -11,8 +11,8 @@
               v-for='(checked, semester) in filter.semesters'
               :key='semester'
               class='filter-block__tags__tag'
-              :class='{ &apos;filter-block__tags__tag--selected&apos;: checked }'
-              @click='$emit(&apos;toggleSemester&apos;, semester)'
+              :class='{ "filter-block__tags__tag--selected": checked }'
+              @click='$emit("toggleSemester", semester)'
             >
               {{ semester }}
             </li>
@@ -21,16 +21,16 @@
         <div class='filter-block'>
           <div class='filter-block__title filter-block__title--tag'>
             標籤
-            <span v-if='allSelected' @click='$emit(&apos;unSelectAllTags&apos;)'>取消全選</span>
-            <span v-else @click='$emit(&apos;selectAllTags&apos;)'>全選</span>
+            <span v-if='allSelected' @click='$emit("unSelectAllTags")'>取消全選</span>
+            <span v-else @click='$emit("selectAllTags")'>全選</span>
           </div>
           <ul class='filter-block__tags'>
             <li
               v-for='(checked, tag) in filter.tags'
               :key='tag'
               class='filter-block__tags__tag'
-              :class='{ &apos;filter-block__tags__tag--selected&apos;: checked }'
-              @click='$emit(&apos;toggleTag&apos;, tag)'
+              :class='{ "filter-block__tags__tag--selected": checked }'
+              @click='$emit("toggleTag", tag)'
             >
               {{ tag }}
             </li>
@@ -45,8 +45,8 @@
               v-for='(checked, type) in filter.types'
               :key='type'
               class='filter-block__tags__tag'
-              :class='{ &apos;filter-block__tags__tag--selected&apos;: checked }'
-              @click='$emit(&apos;toggleType&apos;, type)'
+              :class='{ "filter-block__tags__tag--selected": checked }'
+              @click='$emit("toggleType", type)'
             >
               {{ chineseOfExperienceTypes[type] }}
             </li>

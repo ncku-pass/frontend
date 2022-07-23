@@ -1,6 +1,6 @@
 <template>
   <teleport to='#app'>
-    <div class='modal-bg' @click.self.stop='$emit(&apos;close&apos;)'>
+    <div class='modal-bg' @click.self.stop='$emit("close")'>
       <div class='import-modal'>
         <h1 class='import-modal__title'>
           加入你想要呈現的經驗

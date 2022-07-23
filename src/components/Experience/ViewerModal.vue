@@ -1,7 +1,7 @@
 <template>
-  <div class='modal-bg' @click.self.stop='$emit(&apos;close&apos;)'>
+  <div class='modal-bg' @click.self.stop='$emit("close")'>
     <div class='viewer-modal'>
-      <XCircleIcon class='viewer-modal__close' @click.stop='$emit(&apos;close&apos;)' />
+      <XCircleIcon class='viewer-modal__close' @click.stop='$emit("close")' />
       <div class='viewer-modal__content'>
         <div v-if='experience.name'>
           <h3 class='field-title'>
@@ -70,7 +70,7 @@
             其他連結
           </h3>
           <ul class='field-links'>
-            <li v-for='link in experience.link.split(&apos;,&apos;)' :key='link'>
+            <li v-for='link in experience.link.split(",")' :key='link'>
               <a class='field-value' :href='link.trim()' target='_blank'>
                 {{ link.trim() }}
               </a>

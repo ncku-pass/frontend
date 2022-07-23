@@ -33,7 +33,7 @@
     <button class='btn' :disabled='isPending' type='submit'>
       {{ isPending ? '登入中' : '登入' }}
     </button>
-    <router-link class='register' :to='{ name: &apos;Register&apos; }'>
+    <router-link class='register' :to='{ name: "Register" }'>
       還沒註冊嗎，點我立即註冊
     </router-link>
   </form>

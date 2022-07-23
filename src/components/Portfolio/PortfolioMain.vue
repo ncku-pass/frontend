@@ -11,7 +11,7 @@
             :key='resume.id'
             :ref='setTabRef'
             class='tab-link'
-            :class='{ &apos;is-active&apos;: selectedIndex === index }'
+            :class='{ "is-active": selectedIndex === index }'
             :title='resume.name'
             @click='handleSelectResume(index)'
           >
@@ -69,10 +69,10 @@
               </div>
             </div>
             <div class='content-body__btns'>
-              <button class='content-body__add' @click='handleAddCard(&apos;experience&apos;)'>
+              <button class='content-body__add' @click='handleAddCard("experience")'>
                 + 新增經歷區塊
               </button>
-              <button class='content-body__add' @click='handleAddCard(&apos;text&apos;)'>
+              <button class='content-body__add' @click='handleAddCard("text")'>
                 + 新增文字區塊
               </button>
             </div>

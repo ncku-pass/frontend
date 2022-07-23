@@ -3,34 +3,34 @@
     <li>
       <router-link
         class='tab-link'
-        :class='{ &apos;router-link-active&apos;: type === &apos;course&apos; }'
-        :to='{ name: &apos;Experience&apos;, params: { type: &apos;course&apos; } }'
+        :class='{ "router-link-active": type === "course" }'
+        :to='{ name: "Experience", params: { type: "course" } }'
       >
         課程紀錄
       </router-link>
     </li>
     <li>
-      <router-link class='tab-link' :to='{ name: &apos;Experience&apos;, params: { type: &apos;activity&apos; } }'>
+      <router-link class='tab-link' :to='{ name: "Experience", params: { type: "activity" } }'>
         活動經驗
       </router-link>
     </li>
     <li>
-      <router-link class='tab-link' :to='{ name: &apos;Experience&apos;, params: { type: &apos;competition&apos; } }'>
+      <router-link class='tab-link' :to='{ name: "Experience", params: { type: "competition" } }'>
         競賽經驗
       </router-link>
     </li>
     <li>
-      <router-link class='tab-link' :to='{ name: &apos;Experience&apos;, params: { type: &apos;work&apos; } }'>
+      <router-link class='tab-link' :to='{ name: "Experience", params: { type: "work" } }'>
         工作經驗
       </router-link>
     </li>
     <li>
-      <router-link class='tab-link' :to='{ name: &apos;Experience&apos;, params: { type: &apos;certificate&apos; } }'>
+      <router-link class='tab-link' :to='{ name: "Experience", params: { type: "certificate" } }'>
         外語能力或證照
       </router-link>
     </li>
     <li>
-      <router-link class='tab-link' :to='{ name: &apos;Experience&apos;, params: { type: &apos;other&apos; } }'>
+      <router-link class='tab-link' :to='{ name: "Experience", params: { type: "other" } }'>
         其他
       </router-link>
     </li>

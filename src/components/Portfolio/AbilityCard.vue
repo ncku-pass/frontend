@@ -18,13 +18,13 @@
         :value='abilityTopic'
         class='ability-card__topic'
         placeholder='為這些經歷訂定一個主題吧'
-        @input='$emit(&apos;update:abilityTopic&apos;, $event.target.value)'
+        @input='$emit("update:abilityTopic", $event.target.value)'
       />
-      <XCircleIcon class='ability-card__delete' @click.stop='$emit(&apos;delete-ability&apos;)' />
+      <XCircleIcon class='ability-card__delete' @click.stop='$emit("delete-ability")' />
     </div>
     <hr />
     <div class='ability-card__body'>
-      <template v-if='cardType === &apos;experience&apos;'>
+      <template v-if='cardType === "experience"'>
         <p v-if='experiences.length === 0' class='ability-card__body__tips'>
           由右方列表拉入適合課程
         </p>
@@ -54,7 +54,7 @@
                     <MenuItems as='ul' class='experience-card__menu-items'>
                       <MenuItem v-if='experience.position' v-slot='{ active }'>
                         <li
-                          :class='{ &apos;experience-card__menu-item--active&apos;: active }'
+                          :class='{ "experience-card__menu-item--active": active }'
                           class='experience-card__menu-item'
                           @click='experience.showPosition = !experience.showPosition'
                         >
@@ -64,7 +64,7 @@
                       </MenuItem>
                       <MenuItem v-if='experience.feedback' v-slot='{ active }'>
                         <li
-                          :class='{ &apos;experience-card__menu-item--active&apos;: active }'
+                          :class='{ "experience-card__menu-item--active": active }'
                           class='experience-card__menu-item'
                           @click='experience.showFeedback = !experience.showFeedback'
                         >
@@ -73,9 +73,9 @@
                       </MenuItem>
                       <MenuItem v-slot='{ active }'>
                         <li
-                          :class='{ &apos;experience-card__menu-item--active&apos;: active }'
+                          :class='{ "experience-card__menu-item--active": active }'
                           class='experience-card__menu-item'
-                          @click.stop='$emit(&apos;delete-experience&apos;, index)'
+                          @click.stop='$emit("delete-experience", index)'
                         >
                           刪除此經驗
                         </li>

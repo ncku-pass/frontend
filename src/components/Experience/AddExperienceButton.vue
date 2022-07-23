@@ -7,12 +7,12 @@
     <transition name='menu-fade'>
       <MenuItems as='ul'>
         <MenuItem v-slot='{ active }'>
-          <li :class='{ active }' @click='$emit(&apos;add-experience&apos;)'>
+          <li :class='{ active }' @click='$emit("add-experience")'>
             新增校外或其他經驗
           </li>
         </MenuItem>
-        <MenuItem v-if='type === &apos;course&apos; || type === &apos;activity&apos;' v-slot='{ active }'>
-          <li :class='{ active }' @click='$emit(&apos;import-ncku-data&apos;)'>
+        <MenuItem v-if='type === "course" || type === "activity"' v-slot='{ active }'>
+          <li :class='{ active }' @click='$emit("import-ncku-data")'>
             匯入校內原有資料
           </li>
         </MenuItem>

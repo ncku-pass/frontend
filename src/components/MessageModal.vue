@@ -3,15 +3,15 @@
     <div v-show='show' class='message-modal modal-bg' @click.self.stop='handleClick'>
       <div class='message-modal__content'>
         <slot>
-          <template v-if='messageType === &apos;link&apos;'>
+          <template v-if='messageType === "link"'>
             <p>可以將更多相關資訊（ex.照片、PPT等等）統整到自己的連結裡頭喔！</p>
             <p>若有多個連結，使用<code class='inline-code'>,</code>將連結隔開</p>
           </template>
-          <template v-if='messageType === &apos;score&apos;'>
+          <template v-if='messageType === "score"'>
             <span>歷年選課成績資料查詢：</span>
             <a href='https://qrys.ncku.edu.tw/ncku/qrys05.asp' target='_blank'>https://qrys.ncku.edu.tw/ncku/qrys05.asp</a>
           </template>
-          <div v-if='messageType === &apos;tags&apos;' class='message-modal__tags'>
+          <div v-if='messageType === "tags"' class='message-modal__tags'>
             <b>創建Tag</b>
             <p>在Tag前面加上<code class='inline-code'>#</code>，輸入完畢後按下<code class='inline-code'>Enter</code>新增</p>
             <b>搜尋Tag</b>
