@@ -30,7 +30,6 @@
   },
   "engines": {
     "node": ">=14.0.0",
-    "yarn": "!! Please use yarn instead of NPM to install dependencies !!",
     "npm": ">= 6.0.0"
   },
   "devDependencies": {
