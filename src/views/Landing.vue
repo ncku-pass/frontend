@@ -3,7 +3,7 @@
     <section class='hero'>
       <div class='container hero__content'>
         <div class='intro'>
-          <img class='intro__icon' src='@/assets/brand_icon_white.svg' alt='brand__icon' />
+          <img class='intro__icon' src='@/assets/Logo/normal_white.svg' alt='brand__icon' />
           <h2 class='intro__title'>
             幫助你整理經歷，<br />
             全方位展現個人特質
@@ -95,7 +95,7 @@
       </section>
     </div>
     <footer class='footer'>
-      <img v-if='device !== "mobile"' class='footer__icon' src='@/assets/brand_icon_white.svg' alt='brand icon' />
+      <img v-if='device !== "mobile"' class='footer__icon' src='@/assets/Logo/normal_white.svg' alt='brand icon' />
       <p class='footer__info'>
         <span>© NCKU 教學發展中心版權所有</span>
         <br />
@@ -108,7 +108,7 @@
       <div class='footer__links'>
         <a href='https://web.ncku.edu.tw/' target='_blank'>國立成功大學 National Cheng Kung University</a>
         <a href='https://ctld-acad.ncku.edu.tw/' target='_blank'>教學發展中心</a>
-        <img v-if='device === "mobile"' class='footer__icon' src='@/assets/brand_icon_white.svg' alt='brand icon' />
+        <img v-if='device === "mobile"' class='footer__icon' src='@/assets/Logo/normal_white.svg' alt='brand icon' />
       </div>
     </footer>
   </div>
