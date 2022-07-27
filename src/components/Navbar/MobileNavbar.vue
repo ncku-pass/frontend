@@ -1,25 +1,25 @@
 <template>
   <nav class='navbar'>
     <div class='navbar__brand'>
-      <img class='navbar__brand__icon' src='@/assets/Logo/icon_white_withname.svg' />
+      <img class='navbar__brand__icon' src='@/assets/Logo/icon_white_withname.svg' alt='NCKU PASS' />
     </div>
     <ul class='navbar__links'>
       <li v-for='(link, idx) in navbarLinks' :key='`navbar-${idx}`'>
         <router-link v-slot='{ isActive, navigate }' :to='{ name: link.dest }' custom>
           <transition name='tab' mode='out-in'>
             <div v-if='isActive' class='navbar__tab navbar__tab--active'>
-              <mdicon :name='link.icon' />
+              <mdicon :name='link.icon' size='20' />
               <span class='navbar__tab__name'>{{ link.name }}</span>
             </div>
             <div v-else class='navbar__tab' @click='navigate'>
-              <mdicon :name='link.icon' />
+              <mdicon :name='link.icon' size='16' />
             </div>
           </transition>
         </router-link>
       </li>
       <li>
         <div class='navbar__tab' @click='handleLogout'>
-          <mdicon name='logoutVariant' />
+          <mdicon name='locationExit' size='16' />
         </div>
       </li>
     </ul>
@@ -68,42 +68,40 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
-  height: $navbar-height;
-  padding: 8px 16px;
-  box-shadow: 0 2px 5px #8e3438;
+  height: $mobile-navbar-height;
+  padding: 0 16px;
   z-index: 10;
 
   &__brand {
     margin: 0;
 
     &__icon {
-      height: 46px;
-      width: 46px;
+      height: $mobile-navbar-height;
+      width: $mobile-navbar-height;
     }
   }
 
   &__links {
-    @include grid(column, 0, 24px);
-    margin-bottom: -8px;
+    @include grid(column, 0, 20px);
     padding: 0;
     list-style: none;
     align-items: end;
   }
 
   &__tab {
-    background: $red-white;
-    color: $red;
+    background: $white;
     border-radius: 8px 8px 0 0;
     padding: 4px 16px;
+    filter: drop-shadow(4px 0px 0px $red-light);
+    @include font-format($type: 'b3', $color: $red, $bold: true);
+    letter-spacing: 0.2em;
 
     &--active {
       background: $white;
-      padding: 8px;
-      box-shadow: 2px 0 5px #2a0f11;
+      padding: 8px 10px;
 
       .navbar__tab__name {
-        margin-left: 4px;
-        border-bottom: solid $red 2px;
+        margin-left: 6px;
       }
     }
   }

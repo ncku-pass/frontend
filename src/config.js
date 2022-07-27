@@ -29,6 +29,6 @@ export const navbarLinks = [{
   name: '學習歷程'
 }, {
   dest: 'Portfolio',
-  icon: 'badgeAccount',
+  icon: 'textBoxMultiple',
   name: '經歷整合'
 }]
