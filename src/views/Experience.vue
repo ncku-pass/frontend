@@ -23,9 +23,7 @@
                 @click='openViewerModal(experience)'
               />
             </ExperienceListBlock>
-            <div class='add-btn__container'>
-              <AddExperienceButton :type='type' @add-experience='handleAddExperience' @import-ncku-data='handleImportNCKUData' />
-            </div>
+            <AddExperienceButton :type='type' @add-experience='handleAddExperience' @import-ncku-data='handleImportNCKUData' />
           </div>
         </vueScrollShadow>
       </div>
@@ -190,11 +188,6 @@ export default {
       display: none;
     }
   }
-}
-
-.add-btn__container {
-  display: flex;
-  justify-content: center;
 }
 
 .lds-dual-ring {

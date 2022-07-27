@@ -1,13 +1,24 @@
 import { createApp, computed } from 'vue'
+import App from './App.vue'
+
+// plugin
+import router from './router'
+import store from './store'
+import VueGtag from 'vue-gtag'
+import { Vue3Mq } from 'vue3-mq'
+import Toast from 'vue-toastification'
+
+// styles
 import '@vueform/multiselect/themes/default.css'
 import 'vue-toastification/dist/index.css'
 import '@/scss/index.scss'
-import App from './App.vue'
-import router from './router'
-import store from './store'
-import Toast from 'vue-toastification'
-import { Vue3Mq } from 'vue3-mq'
-import VueGtag from 'vue-gtag'
+
+import PrimeVue from 'primevue/config'
+import 'primevue/resources/primevue.min.css'
+import 'primeicons/primeicons.css'
+import '@/scss/_theme.scss'
+
+// icon
 import mdiVue from 'mdi-vue/v3'
 import * as mdijs from '@mdi/js'
 
@@ -32,6 +43,7 @@ async function startApp() {
     .use(Toast, toastConfig)
     .use(store)
     .use(router)
+    .use(PrimeVue)
     .use(Vue3Mq, {
       breakpoints: {
         mobile: 0,
