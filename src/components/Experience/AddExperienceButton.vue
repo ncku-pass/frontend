@@ -70,7 +70,7 @@ export default {
   justify-content: center;
   display: flex;
 
-  /deep/ .p-speeddial {
+ :deep(.p-speeddial) {
     position: fixed;
     bottom: 20px;
     left: 50%;
@@ -114,7 +114,7 @@ export default {
     height: 40px !important;
     box-shadow: 1px 1px 3px #757575;
 
-    /deep/ .p-button-icon {
+    :deep(.p-button-icon) {
       font-size: 1.3rem;
     }
   }
