@@ -46,14 +46,14 @@ export default {
     })
 
     const addExpOptions = [{
-      label: '新增校外或其他經驗',
-      command: () => {
-        emit('add-experience')
-      }
-    }, {
-      label: '匯入校內原有資料',
+      label: '匯入校內紀錄',
       command: () => {
         emit('import-ncku-data')
+      }
+    }, {
+      label: '新增其他經驗',
+      command: () => {
+        emit('add-experience')
       }
     }]
 

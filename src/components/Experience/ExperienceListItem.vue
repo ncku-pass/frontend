@@ -9,28 +9,28 @@
       </li>
     </ul>
     <div class='experience-list-item__btns'>
-      <button class='experience-list-item__btns__edit btn-pill' @click.stop='handleEditExperience'>
-        <PencilAltIcon />
-        <span class='btn-pill__text'>編輯</span>
-      </button>
+      <Button class='p-button-rounded p-button-outlined p-button-secondary' @click.stop='handleEditExperience'>
+        <mdicon name='squareEditOutline' size='20' />
+        <span v-if='device !== "mobile"' class='p-button-label'>編輯</span>
+      </Button>
       <!-- TODO:  寫死的資料改掉-->
-      <button
-        class='experience-list-item__btns__delete btn-pill'
-        :class='{ disabled: false }'
-        :disabled='false'
-        @click.stop='confirmDelete'
-      >
-        <TrashIcon />
-        <span class='btn-pill__text'>刪除</span>
-      </button>
+      <Button class='p-button-rounded p-button-secondary' @click.stop='confirmDelete'>
+        <mdicon name='trashCanOutline' size='20' />
+        <span v-if='device !== "mobile"' class='p-button-label'>刪除</span>
+      </Button>
     </div>
     <ConfirmModal v-if='showConfirmModal' :message='experience.name' confirm-type='delete' @cancel='closeConfirmModal'>
-      <button v-show='!deleteStatus.isPending' class='btn' @click.stop='closeConfirmModal'>
-        取消
-      </button>
-      <button class='btn--red' :disabled='deleteStatus.isPending' @click.stop='handleDeleteExperience'>
-        {{ deleteStatus.isPending ? '刪除中' : '確定刪除' }}
-      </button>
+      <Button
+        v-show='!deleteStatus.isPending'
+        class='p-button-outlined p-button-secondary'
+        label='取消'
+        @click.stop='closeConfirmModal'
+      />
+      <Button
+        :disabled='deleteStatus.isPending'
+        :label='deleteStatus.isPending ? "刪除中" : "確定刪除"'
+        @click.stop='handleDeleteExperience'
+      />
     </ConfirmModal>
   </li>
 </template>
@@ -38,17 +38,17 @@
 <script>
 import { onMounted, onUnmounted, reactive, ref } from 'vue'
 import { debounce } from 'lodash-es'
+import Button from 'primevue/button'
 import ConfirmModal from '@/components/ConfirmModal'
 import { deleteExperience } from '@/api/experiences'
-import { PencilAltIcon, TrashIcon } from '@heroicons/vue/outline'
 import { useDeleteModal } from '@/composables/useDeleteModal'
 
 export default {
   components: {
     ConfirmModal,
-    PencilAltIcon,
-    TrashIcon
+    Button,
   },
+  inject: ['mq'],
   props: {
     experience: {
       type: Object,
@@ -58,6 +58,11 @@ export default {
     },
   },
   emits: ['delete', 'edit'],
+  computed: {
+    device() {
+      return this.mq.current
+    }
+  },
   setup(props, { emit }) {
     // === 刪除經歷 ===
     const { showConfirmModal, deleteStatus, closeConfirmModal, confirmDelete } = useDeleteModal()
@@ -160,27 +165,10 @@ export default {
     @include grid(column, 0, 10px);
     margin-left: auto;
     flex-shrink: 0;
-    &__edit {
-      color: $gray-2;
-      background-color: #fff;
-    }
-    &__delete {
-      color: #fff;
-      background-color: $gray-2;
-      &.disabled {
-        background-color: $gray-4;
-        border: 1px solid $gray-4;
-      }
-    }
-  }
-}
 
-@media (max-width: 767px) {
-  .experience-list-item__tags {
-    display: none;
-  }
-  .btn-pill__text {
-    display: none;
+    .p-button-label {
+      margin-left: 4px;
+    }
   }
 }
 </style>
