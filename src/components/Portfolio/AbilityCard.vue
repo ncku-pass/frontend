@@ -202,12 +202,12 @@ export default {
     cursor: pointer;
     width: 24px;
     height: 24px;
-    color: $red;
+    color: $red-5;
   }
   hr {
     height: 1px;
     margin: 0;
-    background-color: $gray-5;
+    background-color: $grey-2;
     border: none;
   }
   &__topic {
@@ -226,7 +226,7 @@ export default {
       line-height: 20px;
       text-align: center;
       color: $blue-dark;
-      background: $gray-blue;
+      background: $grey-blue;
       border-radius: 8px;
     }
   }
@@ -278,8 +278,8 @@ export default {
     min-width: 150px;
     background-color: #fff;
     border-radius: 5px;
-    border: 1px solid $gray-6;
-    color: $gray-1;
+    border: 1px solid $grey-1;
+    color: $grey-6;
     z-index: 1;
   }
   &__menu-item {
@@ -287,10 +287,10 @@ export default {
     line-height: 26px;
     cursor: pointer;
     &--active {
-      background-color: $gray-6;
+      background-color: $grey-1;
     }
     &:not(:last-child) {
-      border-bottom: 1px solid $gray-6;
+      border-bottom: 1px solid $grey-1;
     }
   }
   &__name {
@@ -307,7 +307,7 @@ export default {
     cursor: pointer;
     width: 24px;
     height: 24px;
-    color: $gray-3;
+    color: $grey-4;
   }
   &__tags {
     display: flex;
@@ -321,7 +321,7 @@ export default {
   }
   &__description {
     line-height: 24px;
-    color: $gray-3;
+    color: $grey-4;
     white-space: pre-wrap;
     line-break: anywhere;
   }

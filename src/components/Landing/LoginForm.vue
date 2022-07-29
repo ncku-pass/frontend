@@ -80,7 +80,7 @@ export default {
   padding: 50px;
 
   * {
-    color: $gray-1;
+    color: $grey-6;
   }
 
   .btn {

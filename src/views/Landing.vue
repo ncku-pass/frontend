@@ -137,7 +137,7 @@ export default {
 @import '~@/scss/variables';
 
 .landing {
-  background-color: $gray-6;
+  background-color: $grey-1;
 }
 
 .hero {
@@ -198,7 +198,7 @@ export default {
   padding: 0 92px;
 
   &__title {
-    @include font-format('h2', 56px, $red-light, true);
+    @include font-format('h2', 56px, $red-4, true);
   }
   &__list {
     display: flex;
@@ -211,7 +211,7 @@ export default {
       width: 150px;
     }
     &__title {
-      @include font-format($type: 'b2', $color: $gray-1);
+      @include font-format($type: 'b2', $color: $grey-6);
     }
   }
 }
@@ -233,11 +233,11 @@ export default {
     min-width: 540px;
     max-width: 630px;
     &__title {
-      @include font-format('h2', 24px, $red-light, true);
+      @include font-format('h2', 24px, $red-4, true);
       text-align: center;
     }
     &__content {
-      @include font-format($type: 'b2', $color: $gray-2, $line-height: 56px);
+      @include font-format($type: 'b2', $color: $grey-5, $line-height: 56px);
     }
   }
 }
@@ -246,7 +246,7 @@ export default {
   @include font-format($type: 'b5', $color: $white);
   height: 252px;
   padding: 40px 120px;
-  background: $red;
+  background: $red-5;
   display: flex;
 
   a {
@@ -364,7 +364,7 @@ export default {
     padding: 65px 0;
     &__text {
       &__content {
-        @include font-format($type: 'b2', $color: $gray-2, $line-height: 48px);
+        @include font-format($type: 'b2', $color: $grey-5, $line-height: 48px);
       }
     }
   }
@@ -455,7 +455,7 @@ export default {
     &__item {
       gap: 10px 0;
       &__title {
-        @include font-format($type: 'b3', $color: $gray-1);
+        @include font-format($type: 'b3', $color: $grey-6);
       }
       &__img {
         max-width: 60px;

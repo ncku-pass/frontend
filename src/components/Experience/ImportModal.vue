@@ -168,7 +168,7 @@ export default {
   display: flex;
   flex-direction: column;
   gap: 15px;
-  color: $gray-1;
+  color: $grey-6;
   &__title {
     font-size: 26px;
     line-height: 34px;
@@ -210,7 +210,7 @@ export default {
     display: flex;
     align-items: center;
     gap: 8px;
-    color: $gray-3;
+    color: $grey-4;
     font-size: 26px;
     line-height: 34px;
     font-weight: $weight-regular;

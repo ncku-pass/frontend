@@ -398,7 +398,7 @@ export default {
   animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
   animation: slideDown .3s;
   &__hint {
-    color: $gray-3;
+    color: $grey-4;
     display: flex;
     justify-content: space-between;
   }
@@ -407,7 +407,7 @@ export default {
     align-items: center;
     grid-template-columns: auto 1fr auto 1fr;
     column-gap: 10px;
-    color: $gray-1;
+    color: $grey-6;
   }
   summary {
     cursor: pointer;
@@ -470,11 +470,11 @@ export default {
     margin: 0;
   }
   i::before {
-    color: $red;
+    color: $red-5;
     border-radius: 50%;
   }
   i:hover::before {
-    color: $red;
+    color: $red-5;
     background: #ffffff;
   }
 }

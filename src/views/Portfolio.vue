@@ -108,14 +108,14 @@ export default {
 }
 .portfolio__loading-left {
   margin: 26px 0;
-  background-color: $gray-6;
+  background-color: $grey-1;
   filter: drop-shadow(-2px 4px 30px rgba(241, 90, 96, 0.05)) drop-shadow(-2px 4px 30px rgba(241, 90, 96, 0.1));
   border-radius: 10px 10px 0px 0px;
   height: 70%;
 }
 .portfolio__loading-right {
   margin: 26px 0;
-  background-color: $gray-6;
+  background-color: $grey-1;
   border-radius: 10px;
 }
 </style>

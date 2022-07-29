@@ -49,6 +49,6 @@ export default {
 
 #app {
   height: 100vh;
-  background: $pink;
+  background: $red-1;
 }
 </style>

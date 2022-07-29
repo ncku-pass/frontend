@@ -176,7 +176,7 @@ export default {
   padding: 20px;
   background-color: #fff;
   border-radius: 8px;
-  color: $gray-1;
+  color: $grey-6;
   &__close {
     position: absolute;
     right: 25px;
@@ -184,7 +184,7 @@ export default {
     width: 32px;
     height: 32px;
     cursor: pointer;
-    color: $red;
+    color: $red-5;
   }
   &__content {
     display: flex;

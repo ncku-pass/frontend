@@ -182,7 +182,7 @@ export default {
     justify-content: space-between;
     align-items: center;
     margin-bottom: 10px;
-    color: $gray-1;
+    color: $grey-6;
   }
   &__body {
     border-radius: 5px;

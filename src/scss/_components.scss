@@ -2,19 +2,19 @@
 .btn {
   padding: 6px 20px;
   background: #fff;
-  border: 1px solid $gray-4;
+  border: 1px solid $grey-3;
   border-radius: 5px;
   line-height: 26px;
   text-align: center;
   user-select: none;
   &:disabled {
-    background-color: $gray-4;
-    border-color: $gray-4;
+    background-color: $grey-3;
+    border-color: $grey-3;
   }
   &--red {
     @extend .btn;
-    border-color: $red;
-    background: $red;
+    border-color: $red-5;
+    background: $red-5;
     color: #fff;
   }
 }
@@ -22,14 +22,14 @@
 .tag {
   display: inline-block;
   padding: 3px 8px;
-  background-color: $gray-6;
+  background-color: $grey-1;
   border-radius: 50px;
   font-weight: $weight-light;
   font-size: 10px;
   line-height: 15px;
   &--large {
     display: inline-block;
-    background-color: $gray-6;
+    background-color: $grey-1;
     border-radius: 50px;
     line-height: 1.5;
     padding: 4px 8px;
@@ -43,7 +43,7 @@
   @include grid(column, 0, 5px);
   align-items: center;
   padding: 5px 10px;
-  border: 1px solid $gray-2;
+  border: 1px solid $grey-5;
   border-radius: 50px;
   svg {
     width: 24px;
@@ -59,7 +59,7 @@
   text-overflow: ellipsis;
   user-select: none;
   overflow: hidden;
-  color: $gray-4;
+  color: $grey-3;
   letter-spacing: 0.05em;
   font-weight: $weight-medium;
   transition: all 0.3s;
@@ -68,11 +68,11 @@
   white-space: nowrap;
   &.router-link-active,
   &.is-active {
-    color: $gray-1;
-    box-shadow: 0px -3px 0px $red inset;
+    color: $grey-6;
+    box-shadow: 0px -3px 0px $red-5 inset;
   }
   &:hover {
-    color: $gray-1;
+    color: $grey-6;
   }
 }
 
@@ -109,11 +109,11 @@
   }
   &::before {
     top: 0;
-    background: linear-gradient(rgba($gray-2, 0.1), transparent);
+    background: linear-gradient(rgba($grey-5, 0.1), transparent);
   }
   &::after {
     bottom: 0;
-    background: linear-gradient(to top, rgba($gray-2, 0.1), transparent);
+    background: linear-gradient(to top, rgba($grey-5, 0.1), transparent);
   }
   &.off-top::before,
   &.off-bottom::after {
@@ -144,12 +144,12 @@
   width: 100%;
   padding: 10px 12px;
   line-height: 1.5;
-  border: 1px solid $gray-5;
+  border: 1px solid $grey-2;
   border-radius: 8px;
   line-break: anywhere;
   background-color: #fff;
   &.not-selected {
-    color: $gray-3;
+    color: $grey-4;
   }
 }
 
@@ -158,12 +158,12 @@
   display: flex;
   width: fit-content;
   align-items: center;
-  background-color: $gray-6;
-  border: 1px solid $gray-4;
+  background-color: $grey-1;
+  border: 1px solid $grey-3;
   padding: 6px 12px;
   border-radius: 5px;
   text-decoration: none;
-  color: $gray-1;
+  color: $grey-6;
   font-size: 15px;
 }
 

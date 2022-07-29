@@ -64,7 +64,7 @@ export default {
 @import '~@/scss/_mixins';
 
 .navbar {
-  background-color: $red;
+  background-color: $red-5;
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
@@ -92,8 +92,8 @@ export default {
     background: $white;
     border-radius: 8px 8px 0 0;
     padding: 4px 16px;
-    filter: drop-shadow(4px 0px 0px $red-light);
-    @include font-format($type: 'b3', $color: $red, $bold: true);
+    filter: drop-shadow(4px 0px 0px $red-4);
+    @include font-format($type: 'b3', $color: $red-5, $bold: true);
     letter-spacing: 0.2em;
 
     &--active {

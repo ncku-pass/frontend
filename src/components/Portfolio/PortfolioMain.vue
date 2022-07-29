@@ -311,7 +311,7 @@ export default {
     flex-shrink: 0;
     padding: 0 10px;
     min-height: 48px;
-    border-bottom: 2px solid $pink;
+    border-bottom: 2px solid $red-1;
     overflow-x: auto;
     &__add {
       display: flex;
@@ -321,7 +321,7 @@ export default {
       svg {
         width: 24px;
         height: 24px;
-        color: $red;
+        color: $red-5;
         transition: all 0.3s;
         &:hover {
           transform: rotate(90deg);
@@ -365,7 +365,7 @@ export default {
     margin: 0;
     padding: 10px 20px 10px 10px;
     font-size: 26px;
-    color: $gray-1;
+    color: $grey-6;
     line-height: 43px;
     white-space: nowrap;
     overflow: hidden;
@@ -387,7 +387,7 @@ export default {
       height: 15px;
       width: 15px;
       border-radius: 10px;
-      background-color: $red-light;
+      background-color: $red-4;
     }
   }
 }
@@ -407,7 +407,7 @@ export default {
       padding: 10px 75px;
       line-height: 26px;
       color: $blue-dark;
-      background: $gray-blue;
+      background: $grey-blue;
       border-radius: 8px;
     }
   }

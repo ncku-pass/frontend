@@ -162,8 +162,8 @@ function generateCard(type = 'experience', names = []) {
     margin: 0 auto;
     padding: 6px 20px;
     border-radius: 5px;
-    border-color: $gray-4;
-    color: $gray-1;
+    border-color: $grey-3;
+    color: $grey-6;
   }
   &__intro {
     text-align: center;
@@ -179,7 +179,7 @@ function generateCard(type = 'experience', names = []) {
   }
   &__hint {
     text-align: center;
-    color: $gray-3;
+    color: $grey-4;
   }
   &__btns {
     @include grid(column, 0, 10px);

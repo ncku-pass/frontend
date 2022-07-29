@@ -41,10 +41,10 @@ export default {
   align-items: center;
   margin-bottom: 2px;
   padding: 5px 15px;
-  background-color: $gray-blue;
+  background-color: $grey-blue;
   border-radius: 5px;
   &:hover {
-    background-color: $gray-5;
+    background-color: $grey-2;
   }
   &[draggable='true'] {
     cursor: grabbing;
@@ -62,7 +62,7 @@ export default {
       background-color: $blue;
     }
     &--activity {
-      background-color: $red-light;
+      background-color: $red-4;
     }
     &--competition {
       background-color: $purple;

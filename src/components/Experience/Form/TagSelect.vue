@@ -259,7 +259,7 @@ export default {
   cursor: pointer;
   display: grid;
   place-items: center;
-  color: $red;
+  color: $red-5;
   width: 18px;
   height: 18px;
   padding: 2px;
@@ -308,7 +308,7 @@ export default {
   top: 100%;
   left: -1px;
   background-color: $white;
-  border: 1px solid $gray-5;
+  border: 1px solid $grey-2;
   width: 100%;
   border-bottom-right-radius: 5px;
   border-bottom-left-radius: 5px;
@@ -321,13 +321,13 @@ export default {
   justify-content: space-between;
   padding: 6px 24px;
   font-weight: normal;
-  color: $gray-2;
+  color: $grey-5;
   &:hover {
-    background-color: $gray-5;
+    background-color: $grey-2;
   }
   &-label {
     padding: 6px 12px;
-    color: $gray-3;
+    color: $grey-4;
   }
   &__delete {
     display: none;
@@ -338,7 +338,7 @@ export default {
     right: 0;
     top: 0;
     &:hover {
-      background-color: $red-light;
+      background-color: $red-4;
     }
   }
   &:hover &__delete {

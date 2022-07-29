@@ -111,7 +111,7 @@ export default {
 .filter-block {
   margin-bottom: 10px;
   &__title {
-    color: $gray-1;
+    color: $grey-6;
     margin-bottom: 10px;
     &--tag {
       display: flex;
@@ -128,16 +128,16 @@ export default {
     gap: 5px;
     &__tag {
       padding: 10px;
-      color: $gray-1;
-      border: 1px solid $gray-1;
+      color: $grey-6;
+      border: 1px solid $grey-6;
       border-radius: 15px;
       line-height: 14px;
       cursor: pointer;
       user-select: none;
       &--selected {
         color: $white;
-        border-color: $red;
-        background-color: $red;
+        border-color: $red-5;
+        background-color: $red-5;
       }
     }
   }

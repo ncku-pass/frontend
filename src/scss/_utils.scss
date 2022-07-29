@@ -1,15 +1,15 @@
 .text {
   &--red {
-    color: $red;
+    color: $red-5;
   }
   &--blue {
-    color: $blue-dark;  
+    color: $blue-dark;
   }
 }
 
 .inline-code {
   padding: 0 7px;
-  background-color: $gray-6;
+  background-color: $grey-1;
   border-radius: 5px;
   display: inline-block;
 }

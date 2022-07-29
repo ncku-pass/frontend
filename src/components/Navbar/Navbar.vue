@@ -71,7 +71,7 @@ export default {
     left: 0;
     right: 0;
     height: 2px;
-    background-color: $red;
+    background-color: $red-5;
   }
 }
 

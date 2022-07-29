@@ -9,13 +9,16 @@
       </li>
     </ul>
     <div class='experience-list-item__btns'>
-      <Button class='p-button-rounded p-button-outlined p-button-secondary' @click.stop='handleEditExperience'>
-        <mdicon name='squareEditOutline' size='20' />
+      <Button
+        class='p-button-rounded p-button-outlined p-button-secondary p-button-sm'
+        @click.stop='handleEditExperience'
+      >
+        <mdicon name='squareEditOutline' :size='device === "mobile" ? 16 : 20' />
         <span v-if='device !== "mobile"' class='p-button-label'>編輯</span>
       </Button>
       <!-- TODO:  寫死的資料改掉-->
-      <Button class='p-button-rounded p-button-secondary' @click.stop='confirmDelete'>
-        <mdicon name='trashCanOutline' size='20' />
+      <Button class='p-button-rounded p-button-secondary p-button-sm' @click.stop='confirmDelete'>
+        <mdicon name='trashCanOutline' :size='device === "mobile" ? 16 : 20' />
         <span v-if='device !== "mobile"' class='p-button-label'>刪除</span>
       </Button>
     </div>

@@ -33,7 +33,7 @@ export default {
     margin: 5px;
     font-size: 26px;
     font-weight: $weight-medium;
-    color: $gray-3;
+    color: $grey-4;
   }
 }
 </style>

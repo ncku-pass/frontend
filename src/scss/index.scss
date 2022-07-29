@@ -22,23 +22,23 @@
 }
 ::-webkit-scrollbar-thumb {
   border-radius: 4px;
-  background-color: rgba($color: $gray-3, $alpha: .2);
+  background-color: rgba($color: $grey-4, $alpha: .2);
   &:hover {
-    background-color: rgba($color: $gray-3, $alpha: .35);
+    background-color: rgba($color: $grey-4, $alpha: .35);
   }
 }
 :-webkit-autofill {
   box-shadow: 0 0 0px 1000px #fff inset;
 }
 ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
-  color: $gray-3;
+  color: $grey-4;
   opacity: 1; /* Firefox */
 }
 :-ms-input-placeholder { /* Internet Explorer 10-11 */
-  color: $gray-3;
+  color: $grey-4;
 }
 ::-ms-input-placeholder { /* Microsoft Edge */
-  color: $gray-3;
+  color: $grey-4;
 }
 
 html.draggable-cursor {
