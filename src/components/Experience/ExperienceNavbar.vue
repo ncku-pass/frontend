@@ -1,10 +1,10 @@
 <template>
   <ul class='experience__navbar' :class='`experience__navbar--${device}`'>
-    <li v-for='link in experienceNavbarLinks' :key='`exp-navbar-${link.type}`'>
+    <li v-for='(link, idx) in experienceNavbarLinks' :key='`exp-navbar-${link.type}`'>
       <router-link
         class='tab-link'
-        :class='[`tab-link--${device}`, { "router-link-active": isActiveTypeEmpty && link.dest === "course" }]'
-        :to='{ name: "Experience", params: { type: link.dest } }'
+        :class='[`tab-link--${device}`, { "router-link-active": redirected && idx === 0 }]'
+        :to='{ name: "Experience", params: { activeTab: link.dest } }'
       >
         {{ link.name }}
       </router-link>
@@ -18,9 +18,13 @@ export default {
   name: 'ExperienceNavbar',
   inject: ['mq'],
   props: {
-    type: {
+    activeTab: {
       type: String,
       default: '',
+    },
+    redirected: {
+      type: Boolean,
+      default: false,
     }
   },
   setup() {
@@ -30,9 +34,6 @@ export default {
     device() {
       return this.mq.current
     },
-    isActiveTypeEmpty() {
-      return this.type === ''
-    }
   },
 }
 </script>

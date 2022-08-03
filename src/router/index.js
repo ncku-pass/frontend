@@ -28,18 +28,18 @@ const routes = [
     component: AuthRedirect
   },
   {
-    path: '/experience/:type?',
+    path: '/experience/:activeTab?',
     name: 'Experience',
     component: Experience,
     props: route => {
-      if (isEmpty(route.params.type)) {
-        return { type: '' }
+      if (isEmpty(route.params.activeTab)) {
+        return { activeTab: 'course', redirected: true }
 
-      } else if (!['course', 'activity', 'competition', 'work', 'certificate', 'other'].includes(route.params.type)) {
-        return { type: 'course' }
+      } else if (!['course', 'activity', 'competition', 'work', 'certificate', 'other'].includes(route.params.activeTab)) {
+        return { activeTab: 'course', redirected: true }
 
       } else {
-        return { type: route.params.type }
+        return { activeTab: route.params.activeTab }
       }
     },
     meta: { requiresAuth: true, layout: 'AppLayout' }
@@ -62,10 +62,7 @@ router.beforeEach((to, from) => {
     return { name: 'Experience' }
   }
   if (to.meta.requiresAuth && !tokenStr.value) {
-    return {
-      path: '/'
-      // query: { redirect: to.fullPath }
-    }
+    return { name: 'Landing' }
   }
 })
 

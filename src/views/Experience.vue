@@ -1,7 +1,7 @@
 <template>
   <div class='experience'>
     <div class='experience__window'>
-      <ExperienceNavbar :type='type' />
+      <ExperienceNavbar :active-tab='activeTab' :redirected='redirected' />
       <div v-if='isPending' class='experience__loading'>
         <p>Loading</p>
         <div class='lds-dual-ring' />
@@ -10,7 +10,7 @@
         <vueScrollShadow>
           <div class='experience__window__table__wrapper'>
             <ExperienceListBlock
-              v-for='(semesterData, semester) in classifiedExperiences[type]'
+              v-for='(semesterData, semester) in classifiedExperiences[activeTab]'
               :key='semester'
               :semester='semester'
             >
@@ -23,7 +23,7 @@
                 @click='openViewerModal(experience)'
               />
             </ExperienceListBlock>
-            <AddExperienceButton :type='type' @add-experience='handleAddExperience' @import-ncku-data='handleImportNCKUData' />
+            <AddExperienceButton :type='activeTab' @add-experience='handleAddExperience' @import-ncku-data='handleImportNCKUData' />
           </div>
         </vueScrollShadow>
       </div>
@@ -31,18 +31,18 @@
   </div>
   <FormModal
     v-if='showFormModal'
-    :form-type='type'
+    :form-type='activeTab'
     :edit-data='experienceToEdit'
     @close='showFormModal = false'
     @submit='handleSubmit'
   />
   <ViewerModal
     v-if='showViewerModal'
-    :experience-type='type'
+    :experience-type='activeTab'
     :experience='experienceToShow'
     @close='showViewerModal = false'
   />
-  <ImportModal v-if='showImportModal' :type='type' @close='showImportModal = false' />
+  <ImportModal v-if='showImportModal' :type='activeTab' @close='showImportModal = false' />
 </template>
 
 <script>
@@ -70,10 +70,13 @@ export default {
     vueScrollShadow
   },
   props: {
-    // 目前顯示的TAB種類
-    type: {
+    activeTab: {
       type: String,
       default: 'course'
+    },
+    redirected: {
+      type: Boolean,
+      default: false,
     }
   },
   setup(props) {
@@ -108,7 +111,7 @@ export default {
     const experienceToEdit = ref(null)
     const handleEditExperience = experienceId => {
       showFormModal.value = true
-      ;[experienceToEdit.value] = experiences.value[props.type].filter(exp => {
+      ;[experienceToEdit.value] = experiences.value[props.activeTab].filter(exp => {
         return exp.id === experienceId
       })
     }
@@ -171,7 +174,7 @@ export default {
   display: flex;
   flex-direction: column;
   background-color: #fff;
-  box-shadow: 0px 0px 30px rgba(241, 90, 96, 0.05), 0px 0px 25px rgba(241, 90, 96, 0.1);
+  box-shadow: 0 0 30px rgba(241, 90, 96, 0.05), 0 0 25px rgba(241, 90, 96, 0.1);
   width: 100%;
   max-width: 1110px;
 }
