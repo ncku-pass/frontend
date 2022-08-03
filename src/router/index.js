@@ -1,5 +1,6 @@
 import { computed } from 'vue'
 import { createRouter, createWebHistory } from 'vue-router'
+import { isEmpty } from 'lodash-es'
 import store from '@/store'
 import Experience from '../views/Experience.vue'
 import Portfolio from '../views/Portfolio.vue'
@@ -31,8 +32,7 @@ const routes = [
     name: 'Experience',
     component: Experience,
     props: route => {
-      console.log(route.params.type)
-      if (route.params.type === '') {
+      if (isEmpty(route.params.type)) {
         return { type: '' }
 
       } else if (!['course', 'activity', 'competition', 'work', 'certificate', 'other'].includes(route.params.type)) {
@@ -59,9 +59,7 @@ const router = createRouter({
 
 router.beforeEach((to, from) => {
   if (to.name === 'Landing' && tokenStr.value) {
-    return {
-      name: 'Experience'
-    }
+    return { name: 'Experience' }
   }
   if (to.meta.requiresAuth && !tokenStr.value) {
     return {
