@@ -1,5 +1,5 @@
 <template>
-  <li class='experience-list-item'>
+  <li class='experience-list-item' :class='`experience-list-item--${device}`'>
     <h4 class='experience-list-item__title'>
       {{ experience.name }}
     </h4>
@@ -13,12 +13,12 @@
         class='p-button-rounded p-button-outlined p-button-secondary p-button-sm'
         @click.stop='handleEditExperience'
       >
-        <mdicon name='squareEditOutline' :size='device === "mobile" ? 16 : 20' />
+        <mdicon name='squareEditOutline' :size='device === "mobile" ? 14 : 20' />
         <span v-if='device !== "mobile"' class='p-button-label'>編輯</span>
       </Button>
       <!-- TODO:  寫死的資料改掉-->
       <Button class='p-button-rounded p-button-secondary p-button-sm' @click.stop='confirmDelete'>
-        <mdicon name='trashCanOutline' :size='device === "mobile" ? 16 : 20' />
+        <mdicon name='trashCanOutline' :size='device === "mobile" ? 14 : 20' />
         <span v-if='device !== "mobile"' class='p-button-label'>刪除</span>
       </Button>
     </div>
@@ -133,7 +133,7 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang='scss' scoped>
 @import '~@/scss/variables';
 @import '~@/scss/mixins';
 
@@ -171,6 +171,20 @@ export default {
 
     .p-button-label {
       margin-left: 4px;
+    }
+  }
+
+  &--mobile {
+    .experience-list-item__title {
+      @include font-format('b2', $color: $red-8)
+    }
+
+    .experience-list-item__tags {
+      @include font-format('b4')
+    }
+
+    .p-button-sm {
+      padding: 4px 8px;
     }
   }
 }
