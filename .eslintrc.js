@@ -19,6 +19,7 @@ module.exports = {
         skipBlankLines: true,
       }],
     'space-before-function-paren': ['error', 'never'],
+    'padded-blocks': ['off'],
     'vue/max-attributes-per-line': [
       'error',
       {

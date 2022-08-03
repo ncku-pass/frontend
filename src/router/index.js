@@ -31,13 +31,16 @@ const routes = [
     name: 'Experience',
     component: Experience,
     props: route => {
-      if (
-        route.params.type &&
-        !['course', 'activity', 'competition', 'work', 'certificate', 'other'].includes(route.params.type)
-      ) {
+      console.log(route.params.type)
+      if (route.params.type === '') {
+        return { type: '' }
+
+      } else if (!['course', 'activity', 'competition', 'work', 'certificate', 'other'].includes(route.params.type)) {
         return { type: 'course' }
+
+      } else {
+        return { type: route.params.type }
       }
-      return { type: route.params.type || 'course' }
     },
     meta: { requiresAuth: true, layout: 'AppLayout' }
   },

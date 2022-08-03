@@ -1,7 +1,7 @@
 <template>
   <div class='experience'>
     <div class='experience__window'>
-      <ExperienceWindowTabs :type='type' />
+      <ExperienceNavbar :type='type' />
       <div v-if='isPending' class='experience__loading'>
         <p>Loading</p>
         <div class='lds-dual-ring' />
@@ -48,7 +48,7 @@
 <script>
 import { ref, computed } from 'vue'
 import { useStore } from 'vuex'
-import ExperienceWindowTabs from '@/components/Experience/ExperienceWindowTabs.vue'
+import ExperienceNavbar from '@/components/Experience/ExperienceNavbar.vue'
 import ExperienceListItem from '@/components/Experience/ExperienceListItem.vue'
 import ExperienceListBlock from '@/components/Experience/ExperienceListBlock.vue'
 import AddExperienceButton from '@/components/Experience/AddExperienceButton.vue'
@@ -60,7 +60,7 @@ import vueScrollShadow from 'vue3-scroll-shadow'
 export default {
   name: 'Experience',
   components: {
-    ExperienceWindowTabs,
+    ExperienceNavbar,
     ExperienceListItem,
     ExperienceListBlock,
     AddExperienceButton,

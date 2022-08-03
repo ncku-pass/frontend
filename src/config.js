@@ -32,3 +32,23 @@ export const navbarLinks = [{
   icon: 'textBoxMultiple',
   name: '經歷整合'
 }]
+
+export const experienceNavbarLinks = [{
+  name: '課程紀錄',
+  dest: 'course',
+}, {
+  name: '活動經驗',
+  dest: 'activity',
+}, {
+  name: '競賽經驗',
+  dest: 'competition',
+}, {
+  name: '工作經驗',
+  dest: 'work',
+}, {
+  name: '外語能力或證照',
+  dest: 'certificate',
+}, {
+  name: '其他',
+  dest: 'other',
+}]

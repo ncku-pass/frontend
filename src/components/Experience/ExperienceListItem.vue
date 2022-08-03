@@ -61,11 +61,6 @@ export default {
     },
   },
   emits: ['delete', 'edit'],
-  computed: {
-    device() {
-      return this.mq.current
-    }
-  },
   setup(props, { emit }) {
     // === 刪除經歷 ===
     const { showConfirmModal, deleteStatus, closeConfirmModal, confirmDelete } = useDeleteModal()
@@ -128,6 +123,11 @@ export default {
       handleDeleteExperience,
       handleEditExperience,
       tagsWrapped
+    }
+  },
+  computed: {
+    device() {
+      return this.mq.current
     }
   },
 }
