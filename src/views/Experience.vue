@@ -2,11 +2,8 @@
   <div class='experience'>
     <div class='experience__window'>
       <ExperienceNavbar :active-tab='activeTab' :redirected='redirected' />
-      <div v-if='isPending' class='experience__loading'>
-        <p>Loading</p>
-        <div class='lds-dual-ring' />
-      </div>
-      <div v-else class='experience__window__table'>
+      <Loader :loading='isPending' />
+      <div v-if='!isPending' class='experience__window__table'>
         <vueScrollShadow>
           <div class='experience__window__table__wrapper'>
             <ExperienceListBlock
@@ -48,6 +45,7 @@
 <script>
 import { ref, computed } from 'vue'
 import { useStore } from 'vuex'
+import Loader from '@/components/Loader'
 import ExperienceNavbar from '@/components/Experience/ExperienceNavbar.vue'
 import ExperienceListItem from '@/components/Experience/ExperienceListItem.vue'
 import ExperienceListBlock from '@/components/Experience/ExperienceListBlock.vue'
@@ -60,6 +58,7 @@ import vueScrollShadow from 'vue3-scroll-shadow'
 export default {
   name: 'Experience',
   components: {
+    Loader,
     ExperienceNavbar,
     ExperienceListItem,
     ExperienceListBlock,
@@ -150,7 +149,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang='scss'>
 @import '../scss/variables';
 @import '../scss/mixins';
 
@@ -160,14 +159,6 @@ export default {
   display: flex;
   justify-content: center;
   color: $grey-6;
-  &__loading {
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 20px;
-    font-size: 26px;
-  }
 }
 
 .experience__window {
@@ -190,31 +181,6 @@ export default {
     &::-webkit-scrollbar {
       display: none;
     }
-  }
-}
-
-.lds-dual-ring {
-  display: inline-block;
-  width: 60px;
-  height: 60px;
-}
-.lds-dual-ring:after {
-  content: ' ';
-  display: block;
-  width: 60px;
-  height: 60px;
-  box-sizing: border-box;
-  border-radius: 50%;
-  border: 6px solid #000;
-  border-color: #000 transparent #000 transparent;
-  animation: lds-dual-ring 1.2s linear infinite;
-}
-@keyframes lds-dual-ring {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
   }
 }
 

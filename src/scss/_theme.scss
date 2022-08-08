@@ -114,16 +114,16 @@
   --gray-700: #616161;
   --gray-800: #424242;
   --gray-900: #212121;
-  --blue-50:#f4fafe;
-  --blue-100:#cae6fc;
-  --blue-200:#a0d2fa;
-  --blue-300:#75bef8;
+  --blue-50:$blue-1;
+  --blue-100:$blue-2;
+  --blue-200:$blue-3;
+  --blue-300:$blue-4;
   --blue-400:#4baaf5;
-  --blue-500:#2196f3;
-  --blue-600:#1c80cf;
+  --blue-500:$blue-5;
+  --blue-600:$blue-6;
   --blue-700:#1769aa;
-  --blue-800:#125386;
-  --blue-900:#0d3c61;
+  --blue-800:$blue-7;
+  --blue-900:$blue-8;
   --green-50:#f6fbf6;
   --green-100:#d4ecd5;
   --green-200:#b2ddb4;
@@ -196,13 +196,13 @@
   padding: 0.25rem 0.5rem;
 }
 .p-autocomplete .p-autocomplete-multiple-container:not(.p-disabled):hover {
-  border-color: $red-5;
+  border-color: #495057;
 }
 .p-autocomplete .p-autocomplete-multiple-container:not(.p-disabled).p-focus {
   outline: 0 none;
   outline-offset: 0;
   box-shadow: 0 0 0 0.2rem #fbebed;
-  border-color: $red-5;
+  border-color: #495057;
 }
 .p-autocomplete .p-autocomplete-multiple-container .p-autocomplete-input-token {
   padding: 0.25rem 0;
@@ -326,7 +326,7 @@
 }
 .p-datepicker .p-datepicker-header .p-datepicker-title .p-datepicker-year:enabled:hover,
 .p-datepicker .p-datepicker-header .p-datepicker-title .p-datepicker-month:enabled:hover {
-  color: $red-5;
+  color: #495057;
 }
 .p-datepicker .p-datepicker-header .p-datepicker-title .p-datepicker-month {
   margin-right: 0.5rem;
@@ -484,13 +484,13 @@
   border-radius: 3px;
 }
 .p-cascadeselect:not(.p-disabled):hover {
-  border-color: $red-5;
+  border-color: #495057;
 }
 .p-cascadeselect:not(.p-disabled).p-focus {
   outline: 0 none;
   outline-offset: 0;
   box-shadow: 0 0 0 0.2rem #fbebed;
-  border-color: $red-5;
+  border-color: #495057;
 }
 .p-cascadeselect .p-cascadeselect-label {
   background: transparent;
@@ -586,47 +586,34 @@
   background: $red-5;
 }
 .p-checkbox:not(.p-checkbox-disabled) .p-checkbox-box:hover {
-  border-color: $red-5;
+  border-color: $red-6;
 }
 .p-checkbox:not(.p-checkbox-disabled) .p-checkbox-box.p-focus {
   outline: 0 none;
   outline-offset: 0;
   box-shadow: 0 0 0 0.2rem #fbebed;
-  border-color: $red-5;
+  border-color: $red-6;
 }
 .p-checkbox:not(.p-checkbox-disabled) .p-checkbox-box.p-highlight:hover {
-  border-color: #6d1825;
-  background: #6d1825;
+  border-color: $red-6;
+  background: $red-6;
   color: #ffffff;
 }
 .p-checkbox.p-invalid > .p-checkbox-box {
   border-color: #f44336;
 }
 
-.p-input-filled .p-checkbox .p-checkbox-box {
-  background-color: #f8f9fa;
-}
-.p-input-filled .p-checkbox .p-checkbox-box.p-highlight {
-  background: $red-5;
-}
-.p-input-filled .p-checkbox:not(.p-checkbox-disabled) .p-checkbox-box:hover {
-  background-color: #f8f9fa;
-}
-.p-input-filled .p-checkbox:not(.p-checkbox-disabled) .p-checkbox-box.p-highlight:hover {
-  background: #6d1825;
-}
-
 .p-chips .p-chips-multiple-container {
   padding: 0.25rem 0.5rem;
 }
 .p-chips .p-chips-multiple-container:not(.p-disabled):hover {
-  border-color: $red-5;
+  border-color: #495057;
 }
 .p-chips .p-chips-multiple-container:not(.p-disabled).p-focus {
   outline: 0 none;
   outline-offset: 0;
   box-shadow: 0 0 0 0.2rem #fbebed;
-  border-color: $red-5;
+  border-color: #495057;
 }
 .p-chips .p-chips-multiple-container .p-chips-token {
   padding: 0.25rem 0.5rem;
@@ -677,13 +664,13 @@
   border-radius: 3px;
 }
 .p-dropdown:not(.p-disabled):hover {
-  border-color: $red-5;
+  border-color: #495057;
 }
 .p-dropdown:not(.p-disabled).p-focus {
   outline: 0 none;
   outline-offset: 0;
   box-shadow: 0 0 0 0.2rem #fbebed;
-  border-color: $red-5;
+  border-color: #495057;
 }
 .p-dropdown.p-dropdown-clearable .p-dropdown-label {
   padding-right: 1.5rem;
@@ -993,7 +980,7 @@
   background: #ffffff;
 }
 .p-inputswitch.p-inputswitch-checked:not(.p-disabled):hover .p-inputswitch-slider {
-  background: #7d1b2a;
+  background: #495057;
 }
 .p-inputswitch.p-invalid {
   border-color: #f44336;
@@ -1011,13 +998,13 @@
   border-radius: 3px;
 }
 .p-inputtext:enabled:hover {
-  border-color: $red-5;
+  border-color: #495057;
 }
 .p-inputtext:enabled:focus {
   outline: 0 none;
   outline-offset: 0;
-  box-shadow: 0 0 0 0.2rem #fbebed;
-  border-color: $red-5;
+  box-shadow: 0 0 0 0.2rem #F2F2F2;
+  border-color: #495057;
 }
 .p-inputtext.p-invalid.p-component {
   border-color: #f44336;
@@ -1168,13 +1155,13 @@
   border-radius: 3px;
 }
 .p-multiselect:not(.p-disabled):hover {
-  border-color: $red-5;
+  border-color: #495057;
 }
 .p-multiselect:not(.p-disabled).p-focus {
   outline: 0 none;
   outline-offset: 0;
-  box-shadow: 0 0 0 0.2rem #fbebed;
-  border-color: $red-5;
+  box-shadow: 0 0 0 0.2rem $grey-1;
+  border-color: #495057;
 }
 .p-multiselect .p-multiselect-label {
   padding: 0.5rem 0.5rem;

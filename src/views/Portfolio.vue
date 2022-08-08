@@ -1,17 +1,12 @@
 <template>
   <div class='portfolio'>
-    <template v-if='loading'>
-      <div class='portfolio__loading'>
-        <p>Loading</p>
-        <div class='lds-dual-ring' />
-      </div>
-      <div class='portfolio__loading-left' />
-      <div class='portfolio__loading-right' />
-    </template>
-    <template v-else>
+    <Loader :loading='loading' />
+
+    <template v-if='!loading'>
       <PortfolioMain />
       <PortfolioMenu />
     </template>
+
     <ConfirmModal
       v-if='showConfirmModal'
       confirm-type='customize'
@@ -33,6 +28,7 @@
 import { computed, ref } from 'vue'
 import { useStore } from 'vuex'
 import { onBeforeRouteLeave } from 'vue-router'
+import Loader from '@/components/Loader'
 import PortfolioMain from '@/components/Portfolio/PortfolioMain'
 import PortfolioMenu from '@/components/Portfolio/PortfolioMenu'
 import ConfirmModal from '@/components/ConfirmModal'
@@ -42,7 +38,8 @@ export default {
   components: {
     PortfolioMain,
     PortfolioMenu,
-    ConfirmModal
+    ConfirmModal,
+    Loader,
   },
   setup() {
     const store = useStore()
@@ -50,7 +47,6 @@ export default {
     const someResumesNotSaved = computed(() => store.getters['resumes/someResumesNotSaved'])
     const resumesNotReady = computed(() => store.state.resumes.isPending && !store.state.resumes.resumes)
     const experiencesNotReady = computed(() => store.state.experiences.isPending)
-
     const loading = computed(() => resumesNotReady.value || experiencesNotReady.value)
 
     // ===== 若未儲存時，跳出確認視窗 =====
@@ -92,30 +88,5 @@ export default {
   height: 100%;
   max-width: 1110px;
   margin: 0 auto;
-  &__loading {
-    position: absolute;
-    z-index: 1;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 20px;
-    font-size: 26px;
-  }
-}
-.portfolio__loading-left {
-  margin: 26px 0;
-  background-color: $grey-1;
-  filter: drop-shadow(-2px 4px 30px rgba(241, 90, 96, 0.05)) drop-shadow(-2px 4px 30px rgba(241, 90, 96, 0.1));
-  border-radius: 10px 10px 0px 0px;
-  height: 70%;
-}
-.portfolio__loading-right {
-  margin: 26px 0;
-  background-color: $grey-1;
-  border-radius: 10px;
 }
 </style>
