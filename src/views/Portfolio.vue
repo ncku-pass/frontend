@@ -78,8 +78,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '~@/scss/variables';
-
 .portfolio {
   position: relative;
   display: grid;
