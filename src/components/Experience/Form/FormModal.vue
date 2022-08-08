@@ -21,7 +21,7 @@
           <div v-if='showedFieldText.position'>
             <label for='experiencePosition' class='form-label'>
               {{ showedFieldText.position.text }}
-              <InformationCircleIcon class='form-label__info' @click.stop='openMessageModal("score")' />
+              <InformationCircleIcon v-if='showedFieldText.position.showInfo' class='form-label__info' @click.stop='openMessageModal("score")' />
             </label>
             <input
               id='experiencePosition'
@@ -157,7 +157,7 @@ const fieldText = {
       options: ['必修課程', '選修課程', '通識', '工作坊', '密集課程', '線上課程']
     },
     semester: { text: '*課程時間', required: true },
-    position: { text: '課程分數', required: false, type: 'number' },
+    position: { text: '課程分數', required: false, type: 'number', showInfo: true },
     description: {
       text: '課程簡介 (500字以內)',
       placeholder: '填寫課程簡介以便日後方便回想課程內容',
@@ -176,7 +176,7 @@ const fieldText = {
     name: { text: '*活動名稱', required: true },
     categories: { text: '活動類別', required: false, options: ['社團', '系內活動', '校內活動', '校外活動', '其他'] },
     semester: { text: '*活動時間', required: true },
-    position: { text: '*活動擔任職位', required: true },
+    position: { text: '*活動擔任職位', required: true, showInfo: false },
     description: {
       text: '活動簡介 (500字以內)',
       placeholder: '填寫活動簡介以便日後方便回想活動內容',
@@ -194,7 +194,7 @@ const fieldText = {
   competition: {
     name: { text: '*競賽名稱', required: true, placeholder: '可以填入競賽名稱、組別、獲獎類別（國內/國外）、類型（個人/團體）' },
     semester: { text: '*競賽時間', required: true },
-    position: { text: '*競賽獲得獎項', required: true },
+    position: { text: '*競賽獲得獎項', required: true, showInfo: false },
     description: {
       text: '競賽簡介 (500字以內)',
       placeholder: '填寫競賽簡介以便日後方便回想競賽內容',
@@ -212,7 +212,7 @@ const fieldText = {
   work: {
     name: { text: '*公司單位名稱', required: true },
     semester: { text: '*實習 / 工作時間', required: true },
-    position: { text: '*職位職位', required: true },
+    position: { text: '*職位', required: true, showInfo: false },
     description: {
       text: '實習 / 工作內容 (500字以內)',
       placeholder: '填寫以便日後方便回想實習 / 工作內容',
@@ -230,7 +230,7 @@ const fieldText = {
   certificate: {
     name: { text: '*證照/檢定名稱', required: true },
     semester: { text: '*考取時間', required: true },
-    position: { text: '*證照分數或等級', required: true },
+    position: { text: '*證照分數或等級', required: true, showInfo: false },
     feedback: {
       text: '收穫及成就 (500字以內)',
       placeholder: '將過程中所得到的收穫及成就記錄下來吧~',
@@ -243,7 +243,7 @@ const fieldText = {
   other: {
     name: { text: '*經歷名稱', required: true },
     semester: { text: '時間', required: false },
-    position: { text: '*經歷職位、成就', required: true },
+    position: { text: '*經歷職位、成就', required: true, showInfo: false },
     description: {
       text: '經歷簡介 (500字以內)',
       placeholder: '填寫簡介以便日後方便回想經歷內容',
