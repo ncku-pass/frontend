@@ -3,11 +3,11 @@
     <h4 class='experience-list-item__title'>
       {{ experience.name }}
     </h4>
-    <ul :id='getTagListId(experience.id)' class='experience-list-item__tags' :class='tagsWrapped.value ? "wrapped" : ""'>
-      <li v-for='tag in experience.tags' :key='tag.id' class='tag'>
-        {{ tag.name }}
-      </li>
-    </ul>
+
+    <div class='experience-list-item__tags'>
+      <Chip v-for='tag in experience.tags' :key='tag.id' :label='tag.name' />
+    </div>
+
     <div class='experience-list-item__btns'>
       <Button
         class='p-button-rounded p-button-outlined p-button-secondary p-button-sm'
@@ -39,9 +39,8 @@
 </template>
 
 <script>
-import { onMounted, onUnmounted, reactive, ref } from 'vue'
-import { debounce } from 'lodash-es'
 import Button from 'primevue/button'
+import Chip from 'primevue/chip'
 import ConfirmModal from '@/components/ConfirmModal'
 import { deleteExperience } from '@/api/experiences'
 import { useDeleteModal } from '@/composables/useDeleteModal'
@@ -50,6 +49,7 @@ export default {
   components: {
     ConfirmModal,
     Button,
+    Chip,
   },
   inject: ['mq'],
   props: {
@@ -83,46 +83,13 @@ export default {
       emit('edit', props.experience.id)
     }
 
-    // === detect if tags are wrapped ===
-    const tagsWrapped = reactive({ value: false })
-    const container = ref(null)
-
-    const getTagListId = (id) => {
-      return `exp-tags-${id}`
-    }
-
-    const onResize = debounce(() => {
-      if (container.value.children !== undefined && container.value.children.length > 2) {
-        // reset wrapped value
-        tagsWrapped.value = false
-        for (const child of container.value.children) {
-          child.classList.remove('tag--wrapped')
-          if (child.offsetTop > container.value.offsetTop) {
-            child.classList.add('tag--wrapped')
-            tagsWrapped.value = true
-          }
-        }
-      }
-    }, 500)
-
-    onMounted(async() => {
-      container.value = document.querySelector(`#${getTagListId(props.experience.id)}`)
-      window.addEventListener('resize', onResize)
-    })
-
-    onUnmounted(async() => {
-      window.removeEventListener('resize', onResize)
-    })
-
     return {
-      getTagListId,
       showConfirmModal,
       closeConfirmModal,
       confirmDelete,
       deleteStatus,
       handleDeleteExperience,
       handleEditExperience,
-      tagsWrapped
     }
   },
   computed: {
@@ -142,26 +109,27 @@ export default {
   align-items: center;
   gap: 0 10px;
   padding: 10px 5px 10px 10px;
-  border-radius: 5px;
-  transition: background 0.3s;
+
   &:hover {
     background-color: #f8f8f8;
   }
-  &__title {
-    font-weight: $weight-medium;
-    flex-shrink: 0;
-    max-width: 200px;
-  }
-  &__tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-    max-height: 21px;
-    overflow: hidden;
 
-    &.wrapped::after {
-      min-width: 20px;
-      content: "...";
+  &__title {
+    flex-shrink: 0;
+    max-width: 250px;
+  }
+
+  &__tags {
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    color: $red-8;
+    font-size: 10px;
+
+    :deep(.p-chip) {
+      margin-right: 12px;
     }
   }
   &__btns {
@@ -180,7 +148,12 @@ export default {
     }
 
     .experience-list-item__tags {
-      @include font-format('b4')
+      :deep(.p-chip) {
+        margin-right: 6px;
+      }
+      :deep(.p-chip-text) {
+        @include font-format('b4');
+      }
     }
 
     .p-button-sm {
