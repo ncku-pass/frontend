@@ -13,7 +13,7 @@
     "@heroicons/vue": "^1.0.5",
     "@mdi/js": "^7.0.96",
     "@vueform/multiselect": "^2.3.2",
-    "axios": "^0.26.0",
+    "axios": "^0.27.2",
     "core-js": "^3.21.1",
     "lodash-es": "^4.17.21",
     "mdi-vue": "^3.0.12",
