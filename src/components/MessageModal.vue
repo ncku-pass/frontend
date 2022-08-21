@@ -13,7 +13,7 @@
           </template>
           <div v-if='messageType === "tags"' class='message-modal__tags'>
             <b>創建Tag</b>
-            <p>在Tag前面加上<code class='inline-code'>#</code>，輸入完畢後按下<code class='inline-code'>Enter</code>新增</p>
+            <p>輸入完畢後按下<code class='inline-code'>Enter</code>新增</p>
             <b>搜尋Tag</b>
             <p>直接輸入要搜尋的Tag名稱</p>
           </div>
@@ -73,7 +73,7 @@ export default {
   line-height: 24px;
   text-align: center;
   background-color: #fff;
-  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.25);
   border-radius: 10px;
 }
 
@@ -84,5 +84,12 @@ export default {
   b {
     color: $blue-dark;
   }
+}
+
+.inline-code {
+  padding: 0 7px;
+  background-color: $grey-1;
+  border-radius: 5px;
+  display: inline-block;
 }
 </style>

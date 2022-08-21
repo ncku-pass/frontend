@@ -65,12 +65,17 @@ export default {
   line-height: 24px;
   text-align: center;
   background-color: #fff;
-  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.25);
   border-radius: 10px;
+
   &__btns {
     @include grid(column, 0, 10px);
     margin-top: 10px;
     justify-content: center;
+  }
+
+  .text--red {
+    color: $red-5;
   }
 }
 </style>

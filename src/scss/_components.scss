@@ -30,24 +30,8 @@
   line-height: 15px;
   &--large {
     display: inline-block;
-    border-radius: 50px;
     line-height: 1.5;
     padding: 4px 8px;
-  }
-  &--wrapped {
-    display: none;
-  }
-}
-
-.btn-pill {
-  @include grid(column, 0, 5px);
-  align-items: center;
-  padding: 5px 10px;
-  border: 1px solid $grey-5;
-  border-radius: 50px;
-  svg {
-    width: 24px;
-    height: 24px;
   }
 }
 
