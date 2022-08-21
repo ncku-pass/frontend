@@ -86,10 +86,10 @@
         <img class='feature__img' src='@/assets/landing-3.png' />
         <div class='feature__text'>
           <h2 class='feature__text__title'>
-            簡易製作履歷
+            主題式歸納經歷
           </h2>
           <p class='feature__text__content'>
-            可以針對履歷、研究所備審等編排不同版本，在各版本中能主題式的展現個人能力，不再擔心不會排版，只需拉入各項經驗即可，最後一鍵即能輸出簡潔的個人履歷。
+            可以針對履歷、研究所備審等編排不同版本，在各版本中能主題式展現個人能力，不再擔心不會排版，只須拉入各項經驗即可。定時整理歸納經歷，方便日後做履歷。
           </p>
         </div>
       </section>
@@ -226,7 +226,6 @@ export default {
   }
   &__img {
     max-width: 540px;
-    min-height: 300px;
     margin: 0 24px;
   }
   &__text {
