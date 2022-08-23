@@ -13,4 +13,4 @@
 
 #### :speech_balloon: Find Us  
 [![Instagram](https://img.shields.io/badge/Instagram-%23E4405F.svg?style=flat-squar&logo=Instagram&logoColor=white)](https://instagram.com/ncku.pass?igshid=YmMyMTA2M2Y=)
-[![Facebook](https://img.shields.io/badge/Facebook-%231877F2.svg?style=flat-squar&logo=Facebook&logoColor=white)]()
+[![Facebook](https://img.shields.io/badge/Facebook-%231877F2.svg?style=flat-squar&logo=Facebook&logoColor=white)](https://www.facebook.com/nckupass)
