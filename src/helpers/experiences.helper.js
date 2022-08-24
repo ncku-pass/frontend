@@ -34,3 +34,7 @@ export const classifyBySemester = arr => {
     return obj
   }, {})
 }
+
+export const canImportFromSchool = type => {
+  return type === 'course' || type === 'activity'
+}

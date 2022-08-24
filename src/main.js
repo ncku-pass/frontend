@@ -18,6 +18,7 @@ import 'primevue/resources/primevue.min.css'
 import 'primeicons/primeicons.css'
 import 'primevue/resources/themes/saga-blue/theme.css'
 import '@/scss/_theme.scss'
+import ToastService from 'primevue/toastservice'
 
 // icon
 import mdiVue from 'mdi-vue/v3'
@@ -62,6 +63,7 @@ async function startApp() {
         id: process.env.VUE_APP_GA_ID,
       }
     }, router)
+    .use(ToastService)
     .mount('#app')
 }
 

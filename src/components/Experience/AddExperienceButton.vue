@@ -24,6 +24,7 @@ import SplitButton from 'primevue/splitbutton'
 import Button from 'primevue/button'
 import SpeedDial from 'primevue/speeddial'
 import { MqResponsive } from 'vue3-mq'
+import { canImportFromSchool } from '@/helpers/experiences.helper'
 
 export default {
   name: 'AddExperienceButton',
@@ -42,7 +43,7 @@ export default {
   emits: ['import-ncku-data', 'add-experience'],
   setup(props, { emit }) {
     const isShowOptions = computed(() => {
-      return props.type === 'course' || props.type === 'activity'
+      return canImportFromSchool(props.type)
     })
 
     const addExpOptions = [{

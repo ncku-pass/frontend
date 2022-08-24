@@ -62,7 +62,6 @@ import { ref, computed } from 'vue'
 import { useStore } from 'vuex'
 import { Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/vue'
 import { ChevronDownIcon } from '@heroicons/vue/solid'
-import { semesterToDate, dateToSemester } from '@/helpers'
 import { chineseOfExperienceTypes } from '@/config'
 
 export default {
@@ -140,8 +139,6 @@ export default {
       chineseOfExperienceTypes,
       classifiedNckuExperiences,
       nckuExperiencesError,
-      semesterToDate,
-      dateToSemester,
       selectedExperiences,
       handleImportExperiences,
       error,

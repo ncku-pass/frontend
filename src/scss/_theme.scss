@@ -765,8 +765,23 @@
   box-shadow: 0 0 0 0.2rem #fbebed;
 }
 
+.p-toast {
+  z-index: 1000;
+}
 .p-toast .p-toast-message .p-toast-icon-close:focus {
   box-shadow: 0 0 0 0.2rem #fbebed;
+}
+
+.p-toast .p-toast-message.p-toast-message-info {
+  background: $red-2;
+  border: solid $red-3;
+  border-width: 0 0 0 6px;
+  color: $white;
+}
+
+.p-toast .p-toast-message.p-toast-message-info .p-toast-message-icon,
+.p-toast .p-toast-message.p-toast-message-info .p-toast-icon-close {
+  color: $white;
 }
 
 .p-galleria .p-galleria-thumbnail-container .p-galleria-thumbnail-item-content:focus {
