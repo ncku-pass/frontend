@@ -27,8 +27,6 @@ export default {
     watch(tokenStr, () => {
       if (tokenStr.value) {
         store.dispatch('tags/initTags')
-        store.dispatch('experiences/initExperiences')
-        store.dispatch('resumes/initResumes')
       }
     }, { immediate: true })
 

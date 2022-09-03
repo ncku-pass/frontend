@@ -43,6 +43,7 @@ export default {
   },
   setup() {
     const store = useStore()
+    store.dispatch('resumes/initResumes')
 
     const someResumesNotSaved = computed(() => store.getters['resumes/someResumesNotSaved'])
     const resumesNotReady = computed(() => store.state.resumes.isPending && !store.state.resumes.resumes)
