@@ -58,8 +58,8 @@
                           class='experience-card__menu-item'
                           @click='experience.showPosition = !experience.showPosition'
                         >
-                          {{ experience.showPosition ? '隱藏' : '顯示'
-                          }}{{ experience.type === 'course' ? '成績' : '職位/名次' }}
+                          {{ experience.showPosition ? '隱藏' : '顯示' }}
+                          {{ experience.type === 'course' ? '成績' : '職位/名次' }}
                         </li>
                       </MenuItem>
                       <MenuItem v-if='experience.feedback' v-slot='{ active }'>
@@ -97,7 +97,7 @@
         </draggable>
       </template>
       <template v-else>
-        <textarea :value='text' class='ability-card__text' @input='handleTextInput' />
+        <textarea :value='text' class='ability-card__text' placeholder='在此輸入文字內容' @input='handleTextInput' />
       </template>
     </div>
   </div>

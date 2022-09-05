@@ -78,9 +78,9 @@
             </div>
           </div>
         </template>
-        <div v-else class='content-body--empty'>
+        <div v-else class='content-body--empty' @click='openTemplateModal'>
           <img src='@/assets/Portfolio/man-with-coffee.png' alt='man-with-coffee' />
-          <p>點擊上方 + 來新增第一份履歷吧</p>
+          <p>點擊這裡新增第一份履歷吧</p>
         </div>
       </div>
     </div>
@@ -409,6 +409,7 @@ export default {
       color: $blue-dark;
       background: $grey-blue;
       border-radius: 8px;
+      cursor: pointer;
     }
   }
   &__btns {
