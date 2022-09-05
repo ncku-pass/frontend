@@ -41,7 +41,7 @@
               </button>
               <button class='btn content-header__save' :disabled='isPending || !notSaved' @click='handleSave()'>
                 {{ isPending ? '存檔中' : '存檔' }}
-                <div v-show='notSaved && !isPending' class='content-header__save__hint' />
+                <div v-show='notSaved && !isPending' class='button-badge' />
               </button>
             </div>
           </div>
@@ -380,15 +380,6 @@ export default {
   }
   &__save {
     position: relative;
-    &__hint {
-      position: absolute;
-      right: -5px;
-      top: -5px;
-      height: 15px;
-      width: 15px;
-      border-radius: 10px;
-      background-color: $red-4;
-    }
   }
 }
 

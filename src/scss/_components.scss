@@ -154,3 +154,14 @@
 .mdi {
    cursor: pointer;
 }
+
+
+.button-badge {
+  position: absolute;
+  right: -5px;
+  top: -5px;
+  height: 15px;
+  width: 15px;
+  border-radius: 10px;
+  background-color: $red-4;
+}

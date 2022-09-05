@@ -23,7 +23,12 @@
         </div>
       </div>
     </div>
-    <AddExperienceButton :type='activeTab' @add-experience='handleAddExperience' @import-ncku-data='handleImportNCKUData' />
+    <AddExperienceButton
+      :type='activeTab'
+      :show-badge='showButtonBadge'
+      @add-experience='handleAddExperience'
+      @import-ncku-data='handleImportNCKUData'
+    />
   </div>
   <FormModal
     v-if='showFormModal'
@@ -93,6 +98,8 @@ export default {
     // ===新增活動表單===
     const showFormModal = ref(false)
     const handleAddExperience = () => {
+      localStorage.setItem('add-exp-clicked', 'true')
+      showButtonBadge.value = false
       showFormModal.value = true
       experienceToEdit.value = null
     }
@@ -128,11 +135,14 @@ export default {
     // === 匯入學校資料 ===
     const showImportModal = ref(false)
     const handleImportNCKUData = async() => {
+      localStorage.setItem('add-exp-clicked', 'true')
+      showButtonBadge.value = false
       showImportModal.value = true
     }
 
     // === Check if need to display import exp reminder ===
     const toast = useToast()
+    const showButtonBadge = ref(false)
     watch(isPending, (newValue) => {
       if (!newValue) { // finish pending
         const targetExp = classifiedExperiences.value[props.activeTab]
@@ -141,6 +151,9 @@ export default {
           const lastKey = Object.keys(targetExp)[0]
           // alert user to import if no new record
           if (!isCurrentOrLastSemester(lastKey)) {
+            if (localStorage.getItem('add-exp-clicked') !== 'true') {
+              showButtonBadge.value = true
+            }
             toast.add({ severity: 'info', summary: '資料已更新！', detail: '請匯入最新課程紀錄', life: 10000 })
           }
         }
@@ -160,6 +173,7 @@ export default {
       openViewerModal,
       experienceToShow,
       showImportModal,
+      showButtonBadge,
       handleImportNCKUData
     }
   }
