@@ -773,15 +773,15 @@
 }
 
 .p-toast .p-toast-message.p-toast-message-info {
-  background: $red-2;
-  border: solid $red-3;
+  background: $white;
+  border: solid $red-4;
   border-width: 0 0 0 6px;
-  color: $white;
+  color: $grey-5;
 }
 
 .p-toast .p-toast-message.p-toast-message-info .p-toast-message-icon,
 .p-toast .p-toast-message.p-toast-message-info .p-toast-icon-close {
-  color: $white;
+  color: $grey-5;
 }
 
 .p-galleria .p-galleria-thumbnail-container .p-galleria-thumbnail-item-content:focus {
