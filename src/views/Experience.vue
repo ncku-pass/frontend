@@ -1,6 +1,6 @@
 <template>
-  <div class='experience'>
-    <div class='experience__window'>
+  <div class='experience' :class='`experience--${device}`'>
+    <div class='experience__window' :class='`experience__window--${device}`'>
       <Toast position='top-right' />
       <ExperienceNavbar :active-tab='activeTab' :redirected='redirected' />
       <Loader :loading='isPending' />
@@ -76,6 +76,7 @@ export default {
     ImportModal,
     Toast,
   },
+  inject: ['mq'],
   props: {
     activeTab: {
       type: String,
@@ -176,6 +177,11 @@ export default {
       showButtonBadge,
       handleImportNCKUData
     }
+  },
+  computed: {
+    device() {
+      return this.mq.current
+    },
   }
 }
 </script>
@@ -187,21 +193,27 @@ export default {
   height: 100%;
   padding: 26px 0;
   display: flex;
-  flex-direction: column;
   justify-content: center;
-  align-items: center;
   color: $grey-6;
+
+  &--desktop, &--laptop, &--tablet {
+    flex-direction: column;
+    align-items: center;
+  }
 }
 
 .experience__window {
-  height: 90%;
-  margin-bottom: 24px;
   display: flex;
   flex-direction: column;
   background-color: #fff;
   box-shadow: -2px 4px 25px rgba(241, 90, 96, 0.05), 2px -4px 20px rgba(241, 90, 96, 0.1);
   width: 100%;
   max-width: 1110px;
+
+  &--desktop, &--laptop, &--tablet {
+    height: 90%;
+    margin-bottom: 24px;
+  }
 }
 
 .experience__window__table {
@@ -211,9 +223,18 @@ export default {
   flex-direction: column;
   &__wrapper {
     overflow-y: auto;
-    padding: 24px 96px 100px;
+    padding: 24px 80px 100px;
     &::-webkit-scrollbar {
       display: none;
+    }
+  }
+}
+
+.experience--mobile {
+  padding: 0;
+  .experience__window__table {
+    &__wrapper {
+      padding: 12px 24px 100px;
     }
   }
 }
