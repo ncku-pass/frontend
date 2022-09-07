@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import { ref, watchEffect } from '@vue/runtime-core'
+import { ref, watchEffect } from 'vue'
 export default {
   name: 'MessageModal',
   props: {

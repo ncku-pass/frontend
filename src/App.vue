@@ -9,10 +9,9 @@
 </template>
 
 <script>
-import { computed } from 'vue'
+import { computed, watch, watchEffect } from 'vue'
 import { useStore } from 'vuex'
 import useGrab from '@/composables/useGrab'
-import { watch, watchEffect } from '@vue/runtime-core'
 import LayoutWrapper from '@/layouts/LayoutWrapper.vue'
 
 export default {
