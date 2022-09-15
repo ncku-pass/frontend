@@ -149,16 +149,28 @@
   background: #495057;
 }
 
+.p-inputtext{
+  line-height: 1.5;
+  padding: 10px 12px;
+  border-radius: 8px;
+}
+
 .p-inputtext:enabled:hover {
-  border-color: #495057;
+  border-color: $grey-4;
 }
 .p-inputtext:enabled:focus {
   box-shadow: 0 0 0 0.2rem #F2F2F2;
-  border-color: #495057;
+  border-color: $grey-4;
 }
 
 .p-listbox .p-listbox-list .p-listbox-item:focus {
   box-shadow: inset 0 0 0 0.15rem #fbebed;
+}
+
+.p-multiselect {
+  line-height: 1.5;
+  padding: 5px;
+  border-radius: 8px;
 }
 
 .p-multiselect:not(.p-disabled):hover {
@@ -173,11 +185,7 @@
   outline-offset: 0;
   box-shadow: none;
 }
-.p-multiselect-panel .p-multiselect-items .p-multiselect-item:focus {
-  outline: 0 none;
-  outline-offset: 0;
-  box-shadow: inset 0 0 0 0.15rem #fbebed;
-}
+
 .p-radiobutton .p-radiobutton-box:not(.p-disabled):not(.p-highlight):hover {
   border-color: $red-5;
 }
@@ -240,12 +248,17 @@
   border-color: $red-5;
 }
 
+.p-treeselect {
+  padding: 5px;
+  border-radius: 8px
+}
+
 .p-treeselect:not(.p-disabled):hover {
-  border-color: $red-5;
+  border-color: $grey-4;
 }
 .p-treeselect:not(.p-disabled).p-focus {
   box-shadow: 0 0 0 0.2rem #fbebed;
-  border-color: $red-5;
+  border-color: $grey-4;
 }
 
 .p-togglebutton.p-button.p-highlight {
@@ -608,6 +621,10 @@
 .p-timeline .p-timeline-event-marker {
   border: 2px solid $red-5;
   background-color: #ffffff;
+}
+
+.p-tree .p-tree-container .p-treenode .p-treenode-content .p-treenode-label {
+  margin-left: -32px;
 }
 
 .p-tree .p-tree-container .p-treenode .p-treenode-content .p-tree-toggler:focus {

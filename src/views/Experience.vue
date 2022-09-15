@@ -25,12 +25,10 @@
     </div>
     <AddExperienceButton :type='activeTab' @add-experience='handleAddExperience' @import-ncku-data='handleImportNCKUData' />
   </div>
-  <FormModal
-    v-if='showFormModal'
-    :form-type='activeTab'
-    :edit-data='experienceToEdit'
-    @close='showFormModal = false'
-    @submit='handleSubmit'
+  <AddExperienceDialog
+    v-model:visible='showAddExperienceDialog'
+    :exp-type='activeTab'
+    :exp-data='experienceToEdit'
   />
   <ViewerModal
     v-if='showViewerModal'
@@ -52,7 +50,7 @@ import ExperienceNavbar from '@/components/Experience/ExperienceNavbar.vue'
 import ExperienceListItem from '@/components/Experience/ExperienceListItem.vue'
 import ExperienceListBlock from '@/components/Experience/ExperienceListBlock.vue'
 import AddExperienceButton from '@/components/Experience/AddExperienceButton.vue'
-import FormModal from '@/components/Experience/Form/FormModal.vue'
+import AddExperienceDialog from '@/components/Experience/Form/AddExperienceDialog.vue'
 import ViewerModal from '@/components/Experience/ViewerModal.vue'
 import ImportModal from '@/components/Experience/ImportModal.vue'
 import { canImportFromSchool } from '@/helpers/experiences.helper'
@@ -66,7 +64,7 @@ export default {
     ExperienceListItem,
     ExperienceListBlock,
     AddExperienceButton,
-    FormModal,
+    AddExperienceDialog,
     ViewerModal,
     ImportModal,
     Toast,
@@ -91,15 +89,10 @@ export default {
     const getExperiences = () => store.dispatch('experiences/getExperiences')
 
     // ===新增活動表單===
-    const showFormModal = ref(false)
+    const showAddExperienceDialog = ref(false)
     const handleAddExperience = () => {
-      showFormModal.value = true
-      experienceToEdit.value = null
-    }
-
-    // ===處理表單送出===
-    const handleSubmit = () => {
-      showFormModal.value = false
+      showAddExperienceDialog.value = true
+      experienceToEdit.value = {}
     }
 
     // ===處理經驗刪除===
@@ -110,7 +103,7 @@ export default {
     // ===點擊編輯的按鈕時，抓出此筆經歷，傳入表單中===
     const experienceToEdit = ref(null)
     const handleEditExperience = experienceId => {
-      showFormModal.value = true
+      showAddExperienceDialog.value = true
       ;[experienceToEdit.value] = experiences.value[props.activeTab].filter(exp => {
         return exp.id === experienceId
       })
@@ -150,9 +143,8 @@ export default {
     return {
       isPending,
       classifiedExperiences,
-      showFormModal,
+      showAddExperienceDialog,
       handleAddExperience,
-      handleSubmit,
       handleDelete,
       handleEditExperience,
       experienceToEdit,
@@ -160,7 +152,7 @@ export default {
       openViewerModal,
       experienceToShow,
       showImportModal,
-      handleImportNCKUData
+      handleImportNCKUData,
     }
   }
 }

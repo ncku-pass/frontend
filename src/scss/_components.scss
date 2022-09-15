@@ -107,14 +107,6 @@
 
 // ===== 表單類 =====
 .form-label {
-  @include grid(column, 0, 10px);
-  justify-content: flex-start;
-  align-items: center;
-  color: $blue-dark;
-  line-height: 24px;
-  font-weight: 500;
-  letter-spacing: 0.05em;
-  margin-bottom: 8px;
   &__info {
     height: 16px;
     width: 16px;
@@ -123,18 +115,8 @@
   }
 }
 
-.form-control {
-  display: block;
+.p-inputtext, .p-inputwrapper {
   width: 100%;
-  padding: 10px 12px;
-  line-height: 1.5;
-  border: 1px solid $grey-2;
-  border-radius: 8px;
-  line-break: anywhere;
-  background-color: #fff;
-  &.not-selected {
-    color: $grey-4;
-  }
 }
 
 // 成功入口登入按鈕
@@ -153,4 +135,11 @@
 
 .mdi {
    cursor: pointer;
+}
+
+.inline-code {
+  padding: 0 7px;
+  background-color: $grey-1;
+  border-radius: 5px;
+  display: inline-block;
 }
