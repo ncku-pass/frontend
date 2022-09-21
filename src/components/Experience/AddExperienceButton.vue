@@ -3,6 +3,7 @@
     <MqResponsive target='tablet+'>
       <SplitButton v-if='isShowOptions' label='新增經驗' :model='addExpOptions' />
       <Button v-else label='新增校外或其他經驗' @click='$emit("add-experience")' />
+      <div v-if='showBadge' class='button-badge' />
     </MqResponsive>
 
     <MqResponsive target='mobile' style='width: 100%'>
@@ -38,6 +39,10 @@ export default {
     type: {
       type: String,
       required: true
+    },
+    showBadge: {
+      type: Boolean,
+      required: true
     }
   },
   emits: ['import-ncku-data', 'add-experience'],
@@ -67,9 +72,12 @@ export default {
 </script>
 
 <style lang='scss' scoped>
+@import '~@/scss/_variables.scss';
+
 .add-experience-button {
   justify-content: center;
   display: flex;
+  position: relative;
 
  :deep(.p-speeddial) {
     position: fixed;

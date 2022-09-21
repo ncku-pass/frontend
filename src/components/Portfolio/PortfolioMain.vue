@@ -41,7 +41,7 @@
               </button>
               <button class='btn content-header__save' :disabled='isPending || !notSaved' @click='handleSave()'>
                 {{ isPending ? '存檔中' : '存檔' }}
-                <div v-show='notSaved && !isPending' class='content-header__save__hint' />
+                <div v-show='notSaved && !isPending' class='button-badge' />
               </button>
             </div>
           </div>
@@ -78,9 +78,9 @@
             </div>
           </div>
         </template>
-        <div v-else class='content-body--empty'>
+        <div v-else class='content-body--empty' @click='openTemplateModal'>
           <img src='@/assets/Portfolio/man-with-coffee.png' alt='man-with-coffee' />
-          <p>點擊上方 + 來新增第一份履歷吧</p>
+          <p>點擊這裡新增第一份履歷吧</p>
         </div>
       </div>
     </div>
@@ -380,15 +380,6 @@ export default {
   }
   &__save {
     position: relative;
-    &__hint {
-      position: absolute;
-      right: -5px;
-      top: -5px;
-      height: 15px;
-      width: 15px;
-      border-radius: 10px;
-      background-color: $red-4;
-    }
   }
 }
 
@@ -409,6 +400,7 @@ export default {
       color: $blue-dark;
       background: $grey-blue;
       border-radius: 8px;
+      cursor: pointer;
     }
   }
   &__btns {
