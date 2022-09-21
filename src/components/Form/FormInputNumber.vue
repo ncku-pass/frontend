@@ -1,6 +1,6 @@
 <template>
   <!-- eslint-disable vue/no-mutating-props -->
-  <InputNumber v-model='value' @input='$emit("input", $event)' />
+  <InputNumber v-model='value' mode='decimal' @input='$emit("input", $event)' />
 </template>
 
 <script>
