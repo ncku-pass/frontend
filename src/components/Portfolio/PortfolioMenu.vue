@@ -45,7 +45,7 @@ import useScrollShadow from '@/composables/useScrollShadow'
 import MenuFilter from '@/components/Portfolio/MenuFilter'
 import MenuCard from '@/components/Portfolio/MenuCard'
 import draggable from 'vuedraggable'
-import { ExperienceTypes } from '@/config'
+import { experienceTypes } from '@/config'
 
 export default {
   name: 'PortfolioMenu',
@@ -74,7 +74,7 @@ export default {
     const filter = reactive({
       semesters: {},
       tags: {},
-      types: ExperienceTypes.reduce((obj, type) => ({ ...obj, [type]: true }), {})
+      types: experienceTypes.reduce((obj, type) => ({ ...obj, [type]: true }), {})
     })
     watchEffect(() => {
       filter.semesters = semesters.value.reduce((obj, semester) => {

@@ -1,4 +1,4 @@
-export const ExperienceTypes = [
+export const experienceTypes = [
   'course',
   'activity',
   'competition',
@@ -7,7 +7,7 @@ export const ExperienceTypes = [
   'other'
 ]
 
-export const chineseOfExperienceTypes = {
+export const experienceTypesInChinese = {
   course: '課程紀錄',
   activity: '活動經驗',
   competition: '競賽經驗',
@@ -56,3 +56,24 @@ export const experienceNavbarLinks = [
     dest: 'other',
   }
 ]
+
+export const defaultTagNames = [
+  '人文素養',
+  '公民素養',
+  '國際視野',
+  '社會關懷',
+  '語文與溝通能力',
+  '思考與判斷能力',
+  '專業與跨域能力',
+  '創新與領導能力',
+  '邏輯與分析能力',
+  '勇敢落實的能力',
+  '闡述與敘事能力',
+  '拆解問題的能力',
+  '人本關懷的能力'
+].map((ability, i) => {
+  return {
+    id: i + 1,
+    name: ability
+  }
+})

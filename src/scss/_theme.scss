@@ -5,11 +5,11 @@
 }
 
 .p-autocomplete .p-autocomplete-multiple-container:not(.p-disabled):hover {
-  border-color: #495057;
+  border-color: $grey-4;
 }
 .p-autocomplete .p-autocomplete-multiple-container:not(.p-disabled).p-focus {
   box-shadow: 0 0 0 0.2rem #fbebed;
-  border-color: #495057;
+  border-color: $grey-4;
 }
 
 .p-datepicker .p-datepicker-header .p-datepicker-prev:focus,
@@ -18,18 +18,18 @@
 }
 .p-datepicker .p-datepicker-header .p-datepicker-title .p-datepicker-year:enabled:hover,
 .p-datepicker .p-datepicker-header .p-datepicker-title .p-datepicker-month:enabled:hover {
-  color: #495057;
+  color: $grey-4;
 }
 .p-datepicker table td > span:focus {
   box-shadow: 0 0 0 0.2rem #fbebed;
 }
 .p-datepicker table td.p-datepicker-today > span {
   background: #ced4da;
-  color: #495057;
+  color: $grey-4;
   border-color: transparent;
 }
 .p-datepicker table td.p-datepicker-today > span.p-highlight {
-  color: #495057;
+  color: $grey-4;
   background: #E3F2FD;
 }
 .p-datepicker .p-datepicker-buttonbar {
@@ -47,7 +47,7 @@
   transition: background-color 0.2s, color 0.2s, box-shadow 0.2s;
 }
 .p-datepicker .p-timepicker button:enabled:hover {
-  color: #495057;
+  color: $grey-4;
   border-color: transparent;
   background: #e9ecef;
 }
@@ -68,11 +68,11 @@
 }
 
 .p-cascadeselect:not(.p-disabled):hover {
-  border-color: #495057;
+  border-color: $grey-4;
 }
 .p-cascadeselect:not(.p-disabled).p-focus {
   box-shadow: 0 0 0 0.2rem #fbebed;
-  border-color: #495057;
+  border-color: $grey-4;
 }
 .p-cascadeselect-panel .p-cascadeselect-items .p-cascadeselect-item .p-cascadeselect-item-content:focus {
   box-shadow: inset 0 0 0 0.15rem #fbebed;
@@ -97,26 +97,34 @@
   border-color: #f44336;
 }
 
+.p-chips .p-chips-multiple-container {
+  line-height: 1.5;
+  padding: 0.5rem 0.75rem;
+}
 .p-chips .p-chips-multiple-container:not(.p-disabled):hover {
-  border-color: #495057;
+  border-color: $grey-4;
 }
 .p-chips .p-chips-multiple-container:not(.p-disabled).p-focus {
   box-shadow: 0 0 0 0.2rem #fbebed;
-  border-color: #495057;
+  border-color: $grey-4;
 }
-.p-chips .p-chips-multiple-container .p-chips-token {
-  padding: 0.25rem 0.5rem;
-  margin-right: 0.5rem;
-  background: $red-1;
-  color: $red-8;
-  border-radius: 16px;
+.p-chips:not(.p-disabled).p-focus .p-chips-multiple-container {
+  box-shadow: 0 0 0 0.2rem $grey-1;
+  border-color: $grey-4;
 }
+.p-treeselect-token, .p-multiselect-token, .p-inputtext .p-chips-token {
+  margin-right: 0.7rem !important;
+  padding: 0.3rem 0.8rem !important;
+  background: $grey-1 !important;
+  color: $grey-6 !important;
+}
+
 .p-dropdown:not(.p-disabled):hover {
-  border-color: #495057;
+  border-color: $grey-4;
 }
 .p-dropdown:not(.p-disabled).p-focus {
   box-shadow: 0 0 0 0.2rem #fbebed;
-  border-color: #495057;
+  border-color: $grey-4;
 }
 .p-editor-container .ql-snow.ql-toolbar button.ql-active,
 .p-editor-container .ql-snow.ql-toolbar .ql-picker-label.ql-active,
@@ -146,7 +154,7 @@
   background: $red-5;
 }
 .p-inputswitch.p-inputswitch-checked:not(.p-disabled):hover .p-inputswitch-slider {
-  background: #495057;
+  background: $grey-4;
 }
 
 .p-inputtext{
@@ -168,17 +176,15 @@
 }
 
 .p-multiselect {
-  line-height: 1.5;
   padding: 5px;
   border-radius: 8px;
 }
-
 .p-multiselect:not(.p-disabled):hover {
-  border-color: #495057;
+  border-color: $grey-4;
 }
 .p-multiselect:not(.p-disabled).p-focus {
   box-shadow: 0 0 0 0.2rem $grey-1;
-  border-color: #495057;
+  border-color: $grey-4;
 }
 .p-multiselect-panel .p-multiselect-header .p-multiselect-close:focus {
   outline: 0 none;
