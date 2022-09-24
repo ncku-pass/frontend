@@ -5,9 +5,9 @@ import {
   importExperiences as importExperiencesAPI
 } from '@/api/experiences'
 import { getNCKUExperiences as getNCKUExperiencesAPI } from '@/api/ncku-portal'
-import { semesterToDate, dateToSemester } from '@/helpers'
 import { sortExperiences, classifyBySemester, orderBySemester } from '@/helpers/experiences.helper'
 import { KeyNoPairedError } from '@/config'
+import { dateToSemester, semesterToDate } from '@/helpers/semester.helper'
 
 const experiences = {
   namespaced: true,

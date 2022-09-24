@@ -59,7 +59,7 @@ import AddExperienceDialog from '@/components/Experience/Form/AddExperienceDialo
 import ViewerModal from '@/components/Experience/ViewerModal.vue'
 import ImportModal from '@/components/Experience/ImportModal.vue'
 import { canImportFromSchool } from '@/helpers/experiences.helper'
-import { isCurrentOrLastSemester } from '@/helpers/datetime.helper'
+import { isCurrentOrLastSemester } from '@/helpers/semester.helper'
 
 export default {
   name: 'Experience',
