@@ -101,7 +101,7 @@ export default {
 
     const updateData = ({ key, value }) => {
       isFormDirty = true
-      inputData[key] = value
+      inputData.value[key] = value
     }
 
     // === HANDLE SUBMIT ===

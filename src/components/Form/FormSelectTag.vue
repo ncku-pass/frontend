@@ -1,7 +1,7 @@
 <template>
   <div class='tag-select'>
     <Chips
-      v-model='value'
+      v-model='selectedTags'
       placeholder='建立一個新的tag...'
       :allowDuplicate='false'
       @remove='onUnselectTag'
@@ -29,7 +29,7 @@
           </div>
           <div v-for='tag in optionType.options' :key='tag.id' class='option' @click='onSelectDropdownTag(tag)'>
             {{ tag.name }}
-            <mdicon v-if='optionType.allowDelete' class='option__delete' name='trashCanOutline' size='18' @click='onDeleteTag(tag.id)' />
+            <mdicon v-if='optionType.allowDelete' class='option__delete' name='trashCanOutline' size='18' @click.stop='onDeleteTag(tag.id)' />
           </div>
         </div>
       </div>
@@ -73,7 +73,7 @@ export default {
   emits: ['input'],
   setup(props, { emit }) {
     const store = useStore()
-    const value = ref(props.initValue)
+    const selectedTags = computed(() => props.initValue)
 
     // ===== DEFINE TAGS =====
     const tagsFromStore = computed(() => store.state.tags.tags.filter(tag => tag.id > 14))
@@ -129,12 +129,12 @@ export default {
 
     // ===== TAGS OPERATIONS =====
     const onSelectDropdownTag = tag => {
-      emitUpdateTag([...value.value, tag])
+      emitUpdateTag([...selectedTags.value, tag])
     }
 
     const onUnselectTag = (evt) => {
       const unSelectedId = evt.value[0].id
-      emitUpdateTag(value.value.filter(tag => tag.id !== unSelectedId))
+      emitUpdateTag(selectedTags.value.filter(tag => tag.id !== unSelectedId))
     }
 
     const onDeleteTag = (tagId) => {
@@ -148,17 +148,17 @@ export default {
       if (!targetTagName) {
         return
 
-      // 只允許中、英、數、底線 (_)、橫線(-)、空白( )
       } else if (!targetTagName.match(/^[\u4e00-\u9fa5_a-zA-Z0-9\s-]+$/)) {
+        // 只允許中、英、數、底線 (_)、橫線(-)、空白( )
         createTagError.value = '只接受中、英、數、底線 (_)、橫線(-)哦！'
         showDropdown.value = false
-        value.value.pop()
+        selectedTags.value.pop()
         return
 
       } else if (props.initValue.some(tag => tag.name === targetTagName)) {
         createTagError.value = '已經有這個tag了！'
         showDropdown.value = false
-        value.value.pop()
+        selectedTags.value.pop()
         return
       }
 
@@ -175,7 +175,6 @@ export default {
       }
 
       const newTag = await store.dispatch('tags/addTag', targetTagName)
-      value.value[value.value.length - 1] = newTag
       emitUpdateTag([...props.initValue, newTag])
     }
 
@@ -187,7 +186,7 @@ export default {
     }
 
     return {
-      value,
+      selectedTags,
       optionsForDisplay,
       showDropdown,
       isChoosing,
