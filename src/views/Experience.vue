@@ -33,7 +33,7 @@
   <AddExperienceDialog
     v-model:visible='showAddExperienceDialog'
     :exp-type='activeTab'
-    :exp-data='experienceToEdit'
+    :init-value='experienceToEdit'
   />
   <ViewerModal
     v-if='showViewerModal'
@@ -104,11 +104,6 @@ export default {
       experienceToEdit.value = null
     }
 
-    // ===處理表單送出===
-    const handleSubmit = () => {
-      showAddExperienceDialog.value = false
-    }
-
     // ===處理經驗刪除===
     const handleDelete = () => {
       getExperiences()
@@ -165,7 +160,6 @@ export default {
       classifiedExperiences,
       showAddExperienceDialog,
       handleAddExperience,
-      handleSubmit,
       handleDelete,
       handleEditExperience,
       experienceToEdit,

@@ -19,6 +19,7 @@ import 'primeicons/primeicons.css'
 import 'primevue/resources/themes/saga-blue/theme.css'
 import '@/scss/_theme.scss'
 import ToastService from 'primevue/toastservice'
+import ConfirmationService from 'primevue/confirmationservice'
 
 // icon
 import mdiVue from 'mdi-vue/v3'
@@ -64,6 +65,7 @@ async function startApp() {
       }
     }, router)
     .use(ToastService)
+    .use(ConfirmationService)
     .mount('#app')
 }
 

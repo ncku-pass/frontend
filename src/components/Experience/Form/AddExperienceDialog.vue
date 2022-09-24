@@ -22,17 +22,37 @@
       </label>
       <DynamicFormRenderer
         :schema='item'
-        :data='expData[item.key]'
+        :data='inputData[item.key]'
         @input='updateData($event)'
       />
     </div>
+    <template #footer>
+      <Button
+        :disabled='submitStatus.isPending'
+        class='p-button-secondary p-button-outlined'
+        @click='onCancelAddExp'
+      >
+        取消
+      </Button>
+      <Button
+        :loading='submitStatus.isPending'
+        @click='onSubmitExp'
+      >
+        儲存
+      </Button>
+    </template>
   </Dialog>
+  <ConfirmDialog />
 </template>
 
 <script>
+import Button from 'primevue/button'
 import Dialog from 'primevue/dialog'
 import OverlayPanel from 'primevue/overlaypanel'
-import { computed, onBeforeUpdate, ref } from 'vue'
+import ConfirmDialog from 'primevue/confirmdialog'
+import { useConfirm } from 'primevue/useconfirm'
+import { useToast } from 'primevue/usetoast'
+import { computed, onBeforeUpdate, reactive, ref } from 'vue'
 import { mdiInformation } from '@mdi/js'
 
 import * as formSchema from './experienceSchema'
@@ -41,8 +61,10 @@ import DynamicFormRenderer from '@/components/Form/DynamicFormRenderer'
 export default {
   name: 'AddExperienceDialog',
   components: {
+    Button,
     Dialog,
     OverlayPanel,
+    ConfirmDialog,
     DynamicFormRenderer,
     mdiInformation,
   },
@@ -58,7 +80,7 @@ export default {
         return ['course', 'activity', 'competition', 'work', 'certificate', 'other'].includes(value)
       }
     },
-    expData: {
+    initValue: {
       type: Object,
       default() {
         return {}
@@ -71,15 +93,72 @@ export default {
       get: () => props.visible,
       set: (val) => { context.emit('update:visible', val) }
     })
-
     const schema = computed(() => formSchema[props.expType])
 
+    // === HANDLE DATA CHANGE ===
+    const inputData = computed(() => props.initValue)
+    let isFormDirty = false
+
     const updateData = ({ key, value }) => {
-      console.log(key)
-      console.log(value)
+      isFormDirty = true
+      inputData[key] = value
     }
 
-    // === Remarks Panel ===
+    // === HANDLE SUBMIT ===
+    const toast = useToast()
+    const submitStatus = reactive({
+      error: null,
+      isPending: false
+    })
+
+    const onCancelAddExp = () => {
+      if (isFormDirty) {
+        showCloseReminder()
+      } else {
+        showDialog.value = false
+      }
+    }
+
+    const onSubmitExp = async() => {
+      submitStatus.isPending = true
+      console.log(inputData)
+
+      try {
+        if (props.initValue) {
+          console.log('todo: update')
+          // await updateExperience(formData.id, newFormData)
+        } else {
+          console.log('todo: create')
+          // await addExperience(newFormData)
+        }
+
+        // close the dialog
+        showDialog.value = false
+
+      } catch (error) {
+        onSubmitExp.error = error
+        toast.add({ severity: 'error', summary: '儲存出錯！', detail: '無法儲存經歷，請再次嘗試', life: 10000 })
+      } finally {
+        onSubmitExp.isPending = false
+      }
+    }
+
+    // === CONFIRMATION MODEL ===
+    const confirm = useConfirm()
+    const showCloseReminder = () => {
+      confirm.require({
+        message: '離開則無法儲存資料喔！',
+        header: '確定要離開嗎？',
+        icon: 'pi pi-exclamation-triangle',
+        acceptLabel: '確定離開',
+        rejectLabel: '留下',
+        accept: () => {
+          showDialog.value = false
+        },
+      })
+    }
+
+    // === REMARK PANEL ===
     const overlayPanelRefs = ref([])
     // make sure to reset the refs before each update
     onBeforeUpdate(() => {
@@ -96,6 +175,10 @@ export default {
     return {
       showDialog,
       schema,
+      inputData,
+      submitStatus,
+      onCancelAddExp,
+      onSubmitExp,
       updateData,
       overlayPanelRefs,
       toggleRemarkPanel,
@@ -139,6 +222,13 @@ export default {
 
   .p-dialog-content {
     @include grid(row, 20px, 0);
+  }
+
+  .p-dialog-footer {
+    padding: 8px 16px;
+    .p-button {
+      margin-left: 16px;
+    }
   }
 }
 

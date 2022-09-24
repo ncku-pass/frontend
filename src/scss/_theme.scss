@@ -12,6 +12,10 @@
   border-color: $grey-4;
 }
 
+.p-confirm-dialog-reject.p-button-text {
+  color: $grey-5 !important;
+}
+
 .p-datepicker .p-datepicker-header .p-datepicker-prev:focus,
 .p-datepicker .p-datepicker-header .p-datepicker-next:focus {
   box-shadow: 0 0 0 0.2rem #fbebed;
