@@ -3,6 +3,8 @@
  * @param {object} experiences 從API（getExperiences）得到的資料
  * @returns {object} 排序完的資料
  */
+import * as formSchema from '@/components/Experience/AddExp/experienceSchema'
+
 export const sortExperiences = experiences => {
   const obj = Object.assign(experiences)
   for (const type in obj) {
@@ -37,4 +39,13 @@ export const classifyBySemester = arr => {
 
 export const canImportFromSchool = type => {
   return type === 'course' || type === 'activity'
+}
+
+export const generateEmptyExp = (type) => {
+  const schema = formSchema[type]
+  const emptyExp = {}
+  schema.forEach(item => {
+    emptyExp[item.key] = item.defaultValue
+  })
+  return emptyExp
 }

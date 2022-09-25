@@ -22,7 +22,7 @@
       </label>
       <DynamicFormRenderer
         :schema='item'
-        :data='targetExp[item.key]'
+        :data='inputData[item.key]'
         @input='updateData($event)'
       />
     </div>
@@ -52,13 +52,14 @@ import OverlayPanel from 'primevue/overlaypanel'
 import ConfirmDialog from 'primevue/confirmdialog'
 import { useConfirm } from 'primevue/useconfirm'
 import { useToast } from 'primevue/usetoast'
-import { computed, onBeforeUpdate, ref } from 'vue'
+import { computed, onBeforeUpdate, ref, watch } from 'vue'
 import { mdiInformation } from '@mdi/js'
 
 import * as formSchema from './experienceSchema'
 import DynamicFormRenderer from '@/components/Form/DynamicFormRenderer'
 import { addExperience, updateExperience } from '@/api/experiences'
 import { useStore } from 'vuex'
+import { generateEmptyExp } from '@/helpers/experiences.helper'
 
 export default {
   name: 'AddExperienceDialog',
@@ -97,12 +98,28 @@ export default {
 
     // === HANDLE DATA CHANGE ===
     const store = useStore()
-    const targetExp = computed(() => store.getters['experiences/experienceByTypeAndId'](props.expType, props.expId))
+    const targetExp = computed({
+      get: () => {
+        if (!props.expId) {
+          return generateEmptyExp(props.expType)
+        }
+        const fromStore = store.getters['experiences/experienceByTypeAndId'](props.expType, props.expId)
+        return fromStore === undefined ? generateEmptyExp(props.expType) : fromStore
+      },
+      set: () => {}
+    })
     let isFormDirty = false
+
+    const inputData = ref({})
+    watch(targetExp, (val) => {
+      if (val !== undefined) {
+        inputData.value = { ...val }
+      }
+    })
 
     const updateData = ({ key, value }) => {
       isFormDirty = true
-      targetExp.value[key] = value
+      inputData.value[key] = value
     }
 
     // === HANDLE SUBMIT ===
@@ -121,8 +138,8 @@ export default {
       isSubmitPending.value = true
 
       const payload = {
-        ...targetExp.value,
-        tags: targetExp.value.tags.map(tag => tag.id)
+        ...inputData.value,
+        tags: inputData.value.tags.map(tag => tag.id)
       }
       try {
         if (props.expId) {
@@ -174,7 +191,7 @@ export default {
     return {
       showDialog,
       schema,
-      targetExp,
+      inputData,
       isSubmitPending,
       onCancelAddExp,
       onSubmitExp,

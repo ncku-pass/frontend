@@ -13,12 +13,14 @@ export const course = [
     key: 'name',
     label: '課程名稱',
     type: 'FormInputText',
+    defaultValue: '',
     required: true
   },
   {
     key: 'position',
     label: '課程分數',
     type: 'FormInputNumber',
+    defaultValue: '',
     required: false,
     remarks: defineAsyncComponent(() => new Promise((resolve) => {
       resolve({
@@ -37,6 +39,7 @@ export const course = [
     key: 'semester',
     label: '課程時間',
     type: 'FormSelect',
+    defaultValue: '',
     required: true,
     options: generateSemesters()
   },
@@ -44,6 +47,7 @@ export const course = [
     key: 'categories',
     label: '課程類別',
     type: 'FormMultiSelect',
+    defaultValue: [],
     required: false,
     options: ['必修課程', '選修課程', '通識', '工作坊', '密集課程', '線上課程']
   },
@@ -51,6 +55,7 @@ export const course = [
     key: 'tags',
     label: '獲得技能Tag',
     type: 'FormSelectTag',
+    defaultValue: [],
     required: false,
     remarks: defineAsyncComponent(() => new Promise((resolve) => {
       resolve({
@@ -71,6 +76,7 @@ export const course = [
     key: 'description',
     label: '課程簡介 (500字以內)',
     type: 'FormTextArea',
+    defaultValue: '',
     required: false,
     placeholder: '填寫課程簡介以便日後方便回想課程內容'
   },
@@ -78,6 +84,7 @@ export const course = [
     key: 'feedback',
     label: '課程收穫及成就 (500字以內)',
     type: 'FormTextArea',
+    defaultValue: '',
     required: false,
     placeholder: '將課程中所得到的收穫及成就記錄下來，或是寫出課程內容的特色吧'
   },
@@ -85,6 +92,7 @@ export const course = [
     key: 'link',
     label: '作品和相關證明',
     type: 'FormInputText',
+    defaultValue: '',
     required: false,
     remarks: defineAsyncComponent(() => new Promise((resolve) => {
       resolve({
@@ -106,12 +114,14 @@ export const activity = [
     key: 'name',
     label: '活動名稱',
     type: 'FormInputText',
+    defaultValue: '',
     required: true
   },
   {
     key: 'position',
     label: '活動擔任職位',
     type: 'FormInputText',
+    defaultValue: '',
     required: true,
   },
   {
@@ -124,6 +134,7 @@ export const activity = [
     key: 'categories',
     label: '活動類別',
     type: 'FormMultiSelect',
+    defaultValue: [],
     required: false,
     options: ['社團', '系內活動', '校內活動', '校外活動', '其他']
   },
@@ -131,6 +142,7 @@ export const activity = [
     key: 'tags',
     label: '獲得技能Tag',
     type: 'FormSelectTag',
+    defaultValue: [],
     required: false,
     remarks: defineAsyncComponent(() => new Promise((resolve) => {
       resolve({
@@ -151,6 +163,7 @@ export const activity = [
     key: 'description',
     label: '活動簡介 (500字以內)',
     type: 'FormTextArea',
+    defaultValue: '',
     required: false,
     placeholder: '填寫活動簡介以便日後方便回想活動內容'
   },
@@ -158,6 +171,7 @@ export const activity = [
     key: 'feedback',
     label: '活動收穫及成就 (500字以內)',
     type: 'FormTextArea',
+    defaultValue: '',
     required: false,
     placeholder: '將活動中所得到的收穫及成就記錄下來吧～若有辦理相關活動也可紀錄下來唷'
   },
@@ -165,6 +179,7 @@ export const activity = [
     key: 'link',
     label: '作品和相關證明',
     type: 'FormInputText',
+    defaultValue: '',
     required: false,
     remarks: defineAsyncComponent(() => new Promise((resolve) => {
       resolve({
@@ -186,6 +201,7 @@ export const competition = [
     key: 'name',
     label: '競賽名稱',
     type: 'FormInputText',
+    defaultValue: '',
     required: true,
     placeholder: '可以填入競賽名稱、組別、獲獎類別（國內/國外）、類型（個人/團體）'
   },
@@ -193,6 +209,7 @@ export const competition = [
     key: 'position',
     label: '競賽獲得獎項',
     type: 'FormInputText',
+    defaultValue: '',
     required: true,
   },
   {
@@ -205,6 +222,7 @@ export const competition = [
     key: 'tags',
     label: '獲得技能Tag',
     type: 'FormSelectTag',
+    defaultValue: [],
     required: false,
     remarks: defineAsyncComponent(() => new Promise((resolve) => {
       resolve({
@@ -225,6 +243,7 @@ export const competition = [
     key: 'description',
     label: '競賽簡介 (500字以內)',
     type: 'FormTextArea',
+    defaultValue: '',
     required: false,
     placeholder: '填寫競賽簡介以便日後方便回想競賽內容'
   },
@@ -232,6 +251,7 @@ export const competition = [
     key: 'feedback',
     label: '競賽收穫及成就 (500字以內)',
     type: 'FormTextArea',
+    defaultValue: '',
     required: false,
     placeholder: '將競賽中所得到的收穫及成就記錄下來吧~'
   },
@@ -239,6 +259,7 @@ export const competition = [
     key: 'link',
     label: '作品和相關證明',
     type: 'FormInputText',
+    defaultValue: '',
     required: false,
     remarks: defineAsyncComponent(() => new Promise((resolve) => {
       resolve({
@@ -260,12 +281,14 @@ export const work = [
     key: 'name',
     label: '公司單位名稱',
     type: 'FormInputText',
+    defaultValue: '',
     required: true,
   },
   {
     key: 'position',
     label: '職位',
     type: 'FormInputText',
+    defaultValue: '',
     required: true,
   },
   {
@@ -278,6 +301,7 @@ export const work = [
     key: 'tags',
     label: '獲得技能Tag',
     type: 'FormSelectTag',
+    defaultValue: [],
     required: false,
     remarks: defineAsyncComponent(() => new Promise((resolve) => {
       resolve({
@@ -298,6 +322,7 @@ export const work = [
     key: 'description',
     label: '實習 / 工作內容 (500字以內)',
     type: 'FormTextArea',
+    defaultValue: '',
     required: false,
     placeholder: '填寫以便日後方便回想實習 / 工作內容'
   },
@@ -305,6 +330,7 @@ export const work = [
     key: 'feedback',
     label: '收穫及成就 (500字以內)',
     type: 'FormTextArea',
+    defaultValue: '',
     required: false,
     placeholder: '將實習 / 工作中所得到的收穫及成就記錄下來吧~'
   },
@@ -312,6 +338,7 @@ export const work = [
     key: 'link',
     label: '相關證明',
     type: 'FormInputText',
+    defaultValue: '',
     required: false,
     remarks: defineAsyncComponent(() => new Promise((resolve) => {
       resolve({
@@ -333,12 +360,14 @@ export const certificate = [
     key: 'name',
     label: '證照/檢定名稱',
     type: 'FormInputText',
+    defaultValue: '',
     required: true,
   },
   {
     key: 'position',
     label: '證照分數或等級',
     type: 'FormInputText',
+    defaultValue: '',
     required: true,
   },
   {
@@ -351,6 +380,7 @@ export const certificate = [
     key: 'tags',
     label: '獲得技能Tag',
     type: 'FormSelectTag',
+    defaultValue: [],
     required: false,
     remarks: defineAsyncComponent(() => new Promise((resolve) => {
       resolve({
@@ -371,6 +401,7 @@ export const certificate = [
     key: 'feedback',
     label: '收穫及成就 (500字以內)',
     type: 'FormTextArea',
+    defaultValue: '',
     required: false,
     placeholder: '將過程中所得到的收穫及成就記錄下來吧~'
   },
@@ -378,6 +409,7 @@ export const certificate = [
     key: 'link',
     label: '相關證明',
     type: 'FormInputText',
+    defaultValue: '',
     required: false,
     remarks: defineAsyncComponent(() => new Promise((resolve) => {
       resolve({
@@ -399,12 +431,14 @@ export const other = [
     key: 'name',
     label: '經歷名稱',
     type: 'FormInputText',
+    defaultValue: '',
     required: true,
   },
   {
     key: 'position',
     label: '經歷職位、成就',
     type: 'FormInputText',
+    defaultValue: '',
     required: true,
   },
   {
@@ -417,6 +451,7 @@ export const other = [
     key: 'tags',
     label: '獲得技能Tag',
     type: 'FormSelectTag',
+    defaultValue: [],
     required: false,
     remarks: defineAsyncComponent(() => new Promise((resolve) => {
       resolve({
@@ -437,6 +472,7 @@ export const other = [
     key: 'description',
     label: '經歷簡介 (500字以內)',
     type: 'FormTextArea',
+    defaultValue: '',
     required: false,
     placeholder: '填寫簡介以便日後方便回想經歷內容'
   },
@@ -444,6 +480,7 @@ export const other = [
     key: 'feedback',
     label: '經歷收穫及成就 (500字以內)',
     type: 'FormTextArea',
+    defaultValue: '',
     required: false,
     placeholder: '將過程中所得到的收穫及成就記錄下來吧~'
   },
@@ -451,6 +488,7 @@ export const other = [
     key: 'link',
     label: '其他連結',
     type: 'FormInputText',
+    defaultValue: '',
     required: false,
     remarks: defineAsyncComponent(() => new Promise((resolve) => {
       resolve({

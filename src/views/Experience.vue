@@ -99,6 +99,7 @@ export default {
       showAddExperienceDialog.value = true
       showButtonBadge.value = false
       localStorage.setItem('add-exp-clicked', 'true')
+      targetExpId.value = null
     }
 
     // ===處理經驗刪除===
