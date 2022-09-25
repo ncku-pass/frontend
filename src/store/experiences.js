@@ -204,6 +204,12 @@ const experiences = {
         }
       }
       return [...tags]
+    },
+    // return undefined if not found
+    experienceByTypeAndId(state) {
+      return (type, id) => {
+        return state.experiences?.[type]?.filter(exp => exp.id === id)?.[0]
+      }
     }
   }
 }

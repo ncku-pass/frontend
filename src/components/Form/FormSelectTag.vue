@@ -49,9 +49,13 @@ import { defaultTagNames } from '@/config'
 import Chips from 'primevue/chips'
 
 const filterUnusedTag = (options, tags) => {
-  return options.filter(opt => {
-    return !tags.some(tag => opt.id === tag.id)
-  })
+  if (!tags) {
+    return []
+  } else {
+    return options.filter(opt => {
+      return !tags.some(tag => opt.id === tag.id)
+    })
+  }
 }
 
 const filterSearchTag = (options, searchText) => {

@@ -22,20 +22,20 @@
       </label>
       <DynamicFormRenderer
         :schema='item'
-        :data='inputData[item.key]'
+        :data='targetExp[item.key]'
         @input='updateData($event)'
       />
     </div>
     <template #footer>
       <Button
-        :disabled='submitStatus.isPending'
+        :disabled='isSubmitPending'
         class='p-button-secondary p-button-outlined'
         @click='onCancelAddExp'
       >
         取消
       </Button>
       <Button
-        :loading='submitStatus.isPending'
+        :loading='isSubmitPending'
         @click='onSubmitExp'
       >
         儲存
@@ -52,12 +52,13 @@ import OverlayPanel from 'primevue/overlaypanel'
 import ConfirmDialog from 'primevue/confirmdialog'
 import { useConfirm } from 'primevue/useconfirm'
 import { useToast } from 'primevue/usetoast'
-import { computed, onBeforeUpdate, reactive, ref } from 'vue'
+import { computed, onBeforeUpdate, ref } from 'vue'
 import { mdiInformation } from '@mdi/js'
 
 import * as formSchema from './experienceSchema'
 import DynamicFormRenderer from '@/components/Form/DynamicFormRenderer'
-import { addExperience, updateExperience } from '@/api/experiences';
+import { addExperience, updateExperience } from '@/api/experiences'
+import { useStore } from 'vuex'
 
 export default {
   name: 'AddExperienceDialog',
@@ -81,43 +82,32 @@ export default {
         return ['course', 'activity', 'competition', 'work', 'certificate', 'other'].includes(value)
       }
     },
-    initValue: {
-      type: Object,
-      default() {
-        return {}
-      }
-    }
+    expId: {
+      type: Number,
+      default: null,
+    },
   },
   emits: ['update:visible'],
   setup(props, context) {
     const showDialog = computed({
       get: () => props.visible,
-      set: (val) => {
-        // closing the dialog
-        if (!val) {
-          submitStatus.isPending = false
-          submitStatus.error = null
-        }
-        context.emit('update:visible', val)
-      }
+      set: (val) => context.emit('update:visible', val)
     })
     const schema = computed(() => formSchema[props.expType])
 
     // === HANDLE DATA CHANGE ===
-    const inputData = computed(() => props.initValue)
+    const store = useStore()
+    const targetExp = computed(() => store.getters['experiences/experienceByTypeAndId'](props.expType, props.expId))
     let isFormDirty = false
 
     const updateData = ({ key, value }) => {
       isFormDirty = true
-      inputData.value[key] = value
+      targetExp.value[key] = value
     }
 
     // === HANDLE SUBMIT ===
     const toast = useToast()
-    const submitStatus = reactive({
-      error: null,
-      isPending: false
-    })
+    const isSubmitPending = ref(false)
 
     const onCancelAddExp = () => {
       if (isFormDirty) {
@@ -128,16 +118,14 @@ export default {
     }
 
     const onSubmitExp = async() => {
-      submitStatus.isPending = true
-      console.log(inputData)
-      console.log(inputData.value)
+      isSubmitPending.value = true
 
       const payload = {
-        ...inputData.value,
-        tags: inputData.value.tags.map(tag => tag.id)
+        ...targetExp.value,
+        tags: targetExp.value.tags.map(tag => tag.id)
       }
       try {
-        if (props.initValue) {
+        if (props.expId) {
           await updateExperience(payload.id, payload)
         } else {
           await addExperience(payload)
@@ -147,10 +135,10 @@ export default {
         showDialog.value = false
 
       } catch (error) {
-        onSubmitExp.error = error
         toast.add({ severity: 'error', summary: '儲存出錯！', detail: '無法儲存經歷，請再次嘗試', life: 10000 })
+
       } finally {
-        onSubmitExp.isPending = false
+        isSubmitPending.value = false
       }
     }
 
@@ -186,8 +174,8 @@ export default {
     return {
       showDialog,
       schema,
-      inputData,
-      submitStatus,
+      targetExp,
+      isSubmitPending,
       onCancelAddExp,
       onSubmitExp,
       updateData,

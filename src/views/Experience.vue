@@ -33,7 +33,7 @@
   <AddExperienceDialog
     v-model:visible='showAddExperienceDialog'
     :exp-type='activeTab'
-    :init-value='experienceToEdit'
+    :exp-id='targetExpId'
   />
   <ViewerModal
     v-if='showViewerModal'
@@ -90,7 +90,6 @@ export default {
     store.dispatch('experiences/initExperiences')
 
     const isPending = computed(() => store.state.experiences.isPending)
-    const experiences = computed(() => store.state.experiences.experiences)
     const classifiedExperiences = computed(() => store.getters['experiences/classifiedExperiences'])
     const getExperiences = () => store.dispatch('experiences/getExperiences')
 
@@ -98,10 +97,8 @@ export default {
     const showAddExperienceDialog = ref(false)
     const handleAddExperience = () => {
       showAddExperienceDialog.value = true
-      experienceToEdit.value = {}
-      localStorage.setItem('add-exp-clicked', 'true')
       showButtonBadge.value = false
-      experienceToEdit.value = null
+      localStorage.setItem('add-exp-clicked', 'true')
     }
 
     // ===處理經驗刪除===
@@ -109,13 +106,11 @@ export default {
       getExperiences()
     }
 
-    // ===點擊編輯的按鈕時，抓出此筆經歷，傳入表單中===
-    const experienceToEdit = ref(null)
-    const handleEditExperience = experienceId => {
+    // === EDIT EXP ===
+    const targetExpId = ref(-1)
+    const handleEditExperience = (expId) => {
+      targetExpId.value = expId
       showAddExperienceDialog.value = true
-      ;[experienceToEdit.value] = experiences.value[props.activeTab].filter(exp => {
-        return exp.id === experienceId
-      })
     }
 
     // === 點擊經歷時，跳出檢視視窗 ===
@@ -162,7 +157,7 @@ export default {
       handleAddExperience,
       handleDelete,
       handleEditExperience,
-      experienceToEdit,
+      targetExpId,
       showViewerModal,
       openViewerModal,
       experienceToShow,
