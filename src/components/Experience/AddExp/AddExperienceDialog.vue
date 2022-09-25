@@ -57,6 +57,7 @@ import { mdiInformation } from '@mdi/js'
 
 import * as formSchema from './experienceSchema'
 import DynamicFormRenderer from '@/components/Form/DynamicFormRenderer'
+import { addExperience, updateExperience } from '@/api/experiences';
 
 export default {
   name: 'AddExperienceDialog',
@@ -91,7 +92,14 @@ export default {
   setup(props, context) {
     const showDialog = computed({
       get: () => props.visible,
-      set: (val) => { context.emit('update:visible', val) }
+      set: (val) => {
+        // closing the dialog
+        if (!val) {
+          submitStatus.isPending = false
+          submitStatus.error = null
+        }
+        context.emit('update:visible', val)
+      }
     })
     const schema = computed(() => formSchema[props.expType])
 
@@ -122,14 +130,17 @@ export default {
     const onSubmitExp = async() => {
       submitStatus.isPending = true
       console.log(inputData)
+      console.log(inputData.value)
 
+      const payload = {
+        ...inputData.value,
+        tags: inputData.value.tags.map(tag => tag.id)
+      }
       try {
         if (props.initValue) {
-          console.log('todo: update')
-          // await updateExperience(formData.id, newFormData)
+          await updateExperience(payload.id, payload)
         } else {
-          console.log('todo: create')
-          // await addExperience(newFormData)
+          await addExperience(payload)
         }
 
         // close the dialog
