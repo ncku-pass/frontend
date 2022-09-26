@@ -96,7 +96,7 @@ export default {
     })
     const schema = computed(() => formSchema[props.expType])
 
-    // === HANDLE DATA CHANGE ===
+    // === INT EXP DATA ===
     const store = useStore()
     const targetExp = computed({
       get: () => {
@@ -108,17 +108,18 @@ export default {
       },
       set: () => {}
     })
-    let isFormDirty = false
-
     const inputData = ref({})
     watch(targetExp, (val) => {
       if (val !== undefined) {
         inputData.value = { ...val }
+        isFormDirty.value = false
       }
     })
 
+    // === HANDLE DATA CHANGE ===
+    const isFormDirty = ref(false)
     const updateData = ({ key, value }) => {
-      isFormDirty = true
+      isFormDirty.value = true
       inputData.value[key] = value
     }
 
@@ -127,7 +128,7 @@ export default {
     const isSubmitPending = ref(false)
 
     const onCancelAddExp = () => {
-      if (isFormDirty) {
+      if (isFormDirty.value) {
         showCloseReminder()
       } else {
         showDialog.value = false
