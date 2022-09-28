@@ -3,6 +3,7 @@
     id='add-exp-dialog'
     v-model:visible='showDialog'
     header='新增經驗'
+    :dismissableMask='true'
     :modal='true'
     :draggable='false'
   >
