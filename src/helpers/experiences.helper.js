@@ -45,7 +45,13 @@ export const generateEmptyExp = (type) => {
   const schema = formSchema[type]
   const emptyExp = {}
   schema.forEach(item => {
-    emptyExp[item.key] = item.defaultValue
+    if (typeof item.inputKey === 'string') {
+      emptyExp[item.inputKey] = item.defaultValue
+    } else {
+      item.inputKey.forEach(key => {
+        emptyExp[key] = item.defaultValue
+      })
+    }
   })
   return emptyExp
 }

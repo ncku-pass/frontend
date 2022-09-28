@@ -3,7 +3,7 @@
     :is='schema.type'
     :init-value='data'
     v-bind='schema'
-    @input='updateData(schema.key, $event)'
+    @input='updateData(schema.inputKey, $event)'
   />
 </template>
 
@@ -14,6 +14,7 @@ import FormTextArea from './FormTextArea'
 import FormMultiSelect from './FormMultiSelect'
 import FormSelect from './FormSelect'
 import FormSelectTag from './FormSelectTag'
+import FormTimeRange from './FormTimeRange'
 
 export default {
   name: 'DynamicFormRenderer',
@@ -24,6 +25,7 @@ export default {
     FormMultiSelect,
     FormSelect,
     FormSelectTag,
+    FormTimeRange,
   },
   props: {
     schema: {
@@ -31,7 +33,7 @@ export default {
       required: true,
     },
     data: {
-      type: [String, Number, Array],
+      type: [String, Number, Array, Object],
       default: ''
     },
   },
@@ -40,7 +42,9 @@ export default {
     const updateData = (key, event) => {
       // some input type return { originalEvent, value }
       const value = typeof event.target?.value === 'undefined' ? event.value : event.target.value
-      emit('input', { key, value })
+      const inputKey = event.subKey ? event.subKey : key
+
+      emit('input', { key: inputKey, value })
     }
 
     return { updateData }

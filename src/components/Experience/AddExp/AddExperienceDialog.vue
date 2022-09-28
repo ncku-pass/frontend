@@ -29,7 +29,7 @@
       </label>
       <DynamicFormRenderer
         :schema='item'
-        :data='inputData[item.key]'
+        :data='typeof item.inputKey === "string" ? inputData[item.inputKey] : inputData'
         @input='updateData($event)'
       />
     </div>

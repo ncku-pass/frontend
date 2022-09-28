@@ -5,19 +5,19 @@ const generateSemesters = () => {
   return [...Array(5).keys()]
     .map((_, i) => [`${year - i}-2`, `${year - i}-1`])
     .flat()
-    .map(sem => { return { key: sem, label: sem } })
+    .map(sem => { return { inputKey: sem, label: sem } })
 }
 
 export const course = [
   {
-    key: 'name',
+    inputKey: 'name',
     label: '課程名稱',
     type: 'FormInputText',
     defaultValue: '',
     required: true
   },
   {
-    key: 'position',
+    inputKey: 'position',
     label: '課程分數',
     type: 'FormInputNumber',
     defaultValue: '',
@@ -36,7 +36,7 @@ export const course = [
     }))
   },
   {
-    key: 'semester',
+    inputKey: 'semester',
     label: '課程時間',
     type: 'FormSelect',
     defaultValue: '',
@@ -44,7 +44,7 @@ export const course = [
     options: generateSemesters()
   },
   {
-    key: 'categories',
+    inputKey: 'categories',
     label: '課程類別',
     type: 'FormMultiSelect',
     defaultValue: [],
@@ -52,7 +52,7 @@ export const course = [
     options: ['必修課程', '選修課程', '通識', '工作坊', '密集課程', '線上課程']
   },
   {
-    key: 'tags',
+    inputKey: 'tags',
     label: '獲得技能Tag',
     type: 'FormSelectTag',
     defaultValue: [],
@@ -73,7 +73,7 @@ export const course = [
     }))
   },
   {
-    key: 'description',
+    inputKey: 'description',
     label: '課程簡介 (500字以內)',
     type: 'FormTextArea',
     defaultValue: '',
@@ -81,7 +81,7 @@ export const course = [
     placeholder: '填寫課程簡介以便日後方便回想課程內容'
   },
   {
-    key: 'feedback',
+    inputKey: 'feedback',
     label: '課程收穫及成就 (500字以內)',
     type: 'FormTextArea',
     defaultValue: '',
@@ -89,7 +89,7 @@ export const course = [
     placeholder: '將課程中所得到的收穫及成就記錄下來，或是寫出課程內容的特色吧'
   },
   {
-    key: 'link',
+    inputKey: 'link',
     label: '作品和相關證明',
     type: 'FormInputText',
     defaultValue: '',
@@ -111,27 +111,28 @@ export const course = [
 
 export const activity = [
   {
-    key: 'name',
+    inputKey: 'name',
     label: '活動名稱',
     type: 'FormInputText',
     defaultValue: '',
     required: true
   },
   {
-    key: 'position',
+    inputKey: 'position',
     label: '活動擔任職位',
     type: 'FormInputText',
     defaultValue: '',
     required: true,
   },
   {
-    key: 'semester',
+    inputKey: ['dateStart', 'dateEnd'],
     label: '活動時間',
-    type: 'range',
+    type: 'FormTimeRange',
+    defaultValue: null,
     required: true
   },
   {
-    key: 'categories',
+    inputKey: 'categories',
     label: '活動類別',
     type: 'FormMultiSelect',
     defaultValue: [],
@@ -139,7 +140,7 @@ export const activity = [
     options: ['社團', '系內活動', '校內活動', '校外活動', '其他']
   },
   {
-    key: 'tags',
+    inputKey: 'tags',
     label: '獲得技能Tag',
     type: 'FormSelectTag',
     defaultValue: [],
@@ -160,7 +161,7 @@ export const activity = [
     }))
   },
   {
-    key: 'description',
+    inputKey: 'description',
     label: '活動簡介 (500字以內)',
     type: 'FormTextArea',
     defaultValue: '',
@@ -168,7 +169,7 @@ export const activity = [
     placeholder: '填寫活動簡介以便日後方便回想活動內容'
   },
   {
-    key: 'feedback',
+    inputKey: 'feedback',
     label: '活動收穫及成就 (500字以內)',
     type: 'FormTextArea',
     defaultValue: '',
@@ -176,7 +177,7 @@ export const activity = [
     placeholder: '將活動中所得到的收穫及成就記錄下來吧～若有辦理相關活動也可紀錄下來唷'
   },
   {
-    key: 'link',
+    inputKey: 'link',
     label: '作品和相關證明',
     type: 'FormInputText',
     defaultValue: '',
@@ -198,7 +199,7 @@ export const activity = [
 
 export const competition = [
   {
-    key: 'name',
+    inputKey: 'name',
     label: '競賽名稱',
     type: 'FormInputText',
     defaultValue: '',
@@ -206,20 +207,21 @@ export const competition = [
     placeholder: '可以填入競賽名稱、組別、獲獎類別（國內/國外）、類型（個人/團體）'
   },
   {
-    key: 'position',
+    inputKey: 'position',
     label: '競賽獲得獎項',
     type: 'FormInputText',
     defaultValue: '',
     required: true,
   },
   {
-    key: 'semester',
+    inputKey: ['dateStart', 'dateEnd'],
     label: '競賽時間',
-    type: 'range',
+    type: 'FormTimeRange',
+    defaultValue: null,
     required: true,
   },
   {
-    key: 'tags',
+    inputKey: 'tags',
     label: '獲得技能Tag',
     type: 'FormSelectTag',
     defaultValue: [],
@@ -240,7 +242,7 @@ export const competition = [
     }))
   },
   {
-    key: 'description',
+    inputKey: 'description',
     label: '競賽簡介 (500字以內)',
     type: 'FormTextArea',
     defaultValue: '',
@@ -248,7 +250,7 @@ export const competition = [
     placeholder: '填寫競賽簡介以便日後方便回想競賽內容'
   },
   {
-    key: 'feedback',
+    inputKey: 'feedback',
     label: '競賽收穫及成就 (500字以內)',
     type: 'FormTextArea',
     defaultValue: '',
@@ -256,7 +258,7 @@ export const competition = [
     placeholder: '將競賽中所得到的收穫及成就記錄下來吧~'
   },
   {
-    key: 'link',
+    inputKey: 'link',
     label: '作品和相關證明',
     type: 'FormInputText',
     defaultValue: '',
@@ -278,27 +280,28 @@ export const competition = [
 
 export const work = [
   {
-    key: 'name',
+    inputKey: 'name',
     label: '公司單位名稱',
     type: 'FormInputText',
     defaultValue: '',
     required: true,
   },
   {
-    key: 'position',
+    inputKey: 'position',
     label: '職位',
     type: 'FormInputText',
     defaultValue: '',
     required: true,
   },
   {
-    key: 'semester',
+    inputKey: ['dateStart', 'dateEnd'],
     label: '實習 / 工作時間',
-    type: 'range',
+    type: 'FormTimeRange',
+    defaultValue: null,
     required: true,
   },
   {
-    key: 'tags',
+    inputKey: 'tags',
     label: '獲得技能Tag',
     type: 'FormSelectTag',
     defaultValue: [],
@@ -319,7 +322,7 @@ export const work = [
     }))
   },
   {
-    key: 'description',
+    inputKey: 'description',
     label: '實習 / 工作內容 (500字以內)',
     type: 'FormTextArea',
     defaultValue: '',
@@ -327,7 +330,7 @@ export const work = [
     placeholder: '填寫以便日後方便回想實習 / 工作內容'
   },
   {
-    key: 'feedback',
+    inputKey: 'feedback',
     label: '收穫及成就 (500字以內)',
     type: 'FormTextArea',
     defaultValue: '',
@@ -335,7 +338,7 @@ export const work = [
     placeholder: '將實習 / 工作中所得到的收穫及成就記錄下來吧~'
   },
   {
-    key: 'link',
+    inputKey: 'link',
     label: '相關證明',
     type: 'FormInputText',
     defaultValue: '',
@@ -357,27 +360,28 @@ export const work = [
 
 export const certificate = [
   {
-    key: 'name',
+    inputKey: 'name',
     label: '證照/檢定名稱',
     type: 'FormInputText',
     defaultValue: '',
     required: true,
   },
   {
-    key: 'position',
+    inputKey: 'position',
     label: '證照分數或等級',
     type: 'FormInputText',
     defaultValue: '',
     required: true,
   },
   {
-    key: 'semester',
+    inputKey: ['dateStart', 'dateEnd'],
     label: '考取時間',
-    type: 'range',
+    type: 'FormTimeRange',
+    defaultValue: null,
     required: true,
   },
   {
-    key: 'tags',
+    inputKey: 'tags',
     label: '獲得技能Tag',
     type: 'FormSelectTag',
     defaultValue: [],
@@ -398,7 +402,7 @@ export const certificate = [
     }))
   },
   {
-    key: 'feedback',
+    inputKey: 'feedback',
     label: '收穫及成就 (500字以內)',
     type: 'FormTextArea',
     defaultValue: '',
@@ -406,7 +410,7 @@ export const certificate = [
     placeholder: '將過程中所得到的收穫及成就記錄下來吧~'
   },
   {
-    key: 'link',
+    inputKey: 'link',
     label: '相關證明',
     type: 'FormInputText',
     defaultValue: '',
@@ -428,27 +432,28 @@ export const certificate = [
 
 export const other = [
   {
-    key: 'name',
+    inputKey: 'name',
     label: '經歷名稱',
     type: 'FormInputText',
     defaultValue: '',
     required: true,
   },
   {
-    key: 'position',
+    inputKey: 'position',
     label: '經歷職位、成就',
     type: 'FormInputText',
     defaultValue: '',
     required: true,
   },
   {
-    key: 'semester',
+    inputKey: ['dateStart', 'dateEnd'],
     label: '時間',
-    type: 'range',
+    type: 'FormTimeRange',
+    defaultValue: null,
     required: true,
   },
   {
-    key: 'tags',
+    inputKey: 'tags',
     label: '獲得技能Tag',
     type: 'FormSelectTag',
     defaultValue: [],
@@ -469,7 +474,7 @@ export const other = [
     }))
   },
   {
-    key: 'description',
+    inputKey: 'description',
     label: '經歷簡介 (500字以內)',
     type: 'FormTextArea',
     defaultValue: '',
@@ -477,7 +482,7 @@ export const other = [
     placeholder: '填寫簡介以便日後方便回想經歷內容'
   },
   {
-    key: 'feedback',
+    inputKey: 'feedback',
     label: '經歷收穫及成就 (500字以內)',
     type: 'FormTextArea',
     defaultValue: '',
@@ -485,7 +490,7 @@ export const other = [
     placeholder: '將過程中所得到的收穫及成就記錄下來吧~'
   },
   {
-    key: 'link',
+    inputKey: 'link',
     label: '其他連結',
     type: 'FormInputText',
     defaultValue: '',
