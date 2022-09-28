@@ -692,6 +692,21 @@
 .p-dialog .p-dialog-header .p-dialog-header-icon:focus {
   box-shadow: 0 0 0 0.2rem #fbebed;
 }
+.p-dialog.p-confirm-dialog {
+  .p-dialog-header {
+    padding: 1.5rem 2rem;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+  }
+  .p-dialog-content {
+    padding: 0 2.5rem 2rem 2.5rem
+  }
+  .p-dialog-footer {
+    padding: 0 2rem 1.5rem 2rem;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+  }
+}
 .p-overlaypanel .p-overlaypanel-close {
   background: $red-5;
   color: #ffffff;
