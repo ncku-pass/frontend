@@ -99,22 +99,22 @@ export default {
     const showDialog = computed({
       get: () => props.visible,
       set: (val) => {
-        // should only set to false
+        // should only set to false, for dialog-controlled cancel close
         if (!val) {
           if (isFormDirty.value) {
             showDialog.value = true
             showCloseReminder()
           } else {
-            closeDialog()
+            closeDialog(false)
           }
         }
       }
     })
     const schema = computed(() => formSchema[props.expType])
 
-    const closeDialog = () => {
+    const closeDialog = (needRefresh) => {
       isFormDirty.value = false
-      emit('close-dialog')
+      emit('close-dialog', needRefresh)
     }
 
     // === INT EXP DATA ===
@@ -161,7 +161,7 @@ export default {
           await addExperience(payload)
         }
 
-        closeDialog()
+        closeDialog(true)
 
       } catch (error) {
         toast.add({ severity: 'error', summary: '儲存出錯！', detail: '無法儲存經歷，請再次嘗試', life: 10000 })
@@ -181,7 +181,7 @@ export default {
         acceptLabel: '確定離開',
         rejectLabel: '留下',
         accept: () => {
-          closeDialog()
+          closeDialog(false)
         },
       })
     }

@@ -114,9 +114,13 @@ export default {
       targetExpId.value = expId
       showAddExperienceDialog.value = true
     }
-    const onCloseAddExpDialog = () => {
+    const onCloseAddExpDialog = (submitClose) => {
       targetExpId.value = null
       showAddExperienceDialog.value = false
+
+      if (submitClose) {
+        getExperiences()
+      }
     }
 
     // === 點擊經歷時，跳出檢視視窗 ===
