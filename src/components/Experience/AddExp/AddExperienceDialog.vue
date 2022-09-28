@@ -1,5 +1,11 @@
 <template>
-  <Dialog id='add-exp-dialog' v-model:visible='showDialog' header='新增經驗'>
+  <Dialog
+    id='add-exp-dialog'
+    v-model:visible='showDialog'
+    header='新增經驗'
+    :modal='true'
+    :draggable='false'
+  >
     <div v-for='(item, i) in schema' :key='item.key'>
       <label :class='{ "required": item.required }'>
         {{ item.label }}
@@ -30,7 +36,7 @@
       <Button
         :disabled='isSubmitPending'
         class='p-button-secondary p-button-outlined'
-        @click='onCancelAddExp'
+        @click='showDialog = false'
       >
         取消
       </Button>
@@ -88,13 +94,28 @@ export default {
       default: null,
     },
   },
-  emits: ['update:visible'],
-  setup(props, context) {
+  emits: ['close-dialog'],
+  setup(props, { emit }) {
     const showDialog = computed({
       get: () => props.visible,
-      set: (val) => context.emit('update:visible', val)
+      set: (val) => {
+        // should only set to false
+        if (!val) {
+          if (isFormDirty.value) {
+            showDialog.value = true
+            showCloseReminder()
+          } else {
+            closeDialog()
+          }
+        }
+      }
     })
     const schema = computed(() => formSchema[props.expType])
+
+    const closeDialog = () => {
+      isFormDirty.value = false
+      emit('close-dialog')
+    }
 
     // === INT EXP DATA ===
     const store = useStore()
@@ -112,7 +133,6 @@ export default {
     watch(targetExp, (val) => {
       if (val !== undefined) {
         inputData.value = { ...val }
-        isFormDirty.value = false
       }
     })
 
@@ -126,14 +146,6 @@ export default {
     // === HANDLE SUBMIT ===
     const toast = useToast()
     const isSubmitPending = ref(false)
-
-    const onCancelAddExp = () => {
-      if (isFormDirty.value) {
-        showCloseReminder()
-      } else {
-        showDialog.value = false
-      }
-    }
 
     const onSubmitExp = async() => {
       isSubmitPending.value = true
@@ -149,8 +161,7 @@ export default {
           await addExperience(payload)
         }
 
-        // close the dialog
-        showDialog.value = false
+        closeDialog()
 
       } catch (error) {
         toast.add({ severity: 'error', summary: '儲存出錯！', detail: '無法儲存經歷，請再次嘗試', life: 10000 })
@@ -170,7 +181,7 @@ export default {
         acceptLabel: '確定離開',
         rejectLabel: '留下',
         accept: () => {
-          showDialog.value = false
+          closeDialog()
         },
       })
     }
@@ -194,7 +205,6 @@ export default {
       schema,
       inputData,
       isSubmitPending,
-      onCancelAddExp,
       onSubmitExp,
       updateData,
       overlayPanelRefs,

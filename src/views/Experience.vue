@@ -31,9 +31,10 @@
     />
   </div>
   <AddExperienceDialog
-    v-model:visible='showAddExperienceDialog'
+    :visible='showAddExperienceDialog'
     :exp-type='activeTab'
     :exp-id='targetExpId'
+    @close-dialog='onCloseAddExpDialog'
   />
   <ViewerModal
     v-if='showViewerModal'
@@ -113,6 +114,10 @@ export default {
       targetExpId.value = expId
       showAddExperienceDialog.value = true
     }
+    const onCloseAddExpDialog = () => {
+      targetExpId.value = null
+      showAddExperienceDialog.value = false
+    }
 
     // === 點擊經歷時，跳出檢視視窗 ===
     const showViewerModal = ref(false)
@@ -157,6 +162,7 @@ export default {
       showAddExperienceDialog,
       handleAddExperience,
       handleDelete,
+      onCloseAddExpDialog,
       handleEditExperience,
       targetExpId,
       showViewerModal,
