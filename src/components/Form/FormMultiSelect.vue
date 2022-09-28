@@ -1,10 +1,12 @@
 <template>
   <!-- eslint-disable vue/no-mutating-props -->
   <MultiSelect
+    ref='multiSelectRef'
     v-model='value'
     :options='options'
     display='chip'
-    @change='$emit("input", $event)'
+    @change='onValueChange'
+    @show='checkNeedShowPanel'
   />
 </template>
 
@@ -28,9 +30,29 @@ export default {
     }
   },
   emits: ['input'],
-  setup(props) {
+  setup(props, { emit }) {
     const value = ref(props.initValue)
-    return { value }
+    const multiSelectRef = ref(null)
+    const isDeleteItem = ref(false)
+
+    const checkNeedShowPanel = () => {
+      if (isDeleteItem.value) {
+        multiSelectRef.value.hide()
+        isDeleteItem.value = false
+      }
+    }
+
+    const onValueChange = (evt) => {
+      isDeleteItem.value = props.initValue?.length > evt.value?.length
+      emit('input', evt)
+    }
+
+    return {
+      value,
+      multiSelectRef,
+      checkNeedShowPanel,
+      onValueChange,
+    }
   },
 }
 </script>
