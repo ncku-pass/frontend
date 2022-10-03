@@ -55,3 +55,25 @@ export const generateEmptyExp = (type) => {
   })
   return emptyExp
 }
+
+export const generateExpValidationRules = (type) => {
+  const schema = formSchema[type]
+  const emptyRules = {}
+
+  schema.forEach(item => {
+    if (typeof item.inputKey === 'string') {
+      if (item.validations) {
+        emptyRules[item.inputKey] = item.validations
+      }
+    } else {
+      for (let i = 0; i < item.inputKey.length; i++) {
+        if (item.validations[i]) {
+          emptyRules[item.inputKey[i]] = item.validations[i]
+        }
+      }
+    }
+  })
+
+  console.log(emptyRules)
+  return emptyRules
+}

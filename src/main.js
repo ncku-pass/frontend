@@ -9,7 +9,6 @@ import { Vue3Mq } from 'vue3-mq'
 import Toast from 'vue-toastification'
 
 // styles
-import '@vueform/multiselect/themes/default.css'
 import 'vue-toastification/dist/index.css'
 import '@/scss/index.scss'
 

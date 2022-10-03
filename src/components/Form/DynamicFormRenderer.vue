@@ -2,6 +2,7 @@
   <component
     :is='schema.type'
     :init-value='data'
+    :validate-state='validateState'
     v-bind='schema'
     @input='updateData(schema.inputKey, $event)'
   />
@@ -34,7 +35,11 @@ export default {
     },
     data: {
       type: [String, Number, Array, Object],
-      default: ''
+      default: '',
+    },
+    validateState: {
+      type: Object,
+      default: undefined,
     },
   },
   emits: ['input'],

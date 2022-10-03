@@ -1,4 +1,5 @@
 import { defineAsyncComponent } from 'vue'
+import { required } from '@vuelidate/validators'
 
 const generateSemesters = () => {
   const year = new Date().getFullYear() - 1911
@@ -14,13 +15,15 @@ export const course = [
     label: '課程名稱',
     type: 'FormInputText',
     defaultValue: '',
-    required: true
+    validations: { required },
+    required: true,
   },
   {
     inputKey: 'position',
     label: '課程分數',
     type: 'FormInputNumber',
     defaultValue: '',
+    validations: null,
     required: false,
     remarks: defineAsyncComponent(() => new Promise((resolve) => {
       resolve({
@@ -40,6 +43,7 @@ export const course = [
     label: '課程時間',
     type: 'FormSelect',
     defaultValue: '',
+    validations: { required },
     required: true,
     options: generateSemesters()
   },
@@ -48,6 +52,7 @@ export const course = [
     label: '課程類別',
     type: 'FormMultiSelect',
     defaultValue: [],
+    validations: null,
     required: false,
     options: ['必修課程', '選修課程', '通識', '工作坊', '密集課程', '線上課程']
   },
@@ -56,6 +61,7 @@ export const course = [
     label: '獲得技能Tag',
     type: 'FormSelectTag',
     defaultValue: [],
+    validations: null,
     required: false,
     remarks: defineAsyncComponent(() => new Promise((resolve) => {
       resolve({
@@ -77,6 +83,7 @@ export const course = [
     label: '課程簡介 (500字以內)',
     type: 'FormTextArea',
     defaultValue: '',
+    validations: null,
     required: false,
     placeholder: '填寫課程簡介以便日後方便回想課程內容'
   },
@@ -85,6 +92,7 @@ export const course = [
     label: '課程收穫及成就 (500字以內)',
     type: 'FormTextArea',
     defaultValue: '',
+    validations: null,
     required: false,
     placeholder: '將課程中所得到的收穫及成就記錄下來，或是寫出課程內容的特色吧'
   },
@@ -93,6 +101,7 @@ export const course = [
     label: '作品和相關證明',
     type: 'FormInputText',
     defaultValue: '',
+    validations: null,
     required: false,
     remarks: defineAsyncComponent(() => new Promise((resolve) => {
       resolve({
@@ -115,13 +124,15 @@ export const activity = [
     label: '活動名稱',
     type: 'FormInputText',
     defaultValue: '',
-    required: true
+    validations: { required },
+    required: true,
   },
   {
     inputKey: 'position',
     label: '活動擔任職位',
     type: 'FormInputText',
     defaultValue: '',
+    validations: { required },
     required: true,
   },
   {
@@ -129,13 +140,15 @@ export const activity = [
     label: '活動時間',
     type: 'FormTimeRange',
     defaultValue: null,
-    required: true
+    validations: [{ required }, null],
+    required: true,
   },
   {
     inputKey: 'categories',
     label: '活動類別',
     type: 'FormMultiSelect',
     defaultValue: [],
+    validations: null,
     required: false,
     options: ['社團', '系內活動', '校內活動', '校外活動', '其他']
   },
@@ -144,6 +157,7 @@ export const activity = [
     label: '獲得技能Tag',
     type: 'FormSelectTag',
     defaultValue: [],
+    validations: null,
     required: false,
     remarks: defineAsyncComponent(() => new Promise((resolve) => {
       resolve({
@@ -165,6 +179,7 @@ export const activity = [
     label: '活動簡介 (500字以內)',
     type: 'FormTextArea',
     defaultValue: '',
+    validations: null,
     required: false,
     placeholder: '填寫活動簡介以便日後方便回想活動內容'
   },
@@ -173,6 +188,7 @@ export const activity = [
     label: '活動收穫及成就 (500字以內)',
     type: 'FormTextArea',
     defaultValue: '',
+    validations: null,
     required: false,
     placeholder: '將活動中所得到的收穫及成就記錄下來吧～若有辦理相關活動也可紀錄下來唷'
   },
@@ -181,6 +197,7 @@ export const activity = [
     label: '作品和相關證明',
     type: 'FormInputText',
     defaultValue: '',
+    validations: null,
     required: false,
     remarks: defineAsyncComponent(() => new Promise((resolve) => {
       resolve({
@@ -203,6 +220,7 @@ export const competition = [
     label: '競賽名稱',
     type: 'FormInputText',
     defaultValue: '',
+    validations: { required },
     required: true,
     placeholder: '可以填入競賽名稱、組別、獲獎類別（國內/國外）、類型（個人/團體）'
   },
@@ -211,6 +229,7 @@ export const competition = [
     label: '競賽獲得獎項',
     type: 'FormInputText',
     defaultValue: '',
+    validations: { required },
     required: true,
   },
   {
@@ -218,6 +237,7 @@ export const competition = [
     label: '競賽時間',
     type: 'FormTimeRange',
     defaultValue: null,
+    validations: [{ required }, null],
     required: true,
   },
   {
@@ -225,6 +245,7 @@ export const competition = [
     label: '獲得技能Tag',
     type: 'FormSelectTag',
     defaultValue: [],
+    validations: null,
     required: false,
     remarks: defineAsyncComponent(() => new Promise((resolve) => {
       resolve({
@@ -246,6 +267,7 @@ export const competition = [
     label: '競賽簡介 (500字以內)',
     type: 'FormTextArea',
     defaultValue: '',
+    validations: null,
     required: false,
     placeholder: '填寫競賽簡介以便日後方便回想競賽內容'
   },
@@ -254,6 +276,7 @@ export const competition = [
     label: '競賽收穫及成就 (500字以內)',
     type: 'FormTextArea',
     defaultValue: '',
+    validations: null,
     required: false,
     placeholder: '將競賽中所得到的收穫及成就記錄下來吧~'
   },
@@ -262,6 +285,7 @@ export const competition = [
     label: '作品和相關證明',
     type: 'FormInputText',
     defaultValue: '',
+    validations: null,
     required: false,
     remarks: defineAsyncComponent(() => new Promise((resolve) => {
       resolve({
@@ -284,6 +308,7 @@ export const work = [
     label: '公司單位名稱',
     type: 'FormInputText',
     defaultValue: '',
+    validations: { required },
     required: true,
   },
   {
@@ -291,6 +316,7 @@ export const work = [
     label: '職位',
     type: 'FormInputText',
     defaultValue: '',
+    validations: { required },
     required: true,
   },
   {
@@ -298,6 +324,7 @@ export const work = [
     label: '實習 / 工作時間',
     type: 'FormTimeRange',
     defaultValue: null,
+    validations: [{ required }, null],
     required: true,
   },
   {
@@ -305,6 +332,7 @@ export const work = [
     label: '獲得技能Tag',
     type: 'FormSelectTag',
     defaultValue: [],
+    validations: null,
     required: false,
     remarks: defineAsyncComponent(() => new Promise((resolve) => {
       resolve({
@@ -326,6 +354,7 @@ export const work = [
     label: '實習 / 工作內容 (500字以內)',
     type: 'FormTextArea',
     defaultValue: '',
+    validations: null,
     required: false,
     placeholder: '填寫以便日後方便回想實習 / 工作內容'
   },
@@ -334,6 +363,7 @@ export const work = [
     label: '收穫及成就 (500字以內)',
     type: 'FormTextArea',
     defaultValue: '',
+    validations: null,
     required: false,
     placeholder: '將實習 / 工作中所得到的收穫及成就記錄下來吧~'
   },
@@ -342,6 +372,7 @@ export const work = [
     label: '相關證明',
     type: 'FormInputText',
     defaultValue: '',
+    validations: null,
     required: false,
     remarks: defineAsyncComponent(() => new Promise((resolve) => {
       resolve({
@@ -364,6 +395,7 @@ export const certificate = [
     label: '證照/檢定名稱',
     type: 'FormInputText',
     defaultValue: '',
+    validations: { required },
     required: true,
   },
   {
@@ -371,6 +403,7 @@ export const certificate = [
     label: '證照分數或等級',
     type: 'FormInputText',
     defaultValue: '',
+    validations: { required },
     required: true,
   },
   {
@@ -378,6 +411,7 @@ export const certificate = [
     label: '考取時間',
     type: 'FormTimeRange',
     defaultValue: null,
+    validations: [{ required }, null],
     required: true,
   },
   {
@@ -385,6 +419,7 @@ export const certificate = [
     label: '獲得技能Tag',
     type: 'FormSelectTag',
     defaultValue: [],
+    validations: null,
     required: false,
     remarks: defineAsyncComponent(() => new Promise((resolve) => {
       resolve({
@@ -406,6 +441,7 @@ export const certificate = [
     label: '收穫及成就 (500字以內)',
     type: 'FormTextArea',
     defaultValue: '',
+    validations: null,
     required: false,
     placeholder: '將過程中所得到的收穫及成就記錄下來吧~'
   },
@@ -414,6 +450,7 @@ export const certificate = [
     label: '相關證明',
     type: 'FormInputText',
     defaultValue: '',
+    validations: null,
     required: false,
     remarks: defineAsyncComponent(() => new Promise((resolve) => {
       resolve({
@@ -436,6 +473,7 @@ export const other = [
     label: '經歷名稱',
     type: 'FormInputText',
     defaultValue: '',
+    validations: { required },
     required: true,
   },
   {
@@ -443,6 +481,7 @@ export const other = [
     label: '經歷職位、成就',
     type: 'FormInputText',
     defaultValue: '',
+    validations: { required },
     required: true,
   },
   {
@@ -450,6 +489,7 @@ export const other = [
     label: '時間',
     type: 'FormTimeRange',
     defaultValue: null,
+    validations: [{ required }, null],
     required: true,
   },
   {
@@ -457,6 +497,7 @@ export const other = [
     label: '獲得技能Tag',
     type: 'FormSelectTag',
     defaultValue: [],
+    validations: null,
     required: false,
     remarks: defineAsyncComponent(() => new Promise((resolve) => {
       resolve({
@@ -478,6 +519,7 @@ export const other = [
     label: '經歷簡介 (500字以內)',
     type: 'FormTextArea',
     defaultValue: '',
+    validations: null,
     required: false,
     placeholder: '填寫簡介以便日後方便回想經歷內容'
   },
@@ -486,6 +528,7 @@ export const other = [
     label: '經歷收穫及成就 (500字以內)',
     type: 'FormTextArea',
     defaultValue: '',
+    validations: null,
     required: false,
     placeholder: '將過程中所得到的收穫及成就記錄下來吧~'
   },
@@ -494,6 +537,7 @@ export const other = [
     label: '其他連結',
     type: 'FormInputText',
     defaultValue: '',
+    validations: null,
     required: false,
     remarks: defineAsyncComponent(() => new Promise((resolve) => {
       resolve({

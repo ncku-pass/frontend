@@ -30,19 +30,21 @@
       <DynamicFormRenderer
         :schema='item'
         :data='typeof item.inputKey === "string" ? inputData[item.inputKey] : inputData'
+        :validate-state='v$[item.inputKey]'
         @input='updateData($event)'
       />
     </div>
     <template #footer>
       <Button
-        :disabled='isSubmitPending'
+        :disabled='isSubmitLoading'
         class='p-button-secondary p-button-outlined'
         @click='showDialog = false'
       >
         取消
       </Button>
       <Button
-        :loading='isSubmitPending'
+        :disabled='v$.$invalid'
+        :loading='isSubmitLoading'
         @click='onSubmitExp'
       >
         儲存
@@ -66,7 +68,8 @@ import * as formSchema from './experienceSchema'
 import DynamicFormRenderer from '@/components/Form/DynamicFormRenderer'
 import { addExperience, updateExperience } from '@/api/experiences'
 import { useStore } from 'vuex'
-import { generateEmptyExp } from '@/helpers/experiences.helper'
+import { generateEmptyExp, generateExpValidationRules } from '@/helpers/experiences.helper';
+import useVuelidate from '@vuelidate/core';
 
 export default {
   name: 'AddExperienceDialog',
@@ -146,10 +149,13 @@ export default {
 
     // === HANDLE SUBMIT ===
     const toast = useToast()
-    const isSubmitPending = ref(false)
+    const isSubmitLoading = ref(false)
 
     const onSubmitExp = async() => {
-      isSubmitPending.value = true
+      if (v$.value.$invalid) {
+        return
+      }
+      isSubmitLoading.value = true
 
       const payload = {
         ...inputData.value,
@@ -168,7 +174,7 @@ export default {
         toast.add({ severity: 'error', summary: '儲存出錯！', detail: '無法儲存經歷，請再次嘗試', life: 10000 })
 
       } finally {
-        isSubmitPending.value = false
+        isSubmitLoading.value = false
       }
     }
 
@@ -201,15 +207,20 @@ export default {
       }, 5000)
     }
 
+    // FORM VALIDATION
+    const rules = generateExpValidationRules(props.expType)
+    const v$ = useVuelidate(rules, inputData)
+
     return {
       showDialog,
       schema,
       inputData,
-      isSubmitPending,
+      isSubmitLoading,
       onSubmitExp,
       updateData,
       overlayPanelRefs,
       toggleRemarkPanel,
+      v$,
     }
   }
 }
