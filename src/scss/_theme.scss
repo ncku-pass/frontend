@@ -25,7 +25,7 @@
   color: $grey-4;
 }
 .p-datepicker table td > span:focus {
-  box-shadow: 0 0 0 0.2rem #fbebed;
+  box-shadow: 0 0 0 0.2rem $grey-2;
 }
 .p-datepicker table td.p-datepicker-today > span {
   background: #ced4da;
@@ -56,26 +56,26 @@
   background: #e9ecef;
 }
 .p-datepicker .p-timepicker button:focus {
-  box-shadow: 0 0 0 0.2rem #fbebed;
+  box-shadow: 0 0 0 0.2rem $grey-2;
 }
 .p-datepicker.p-datepicker-multiple-month .p-datepicker-group {
   border-left: 1px solid #dee2e6;
 }
 .p-datepicker:not(.p-disabled) table td span:not(.p-highlight):not(.p-disabled):focus {
-  box-shadow: 0 0 0 0.2rem #fbebed;
+  box-shadow: 0 0 0 0.2rem $grey-2;
 }
 .p-datepicker:not(.p-disabled) .p-monthpicker .p-monthpicker-month:not(.p-disabled):focus {
-  box-shadow: 0 0 0 0.2rem #fbebed;
+  box-shadow: 0 0 0 0.2rem $grey-2;
 }
 .p-datepicker:not(.p-disabled) .p-yearpicker .p-yearpicker-year:not(.p-disabled):focus {
-  box-shadow: 0 0 0 0.2rem #fbebed;
+  box-shadow: 0 0 0 0.2rem $grey-2;
 }
 
 .p-cascadeselect:not(.p-disabled):hover {
   border-color: $grey-4;
 }
 .p-cascadeselect:not(.p-disabled).p-focus {
-  box-shadow: 0 0 0 0.2rem #fbebed;
+  box-shadow: 0 0 0 0.2rem $grey-2;
   border-color: $grey-4;
 }
 .p-cascadeselect-panel .p-cascadeselect-items .p-cascadeselect-item .p-cascadeselect-item-content:focus {
@@ -109,7 +109,7 @@
   border-color: $grey-4;
 }
 .p-chips .p-chips-multiple-container:not(.p-disabled).p-focus {
-  box-shadow: 0 0 0 0.2rem #fbebed;
+  box-shadow: 0 0 0 0.2rem $grey-2;
   border-color: $grey-4;
 }
 .p-chips:not(.p-disabled).p-focus .p-chips-multiple-container {
@@ -152,7 +152,7 @@
 }
 
 .p-inputswitch.p-focus .p-inputswitch-slider {
-  box-shadow: 0 0 0 0.2rem #fbebed;
+  box-shadow: 0 0 0 0.2rem $grey-2;
 }
 .p-inputswitch.p-inputswitch-checked .p-inputswitch-slider {
   background: $red-5;
@@ -176,7 +176,7 @@
 }
 
 .p-listbox .p-listbox-list .p-listbox-item:focus {
-  box-shadow: inset 0 0 0 0.15rem #fbebed;
+  box-shadow: inset 0 0 0 0.15rem $grey-2;
 }
 
 .p-multiselect, .p-treeselect {
@@ -263,7 +263,7 @@
   border-color: $grey-4;
 }
 .p-treeselect:not(.p-disabled).p-focus {
-  box-shadow: 0 0 0 0.2rem #fbebed;
+  box-shadow: 0 0 0 0.2rem $grey-2;
   border-color: $grey-4;
 }
 
@@ -634,10 +634,10 @@
 }
 
 .p-tree .p-tree-container .p-treenode .p-treenode-content .p-tree-toggler:focus {
-  box-shadow: 0 0 0 0.2rem #fbebed;
+  box-shadow: 0 0 0 0.2rem $grey-2;
 }
 .p-tree .p-tree-container .p-treenode .p-treenode-content:focus {
-  box-shadow: inset 0 0 0 0.15rem #fbebed;
+  box-shadow: inset 0 0 0 0.15rem $grey-2;
 }
 
 .p-treetable .p-sortable-column {
@@ -690,7 +690,7 @@
 }
 
 .p-dialog .p-dialog-header .p-dialog-header-icon:focus {
-  box-shadow: 0 0 0 0.2rem #fbebed;
+  box-shadow: 0 0 0 0.2rem $grey-2;
 }
 .p-dialog.p-confirm-dialog {
   .p-dialog-header {
