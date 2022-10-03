@@ -98,9 +98,11 @@ export default {
     const showAddExperienceDialog = ref(false)
     const handleAddExperience = () => {
       showAddExperienceDialog.value = true
+      targetExpId.value = null
+
+      // small circle on add exp btn
       showButtonBadge.value = false
       localStorage.setItem('add-exp-clicked', 'true')
-      targetExpId.value = null
     }
 
     // ===處理經驗刪除===

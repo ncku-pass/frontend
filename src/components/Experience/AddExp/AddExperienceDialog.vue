@@ -30,7 +30,7 @@
       <DynamicFormRenderer
         :schema='item'
         :data='typeof item.inputKey === "string" ? inputData[item.inputKey] : inputData'
-        :validate-state='v$[item.inputKey]'
+        :validate-state='isShowErrorMessage ? v$[item.inputKey] : undefined'
         @input='updateData($event)'
       />
     </div>
@@ -43,7 +43,6 @@
         取消
       </Button>
       <Button
-        :disabled='v$.$invalid'
         :loading='isSubmitLoading'
         @click='onSubmitExp'
       >
@@ -118,6 +117,8 @@ export default {
 
     const closeDialog = (needRefresh) => {
       isFormDirty.value = false
+      inputData.value = {}
+      isShowErrorMessage.value = false
       emit('close-dialog', needRefresh)
     }
 
@@ -138,6 +139,7 @@ export default {
       if (val !== undefined) {
         inputData.value = { ...val }
       }
+      isShowErrorMessage.value = !!props.expId
     })
 
     // === HANDLE DATA CHANGE ===
@@ -149,10 +151,12 @@ export default {
 
     // === HANDLE SUBMIT ===
     const toast = useToast()
-    const isSubmitLoading = ref(false)
+    const isSubmitLoading = ref(false) // control button status
+    const isShowErrorMessage = ref(false) // control if to show error message
 
     const onSubmitExp = async() => {
       if (v$.value.$invalid) {
+        isShowErrorMessage.value = true
         return
       }
       isSubmitLoading.value = true
@@ -216,6 +220,7 @@ export default {
       schema,
       inputData,
       isSubmitLoading,
+      isShowErrorMessage,
       onSubmitExp,
       updateData,
       overlayPanelRefs,

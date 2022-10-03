@@ -1,14 +1,4 @@
 <template>
-  <!--  <div v-for='(key, idx) in inputKey' :key='key'>-->
-  <!--    <label :for='key'> {{ subLabels[idx] }} </label>-->
-  <!--    <Calendar-->
-  <!--      v-model='value[idx]'-->
-  <!--      :inputId='key'-->
-  <!--      dateFormat='dd/mm/yy'-->
-  <!--      placeholder='dd/mm/yyyy'-->
-  <!--      :showIcon='true'-->
-  <!--      :manualInput='false'-->
-  <!--    />-->
   <div>
     <Calendar
       v-model='value'

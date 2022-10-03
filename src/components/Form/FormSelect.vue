@@ -1,13 +1,18 @@
 <template>
   <!-- eslint-disable vue/no-mutating-props -->
-  <TreeSelect
-    v-model='value'
-    :styleClass='`no-btn`'
-    :options='options'
-    display='chip'
-    selectionMode='single'
-    @change='onChange($event)'
-  />
+  <div>
+    <TreeSelect
+      v-model='value'
+      :class='{ "p-invalid": validateState?.$invalid }'
+      :options='options'
+      display='chip'
+      selectionMode='single'
+      @change='onChange($event)'
+    />
+    <small v-if='validateState?.$invalid' class='p-error'>
+      {{ validateState?.required.$message.replace('Value', label) }}
+    </small>
+  </div>
 </template>
 
 <script>
@@ -18,6 +23,10 @@ export default {
   name: 'FormSelect',
   components: { TreeSelect },
   props: {
+    label: {
+      type: String,
+      required: true,
+    },
     initValue: {
       type: String,
       default: ''
@@ -25,7 +34,11 @@ export default {
     options: {
       type: Array,
       required: true,
-    }
+    },
+    validateState: {
+      type: Object,
+      default: undefined,
+    },
   },
   emits: ['input'],
   setup(props, { emit }) {
