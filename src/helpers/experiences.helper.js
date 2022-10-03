@@ -74,6 +74,5 @@ export const generateExpValidationRules = (type) => {
     }
   })
 
-  console.log(emptyRules)
   return emptyRules
 }

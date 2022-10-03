@@ -6,7 +6,7 @@ const generateSemesters = () => {
   return [...Array(5).keys()]
     .map((_, i) => [`${year - i}-2`, `${year - i}-1`])
     .flat()
-    .map(sem => { return { inputKey: sem, label: sem } })
+    .map(sem => { return { key: sem, label: sem } })
 }
 
 export const course = [

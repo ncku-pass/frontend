@@ -68,8 +68,8 @@ import * as formSchema from './experienceSchema'
 import DynamicFormRenderer from '@/components/Form/DynamicFormRenderer'
 import { addExperience, updateExperience } from '@/api/experiences'
 import { useStore } from 'vuex'
-import { generateEmptyExp, generateExpValidationRules } from '@/helpers/experiences.helper';
-import useVuelidate from '@vuelidate/core';
+import { generateEmptyExp, generateExpValidationRules } from '@/helpers/experiences.helper'
+import useVuelidate from '@vuelidate/core'
 
 export default {
   name: 'AddExperienceDialog',

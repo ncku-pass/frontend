@@ -1,14 +1,16 @@
 <template>
   <!-- eslint-disable vue/no-mutating-props -->
-  <InputText
-    v-model='value'
-    type='text'
-    :class='{ "p-invalid": validateState?.$invalid }'
-    @input='$emit("input", $event)'
-  />
-  <small v-if='validateState?.$invalid' class='p-error'>
-    {{ validateState?.required.$message.replace('Value', label) }}
-  </small>
+  <div>
+    <InputText
+      v-model='value'
+      type='text'
+      :class='{ "p-invalid": validateState?.$invalid }'
+      @input='$emit("input", $event)'
+    />
+    <small v-if='validateState?.$invalid' class='p-error'>
+      {{ validateState?.required.$message.replace('Value', label) }}
+    </small>
+  </div>
 </template>
 
 <script>
@@ -37,7 +39,7 @@ export default {
     const value = ref(props.initValue)
     return { value }
   },
-} 
+}
 </script>
 
 <style lang='scss' scoped>

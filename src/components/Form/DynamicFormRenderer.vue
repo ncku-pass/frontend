@@ -39,7 +39,11 @@ export default {
     },
     validateState: {
       type: Object,
-      default: undefined,
+      default() {
+        return {
+          validations: null
+        }
+      },
     },
   },
   emits: ['input'],
