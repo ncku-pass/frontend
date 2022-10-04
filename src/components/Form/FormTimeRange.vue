@@ -33,7 +33,10 @@ export default {
   },
   emits: ['input'],
   setup(props, { emit }) {
-    const value = ref(props.inputKey.map((key) => props.initValue[key] === null ? null : new Date(props.initValue[key])))
+    // return null if every element is null, or else wrap with new Date() if has value
+    const value = ref(props.inputKey.every((key) => !props.initValue[key])
+      ? null
+      : props.inputKey.map((key) => props.initValue[key] === null ? null : new Date(props.initValue[key])))
 
     const onDateSelect = (val) => {
       const idx = value.value.findIndex((item) => item === val)
