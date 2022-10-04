@@ -99,10 +99,15 @@ export default {
   },
   emits: ['close-dialog'],
   setup(props, { emit }) {
+    const store = useStore()
+    const schema = computed(() => formSchema[props.expType])
+
+    // === INIT AND CLEAN UP ===
+    const inputData = ref({})
+
     const showDialog = computed({
       get: () => props.visible,
       set: (val) => {
-        // should only set to false, for dialog-controlled cancel close
         if (!val) {
           if (isFormDirty.value) {
             showDialog.value = true
@@ -113,7 +118,22 @@ export default {
         }
       }
     })
-    const schema = computed(() => formSchema[props.expType])
+    watch(showDialog, (val) => {
+      if (val && !isFormDirty.value) {
+        // create exp
+        if (!props.expId) {
+          inputData.value = generateEmptyExp(props.expType)
+
+        // edit exp
+        } else {
+          const fromStore = store.getters['experiences/experienceByTypeAndId'](props.expType, props.expId)
+          inputData.value = fromStore === undefined ? generateEmptyExp(props.expType) : { ...fromStore }
+        }
+
+        // only show error msg when edit
+        isShowErrorMessage.value = !!props.expId
+      }
+    })
 
     const closeDialog = (needRefresh) => {
       isFormDirty.value = false
@@ -121,26 +141,6 @@ export default {
       isShowErrorMessage.value = false
       emit('close-dialog', needRefresh)
     }
-
-    // === INT EXP DATA ===
-    const store = useStore()
-    const targetExp = computed({
-      get: () => {
-        if (!props.expId) {
-          return generateEmptyExp(props.expType)
-        }
-        const fromStore = store.getters['experiences/experienceByTypeAndId'](props.expType, props.expId)
-        return fromStore === undefined ? generateEmptyExp(props.expType) : fromStore
-      },
-      set: () => {}
-    })
-    const inputData = ref({})
-    watch(targetExp, (val) => {
-      if (val !== undefined) {
-        inputData.value = { ...val }
-      }
-      isShowErrorMessage.value = !!props.expId
-    })
 
     // === HANDLE DATA CHANGE ===
     const isFormDirty = ref(false)
@@ -163,6 +163,7 @@ export default {
 
       const payload = {
         ...inputData.value,
+        type: props.expType,
         tags: inputData.value.tags.map(tag => tag.id)
       }
       try {
@@ -179,6 +180,7 @@ export default {
 
       } finally {
         isSubmitLoading.value = false
+        isFormDirty.value = false
       }
     }
 
@@ -212,7 +214,7 @@ export default {
     }
 
     // FORM VALIDATION
-    const rules = generateExpValidationRules(props.expType)
+    const rules = computed(() => generateExpValidationRules(props.expType))
     const v$ = useVuelidate(rules, inputData)
 
     return {

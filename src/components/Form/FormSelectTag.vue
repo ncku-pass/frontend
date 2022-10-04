@@ -159,7 +159,7 @@ export default {
         selectedTags.value.pop()
         return
 
-      } else if (props.initValue.some(tag => tag.name === targetTagName)) {
+      } else if (props.initValue?.some(tag => tag.name === targetTagName)) {
         createTagError.value = '已經有這個tag了！'
         showDropdown.value = false
         selectedTags.value.pop()
