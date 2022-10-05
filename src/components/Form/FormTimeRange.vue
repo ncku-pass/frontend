@@ -9,6 +9,9 @@
       :manualInput='false'
       @date-select='onDateSelect'
     />
+    <small v-if='validateState?.$invalid' class='p-error'>
+      {{ validateState?.required.$message.replace('Value', validateState.label) }}
+    </small>
   </div>
 </template>
 
@@ -29,7 +32,11 @@ export default {
       default() {
         return {}
       }
-    }
+    },
+    validateState: {
+      type: Object,
+      default: undefined,
+    },
   },
   emits: ['input'],
   setup(props, { emit }) {

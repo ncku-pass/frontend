@@ -40,7 +40,7 @@ export default {
     validateState: {
       type: Object,
       default() {
-        return {}
+        return undefined
       },
     },
   },

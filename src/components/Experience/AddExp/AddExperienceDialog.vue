@@ -20,8 +20,7 @@
         <OverlayPanel
           :id='`${item.key}-remarks`'
           :ref='(el) => { overlayPanelRefs[i] = el }'
-          appendTo='body'
-          :class='`add-exp-dialog__remarks`'
+          class='add-exp-dialog__remarks'
           :dismissable='true'
         >
           <component :is='item.remarks' />
@@ -30,7 +29,7 @@
       <DynamicFormRenderer
         :schema='item'
         :data='typeof item.inputKey === "string" ? inputData[item.inputKey] : inputData'
-        :validate-state='isShowErrorMessage ? v$[item.inputKey] : undefined'
+        :validate-state='getValidateState(item.inputKey, item.label)'
         @input='updateData($event)'
       />
     </div>
@@ -217,6 +216,28 @@ export default {
     const rules = computed(() => generateExpValidationRules(props.expType))
     const v$ = useVuelidate(rules, inputData)
 
+    const getValidateState = (inputKey, label) => {
+      if (!isShowErrorMessage.value) {
+        return undefined
+
+      } else if (typeof inputKey === 'string') {
+        return v$.value[inputKey]
+
+      } else {
+        // inputKey is an array
+        let state
+        inputKey.forEach(key => {
+          if (v$.value[key]) {
+            state = {
+              ...v$.value[key],
+              label
+            }
+          }
+        })
+        return state
+      }
+    }
+
     return {
       showDialog,
       schema,
@@ -228,6 +249,7 @@ export default {
       overlayPanelRefs,
       toggleRemarkPanel,
       v$,
+      getValidateState,
     }
   }
 }
