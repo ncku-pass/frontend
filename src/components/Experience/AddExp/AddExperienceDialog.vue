@@ -42,6 +42,7 @@
         取消
       </Button>
       <Button
+        :disabled='v$.$invalid'
         :loading='isSubmitLoading'
         @click='onSubmitExp'
       >
