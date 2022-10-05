@@ -1,5 +1,5 @@
 import { defineAsyncComponent } from 'vue'
-import { required } from '@vuelidate/validators'
+import { helpers, required } from '@vuelidate/validators'
 
 const generateSemesters = () => {
   const year = new Date().getFullYear() - 1911
@@ -9,13 +9,17 @@ const generateSemesters = () => {
     .map(sem => { return { key: sem, label: sem } })
 }
 
+const requiredValidatorWithCustomMsg = {
+  required: helpers.withMessage('請輸入Value', required)
+}
+
 export const course = [
   {
     inputKey: 'name',
     label: '課程名稱',
     type: 'FormInputText',
     defaultValue: '',
-    validations: { required },
+    validations: requiredValidatorWithCustomMsg,
     required: true,
   },
   {
@@ -43,7 +47,7 @@ export const course = [
     label: '課程時間',
     type: 'FormSelect',
     defaultValue: '',
-    validations: { required },
+    validations: requiredValidatorWithCustomMsg,
     required: true,
     options: generateSemesters()
   },
@@ -124,7 +128,7 @@ export const activity = [
     label: '活動名稱',
     type: 'FormInputText',
     defaultValue: '',
-    validations: { required },
+    validations: requiredValidatorWithCustomMsg,
     required: true,
   },
   {
@@ -132,7 +136,7 @@ export const activity = [
     label: '活動擔任職位',
     type: 'FormInputText',
     defaultValue: '',
-    validations: { required },
+    validations: requiredValidatorWithCustomMsg,
     required: true,
   },
   {
@@ -140,7 +144,7 @@ export const activity = [
     label: '活動時間',
     type: 'FormTimeRange',
     defaultValue: null,
-    validations: [{ required }, null],
+    validations: [requiredValidatorWithCustomMsg, null],
     required: true,
   },
   {
@@ -220,7 +224,7 @@ export const competition = [
     label: '競賽名稱',
     type: 'FormInputText',
     defaultValue: '',
-    validations: { required },
+    validations: requiredValidatorWithCustomMsg,
     required: true,
     placeholder: '可以填入競賽名稱、組別、獲獎類別（國內/國外）、類型（個人/團體）'
   },
@@ -229,7 +233,7 @@ export const competition = [
     label: '競賽獲得獎項',
     type: 'FormInputText',
     defaultValue: '',
-    validations: { required },
+    validations: requiredValidatorWithCustomMsg,
     required: true,
   },
   {
@@ -237,7 +241,7 @@ export const competition = [
     label: '競賽時間',
     type: 'FormTimeRange',
     defaultValue: null,
-    validations: [{ required }, null],
+    validations: [requiredValidatorWithCustomMsg, null],
     required: true,
   },
   {
@@ -308,7 +312,7 @@ export const work = [
     label: '公司單位名稱',
     type: 'FormInputText',
     defaultValue: '',
-    validations: { required },
+    validations: requiredValidatorWithCustomMsg,
     required: true,
   },
   {
@@ -316,7 +320,7 @@ export const work = [
     label: '職位',
     type: 'FormInputText',
     defaultValue: '',
-    validations: { required },
+    validations: requiredValidatorWithCustomMsg,
     required: true,
   },
   {
@@ -324,7 +328,7 @@ export const work = [
     label: '實習 / 工作時間',
     type: 'FormTimeRange',
     defaultValue: null,
-    validations: [{ required }, null],
+    validations: [requiredValidatorWithCustomMsg, null],
     required: true,
   },
   {
@@ -395,7 +399,7 @@ export const certificate = [
     label: '證照/檢定名稱',
     type: 'FormInputText',
     defaultValue: '',
-    validations: { required },
+    validations: requiredValidatorWithCustomMsg,
     required: true,
   },
   {
@@ -403,7 +407,7 @@ export const certificate = [
     label: '證照分數或等級',
     type: 'FormInputText',
     defaultValue: '',
-    validations: { required },
+    validations: requiredValidatorWithCustomMsg,
     required: true,
   },
   {
@@ -411,7 +415,7 @@ export const certificate = [
     label: '考取時間',
     type: 'FormTimeRange',
     defaultValue: null,
-    validations: [{ required }, null],
+    validations: [requiredValidatorWithCustomMsg, null],
     required: true,
   },
   {
@@ -473,7 +477,7 @@ export const other = [
     label: '經歷名稱',
     type: 'FormInputText',
     defaultValue: '',
-    validations: { required },
+    validations: requiredValidatorWithCustomMsg,
     required: true,
   },
   {
@@ -481,7 +485,7 @@ export const other = [
     label: '經歷職位、成就',
     type: 'FormInputText',
     defaultValue: '',
-    validations: { required },
+    validations: requiredValidatorWithCustomMsg,
     required: true,
   },
   {
@@ -489,7 +493,7 @@ export const other = [
     label: '時間',
     type: 'FormTimeRange',
     defaultValue: null,
-    validations: [{ required }, null],
+    validations: [requiredValidatorWithCustomMsg, null],
     required: true,
   },
   {
