@@ -54,7 +54,7 @@
           <li class='features__item'>
             <img src='@/assets/card-portfolio.svg' alt='' class='features__item__img' />
             <p class='features__item__title'>
-              簡易製作履歷
+              主題式歸納履歷
             </p>
           </li>
         </ul>
