@@ -7,24 +7,24 @@
     :modal='true'
     :draggable='false'
   >
-    <div v-for='(item, i) in schema' :key='item.key'>
+    <div v-for='(item, i) in schema' :key='item.inputKey'>
       <label :class='{ "required": item.required }'>
         {{ item.label }}
-        <mdicon
-          v-if='item.remarks'
-          name='information'
-          size='16'
-          :aria-controls='`${item.key}-remarks`'
-          @click='(evt) => toggleRemarkPanel(evt, i)'
-        />
-        <OverlayPanel
-          :id='`${item.key}-remarks`'
-          :ref='(el) => { overlayPanelRefs[i] = el }'
-          class='add-exp-dialog__remarks'
-          :dismissable='true'
-        >
-          <component :is='item.remarks' />
-        </OverlayPanel>
+        <div v-if='item.remarks'>
+          <mdicon
+            :id='`${item.inputKey}__remarks-icon`'
+            name='information'
+            size='16'
+            @click='(evt) => toggleRemarkPanel(evt, i)'
+          />
+          <OverlayPanel
+            :ref='(el) => { overlayPanelRefs[i] = el }'
+            class='add-exp-dialog__remarks'
+            :dismissable='true'
+          >
+            <component :is='item.remarks' />
+          </OverlayPanel>
+        </div>
       </label>
       <DynamicFormRenderer
         :schema='item'
@@ -208,7 +208,9 @@ export default {
       overlayPanelRefs.value[idx].toggle(evt)
 
       setTimeout(() => {
-        overlayPanelRefs.value[idx].toggle(evt)
+        if (showDialog.value) {
+          overlayPanelRefs.value[idx].hide(evt)
+        }
       }, 5000)
     }
 
