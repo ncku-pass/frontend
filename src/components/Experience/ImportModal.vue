@@ -23,7 +23,8 @@
             >
               <DisclosureButton as='h2' class='semester-block__title'>
                 {{ semester.replace('-1', '上學期').replace('-2', '下學期') }}
-                <ChevronDownIcon :class='{ opened: open }' />
+                <mdicon v-if='open' name='chevronUp' size='26' />
+                <mdicon v-else name='chevronDown' size='26' />
               </DisclosureButton>
               <DisclosurePanel as='ul' class='semester-block__content'>
                 <li v-for='(exp, i) in classifiedNckuExperiences[semester]' :key='exp.name' class='experience-item'>
@@ -61,7 +62,6 @@
 import { ref, computed } from 'vue'
 import { useStore } from 'vuex'
 import { Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/vue'
-import { ChevronDownIcon } from '@heroicons/vue/solid'
 import { experienceTypesInChinese } from '@/config'
 
 export default {
@@ -70,7 +70,6 @@ export default {
     Disclosure,
     DisclosureButton,
     DisclosurePanel,
-    ChevronDownIcon
   },
   props: {
     type: {
@@ -213,13 +212,6 @@ export default {
     font-weight: $weight-regular;
     margin-bottom: 10px;
     cursor: pointer;
-    svg {
-      width: 26px;
-      height: 26px;
-      &.opened {
-        transform: rotate(180deg);
-      }
-    }
   }
   &__content {
     @include grid(row, 10px, 0);
