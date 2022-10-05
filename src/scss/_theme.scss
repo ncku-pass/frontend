@@ -390,6 +390,50 @@
   color: #4F4F4F;
 }
 
+.p-button.p-button-info, .p-buttonset.p-button-info > .p-button, .p-splitbutton.p-button-info > .p-button {
+  color: #ffffff;
+  background: $blue-6;
+  border: 1px solid $blue-6;
+}
+.p-button.p-button-info:enabled:hover, .p-buttonset.p-button-info > .p-button:enabled:hover, .p-splitbutton.p-button-info > .p-button:enabled:hover {
+  background: $blue-7;
+  color: #ffffff;
+  border-color: $blue-7;
+}
+.p-button.p-button-info:enabled:active, .p-buttonset.p-button-info > .p-button:enabled:active, .p-splitbutton.p-button-info > .p-button:enabled:active {
+  background: $blue-7;
+  color: #ffffff;
+  border-color: $blue-7;
+}
+.p-button.p-button-info.p-button-outlined, .p-buttonset.p-button-info > .p-button.p-button-outlined, .p-splitbutton.p-button-info > .p-button.p-button-outlined {
+  background-color: $white;
+  color: $blue-7;
+  border: 1px solid $blue-7;
+}
+.p-button.p-button-info.p-button-outlined:enabled:hover, .p-buttonset.p-button-info > .p-button.p-button-outlined:enabled:hover, .p-splitbutton.p-button-info > .p-button.p-button-outlined:enabled:hover {
+  background: $blue-1;
+  color: $blue-8;
+  border: 1px solid $blue-7;
+}
+.p-button.p-button-info.p-button-outlined:enabled:active, .p-buttonset.p-button-info > .p-button.p-button-outlined:enabled:active, .p-splitbutton.p-button-info > .p-button.p-button-outlined:enabled:active {
+  background: $blue-1;
+  color: $blue-8;
+  border: 1px solid $blue-7;
+}
+.p-button.p-button-info.p-button-text, .p-buttonset.p-button-info > .p-button.p-button-text, .p-splitbutton.p-button-info > .p-button.p-button-text {
+  color: $white;
+}
+.p-button.p-button-info.p-button-text:enabled:hover, .p-buttonset.p-button-info > .p-button.p-button-text:enabled:hover, .p-splitbutton.p-button-info > .p-button.p-button-text:enabled:hover {
+  background: $blue-1;
+  border-color: transparent;
+  color: $blue-7;
+}
+.p-button.p-button-info.p-button-text:enabled:active, .p-buttonset.p-button-info > .p-button.p-button-text:enabled:active, .p-splitbutton.p-button-info > .p-button.p-button-text:enabled:active {
+  background: $blue-1;
+  border-color: transparent;
+  color: $blue-7;
+}
+
 .p-button.p-button-link {
   color: #6d1825;
   background: transparent;
@@ -530,101 +574,6 @@
   box-shadow: inset 0 0 0 0.15rem #fbebed;
 }
 
-.fc.fc-unthemed .fc-view-container .fc-event {
-  background: #7d1b2a;
-  border: 1px solid #7d1b2a;
-  color: #ffffff;
-}
-.fc.fc-unthemed .fc-toolbar .fc-button {
-  color: #ffffff;
-  background: $red-5;
-  border: 1px solid $red-5;
-}
-.fc.fc-unthemed .fc-toolbar .fc-button:enabled:hover {
-  background: #7d1b2a;
-  color: #ffffff;
-  border-color: #7d1b2a;
-}
-.fc.fc-unthemed .fc-toolbar .fc-button:enabled:active {
-  background: #6d1825;
-  color: #ffffff;
-  border-color: #6d1825;
-}
-.fc.fc-unthemed .fc-toolbar .fc-button:enabled:active:focus {
-  box-shadow: 0 0 0 0.2rem #fbebed;
-}
-.fc.fc-unthemed .fc-toolbar .fc-button:focus {
-  box-shadow: 0 0 0 0.2rem #fbebed;
-}
-.fc.fc-unthemed .fc-toolbar .fc-button.fc-dayGridMonth-button.fc-button-active, .fc.fc-unthemed .fc-toolbar .fc-button.fc-timeGridWeek-button.fc-button-active, .fc.fc-unthemed .fc-toolbar .fc-button.fc-timeGridDay-button.fc-button-active {
-  background: $red-5;
-  border-color: $red-5;
-  color: #ffffff;
-}
-.fc.fc-unthemed .fc-toolbar .fc-button.fc-dayGridMonth-button.fc-button-active:hover, .fc.fc-unthemed .fc-toolbar .fc-button.fc-timeGridWeek-button.fc-button-active:hover, .fc.fc-unthemed .fc-toolbar .fc-button.fc-timeGridDay-button.fc-button-active:hover {
-  background: #7d1b2a;
-  border-color: #7d1b2a;
-  color: #ffffff;
-}
-.fc.fc-unthemed .fc-toolbar .fc-button.fc-dayGridMonth-button:focus, .fc.fc-unthemed .fc-toolbar .fc-button.fc-timeGridWeek-button:focus, .fc.fc-unthemed .fc-toolbar .fc-button.fc-timeGridDay-button:focus {
-  box-shadow: 0 0 0 0.2rem #fbebed;
-  z-index: 1;
-}
-.fc.fc-theme-standard .fc-view-harness .fc-popover .fc-popover-header .fc-popover-close:focus {
-  box-shadow: 0 0 0 0.2rem #fbebed;
-}
-.fc.fc-theme-standard .fc-view-harness .fc-event.fc-daygrid-block-event {
-  color: #ffffff;
-  background: #7d1b2a;
-  border-color: #7d1b2a;
-}
-.fc.fc-theme-standard .fc-view-harness .fc-event.fc-daygrid-block-event .fc-event-main {
-  color: #ffffff;
-}
-.fc.fc-theme-standard .fc-view-harness .fc-event.fc-daygrid-dot-event .fc-daygrid-event-dot {
-  background: #7d1b2a;
-  border-color: #7d1b2a;
-}
-.fc.fc-theme-standard .fc-toolbar .fc-button {
-  color: #ffffff;
-  background: $red-5;
-  border: 1px solid $red-5;
-}
-.fc.fc-theme-standard .fc-toolbar .fc-button:enabled:hover {
-  background: #7d1b2a;
-  color: #ffffff;
-  border-color: #7d1b2a;
-}
-.fc.fc-theme-standard .fc-toolbar .fc-button:enabled:active {
-  background: #6d1825;
-  color: #ffffff;
-  border-color: #6d1825;
-}
-.fc.fc-theme-standard .fc-toolbar .fc-button:enabled:active:focus {
-  box-shadow: 0 0 0 0.2rem #fbebed;
-}
-.fc.fc-theme-standard .fc-toolbar .fc-button:disabled {
-  color: #ffffff;
-  background: $red-5;
-  border: 1px solid $red-5;
-}
-.fc.fc-theme-standard .fc-toolbar .fc-button:focus {
-  box-shadow: 0 0 0 0.2rem #fbebed;
-}
-.fc.fc-theme-standard .fc-toolbar .fc-button.fc-dayGridMonth-button.fc-button-active, .fc.fc-theme-standard .fc-toolbar .fc-button.fc-timeGridWeek-button.fc-button-active, .fc.fc-theme-standard .fc-toolbar .fc-button.fc-timeGridDay-button.fc-button-active {
-  background: $red-5;
-  border-color: $red-5;
-  color: #ffffff;
-}
-.fc.fc-theme-standard .fc-toolbar .fc-button.fc-dayGridMonth-button.fc-button-active:hover, .fc.fc-theme-standard .fc-toolbar .fc-button.fc-timeGridWeek-button.fc-button-active:hover, .fc.fc-theme-standard .fc-toolbar .fc-button.fc-timeGridDay-button.fc-button-active:hover {
-  background: #7d1b2a;
-  border-color: #7d1b2a;
-  color: #ffffff;
-}
-.fc.fc-theme-standard .fc-toolbar .fc-button.fc-dayGridMonth-button:not(:disabled):focus, .fc.fc-theme-standard .fc-toolbar .fc-button.fc-timeGridWeek-button:not(:disabled):focus, .fc.fc-theme-standard .fc-toolbar .fc-button.fc-timeGridDay-button:not(:disabled):focus {
-  box-shadow: 0 0 0 0.2rem #fbebed;
-}
-
 .p-orderlist .p-orderlist-list .p-orderlist-item:focus {
   box-shadow: inset 0 0 0 0.15rem #fbebed;
 }
@@ -645,7 +594,6 @@
 .p-tree .p-tree-container .p-treenode .p-treenode-content .p-treenode-label {
   margin-left: -32px;
 }
-
 .p-tree .p-tree-container .p-treenode .p-treenode-content .p-tree-toggler:focus {
   box-shadow: 0 0 0 0.2rem $grey-2;
 }
