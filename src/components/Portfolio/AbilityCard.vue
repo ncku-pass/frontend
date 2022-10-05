@@ -225,7 +225,7 @@ export default {
       padding: 10px;
       line-height: 20px;
       text-align: center;
-      color: $blue-dark;
+      color: $blue-6;
       background: $grey-blue;
       border-radius: 8px;
     }
@@ -296,12 +296,12 @@ export default {
   &__name {
     font-size: 21px;
     line-height: 34px;
-    color: $blue-dark;
+    color: $blue-6;
     font-weight: normal;
   }
   &__position {
     margin-right: auto;
-    color: $blue-dark;
+    color: $blue-6;
   }
   &__delete {
     cursor: pointer;
@@ -316,7 +316,7 @@ export default {
     padding: 10px 0;
     .tag {
       font-weight: $weight-light;
-      color: $blue-dark;
+      color: $blue-6;
     }
   }
   &__description {

@@ -272,7 +272,7 @@ export default {
   label {
     @include grid(column, 0, 10px);
     justify-content: flex-start;
-    color: $blue-dark;
+    color: $blue-6;
     line-height: 24px;
     font-weight: 500;
     letter-spacing: 0.05em;
@@ -309,7 +309,7 @@ export default {
     .p-overlaypanel-content {
       .tags {
         .title {
-          color: $blue-dark;
+          color: $blue-6;
           font-weight: 500;
         }
 

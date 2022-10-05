@@ -197,7 +197,7 @@ export default {
 .field-title {
   justify-content: flex-start;
   align-items: center;
-  color: $blue-dark;
+  color: $blue-6;
   line-height: 24px;
   font-weight: 500;
   letter-spacing: 0.05em;
@@ -217,6 +217,6 @@ export default {
   gap: 5px;
 }
 a {
-  color: $blue-dark;
+  color: $blue-6;
 }
 </style>
