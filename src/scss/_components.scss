@@ -143,3 +143,25 @@
   border-radius: 10px;
   background-color: $red-4;
 }
+
+.p-confirm-dialog.no-header {
+  .p-dialog-header {
+    display: none;
+  }
+  .p-dialog-content {
+    padding: 2rem 2.5rem !important;
+    border-top-right-radius: 8px;
+    border-top-left-radius: 8px;
+  }
+}
+
+.p-confirm-dialog.no-icon {
+  .p-dialog-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .p-confirm-dialog-message {
+    margin-left: 0 !important;
+  }
+}

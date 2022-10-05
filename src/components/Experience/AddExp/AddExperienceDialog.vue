@@ -49,25 +49,25 @@
       </Button>
     </template>
   </Dialog>
-  <ConfirmDialog />
+  <ConfirmDialog class='no-header no-icon' group='close-dialog' />
 </template>
 
 <script>
+import { computed, onBeforeUpdate, ref, watch } from 'vue'
+import { useStore } from 'vuex'
 import Button from 'primevue/button'
 import Dialog from 'primevue/dialog'
 import OverlayPanel from 'primevue/overlaypanel'
 import ConfirmDialog from 'primevue/confirmdialog'
 import { useConfirm } from 'primevue/useconfirm'
 import { useToast } from 'primevue/usetoast'
-import { computed, onBeforeUpdate, ref, watch } from 'vue'
+import useVuelidate from '@vuelidate/core'
 import { mdiInformation } from '@mdi/js'
 
 import * as formSchema from './experienceSchema'
 import DynamicFormRenderer from '@/components/Form/DynamicFormRenderer'
 import { addExperience, updateExperience } from '@/api/experiences'
-import { useStore } from 'vuex'
 import { generateEmptyExp, generateExpValidationRules } from '@/helpers/experiences.helper'
-import useVuelidate from '@vuelidate/core'
 
 export default {
   name: 'AddExperienceDialog',
@@ -187,9 +187,8 @@ export default {
     const confirm = useConfirm()
     const showCloseReminder = () => {
       confirm.require({
+        group: 'close-dialog',
         message: '離開則無法儲存資料喔！',
-        header: '確定要離開嗎？',
-        icon: 'pi pi-exclamation-triangle',
         acceptLabel: '確定離開',
         rejectLabel: '留下',
         accept: () => {

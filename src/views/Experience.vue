@@ -43,6 +43,15 @@
     @close='showViewerModal = false'
   />
   <ImportModal v-if='showImportModal' :type='activeTab' @close='showImportModal = false' />
+  <ConfirmDialog class='no-header no-icon' group='delete-exp'>
+    <template #message='slotProps'>
+      <div>
+        確定要刪除
+        <span :style='{"color": `var(--primary-500)`}'>{{ slotProps.message.message }}</span>
+        此項歷程？
+      </div>
+    </template>
+  </ConfirmDialog>
 </template>
 
 <script>
@@ -50,6 +59,7 @@ import { ref, computed, watch } from 'vue'
 import { useStore } from 'vuex'
 import Toast from 'primevue/toast'
 import { useToast } from 'primevue/usetoast'
+import ConfirmDialog from 'primevue/confirmdialog'
 
 import Loader from '@/components/Loader'
 import ExperienceNavbar from '@/components/Experience/ExperienceNavbar.vue'
@@ -73,6 +83,7 @@ export default {
     AddExperienceDialog,
     ViewerModal,
     ImportModal,
+    ConfirmDialog,
     Toast,
   },
   inject: ['mq'],

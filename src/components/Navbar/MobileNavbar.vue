@@ -18,43 +18,46 @@
         </router-link>
       </li>
       <li>
-        <div class='navbar__tab' @click='handleLogout'>
+        <div class='navbar__tab' @click='showLogoutConfirm'>
           <mdicon name='locationExit' size='16' />
         </div>
       </li>
     </ul>
-    <ConfirmModal
-      v-if='showConfirmModal'
-      message='確定要登出？'
-      confirmMessage='登出'
-      confirmType='customize'
-      @confirm='logout'
-      @cancel='showConfirmModal = false'
-    />
+    <ConfirmDialog class='no-header no-icon' group='logout' />
   </nav>
 </template>
 
 <script>
-import { ref } from 'vue'
 import { useStore } from 'vuex'
-import ConfirmModal from '@/components/ConfirmModal.vue'
+import { useConfirm } from 'primevue/useconfirm'
+import ConfirmDialog from 'primevue/confirmdialog'
+
 import { navbarLinks } from '@/config'
 
 export default {
   name: 'MobileNavbar',
   components: {
-    ConfirmModal
+    ConfirmDialog
   },
   setup() {
     const store = useStore()
     const logout = () => store.dispatch('auth/logout')
 
-    const showConfirmModal = ref(false)
-    const handleLogout = () => {
-      showConfirmModal.value = true
+    // === CONFIRMATION MODEL ===
+    const confirm = useConfirm()
+    const showLogoutConfirm = () => {
+      confirm.require({
+        group: 'logout',
+        message: '確定要登出？',
+        acceptLabel: '登出',
+        rejectLabel: '取消',
+        accept: () => {
+          logout()
+        },
+      })
     }
 
-    return { navbarLinks, showConfirmModal, logout, handleLogout }
+    return { navbarLinks, showLogoutConfirm }
   },
 }
 </script>
