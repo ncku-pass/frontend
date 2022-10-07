@@ -60,7 +60,7 @@
 <script>
 import { computed } from 'vue'
 import vueScrollShadow from 'vue3-scroll-shadow'
-import { chineseOfExperienceTypes } from '@/config'
+import { experienceTypesInChinese } from '@/config'
 
 export default {
   name: 'MenuFilter',
@@ -86,7 +86,7 @@ export default {
 
     return {
       allSelected,
-      chineseOfExperienceTypes
+      chineseOfExperienceTypes: experienceTypesInChinese
     }
   }
 }

@@ -2,9 +2,7 @@
   <div class='portfolio__main-container'>
     <div v-if='resumes' class='portfolio__main'>
       <div class='portfolio__main__tabs'>
-        <button class='scroll-left-btn' @click='scrollHorizontal(-200)'>
-          <ChevronLeftIcon />
-        </button>
+        <mdicon name='chevronLeft' size='30' @click.stop='scrollHorizontal(-200)' />
         <ul ref='tabWrapperRef' class='tabs-wrapper'>
           <li
             v-for='(resume, index) in resumes'
@@ -17,13 +15,11 @@
           >
             {{ resume.name || '請輸入名稱' }}
           </li>
-          <li class='portfolio__main__tabs__add' @click='openTemplateModal'>
-            <PlusCircleIcon />
+          <li class='portfolio__main__tabs__add'>
+            <mdicon name='plusCircleOutline' size='24' @click='openTemplateModal' />
           </li>
         </ul>
-        <button class='scroll-right-btn' @click='scrollHorizontal(200)'>
-          <ChevronRightIcon />
-        </button>
+        <mdicon name='chevronRight' size='30' @click.stop='scrollHorizontal(200)' />
       </div>
       <div class='portfolio__main__content'>
         <template v-if='showedResume'>
@@ -36,13 +32,19 @@
               maxlength='25'
             />
             <div class='content-header__btns'>
-              <button class='btn--red' @click='confirmDelete'>
+              <Button @click='showDeleteConfirm'>
                 刪除
-              </button>
-              <button class='btn content-header__save' :disabled='isPending || !notSaved' @click='handleSave()'>
-                {{ isPending ? '存檔中' : '存檔' }}
-                <div v-show='notSaved && !isPending' class='button-badge' />
-              </button>
+              </Button>
+              <div :style='{ "position": "relative" }'>
+                <Button
+                  class='p-button-secondary p-button-outlined'
+                  :disabled='isPending || !notSaved'
+                  @click='handleSave'
+                >
+                  {{ isPending ? '存檔中' : '存檔' }}
+                </Button>
+                <div v-if='notSaved && !isPending' class='button-badge' />
+              </div>
             </div>
           </div>
           <div class='content-body'>
@@ -69,12 +71,12 @@
               </div>
             </div>
             <div class='content-body__btns'>
-              <button class='content-body__add' @click='handleAddCard("experience")'>
+              <Button class='p-button-info' @click='handleAddCard("experience")'>
                 + 新增經歷區塊
-              </button>
-              <button class='content-body__add' @click='handleAddCard("text")'>
+              </Button>
+              <Button class='p-button-info' @click='handleAddCard("text")'>
                 + 新增文字區塊
-              </button>
+              </Button>
             </div>
           </div>
         </template>
@@ -85,43 +87,30 @@
       </div>
     </div>
     <TemplateModal :show-modal='showTemplateModal' @close='handleCloseTemplateModal' @choose='handleAddResume' />
-    <ConfirmModal
-      v-if='showConfirmModal'
-      confirm-type='customize'
-      message='確定刪除此項履歷？'
-      @cancel='closeConfirmModal'
-    >
-      <button v-show='!deleteStatus.isPending' class='btn' @click.stop='closeConfirmModal'>
-        取消
-      </button>
-      <button class='btn--red' :disabled='deleteStatus.isPending' @click.stop='handleDeleteResume()'>
-        {{ deleteStatus.isPending ? '刪除中' : '確定刪除' }}
-      </button>
-    </ConfirmModal>
+    <ConfirmDialog class='no-header no-icon' group='delete-resume' />
   </div>
 </template>
 
 <script>
-import { computed, ref, onBeforeUpdate, nextTick } from 'vue'
+import { computed, ref, onBeforeUpdate, nextTick, reactive } from 'vue'
 import { useStore } from 'vuex'
 import draggable from 'vuedraggable'
 import { isEqual } from 'lodash-es'
-import { PlusCircleIcon, ChevronLeftIcon, ChevronRightIcon } from '@heroicons/vue/outline'
+import { useConfirm } from 'primevue/useconfirm'
+import ConfirmDialog from 'primevue/confirmdialog'
+import Button from 'primevue/button'
+
 import AbilityCard from '@/components/Portfolio/AbilityCard.vue'
 import TemplateModal from '@/components/Portfolio/TemplateModal.vue'
-import ConfirmModal from '@/components/ConfirmModal'
-import { useDeleteModal } from '@/composables/useDeleteModal'
 
 export default {
   name: 'PortfolioMain',
   components: {
-    ConfirmModal,
+    Button,
+    ConfirmDialog,
     AbilityCard,
     TemplateModal,
     draggable,
-    PlusCircleIcon,
-    ChevronLeftIcon,
-    ChevronRightIcon
   },
   setup() {
     const store = useStore()
@@ -187,8 +176,24 @@ export default {
       showTemplateModal.value = false
     }
 
-    // === 刪除履歷 ===
-    const { showConfirmModal, deleteStatus, closeConfirmModal, confirmDelete } = useDeleteModal()
+    // === CONFIRMATION PROFILE MODAL ===
+    const deleteStatus = reactive({
+      isPending: false,
+      error: null
+    })
+    const confirm = useConfirm()
+    const showDeleteConfirm = () => {
+      confirm.require({
+        group: 'delete-resume',
+        message: '確定刪除此項履歷？',
+        acceptLabel: '確定刪除',
+        rejectLabel: '取消',
+        accept: () => {
+          handleDeleteResume()
+        },
+      })
+    }
+
     const handleDeleteResume = async() => {
       if (showedResume.value.isLocal) {
         resumes.value.splice(selectedIndex.value, 1)
@@ -208,7 +213,6 @@ export default {
       } else {
         handleSelectResume(selectedIndex.value)
       }
-      showConfirmModal.value = false
     }
 
     // === 新增 / 刪除卡片 ===
@@ -269,9 +273,7 @@ export default {
       showTemplateModal,
       openTemplateModal,
       deleteStatus,
-      confirmDelete,
-      showConfirmModal,
-      closeConfirmModal,
+      showDeleteConfirm,
       handleCloseTemplateModal,
       handleAddResume,
       handleDeleteResume,
@@ -313,14 +315,13 @@ export default {
     min-height: 48px;
     border-bottom: 2px solid $red-1;
     overflow-x: auto;
+    align-items: center;
     &__add {
       display: flex;
       align-items: center;
-      padding: 0 12px;
+      padding: 0 24px;
       cursor: pointer;
-      svg {
-        width: 24px;
-        height: 24px;
+      .mdi {
         color: $red-5;
         transition: all 0.3s;
         &:hover {
@@ -349,13 +350,6 @@ export default {
     padding-bottom: 0;
   }
 }
-.scroll-left-btn,
-.scroll-right-btn {
-  width: 30px;
-  background-color: transparent;
-  border: none;
-}
-
 .content-header {
   display: flex;
   justify-content: space-between;
@@ -397,7 +391,7 @@ export default {
     p {
       padding: 10px 75px;
       line-height: 26px;
-      color: $blue-dark;
+      color: $blue-6;
       background: $grey-blue;
       border-radius: 8px;
       cursor: pointer;
@@ -406,16 +400,8 @@ export default {
   &__btns {
     display: flex;
     justify-content: center;
-    gap: 12px;
+    gap: 32px;
     padding: 12px;
-  }
-  &__add {
-    display: block;
-    padding: 10px 60px;
-    border: none;
-    border-radius: 8px;
-    background-color: $blue-dark;
-    color: $white;
   }
   &__card-list--empty {
     display: flex;

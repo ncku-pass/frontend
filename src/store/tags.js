@@ -56,7 +56,6 @@ const tags = {
         commit('SET_STATUS', { isPending: true, error: null })
 
         res = await deleteTagAPI(tagId)
-        await dispatch('experiences/getExperiences', null, { root: true })
 
         const newTags = state.tags.filter(tag => tag.id !== tagId)
         commit('SET_TAGS', newTags)

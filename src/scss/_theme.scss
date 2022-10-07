@@ -1,15 +1,32 @@
 @import './variables';
 
+:root {
+  --primary-50:#fbebed;
+  --primary-100:#e99aa6;
+  --primary-200:#db5a6e;
+  --primary-300:#d43951;
+  --primary-400:#cd2c45;
+  --primary-500:#9D2235;
+  --primary-600:#7d1b2a;
+  --primary-700:#6d1825;
+  --primary-800:#5d141f;
+  --primary-900:#2c0a0f;
+}
+
 .p-link:focus {
   box-shadow: 0 0 0 0.2rem #fbebed;
 }
 
 .p-autocomplete .p-autocomplete-multiple-container:not(.p-disabled):hover {
-  border-color: #495057;
+  border-color: $grey-4;
 }
 .p-autocomplete .p-autocomplete-multiple-container:not(.p-disabled).p-focus {
   box-shadow: 0 0 0 0.2rem #fbebed;
-  border-color: #495057;
+  border-color: $grey-4;
+}
+
+.p-confirm-dialog-reject.p-button-text {
+  color: $grey-5 !important;
 }
 
 .p-datepicker .p-datepicker-header .p-datepicker-prev:focus,
@@ -18,18 +35,18 @@
 }
 .p-datepicker .p-datepicker-header .p-datepicker-title .p-datepicker-year:enabled:hover,
 .p-datepicker .p-datepicker-header .p-datepicker-title .p-datepicker-month:enabled:hover {
-  color: #495057;
+  color: $grey-4;
 }
 .p-datepicker table td > span:focus {
-  box-shadow: 0 0 0 0.2rem #fbebed;
+  box-shadow: 0 0 0 0.2rem $grey-2;
 }
 .p-datepicker table td.p-datepicker-today > span {
   background: #ced4da;
-  color: #495057;
+  color: $grey-4;
   border-color: transparent;
 }
 .p-datepicker table td.p-datepicker-today > span.p-highlight {
-  color: #495057;
+  color: $grey-4;
   background: #E3F2FD;
 }
 .p-datepicker .p-datepicker-buttonbar {
@@ -47,32 +64,32 @@
   transition: background-color 0.2s, color 0.2s, box-shadow 0.2s;
 }
 .p-datepicker .p-timepicker button:enabled:hover {
-  color: #495057;
+  color: $grey-4;
   border-color: transparent;
   background: #e9ecef;
 }
 .p-datepicker .p-timepicker button:focus {
-  box-shadow: 0 0 0 0.2rem #fbebed;
+  box-shadow: 0 0 0 0.2rem $grey-2;
 }
 .p-datepicker.p-datepicker-multiple-month .p-datepicker-group {
   border-left: 1px solid #dee2e6;
 }
 .p-datepicker:not(.p-disabled) table td span:not(.p-highlight):not(.p-disabled):focus {
-  box-shadow: 0 0 0 0.2rem #fbebed;
+  box-shadow: 0 0 0 0.2rem $grey-2;
 }
 .p-datepicker:not(.p-disabled) .p-monthpicker .p-monthpicker-month:not(.p-disabled):focus {
-  box-shadow: 0 0 0 0.2rem #fbebed;
+  box-shadow: 0 0 0 0.2rem $grey-2;
 }
 .p-datepicker:not(.p-disabled) .p-yearpicker .p-yearpicker-year:not(.p-disabled):focus {
-  box-shadow: 0 0 0 0.2rem #fbebed;
+  box-shadow: 0 0 0 0.2rem $grey-2;
 }
 
 .p-cascadeselect:not(.p-disabled):hover {
-  border-color: #495057;
+  border-color: $grey-4;
 }
 .p-cascadeselect:not(.p-disabled).p-focus {
-  box-shadow: 0 0 0 0.2rem #fbebed;
-  border-color: #495057;
+  box-shadow: 0 0 0 0.2rem $grey-2;
+  border-color: $grey-4;
 }
 .p-cascadeselect-panel .p-cascadeselect-items .p-cascadeselect-item .p-cascadeselect-item-content:focus {
   box-shadow: inset 0 0 0 0.15rem #fbebed;
@@ -97,26 +114,34 @@
   border-color: #f44336;
 }
 
+.p-chips .p-chips-multiple-container {
+  line-height: 1.5;
+  padding: 0.5rem 0.75rem;
+}
 .p-chips .p-chips-multiple-container:not(.p-disabled):hover {
-  border-color: #495057;
+  border-color: $grey-4;
 }
 .p-chips .p-chips-multiple-container:not(.p-disabled).p-focus {
-  box-shadow: 0 0 0 0.2rem #fbebed;
-  border-color: #495057;
+  box-shadow: 0 0 0 0.2rem $grey-2;
+  border-color: $grey-4;
 }
-.p-chips .p-chips-multiple-container .p-chips-token {
-  padding: 0.25rem 0.5rem;
-  margin-right: 0.5rem;
-  background: $red-1;
-  color: $red-8;
-  border-radius: 16px;
+.p-chips:not(.p-disabled).p-focus .p-chips-multiple-container {
+  box-shadow: 0 0 0 0.2rem $grey-1;
+  border-color: $grey-4;
 }
+.p-treeselect-token, .p-multiselect-token, .p-inputtext .p-chips-token {
+  margin-right: 0.7rem !important;
+  padding: 0.3rem 0.8rem !important;
+  background: $grey-1 !important;
+  color: $grey-6 !important;
+}
+
 .p-dropdown:not(.p-disabled):hover {
-  border-color: #495057;
+  border-color: $grey-4;
 }
 .p-dropdown:not(.p-disabled).p-focus {
   box-shadow: 0 0 0 0.2rem #fbebed;
-  border-color: #495057;
+  border-color: $grey-4;
 }
 .p-editor-container .ql-snow.ql-toolbar button.ql-active,
 .p-editor-container .ql-snow.ql-toolbar .ql-picker-label.ql-active,
@@ -140,44 +165,51 @@
 }
 
 .p-inputswitch.p-focus .p-inputswitch-slider {
-  box-shadow: 0 0 0 0.2rem #fbebed;
+  box-shadow: 0 0 0 0.2rem $grey-2;
 }
 .p-inputswitch.p-inputswitch-checked .p-inputswitch-slider {
   background: $red-5;
 }
 .p-inputswitch.p-inputswitch-checked:not(.p-disabled):hover .p-inputswitch-slider {
-  background: #495057;
+  background: $grey-4;
+}
+
+.p-inputtext{
+  line-height: 1.5;
+  padding: 10px 12px;
+  border-radius: 8px;
 }
 
 .p-inputtext:enabled:hover {
-  border-color: #495057;
+  border-color: $grey-4;
 }
 .p-inputtext:enabled:focus {
   box-shadow: 0 0 0 0.2rem #F2F2F2;
-  border-color: #495057;
+  border-color: $grey-4;
 }
 
 .p-listbox .p-listbox-list .p-listbox-item:focus {
-  box-shadow: inset 0 0 0 0.15rem #fbebed;
+  box-shadow: inset 0 0 0 0.15rem $grey-2;
 }
 
+.p-multiselect, .p-treeselect {
+  min-height: 46px;
+  padding: 5px;
+  border-radius: 8px;
+}
 .p-multiselect:not(.p-disabled):hover {
-  border-color: #495057;
+  border-color: $grey-4;
 }
 .p-multiselect:not(.p-disabled).p-focus {
   box-shadow: 0 0 0 0.2rem $grey-1;
-  border-color: #495057;
+  border-color: $grey-4;
 }
 .p-multiselect-panel .p-multiselect-header .p-multiselect-close:focus {
   outline: 0 none;
   outline-offset: 0;
   box-shadow: none;
 }
-.p-multiselect-panel .p-multiselect-items .p-multiselect-item:focus {
-  outline: 0 none;
-  outline-offset: 0;
-  box-shadow: inset 0 0 0 0.15rem #fbebed;
-}
+
 .p-radiobutton .p-radiobutton-box:not(.p-disabled):not(.p-highlight):hover {
   border-color: $red-5;
 }
@@ -241,11 +273,11 @@
 }
 
 .p-treeselect:not(.p-disabled):hover {
-  border-color: $red-5;
+  border-color: $grey-4;
 }
 .p-treeselect:not(.p-disabled).p-focus {
-  box-shadow: 0 0 0 0.2rem #fbebed;
-  border-color: $red-5;
+  box-shadow: 0 0 0 0.2rem $grey-2;
+  border-color: $grey-4;
 }
 
 .p-togglebutton.p-button.p-highlight {
@@ -356,6 +388,50 @@
   background: rgba(96, 125, 139, 0.16);
   border-color: transparent;
   color: #4F4F4F;
+}
+
+.p-button.p-button-info, .p-buttonset.p-button-info > .p-button, .p-splitbutton.p-button-info > .p-button {
+  color: #ffffff;
+  background: $blue-6;
+  border: 1px solid $blue-6;
+}
+.p-button.p-button-info:enabled:hover, .p-buttonset.p-button-info > .p-button:enabled:hover, .p-splitbutton.p-button-info > .p-button:enabled:hover {
+  background: $blue-7;
+  color: #ffffff;
+  border-color: $blue-7;
+}
+.p-button.p-button-info:enabled:active, .p-buttonset.p-button-info > .p-button:enabled:active, .p-splitbutton.p-button-info > .p-button:enabled:active {
+  background: $blue-7;
+  color: #ffffff;
+  border-color: $blue-7;
+}
+.p-button.p-button-info.p-button-outlined, .p-buttonset.p-button-info > .p-button.p-button-outlined, .p-splitbutton.p-button-info > .p-button.p-button-outlined {
+  background-color: $white;
+  color: $blue-7;
+  border: 1px solid $blue-7;
+}
+.p-button.p-button-info.p-button-outlined:enabled:hover, .p-buttonset.p-button-info > .p-button.p-button-outlined:enabled:hover, .p-splitbutton.p-button-info > .p-button.p-button-outlined:enabled:hover {
+  background: $blue-1;
+  color: $blue-8;
+  border: 1px solid $blue-7;
+}
+.p-button.p-button-info.p-button-outlined:enabled:active, .p-buttonset.p-button-info > .p-button.p-button-outlined:enabled:active, .p-splitbutton.p-button-info > .p-button.p-button-outlined:enabled:active {
+  background: $blue-1;
+  color: $blue-8;
+  border: 1px solid $blue-7;
+}
+.p-button.p-button-info.p-button-text, .p-buttonset.p-button-info > .p-button.p-button-text, .p-splitbutton.p-button-info > .p-button.p-button-text {
+  color: $white;
+}
+.p-button.p-button-info.p-button-text:enabled:hover, .p-buttonset.p-button-info > .p-button.p-button-text:enabled:hover, .p-splitbutton.p-button-info > .p-button.p-button-text:enabled:hover {
+  background: $blue-1;
+  border-color: transparent;
+  color: $blue-7;
+}
+.p-button.p-button-info.p-button-text:enabled:active, .p-buttonset.p-button-info > .p-button.p-button-text:enabled:active, .p-splitbutton.p-button-info > .p-button.p-button-text:enabled:active {
+  background: $blue-1;
+  border-color: transparent;
+  color: $blue-7;
 }
 
 .p-button.p-button-link {
@@ -498,101 +574,6 @@
   box-shadow: inset 0 0 0 0.15rem #fbebed;
 }
 
-.fc.fc-unthemed .fc-view-container .fc-event {
-  background: #7d1b2a;
-  border: 1px solid #7d1b2a;
-  color: #ffffff;
-}
-.fc.fc-unthemed .fc-toolbar .fc-button {
-  color: #ffffff;
-  background: $red-5;
-  border: 1px solid $red-5;
-}
-.fc.fc-unthemed .fc-toolbar .fc-button:enabled:hover {
-  background: #7d1b2a;
-  color: #ffffff;
-  border-color: #7d1b2a;
-}
-.fc.fc-unthemed .fc-toolbar .fc-button:enabled:active {
-  background: #6d1825;
-  color: #ffffff;
-  border-color: #6d1825;
-}
-.fc.fc-unthemed .fc-toolbar .fc-button:enabled:active:focus {
-  box-shadow: 0 0 0 0.2rem #fbebed;
-}
-.fc.fc-unthemed .fc-toolbar .fc-button:focus {
-  box-shadow: 0 0 0 0.2rem #fbebed;
-}
-.fc.fc-unthemed .fc-toolbar .fc-button.fc-dayGridMonth-button.fc-button-active, .fc.fc-unthemed .fc-toolbar .fc-button.fc-timeGridWeek-button.fc-button-active, .fc.fc-unthemed .fc-toolbar .fc-button.fc-timeGridDay-button.fc-button-active {
-  background: $red-5;
-  border-color: $red-5;
-  color: #ffffff;
-}
-.fc.fc-unthemed .fc-toolbar .fc-button.fc-dayGridMonth-button.fc-button-active:hover, .fc.fc-unthemed .fc-toolbar .fc-button.fc-timeGridWeek-button.fc-button-active:hover, .fc.fc-unthemed .fc-toolbar .fc-button.fc-timeGridDay-button.fc-button-active:hover {
-  background: #7d1b2a;
-  border-color: #7d1b2a;
-  color: #ffffff;
-}
-.fc.fc-unthemed .fc-toolbar .fc-button.fc-dayGridMonth-button:focus, .fc.fc-unthemed .fc-toolbar .fc-button.fc-timeGridWeek-button:focus, .fc.fc-unthemed .fc-toolbar .fc-button.fc-timeGridDay-button:focus {
-  box-shadow: 0 0 0 0.2rem #fbebed;
-  z-index: 1;
-}
-.fc.fc-theme-standard .fc-view-harness .fc-popover .fc-popover-header .fc-popover-close:focus {
-  box-shadow: 0 0 0 0.2rem #fbebed;
-}
-.fc.fc-theme-standard .fc-view-harness .fc-event.fc-daygrid-block-event {
-  color: #ffffff;
-  background: #7d1b2a;
-  border-color: #7d1b2a;
-}
-.fc.fc-theme-standard .fc-view-harness .fc-event.fc-daygrid-block-event .fc-event-main {
-  color: #ffffff;
-}
-.fc.fc-theme-standard .fc-view-harness .fc-event.fc-daygrid-dot-event .fc-daygrid-event-dot {
-  background: #7d1b2a;
-  border-color: #7d1b2a;
-}
-.fc.fc-theme-standard .fc-toolbar .fc-button {
-  color: #ffffff;
-  background: $red-5;
-  border: 1px solid $red-5;
-}
-.fc.fc-theme-standard .fc-toolbar .fc-button:enabled:hover {
-  background: #7d1b2a;
-  color: #ffffff;
-  border-color: #7d1b2a;
-}
-.fc.fc-theme-standard .fc-toolbar .fc-button:enabled:active {
-  background: #6d1825;
-  color: #ffffff;
-  border-color: #6d1825;
-}
-.fc.fc-theme-standard .fc-toolbar .fc-button:enabled:active:focus {
-  box-shadow: 0 0 0 0.2rem #fbebed;
-}
-.fc.fc-theme-standard .fc-toolbar .fc-button:disabled {
-  color: #ffffff;
-  background: $red-5;
-  border: 1px solid $red-5;
-}
-.fc.fc-theme-standard .fc-toolbar .fc-button:focus {
-  box-shadow: 0 0 0 0.2rem #fbebed;
-}
-.fc.fc-theme-standard .fc-toolbar .fc-button.fc-dayGridMonth-button.fc-button-active, .fc.fc-theme-standard .fc-toolbar .fc-button.fc-timeGridWeek-button.fc-button-active, .fc.fc-theme-standard .fc-toolbar .fc-button.fc-timeGridDay-button.fc-button-active {
-  background: $red-5;
-  border-color: $red-5;
-  color: #ffffff;
-}
-.fc.fc-theme-standard .fc-toolbar .fc-button.fc-dayGridMonth-button.fc-button-active:hover, .fc.fc-theme-standard .fc-toolbar .fc-button.fc-timeGridWeek-button.fc-button-active:hover, .fc.fc-theme-standard .fc-toolbar .fc-button.fc-timeGridDay-button.fc-button-active:hover {
-  background: #7d1b2a;
-  border-color: #7d1b2a;
-  color: #ffffff;
-}
-.fc.fc-theme-standard .fc-toolbar .fc-button.fc-dayGridMonth-button:not(:disabled):focus, .fc.fc-theme-standard .fc-toolbar .fc-button.fc-timeGridWeek-button:not(:disabled):focus, .fc.fc-theme-standard .fc-toolbar .fc-button.fc-timeGridDay-button:not(:disabled):focus {
-  box-shadow: 0 0 0 0.2rem #fbebed;
-}
-
 .p-orderlist .p-orderlist-list .p-orderlist-item:focus {
   box-shadow: inset 0 0 0 0.15rem #fbebed;
 }
@@ -610,11 +591,14 @@
   background-color: #ffffff;
 }
 
+.p-tree .p-tree-container .p-treenode .p-treenode-content .p-treenode-label {
+  margin-left: -32px;
+}
 .p-tree .p-tree-container .p-treenode .p-treenode-content .p-tree-toggler:focus {
-  box-shadow: 0 0 0 0.2rem #fbebed;
+  box-shadow: 0 0 0 0.2rem $grey-2;
 }
 .p-tree .p-tree-container .p-treenode .p-treenode-content:focus {
-  box-shadow: inset 0 0 0 0.15rem #fbebed;
+  box-shadow: inset 0 0 0 0.15rem $grey-2;
 }
 
 .p-treetable .p-sortable-column {
@@ -667,7 +651,22 @@
 }
 
 .p-dialog .p-dialog-header .p-dialog-header-icon:focus {
-  box-shadow: 0 0 0 0.2rem #fbebed;
+  box-shadow: 0 0 0 0.2rem $grey-2;
+}
+.p-dialog.p-confirm-dialog {
+  .p-dialog-header {
+    padding: 1.5rem 2rem;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+  }
+  .p-dialog-content {
+    padding: 0 2.5rem 2rem 2.5rem
+  }
+  .p-dialog-footer {
+    padding: 0 2rem 1.5rem 2rem;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+  }
 }
 .p-overlaypanel .p-overlaypanel-close {
   background: $red-5;

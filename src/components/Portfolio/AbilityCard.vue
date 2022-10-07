@@ -20,7 +20,7 @@
         placeholder='為這些經歷訂定一個主題吧'
         @input='$emit("update:abilityTopic", $event.target.value)'
       />
-      <XCircleIcon class='ability-card__delete' @click.stop='$emit("delete-ability")' />
+      <mdicon name='closeCircle' class='ability-card__delete' size='24' @click.stop='$emit("delete-ability")' />
     </div>
     <hr />
     <div class='ability-card__body'>
@@ -48,7 +48,7 @@
                 </span>
                 <Menu as='div' class='experience-card__menu'>
                   <MenuButton class='experience-card__menu-btn'>
-                    <DotsVerticalIcon class='experience-card__delete' />
+                    <mdicon name='dotsVertical' class='experience-card__delete' size='24' />
                   </MenuButton>
                   <transition name='menu-fade'>
                     <MenuItems as='ul' class='experience-card__menu-items'>
@@ -107,7 +107,6 @@
 import draggable from 'vuedraggable'
 import useGrab from '@/composables/useGrab'
 import { Menu, MenuButton, MenuItems, MenuItem } from '@headlessui/vue'
-import { XCircleIcon, DotsVerticalIcon } from '@heroicons/vue/solid'
 
 export default {
   name: 'AbilityCard',
@@ -117,8 +116,6 @@ export default {
     MenuButton,
     MenuItems,
     MenuItem,
-    XCircleIcon,
-    DotsVerticalIcon
   },
   props: {
     experiences: {
@@ -199,10 +196,8 @@ export default {
     box-sizing: content-box;
   }
   &__delete {
-    cursor: pointer;
-    width: 24px;
-    height: 24px;
     color: $red-5;
+    margin-right: 12px;
   }
   hr {
     height: 1px;
@@ -225,7 +220,7 @@ export default {
       padding: 10px;
       line-height: 20px;
       text-align: center;
-      color: $blue-dark;
+      color: $blue-6;
       background: $grey-blue;
       border-radius: 8px;
     }
@@ -296,17 +291,14 @@ export default {
   &__name {
     font-size: 21px;
     line-height: 34px;
-    color: $blue-dark;
+    color: $blue-6;
     font-weight: normal;
   }
   &__position {
     margin-right: auto;
-    color: $blue-dark;
+    color: $blue-6;
   }
   &__delete {
-    cursor: pointer;
-    width: 24px;
-    height: 24px;
     color: $grey-4;
   }
   &__tags {
@@ -316,7 +308,7 @@ export default {
     padding: 10px 0;
     .tag {
       font-weight: $weight-light;
-      color: $blue-dark;
+      color: $blue-6;
     }
   }
   &__description {

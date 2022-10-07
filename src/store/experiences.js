@@ -5,9 +5,9 @@ import {
   importExperiences as importExperiencesAPI
 } from '@/api/experiences'
 import { getNCKUExperiences as getNCKUExperiencesAPI } from '@/api/ncku-portal'
-import { semesterToDate, dateToSemester } from '@/helpers'
 import { sortExperiences, classifyBySemester, orderBySemester } from '@/helpers/experiences.helper'
 import { KeyNoPairedError } from '@/config'
+import { dateToSemester, semesterToDate } from '@/helpers/semester.helper'
 
 const experiences = {
   namespaced: true,
@@ -204,6 +204,12 @@ const experiences = {
         }
       }
       return [...tags]
+    },
+    // return undefined if not found
+    experienceByTypeAndId(state) {
+      return (type, id) => {
+        return state.experiences?.[type]?.filter(exp => exp.id === id)?.[0]
+      }
     }
   }
 }

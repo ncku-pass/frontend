@@ -17,37 +17,24 @@
         <span v-if='device !== "mobile"' class='p-button-label'>編輯</span>
       </Button>
       <!-- TODO:  寫死的資料改掉-->
-      <Button class='p-button-rounded p-button-secondary p-button-sm' @click.stop='confirmDelete'>
+      <Button class='p-button-rounded p-button-secondary p-button-sm' @click.stop='showDeleteConfirm'>
         <mdicon name='trashCanOutline' :size='device === "mobile" ? 14 : 20' />
         <span v-if='device !== "mobile"' class='p-button-label'>刪除</span>
       </Button>
     </div>
-    <ConfirmModal v-if='showConfirmModal' :message='experience.name' confirm-type='delete' @cancel='closeConfirmModal'>
-      <Button
-        v-show='!deleteStatus.isPending'
-        class='p-button-outlined p-button-secondary'
-        label='取消'
-        @click.stop='closeConfirmModal'
-      />
-      <Button
-        :disabled='deleteStatus.isPending'
-        :label='deleteStatus.isPending ? "刪除中" : "確定刪除"'
-        @click.stop='handleDeleteExperience'
-      />
-    </ConfirmModal>
   </li>
 </template>
 
 <script>
+import { reactive } from 'vue'
 import Button from 'primevue/button'
 import Chip from 'primevue/chip'
-import ConfirmModal from '@/components/ConfirmModal'
+import { useConfirm } from 'primevue/useconfirm'
+
 import { deleteExperience } from '@/api/experiences'
-import { useDeleteModal } from '@/composables/useDeleteModal'
 
 export default {
   components: {
-    ConfirmModal,
     Button,
     Chip,
   },
@@ -62,18 +49,24 @@ export default {
   },
   emits: ['delete', 'edit'],
   setup(props, { emit }) {
-    // === 刪除經歷 ===
-    const { showConfirmModal, deleteStatus, closeConfirmModal, confirmDelete } = useDeleteModal()
+    const deleteStatus = reactive({
+      isPending: false,
+      error: null
+    })
+
     // TODO: 用vuex去處理
     const handleDeleteExperience = async() => {
       try {
         deleteStatus.isPending = true
         deleteStatus.error = null
         await deleteExperience(props.experience.id)
-        showConfirmModal.value = false
+
+        confirm.close()
         emit('delete')
+
       } catch (error) {
         deleteStatus.error = error
+
       } finally {
         deleteStatus.isPending = false
       }
@@ -83,12 +76,23 @@ export default {
       emit('edit', props.experience.id)
     }
 
+    // === CONFIRMATION MODEL ===
+    const confirm = useConfirm()
+    const showDeleteConfirm = () => {
+      confirm.require({
+        group: 'delete-exp',
+        message: props.experience.name,
+        acceptLabel: '確定刪除',
+        rejectLabel: '取消',
+        accept: () => {
+          handleDeleteExperience()
+        },
+      })
+    }
+
     return {
-      showConfirmModal,
-      closeConfirmModal,
-      confirmDelete,
+      showDeleteConfirm,
       deleteStatus,
-      handleDeleteExperience,
       handleEditExperience,
     }
   },

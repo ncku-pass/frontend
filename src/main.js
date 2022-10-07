@@ -9,7 +9,6 @@ import { Vue3Mq } from 'vue3-mq'
 import Toast from 'vue-toastification'
 
 // styles
-import '@vueform/multiselect/themes/default.css'
 import 'vue-toastification/dist/index.css'
 import '@/scss/index.scss'
 
@@ -19,6 +18,7 @@ import 'primeicons/primeicons.css'
 import 'primevue/resources/themes/saga-blue/theme.css'
 import '@/scss/_theme.scss'
 import ToastService from 'primevue/toastservice'
+import ConfirmationService from 'primevue/confirmationservice'
 
 // icon
 import mdiVue from 'mdi-vue/v3'
@@ -64,6 +64,7 @@ async function startApp() {
       }
     }, router)
     .use(ToastService)
+    .use(ConfirmationService)
     .mount('#app')
 }
 

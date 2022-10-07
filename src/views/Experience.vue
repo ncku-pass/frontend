@@ -30,12 +30,11 @@
       @import-ncku-data='handleImportNCKUData'
     />
   </div>
-  <FormModal
-    v-if='showFormModal'
-    :form-type='activeTab'
-    :edit-data='experienceToEdit'
-    @close='showFormModal = false'
-    @submit='handleSubmit'
+  <AddExperienceDialog
+    :visible='showAddExperienceDialog'
+    :exp-type='activeTab'
+    :exp-id='targetExpId'
+    @close-dialog='onCloseAddExpDialog'
   />
   <ViewerModal
     v-if='showViewerModal'
@@ -44,6 +43,15 @@
     @close='showViewerModal = false'
   />
   <ImportModal v-if='showImportModal' :type='activeTab' @close='showImportModal = false' />
+  <ConfirmDialog class='no-header no-icon' group='delete-exp'>
+    <template #message='slotProps'>
+      <div>
+        確定要刪除
+        <span :style='{"color": `var(--primary-500)`}'>{{ slotProps.message.message }}</span>
+        此項歷程？
+      </div>
+    </template>
+  </ConfirmDialog>
 </template>
 
 <script>
@@ -51,17 +59,18 @@ import { ref, computed, watch } from 'vue'
 import { useStore } from 'vuex'
 import Toast from 'primevue/toast'
 import { useToast } from 'primevue/usetoast'
+import ConfirmDialog from 'primevue/confirmdialog'
 
 import Loader from '@/components/Loader'
 import ExperienceNavbar from '@/components/Experience/ExperienceNavbar.vue'
 import ExperienceListItem from '@/components/Experience/ExperienceListItem.vue'
 import ExperienceListBlock from '@/components/Experience/ExperienceListBlock.vue'
-import AddExperienceButton from '@/components/Experience/AddExperienceButton.vue'
-import FormModal from '@/components/Experience/Form/FormModal.vue'
+import AddExperienceButton from '@/components/Experience/AddExp/AddExperienceButton.vue'
+import AddExperienceDialog from '@/components/Experience/AddExp/AddExperienceDialog.vue'
 import ViewerModal from '@/components/Experience/ViewerModal.vue'
 import ImportModal from '@/components/Experience/ImportModal.vue'
 import { canImportFromSchool } from '@/helpers/experiences.helper'
-import { isCurrentOrLastSemester } from '@/helpers/datetime.helper'
+import { isCurrentOrLastSemester } from '@/helpers/semester.helper'
 
 export default {
   name: 'Experience',
@@ -71,9 +80,10 @@ export default {
     ExperienceListItem,
     ExperienceListBlock,
     AddExperienceButton,
-    FormModal,
+    AddExperienceDialog,
     ViewerModal,
     ImportModal,
+    ConfirmDialog,
     Toast,
   },
   inject: ['mq'],
@@ -92,22 +102,18 @@ export default {
     store.dispatch('experiences/initExperiences')
 
     const isPending = computed(() => store.state.experiences.isPending)
-    const experiences = computed(() => store.state.experiences.experiences)
     const classifiedExperiences = computed(() => store.getters['experiences/classifiedExperiences'])
     const getExperiences = () => store.dispatch('experiences/getExperiences')
 
     // ===新增活動表單===
-    const showFormModal = ref(false)
+    const showAddExperienceDialog = ref(false)
     const handleAddExperience = () => {
-      localStorage.setItem('add-exp-clicked', 'true')
-      showButtonBadge.value = false
-      showFormModal.value = true
-      experienceToEdit.value = null
-    }
+      showAddExperienceDialog.value = true
+      targetExpId.value = null
 
-    // ===處理表單送出===
-    const handleSubmit = () => {
-      showFormModal.value = false
+      // small circle on add exp btn
+      showButtonBadge.value = false
+      localStorage.setItem('add-exp-clicked', 'true')
     }
 
     // ===處理經驗刪除===
@@ -115,13 +121,19 @@ export default {
       getExperiences()
     }
 
-    // ===點擊編輯的按鈕時，抓出此筆經歷，傳入表單中===
-    const experienceToEdit = ref(null)
-    const handleEditExperience = experienceId => {
-      showFormModal.value = true
-      ;[experienceToEdit.value] = experiences.value[props.activeTab].filter(exp => {
-        return exp.id === experienceId
-      })
+    // === EDIT EXP ===
+    const targetExpId = ref(-1)
+    const handleEditExperience = (expId) => {
+      targetExpId.value = expId
+      showAddExperienceDialog.value = true
+    }
+    const onCloseAddExpDialog = (submitClose) => {
+      targetExpId.value = null
+      showAddExperienceDialog.value = false
+
+      if (submitClose) {
+        getExperiences()
+      }
     }
 
     // === 點擊經歷時，跳出檢視視窗 ===
@@ -164,12 +176,12 @@ export default {
     return {
       isPending,
       classifiedExperiences,
-      showFormModal,
+      showAddExperienceDialog,
       handleAddExperience,
-      handleSubmit,
       handleDelete,
+      onCloseAddExpDialog,
       handleEditExperience,
-      experienceToEdit,
+      targetExpId,
       showViewerModal,
       openViewerModal,
       experienceToShow,

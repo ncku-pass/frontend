@@ -105,36 +105,8 @@
   }
 }
 
-// ===== 表單類 =====
-.form-label {
-  @include grid(column, 0, 10px);
-  justify-content: flex-start;
-  align-items: center;
-  color: $blue-dark;
-  line-height: 24px;
-  font-weight: 500;
-  letter-spacing: 0.05em;
-  margin-bottom: 8px;
-  &__info {
-    height: 16px;
-    width: 16px;
-    cursor: pointer;
-    margin-top: 2px;
-  }
-}
-
-.form-control {
-  display: block;
+.p-inputtext, .p-inputwrapper {
   width: 100%;
-  padding: 10px 12px;
-  line-height: 1.5;
-  border: 1px solid $grey-2;
-  border-radius: 8px;
-  line-break: anywhere;
-  background-color: #fff;
-  &.not-selected {
-    color: $grey-4;
-  }
 }
 
 // 成功入口登入按鈕
@@ -155,6 +127,12 @@
    cursor: pointer;
 }
 
+.inline-code {
+  padding: 0 7px;
+  background-color: $grey-1;
+  border-radius: 5px;
+  display: inline-block;
+}
 
 .button-badge {
   position: absolute;
@@ -164,4 +142,26 @@
   width: 15px;
   border-radius: 10px;
   background-color: $red-4;
+}
+
+.p-confirm-dialog.no-header {
+  .p-dialog-header {
+    display: none;
+  }
+  .p-dialog-content {
+    padding: 2rem 2.5rem !important;
+    border-top-right-radius: 8px;
+    border-top-left-radius: 8px;
+  }
+}
+
+.p-confirm-dialog.no-icon {
+  .p-dialog-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .p-confirm-dialog-message {
+    margin-left: 0 !important;
+  }
 }

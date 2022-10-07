@@ -4,7 +4,7 @@
       登入E-portfolio
     </h2>
     <div>
-      <label for='studentId' class='form-label'>帳號</label>
+      <label for='studentId'>帳號</label>
       <input
         id='studentId'
         v-model='authData.studentId'
@@ -16,7 +16,7 @@
       />
     </div>
     <div>
-      <label for='password' class='form-label'>密碼</label>
+      <label for='password'>密碼</label>
       <input
         id='password'
         v-model='authData.password'
