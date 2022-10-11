@@ -58,23 +58,14 @@ export default {
     border-radius: 10px;
     color: $white;
     flex-shrink: 0;
-    &--course {
-      background-color: $blue;
+    &--course, &--activity {
+      background-color: $blue-3;
     }
-    &--activity {
-      background-color: $red-4;
-    }
-    &--competition {
-      background-color: $purple;
-    }
-    &--work {
-      background-color: $green;
-    }
-    &--certificate {
-      background-color: $fuchsia;
+    &--competition, &--work, &--certificate {
+      background-color: $blue-6;
     }
     &--other {
-      background-color: $yellow;
+      background-color: $grey-5;
     }
   }
   &__name {

@@ -125,19 +125,18 @@ export default {
     display: flex;
     flex-wrap: wrap;
     justify-content: flex-start;
-    gap: 5px;
+    gap: 8px;
     &__tag {
-      padding: 10px;
-      color: $grey-6;
-      border: 1px solid $grey-6;
-      border-radius: 15px;
-      line-height: 14px;
+      padding: 6px 8px;
+      color: $grey-3;
+      border: 1px solid $grey-3;
+      border-radius: 10px;
       cursor: pointer;
       user-select: none;
       &--selected {
         color: $white;
-        border-color: $red-5;
-        background-color: $red-5;
+        border-color: $blue-3;
+        background-color: $blue-3;
       }
     }
   }

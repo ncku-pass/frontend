@@ -53,7 +53,7 @@
   &.router-link-active,
   &.is-active {
     color: $grey-6;
-    box-shadow: 0px -3px 0px $red-5 inset;
+    box-shadow: 0px -3px 0px rgba($red-3, 0.5) inset;
   }
   &:hover {
     color: $grey-6;

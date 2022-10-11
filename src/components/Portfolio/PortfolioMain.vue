@@ -32,12 +32,14 @@
               maxlength='25'
             />
             <div class='content-header__btns'>
-              <Button @click='showDeleteConfirm'>
+              <Button
+                class='p-button-secondary p-button-outlined'
+                @click='showDeleteConfirm'
+              >
                 刪除
               </Button>
               <div :style='{ "position": "relative" }'>
                 <Button
-                  class='p-button-secondary p-button-outlined'
                   :disabled='isPending || !notSaved'
                   @click='handleSave'
                 >
@@ -71,10 +73,10 @@
               </div>
             </div>
             <div class='content-body__btns'>
-              <Button class='p-button-info' @click='handleAddCard("experience")'>
+              <Button @click='handleAddCard("experience")'>
                 + 新增經歷區塊
               </Button>
-              <Button class='p-button-info' @click='handleAddCard("text")'>
+              <Button @click='handleAddCard("text")'>
                 + 新增文字區塊
               </Button>
             </div>

@@ -20,7 +20,7 @@
         placeholder='為這些經歷訂定一個主題吧'
         @input='$emit("update:abilityTopic", $event.target.value)'
       />
-      <mdicon name='closeCircle' class='ability-card__delete' size='24' @click.stop='$emit("delete-ability")' />
+      <mdicon name='closeCircleOutline' class='ability-card__delete' size='24' @click.stop='$emit("delete-ability")' />
     </div>
     <hr />
     <div class='ability-card__body'>
@@ -196,7 +196,7 @@ export default {
     box-sizing: content-box;
   }
   &__delete {
-    color: $red-5;
+    color: $grey-4;
     margin-right: 12px;
   }
   hr {

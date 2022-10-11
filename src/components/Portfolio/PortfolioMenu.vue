@@ -176,7 +176,7 @@ export default {
   margin: 26px 0;
   background-color: #fff;
   border-radius: 10px;
-  box-shadow: 0px 0px 30px rgba(241, 90, 96, 0.05), 0px 0px 25px rgba(241, 90, 96, 0.1);
+  box-shadow: 0 0 30px rgba(241, 90, 96, 0.05), 0 0 25px rgba(241, 90, 96, 0.1);
   &__header {
     display: flex;
     justify-content: space-between;
