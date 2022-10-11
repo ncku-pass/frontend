@@ -2,7 +2,7 @@
   <Dialog
     id='add-exp-dialog'
     v-model:visible='showDialog'
-    header='新增經驗'
+    :header='expId ? `修改學習歷程` : `新增學習歷程`'
     :dismissableMask='true'
     :modal='true'
     :draggable='false'
