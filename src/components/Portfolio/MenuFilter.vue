@@ -10,8 +10,8 @@
             <li
               v-for='(checked, semester) in filter.semesters'
               :key='semester'
-              class='filter-block__tags__tag'
-              :class='{ "filter-block__tags__tag--selected": checked }'
+              class='semester filter-block__tags__tag'
+              :class='{ "selected": checked }'
               @click='$emit("toggleSemester", semester)'
             >
               {{ semester }}
@@ -28,8 +28,8 @@
             <li
               v-for='(checked, tag) in filter.tags'
               :key='tag'
-              class='filter-block__tags__tag'
-              :class='{ "filter-block__tags__tag--selected": checked }'
+              class='tags filter-block__tags__tag'
+              :class='{ "selected": checked }'
               @click='$emit("toggleTag", tag)'
             >
               {{ tag }}
@@ -44,8 +44,8 @@
             <li
               v-for='(checked, type) in filter.types'
               :key='type'
-              class='filter-block__tags__tag'
-              :class='{ "filter-block__tags__tag--selected": checked }'
+              class='type filter-block__tags__tag'
+              :class='{ "selected": checked }'
               @click='$emit("toggleType", type)'
             >
               {{ chineseOfExperienceTypes[type] }}
@@ -133,10 +133,16 @@ export default {
       border-radius: 10px;
       cursor: pointer;
       user-select: none;
-      &--selected {
+
+      &.semester.selected, &.type.selected {
         color: $white;
         border-color: $blue-3;
         background-color: $blue-3;
+      }
+      &.tags.selected {
+        color: $white;
+        border-color: $blue-6;
+        background-color: $blue-6;
       }
     }
   }
