@@ -307,18 +307,14 @@ export default {
     border-radius: 8px !important;
 
     .p-overlaypanel-content {
-      .tags {
-        .title {
-          color: $blue-6;
-          font-weight: 500;
-        }
-
-        p {
-          margin-top: 5px;
-          margin-bottom: 10px;
-        }
+      .title {
+        color: $blue-6;
+        font-weight: 500;
       }
-
+      p {
+        margin-top: 5px;
+        margin-bottom: 10px;
+      }
       .inline-code {
         padding: 0 7px;
         background-color: $grey-1;

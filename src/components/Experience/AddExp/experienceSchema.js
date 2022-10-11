@@ -71,7 +71,7 @@ export const course = [
       resolve({
         render() {
           return (
-           <div className='tags'>
+           <div>
               <div className='title'>創建Tag</div>
               <p>輸入完畢後按下<code className='inline-code'>Enter</code>新增</p>
               <div className='title'>搜尋Tag</div>
@@ -146,6 +146,21 @@ export const activity = [
     defaultValue: null,
     validations: [requiredValidatorWithCustomMsg, null],
     required: true,
+    remarks: defineAsyncComponent(() => new Promise((resolve) => {
+      resolve({
+        render() {
+          return (
+           <div>
+              <div className='title'>一日活動</div>
+              <p>直接點擊月曆中的日期</p>
+              <div className='title'>多日活動</div>
+              <p>先點選活動起始日，再點選活動結束日</p>
+              <p>※ 選完日期後點擊空白處即可退出</p>
+            </div>
+          )
+        },
+      })
+    }))
   },
   {
     inputKey: 'categories',
@@ -167,7 +182,7 @@ export const activity = [
       resolve({
         render() {
           return (
-           <div className='tags'>
+           <div>
               <div className='title'>創建Tag</div>
               <p>輸入完畢後按下<code className='inline-code'>Enter</code>新增</p>
               <div className='title'>搜尋Tag</div>
@@ -243,6 +258,21 @@ export const competition = [
     defaultValue: null,
     validations: [requiredValidatorWithCustomMsg, null],
     required: true,
+    remarks: defineAsyncComponent(() => new Promise((resolve) => {
+      resolve({
+        render() {
+          return (
+           <div>
+              <div className='title'>一日活動</div>
+              <p>直接點擊月曆中的日期</p>
+              <div className='title'>多日活動</div>
+              <p>先點選活動起始日，再點選活動結束日</p>
+              <p>※ 選完日期後點擊空白處即可退出</p>
+            </div>
+          )
+        },
+      })
+    }))
   },
   {
     inputKey: 'tags',
@@ -255,7 +285,7 @@ export const competition = [
       resolve({
         render() {
           return (
-           <div className='tags'>
+           <div>
               <div className='title'>創建Tag</div>
               <p>輸入完畢後按下<code className='inline-code'>Enter</code>新增</p>
               <div className='title'>搜尋Tag</div>
@@ -330,6 +360,21 @@ export const work = [
     defaultValue: null,
     validations: [requiredValidatorWithCustomMsg, null],
     required: true,
+    remarks: defineAsyncComponent(() => new Promise((resolve) => {
+      resolve({
+        render() {
+          return (
+           <div>
+              <div className='title'>一日活動</div>
+              <p>直接點擊月曆中的日期</p>
+              <div className='title'>多日活動</div>
+              <p>先點選活動起始日，再點選活動結束日</p>
+              <p>※ 選完日期後點擊空白處即可退出</p>
+            </div>
+          )
+        },
+      })
+    }))
   },
   {
     inputKey: 'tags',
@@ -342,7 +387,7 @@ export const work = [
       resolve({
         render() {
           return (
-           <div className='tags'>
+           <div>
               <div className='title'>創建Tag</div>
               <p>輸入完畢後按下<code className='inline-code'>Enter</code>新增</p>
               <div className='title'>搜尋Tag</div>
@@ -417,6 +462,21 @@ export const certificate = [
     defaultValue: null,
     validations: [requiredValidatorWithCustomMsg, null],
     required: true,
+    remarks: defineAsyncComponent(() => new Promise((resolve) => {
+      resolve({
+        render() {
+          return (
+           <div>
+              <div className='title'>一日活動</div>
+              <p>直接點擊月曆中的日期</p>
+              <div className='title'>多日活動</div>
+              <p>先點選活動起始日，再點選活動結束日</p>
+              <p>※ 選完日期後點擊空白處即可退出</p>
+            </div>
+          )
+        },
+      })
+    }))
   },
   {
     inputKey: 'tags',
@@ -429,7 +489,7 @@ export const certificate = [
       resolve({
         render() {
           return (
-           <div className='tags'>
+           <div>
               <div className='title'>創建Tag</div>
               <p>輸入完畢後按下<code className='inline-code'>Enter</code>新增</p>
               <div className='title'>搜尋Tag</div>
@@ -495,6 +555,21 @@ export const other = [
     defaultValue: null,
     validations: [requiredValidatorWithCustomMsg, null],
     required: true,
+    remarks: defineAsyncComponent(() => new Promise((resolve) => {
+      resolve({
+        render() {
+          return (
+           <div>
+              <div className='title'>一日活動</div>
+              <p>直接點擊月曆中的日期</p>
+              <div className='title'>多日活動</div>
+              <p>先點選活動起始日，再點選活動結束日</p>
+              <p>※ 選完日期後點擊空白處即可退出</p>
+            </div>
+          )
+        },
+      })
+    }))
   },
   {
     inputKey: 'tags',
@@ -507,7 +582,7 @@ export const other = [
       resolve({
         render() {
           return (
-           <div className='tags'>
+           <div>
               <div className='title'>創建Tag</div>
               <p>輸入完畢後按下<code className='inline-code'>Enter</code>新增</p>
               <div className='title'>搜尋Tag</div>
