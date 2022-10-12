@@ -20,7 +20,7 @@ import { ref } from 'vue'
 import Calendar from 'primevue/calendar'
 
 export default {
-  name: 'FormTimeRange',
+  name: 'FormDateRange',
   components: { Calendar },
   props: {
     inputKey: {
@@ -54,8 +54,15 @@ export default {
       // start date, clear end date
       if (idx === 0) {
         emit('input', { subKey: props.inputKey[idx + 1], value: null })
+        emit('input', { subKey: props.inputKey[idx], value: convertedDate })
+      } else {
+        // end date, discard if same date as dateStart
+        if (value.value[0].toString() !== val.toString()) {
+          emit('input', { subKey: props.inputKey[idx], value: convertedDate })
+        } else {
+          value.value[idx] = null
+        }
       }
-      emit('input', { subKey: props.inputKey[idx], value: convertedDate })
     }
 
     return {

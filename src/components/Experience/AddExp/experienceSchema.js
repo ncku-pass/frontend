@@ -142,7 +142,7 @@ export const activity = [
   {
     inputKey: ['dateStart', 'dateEnd'],
     label: '活動時間',
-    type: 'FormTimeRange',
+    type: 'FormDateRange',
     defaultValue: null,
     validations: [requiredValidatorWithCustomMsg, null],
     required: true,
@@ -254,7 +254,7 @@ export const competition = [
   {
     inputKey: ['dateStart', 'dateEnd'],
     label: '競賽時間',
-    type: 'FormTimeRange',
+    type: 'FormDateRange',
     defaultValue: null,
     validations: [requiredValidatorWithCustomMsg, null],
     required: true,
@@ -356,7 +356,7 @@ export const work = [
   {
     inputKey: ['dateStart', 'dateEnd'],
     label: '實習 / 工作時間',
-    type: 'FormTimeRange',
+    type: 'FormDateRange',
     defaultValue: null,
     validations: [requiredValidatorWithCustomMsg, null],
     required: true,
@@ -458,7 +458,7 @@ export const certificate = [
   {
     inputKey: ['dateStart', 'dateEnd'],
     label: '考取時間',
-    type: 'FormTimeRange',
+    type: 'FormDateRange',
     defaultValue: null,
     validations: [requiredValidatorWithCustomMsg, null],
     required: true,
@@ -551,7 +551,7 @@ export const other = [
   {
     inputKey: ['dateStart', 'dateEnd'],
     label: '時間',
-    type: 'FormTimeRange',
+    type: 'FormDateRange',
     defaultValue: null,
     validations: [requiredValidatorWithCustomMsg, null],
     required: true,

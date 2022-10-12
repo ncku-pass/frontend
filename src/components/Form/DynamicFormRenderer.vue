@@ -15,7 +15,7 @@ import FormTextArea from './FormTextArea'
 import FormMultiSelect from './FormMultiSelect'
 import FormSelect from './FormSelect'
 import FormSelectTag from './FormSelectTag'
-import FormTimeRange from './FormTimeRange'
+import FormDateRange from './FormDateRange'
 
 export default {
   name: 'DynamicFormRenderer',
@@ -26,7 +26,7 @@ export default {
     FormMultiSelect,
     FormSelect,
     FormSelectTag,
-    FormTimeRange,
+    FormDateRange,
   },
   props: {
     schema: {
