@@ -1,35 +1,23 @@
 <template>
   <div class='ability-card'>
-    <div class='ability-card__head'>
-      <svg
-        class='ability-card__grab-area'
-        width='10'
-        height='16'
-        viewBox='0 0 10 16'
-        fill='none'
-        xmlns='http://www.w3.org/2000/svg'
-      >
-        <path
-          d='M4 14C4 15.1 3.1 16 2 16C0.9 16 0 15.1 0 14C0 12.9 0.9 12 2 12C3.1 12 4 12.9 4 14ZM2 6C0.9 6 0 6.9 0 8C0 9.1 0.9 10 2 10C3.1 10 4 9.1 4 8C4 6.9 3.1 6 2 6ZM2 0C0.9 0 0 0.9 0 2C0 3.1 0.9 4 2 4C3.1 4 4 3.1 4 2C4 0.9 3.1 0 2 0ZM8 4C9.1 4 10 3.1 10 2C10 0.9 9.1 0 8 0C6.9 0 6 0.9 6 2C6 3.1 6.9 4 8 4ZM8 6C6.9 6 6 6.9 6 8C6 9.1 6.9 10 8 10C9.1 10 10 9.1 10 8C10 6.9 9.1 6 8 6ZM8 12C6.9 12 6 12.9 6 14C6 15.1 6.9 16 8 16C9.1 16 10 15.1 10 14C10 12.9 9.1 12 8 12Z'
-          fill='#828282'
-        />
-      </svg>
-      <input
-        :value='abilityTopic'
-        class='ability-card__topic'
+    <div class='ability-card__header'>
+      <mdicon name='dragVertical' class='ability-card__header__btn-drag' />
+      <InputText
+        v-model='headerValue'
+        type='text'
+        class='input-topic'
         placeholder='為這些經歷訂定一個主題吧'
         @input='$emit("update:abilityTopic", $event.target.value)'
       />
-      <mdicon name='closeCircleOutline' class='ability-card__delete' size='24' @click.stop='$emit("delete-ability")' />
+      <mdicon name='closeCircleOutline' class='btn-delete' size='24' @click.stop='$emit("delete-ability")' />
     </div>
-    <hr />
     <div class='ability-card__body'>
       <template v-if='cardType === "experience"'>
         <p v-if='experiences.length === 0' class='ability-card__body__tips'>
           由右方列表拉入適合課程
         </p>
         <draggable
-          class='experience-list'
+          class='exp-list'
           tag='ul'
           :list='experiences'
           v-bind='draggableOptions'
@@ -37,85 +25,68 @@
           @start='handleDrag(true)'
           @end='handleDrag(false)'
         >
-          <template #item='{ element: experience, index }'>
-            <li class='experience-card' :data-id='experience.id'>
-              <div class='experience-card__header'>
-                <h3 class='experience-card__name'>
-                  {{ experience.name }}
-                </h3>
-                <span v-if='experience.showPosition' class='experience-card__position'>
-                  {{ experience.type === 'course' ? `學期成績${experience.position}分` : experience.position }}
+          <template #item='{ element: exp, index: idx }'>
+            <li class='exp-card' :data-id='exp.id'>
+              <div class='exp-card__header'>
+                <p class='title'>
+                  {{ exp.name }}
+                </p>
+                <span v-if='exp.showPosition' class='position'>
+                  {{ exp.type === 'course' ? `學期成績${exp.position}分` : exp.position }}
                 </span>
-                <Menu as='div' class='experience-card__menu'>
-                  <MenuButton class='experience-card__menu-btn'>
-                    <mdicon name='dotsVertical' class='experience-card__delete' size='24' />
-                  </MenuButton>
-                  <transition name='menu-fade'>
-                    <MenuItems as='ul' class='experience-card__menu-items'>
-                      <MenuItem v-if='experience.position' v-slot='{ active }'>
-                        <li
-                          :class='{ "experience-card__menu-item--active": active }'
-                          class='experience-card__menu-item'
-                          @click='experience.showPosition = !experience.showPosition'
-                        >
-                          {{ experience.showPosition ? '隱藏' : '顯示' }}
-                          {{ experience.type === 'course' ? '成績' : '職位/名次' }}
-                        </li>
-                      </MenuItem>
-                      <MenuItem v-if='experience.feedback' v-slot='{ active }'>
-                        <li
-                          :class='{ "experience-card__menu-item--active": active }'
-                          class='experience-card__menu-item'
-                          @click='experience.showFeedback = !experience.showFeedback'
-                        >
-                          {{ experience.showFeedback ? '隱藏心得' : '顯示心得' }}
-                        </li>
-                      </MenuItem>
-                      <MenuItem v-slot='{ active }'>
-                        <li
-                          :class='{ "experience-card__menu-item--active": active }'
-                          class='experience-card__menu-item'
-                          @click.stop='$emit("delete-experience", index)'
-                        >
-                          刪除此經驗
-                        </li>
-                      </MenuItem>
-                    </MenuItems>
-                  </transition>
-                </Menu>
+                <mdicon
+                  name='dotsVertical'
+                  class='btn-menu'
+                  @click='(evt) => onToggleMenu(evt, idx)'
+                />
+                <Menu
+                  :ref='(el) => setMenuRef(el, idx)'
+                  :model='getMenuItems(exp, idx)'
+                  :popup='true'
+                />
               </div>
-              <div class='experience-card__tags'>
-                <div v-for='tag in experience.tags' :key='tag' class='tag'>
+              <div class='exp-card__tags'>
+                <div v-for='tag in exp.tags' :key='tag' class='tag'>
                   {{ tag.name }}
                 </div>
               </div>
-              <div v-if='experience.showFeedback' class='experience-card__description'>
-                {{ experience.feedback }}
+              <div v-if='exp.showFeedback' class='exp-card__body'>
+                {{ exp.feedback }}
               </div>
             </li>
           </template>
         </draggable>
       </template>
       <template v-else>
-        <textarea :value='text' class='ability-card__text' placeholder='在此輸入文字內容' @input='handleTextInput' />
+        <Textarea
+          v-model='description'
+          class='ability-card__body__input'
+          placeholder='在此輸入文字內容'
+          :autoResize='true'
+          :rows='3'
+          @input='$emit("update:text", $event.target.value)'
+        />
       </template>
     </div>
   </div>
 </template>
 
 <script>
+import { ref, onBeforeUpdate } from 'vue'
+
 import draggable from 'vuedraggable'
 import useGrab from '@/composables/useGrab'
-import { Menu, MenuButton, MenuItems, MenuItem } from '@headlessui/vue'
+import Menu from 'primevue/menu'
+import InputText from 'primevue/inputtext'
+import Textarea from 'primevue/textarea'
 
 export default {
   name: 'AbilityCard',
   components: {
-    draggable,
+    InputText,
+    Textarea,
     Menu,
-    MenuButton,
-    MenuItems,
-    MenuItem,
+    draggable,
   },
   props: {
     experiences: {
@@ -142,6 +113,9 @@ export default {
   },
   emits: ['update:abilityTopic', 'update:text', 'delete-experience', 'delete-ability'],
   setup(props, { emit }) {
+    const headerValue = ref(props.abilityTopic)
+    const description = ref(props.text)
+
     const { setIsGrabbing } = useGrab()
 
     const handleDrag = onDragging => {
@@ -160,61 +134,103 @@ export default {
       }
     }
 
-    const handleTextInput = e => {
-      emit('update:text', e.target.value)
-      if (e.target.scrollHeight > 80) {
-        e.target.style.height = '5px'
-        e.target.style.height = `${e.target.scrollHeight}px`
+    // === Experience Menu ===
+    const menuRefs = ref([])
+    const setMenuRef = (el, idx) => {
+      // need to use idx because menu is not loaded in seq
+      // use push will lead to wrong idx for deleting exp
+      if (el) {
+        menuRefs.value[idx] = el
       }
     }
+    // make sure to reset the refs before each update
+    onBeforeUpdate(() => {
+      menuRefs.value = []
+    })
 
-    return { setIsGrabbing, handleDrag, draggableOptions, handleTextInput }
+    const onToggleMenu = (evt, idx) => {
+      menuRefs.value[idx].toggle(evt)
+    }
+
+    const getMenuItems = (exp, idx) => {
+      const items = []
+
+      if (exp.position) {
+        items.push({
+          label: `${exp.showPosition ? '隱藏' : '顯示'}${exp.type === 'course' ? '成績' : '職位/名次'}`,
+          command: () => { exp.showPosition = !exp.showPosition }
+        })
+      }
+      if (exp.feedback) {
+        items.push({
+          label: `${exp.showFeedback ? '隱藏' : '顯示'}心得`,
+          command: () => { exp.showFeedback = !exp.showFeedback }
+        })
+      }
+      items.push({
+        label: '刪除此經驗',
+        command: () => { emit('delete-experience', idx) }
+      })
+
+      return items
+    }
+
+    return {
+      headerValue,
+      description,
+      setIsGrabbing,
+      handleDrag,
+      draggableOptions,
+      setMenuRef,
+      getMenuItems,
+      onToggleMenu
+    }
   }
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang='scss' scoped>
 @import '~@/scss/variables';
 @import '~@/scss/mixins';
 
 .ability-card {
+  [class*='btn'] {
+    color: $grey-4;
+    &:hover {
+      color: $grey-5;
+    }
+  }
+
   @include grid(row, 12px, 0);
   position: relative;
   user-select: none;
   margin-bottom: 12px;
-  padding: 15px 0;
-  background-color: #f8f8f8;
+  padding: 16px;
+  background-color: $grey-0;
   border-radius: 8px;
-  &__head {
+
+  &__header {
     display: flex;
     align-items: center;
-    padding: 0 10px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #E0E0E0;
+
+    &.btn-drag {
+      cursor: grab;
+    }
+
+    .input-topic {
+      background-color: transparent;
+      border: none;
+      font-size: 20px;
+      margin-right: 24px;
+      &:focus {
+        box-shadow: 0 0 0 0.1rem $grey-4 !important;
+      }
+    }
   }
-  &__grab-area {
-    padding: 4px 7px;
-    cursor: grab;
-    box-sizing: content-box;
-  }
-  &__delete {
-    color: $grey-4;
-    margin-right: 12px;
-  }
-  hr {
-    height: 1px;
-    margin: 0;
-    background-color: $grey-2;
-    border: none;
-  }
-  &__topic {
-    background-color: transparent;
-    border: none;
-    padding: 10px 8px;
-    flex: 1;
-    font-size: 21px;
-    width: 100%;
-  }
+
   &__body {
-    padding: 0 15px;
     &__tips {
       margin-bottom: -40px;
       padding: 10px;
@@ -224,101 +240,69 @@ export default {
       background: $grey-blue;
       border-radius: 8px;
     }
+
+    &__input {
+      border: none;
+      &:focus {
+        box-shadow: 0 0 0 0.1rem $grey-4 !important;
+      }
+    }
   }
-  &__text {
-    width: 100%;
-    outline: none;
-    border: none;
-    padding: 15px;
-    border-radius: 8px;
-    margin: 12px 0 0 0;
-    background-color: #fff;
-    resize: none;
-    line-height: 1.5;
-    overflow: hidden;
-    min-height: 80px;
-  }
-}
-.experience-list {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  &:empty {
-    padding: 20px 0;
-  }
-}
-.experience-card {
-  cursor: grab;
-  padding: 15px;
-  border-radius: 8px;
-  background-color: #fff;
-  &__header {
+
+  .exp-list {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 15px;
-  }
-  &__menu {
-    position: relative;
-  }
-  &__menu-btn {
-    background: transparent;
-    border: none;
-  }
-  &__menu-items {
-    position: absolute;
-    outline: none;
-    right: 0;
-    transform-origin: top right;
-    min-width: 150px;
-    background-color: #fff;
-    border-radius: 5px;
-    border: 1px solid $grey-1;
-    color: $grey-6;
-    z-index: 1;
-  }
-  &__menu-item {
-    padding: 2px 5px;
-    line-height: 26px;
-    cursor: pointer;
-    &--active {
-      background-color: $grey-1;
+    flex-direction: column;
+    gap: 12px;
+
+    &:empty {
+      padding: 20px 0;
     }
-    &:not(:last-child) {
-      border-bottom: 1px solid $grey-1;
+
+    .exp-card {
+      cursor: grab;
+      padding: 16px 16px 16px 20px;
+      border-radius: 8px;
+      background-color: #fff;
+
+      &__header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 15px;
+        padding: 6px 0;
+        color: $blue-6;
+
+        .title {
+          font-size: 20px;
+        }
+
+        .position {
+          margin-right: auto;
+        }
+      }
+
+      &__tags {
+        display: flex;
+        gap: 5px;
+        flex-wrap: wrap;
+        padding: 10px 0;
+        .tag {
+          font-weight: $weight-light;
+          color: $blue-6;
+        }
+      }
+
+      &__body {
+        line-height: 24px;
+        color: $grey-4;
+        white-space: pre-wrap;
+        line-break: anywhere;
+      }
     }
-  }
-  &__name {
-    font-size: 21px;
-    line-height: 34px;
-    color: $blue-6;
-    font-weight: normal;
-  }
-  &__position {
-    margin-right: auto;
-    color: $blue-6;
-  }
-  &__delete {
-    color: $grey-4;
-  }
-  &__tags {
-    display: flex;
-    gap: 5px;
-    flex-wrap: wrap;
-    padding: 10px 0;
-    .tag {
-      font-weight: $weight-light;
-      color: $blue-6;
+
+    .exp-card[draggable='true'] {
+      cursor: grabbing;
     }
   }
-  &__description {
-    line-height: 24px;
-    color: $grey-4;
-    white-space: pre-wrap;
-    line-break: anywhere;
-  }
-}
-.experience-card[draggable='true'] {
-  cursor: grabbing;
 }
 </style>

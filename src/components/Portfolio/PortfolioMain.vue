@@ -40,11 +40,11 @@
               </Button>
               <div :style='{ "position": "relative" }'>
                 <Button
+                  :loading='isPending'
                   :disabled='isPending || !notSaved'
+                  label='存檔'
                   @click='handleSave'
-                >
-                  {{ isPending ? '存檔中' : '存檔' }}
-                </Button>
+                />
                 <div v-if='notSaved && !isPending' class='button-badge' />
               </div>
             </div>
@@ -54,7 +54,7 @@
               <draggable
                 v-model='showedResume.cards'
                 v-bind='draggableOptions'
-                handle='.ability-card__grab-area'
+                handle='.ability-card__header__btn-drag'
                 :itemKey='resume => resume.id || resume.vForKey'
               >
                 <template #item='{element, index}'>
