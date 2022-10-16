@@ -134,10 +134,15 @@ export default {
       cursor: pointer;
       user-select: none;
 
-      &.semester.selected, &.type.selected {
+      &.semester.selected {
         color: $white;
         border-color: $blue-3;
         background-color: $blue-3;
+      }
+      &.type.selected {
+        color: $white;
+        border-color: $grey-5;
+        background-color: $grey-5;
       }
       &.tags.selected {
         color: $white;
