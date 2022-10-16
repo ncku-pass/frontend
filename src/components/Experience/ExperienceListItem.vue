@@ -115,7 +115,7 @@ export default {
   padding: 10px 5px 10px 10px;
 
   &:hover {
-    background-color: #f8f8f8;
+    background-color: $grey-0;
   }
 
   &__title {

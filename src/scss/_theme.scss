@@ -25,10 +25,6 @@
   border-color: $grey-4;
 }
 
-.p-confirm-dialog-reject.p-button-text {
-  color: $grey-5 !important;
-}
-
 .p-datepicker .p-datepicker-header .p-datepicker-prev:focus,
 .p-datepicker .p-datepicker-header .p-datepicker-next:focus {
   box-shadow: 0 0 0 0.2rem #fbebed;
@@ -185,7 +181,6 @@
 }
 .p-inputtext:enabled:focus {
   box-shadow: 0 0 0 0.2rem #F2F2F2;
-  border-color: $grey-4;
 }
 
 .p-listbox .p-listbox-list .p-listbox-item:focus {
@@ -666,8 +661,15 @@
     padding: 0 2rem 1.5rem 2rem;
     border-bottom-left-radius: 8px;
     border-bottom-right-radius: 8px;
+    .p-confirm-dialog-reject.p-button-text {
+      color: $grey-5;
+      &:hover {
+        background: #F2F2F2;
+      }
+    }
   }
 }
+
 .p-overlaypanel .p-overlaypanel-close {
   background: $red-5;
   color: #ffffff;
