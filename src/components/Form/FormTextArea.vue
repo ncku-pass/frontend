@@ -1,6 +1,12 @@
 <template>
   <!-- eslint-disable vue/no-mutating-props -->
-  <Textarea v-model='value' type='text' @input='$emit("input", $event)' />
+  <Textarea
+    v-model='value'
+    type='text'
+    :autoResize='true'
+    :rows='2'
+    @input='$emit("input", $event)'
+  />
 </template>
 
 <script>
