@@ -69,7 +69,6 @@ import AddExperienceButton from '@/components/Experience/AddExp/AddExperienceBut
 import AddExperienceDialog from '@/components/Experience/AddExp/AddExperienceDialog.vue'
 import ViewerModal from '@/components/Experience/ViewerModal.vue'
 import ImportModal from '@/components/Experience/ImportModal.vue'
-import { canImportFromSchool } from '@/helpers/experiences.helper'
 import { isCurrentOrLastSemester } from '@/helpers/semester.helper'
 
 export default {
@@ -160,7 +159,7 @@ export default {
       if (!newValue) { // finish pending
         const targetExp = classifiedExperiences.value[props.activeTab]
 
-        if (canImportFromSchool(props.activeTab) && targetExp) {
+        if (props.activeTab === 'course' && targetExp) {
           const lastKey = Object.keys(targetExp)[0]
           // alert user to import if no new record
           if (!isCurrentOrLastSemester(lastKey)) {
