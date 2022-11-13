@@ -59,7 +59,6 @@ import { ref, computed, watch } from 'vue'
 import { useStore } from 'vuex'
 import Toast from 'primevue/toast'
 import { useToast } from 'primevue/usetoast'
-import ConfirmDialog from 'primevue/confirmdialog'
 
 import Loader from '@/components/Loader'
 import ExperienceNavbar from '@/components/Experience/ExperienceNavbar.vue'
@@ -82,7 +81,6 @@ export default {
     AddExperienceDialog,
     ViewerModal,
     ImportModal,
-    ConfirmDialog,
     Toast,
   },
   inject: ['mq'],

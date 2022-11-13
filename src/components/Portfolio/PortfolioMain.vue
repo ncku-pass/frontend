@@ -101,7 +101,6 @@ import { useStore } from 'vuex'
 import draggable from 'vuedraggable'
 import { isEqual } from 'lodash-es'
 import { useConfirm } from 'primevue/useconfirm'
-import ConfirmDialog from 'primevue/confirmdialog'
 import Toast from 'primevue/toast'
 
 import AbilityCard from '@/components/Portfolio/AbilityCard.vue'
@@ -110,7 +109,6 @@ import TemplateModal from '@/components/Portfolio/TemplateModal.vue'
 export default {
   name: 'PortfolioMain',
   components: {
-    ConfirmDialog,
     AbilityCard,
     TemplateModal,
     draggable,

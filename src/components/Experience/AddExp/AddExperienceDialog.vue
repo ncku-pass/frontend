@@ -56,7 +56,6 @@ import { computed, onBeforeUpdate, ref, watch } from 'vue'
 import { useStore } from 'vuex'
 import Dialog from 'primevue/dialog'
 import OverlayPanel from 'primevue/overlaypanel'
-import ConfirmDialog from 'primevue/confirmdialog'
 import { useConfirm } from 'primevue/useconfirm'
 import { useToast } from 'primevue/usetoast'
 import useVuelidate from '@vuelidate/core'
@@ -72,7 +71,6 @@ export default {
   components: {
     Dialog,
     OverlayPanel,
-    ConfirmDialog,
     DynamicFormRenderer,
     mdiInformation,
   },

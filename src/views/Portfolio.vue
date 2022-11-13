@@ -14,7 +14,6 @@ import { computed, ref } from 'vue'
 import { useStore } from 'vuex'
 import { onBeforeRouteLeave } from 'vue-router'
 import { useConfirm } from 'primevue/useconfirm'
-import ConfirmDialog from 'primevue/confirmdialog'
 
 import Loader from '@/components/Loader'
 import PortfolioMain from '@/components/Portfolio/PortfolioMain'
@@ -25,7 +24,6 @@ export default {
   components: {
     PortfolioMain,
     PortfolioMenu,
-    ConfirmDialog,
     Loader,
   },
   setup() {

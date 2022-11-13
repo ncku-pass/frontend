@@ -22,13 +22,11 @@
 <script>
 import { useStore } from 'vuex'
 import { useConfirm } from 'primevue/useconfirm'
-import ConfirmDialog from 'primevue/confirmdialog'
 
 import { navbarLinks } from '@/config'
 
 export default {
   name: 'Navbar',
-  components: { ConfirmDialog },
   setup() {
     const store = useStore()
     const logout = () => store.dispatch('auth/logout')
