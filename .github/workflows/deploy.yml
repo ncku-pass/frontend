@@ -11,6 +11,6 @@ jobs:
     - id: Build-Vue
       uses: xRealNeon/VuePagesAction@1.0.1
       with:
-        username: 'frontend'
-        reponame: 'fung-hei-man'
+        username: 'ncku-pass'
+        reponame: 'frontend'
         token: ${{ secrets.GITHUB_TOKEN }} # Leave this line unchanged
