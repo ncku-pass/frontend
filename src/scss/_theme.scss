@@ -710,6 +710,13 @@
   box-shadow: inset 0 0 0 0.15rem #fbebed;
 }
 
+.p-menu .p-menuitem-link .p-menuitem-text {
+  color: $grey-5;
+  margin-left: .25rem;
+}
+.p-menu .p-menuitem-link:not(.p-disabled):hover {
+  background: $grey-1;
+}
 .p-menu .p-menuitem-link:focus {
   box-shadow: inset 0 0 0 0.15rem #fbebed;
 }
@@ -766,20 +773,37 @@
 .p-toast {
   z-index: 1000;
 }
-.p-toast .p-toast-message .p-toast-icon-close:focus {
-  box-shadow: 0 0 0 0.2rem #fbebed;
+.p-toast .p-toast-message {
+  background: $white !important;
+  border-width: 1px 1px 1px 6px !important;
+  color: $grey-5 !important;
 }
-
+.p-toast .p-toast-message .p-toast-message-content .p-toast-detail {
+  font-size: 13px;
+}
 .p-toast .p-toast-message.p-toast-message-info {
-  background: $white;
+  border-width: 0 0 0 6px !important;
   border: solid $red-4;
-  border-width: 0 0 0 6px;
-  color: $grey-5;
+}
+.p-toast .p-toast-message.p-toast-message-info .p-toast-message-icon,
+.p-toast .p-toast-message .p-toast-icon-close {
+  color: $grey-5 !important;
 }
 
-.p-toast .p-toast-message.p-toast-message-info .p-toast-message-icon,
-.p-toast .p-toast-message.p-toast-message-info .p-toast-icon-close {
-  color: $grey-5;
+.p-toast .p-toast-message.p-toast-message-error {
+  border: solid $red-4;
+}
+.p-toast .p-toast-message.p-toast-message-error .p-toast-message-content .p-toast-summary,
+.p-toast .p-toast-message.p-toast-message-error .p-toast-message-icon {
+  color: $red-4;
+}
+
+.p-toast .p-toast-message.p-toast-message-success {
+  border: solid $success-green;
+}
+.p-toast .p-toast-message.p-toast-message-success .p-toast-message-content .p-toast-summary,
+.p-toast .p-toast-message.p-toast-message-success .p-toast-message-icon {
+  color: $success-green;
 }
 
 .p-galleria .p-galleria-thumbnail-container .p-galleria-thumbnail-item-content:focus {

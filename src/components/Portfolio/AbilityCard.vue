@@ -1,16 +1,12 @@
 <template>
   <div class='ability-card'>
-    <div class='ability-card__header'>
-      <mdicon name='dragVertical' class='ability-card__header__btn-drag' />
-      <InputText
-        v-model='headerValue'
-        type='text'
-        class='input-topic'
-        placeholder='為這些經歷訂定一個主題吧'
-        @input='$emit("update:abilityTopic", $event.target.value)'
-      />
-      <mdicon name='closeCircleOutline' class='btn-delete' size='24' @click.stop='$emit("delete-ability")' />
-    </div>
+    <AbilityCardHeader
+      :topic='abilityTopic'
+      @update-topic='(topicValue) => $emit("update:abilityTopic", topicValue)'
+      @delete-ability='$emit("delete-ability")'
+      @duplicate-ability='$emit("duplicate-ability")'
+      @copy-ability-text='onCopyAbilityText'
+    />
     <div class='ability-card__body'>
       <template v-if='cardType === "experience"'>
         <p v-if='experiences.length === 0' class='ability-card__body__tips'>
@@ -73,17 +69,19 @@
 
 <script>
 import { ref, onBeforeUpdate } from 'vue'
-
+import { isEmpty } from 'lodash-es'
 import draggable from 'vuedraggable'
 import useGrab from '@/composables/useGrab'
 import Menu from 'primevue/menu'
-import InputText from 'primevue/inputtext'
 import Textarea from 'primevue/textarea'
+import { useToast } from 'primevue/usetoast'
+
+import AbilityCardHeader from '@/components/Portfolio/AbilityCardHeader'
 
 export default {
   name: 'AbilityCard',
   components: {
-    InputText,
+    AbilityCardHeader,
     Textarea,
     Menu,
     draggable,
@@ -111,11 +109,74 @@ export default {
       default: ''
     }
   },
-  emits: ['update:abilityTopic', 'update:text', 'delete-experience', 'delete-ability'],
+  emits: ['update:abilityTopic', 'update:text', 'delete-experience', 'delete-ability', 'duplicate-ability'],
   setup(props, { emit }) {
-    const headerValue = ref(props.abilityTopic)
     const description = ref(props.text)
 
+    // === copy ability card text
+    const toast = useToast()
+
+    const onCopyAbilityText = () => {
+      if (props.cardType === 'text') {
+        if (description.value === '') {
+          useErrorToast()
+        } else {
+          const text = `${props.abilityTopic}\n${description.value}`
+          navigator.clipboard.writeText(text)
+          useSuccessToast()
+        }
+      } else {
+        if (props.experiences.length === 0) {
+          useErrorToast()
+        } else {
+          let text = `${props.abilityTopic}\n`
+          for (const exp of props.experiences) {
+            text += `• ${exp.name}`
+
+            if (!isEmpty(exp?.position)) {
+              text += `｜${exp.position}`
+            }
+
+            if (!isEmpty(exp?.tags)) {
+              for (const tag of exp.tags) {
+                text += ` #${tag.name}`
+              }
+            }
+
+            if (!isEmpty(exp?.feedback)) {
+              // eslint-disable-next-line no-irregular-whitespace
+              text += `\n　${exp.feedback}`
+            }
+
+            text += '\n'
+          }
+          navigator.clipboard.writeText(text)
+          useSuccessToast()
+        }
+      }
+    }
+
+    const useSuccessToast = () => {
+      toast.add({
+        group: 'copy-ability-text',
+        severity: 'success',
+        summary: '複製成功！',
+        detail: '[右鍵 > 貼上] 即可將文字貼到其他文件',
+        life: 3000
+      })
+    }
+
+    const useErrorToast = () => {
+      toast.add({
+        group: 'copy-ability-text',
+        severity: 'error',
+        summary: '無法複製區塊內文字',
+        detail: '請先新增內容再複製！',
+        life: 3000
+      })
+    }
+
+    // === DnD Experience ===
     const { setIsGrabbing } = useGrab()
 
     const handleDrag = onDragging => {
@@ -176,11 +237,11 @@ export default {
     }
 
     return {
-      headerValue,
       description,
       setIsGrabbing,
       handleDrag,
       draggableOptions,
+      onCopyAbilityText,
       setMenuRef,
       getMenuItems,
       onToggleMenu
@@ -208,27 +269,6 @@ export default {
   padding: 16px;
   background-color: $grey-0;
   border-radius: 8px;
-
-  &__header {
-    display: flex;
-    align-items: center;
-    padding-bottom: 12px;
-    border-bottom: 1px solid #E0E0E0;
-
-    &.btn-drag {
-      cursor: grab;
-    }
-
-    .input-topic {
-      background-color: transparent;
-      border: none;
-      font-size: 20px;
-      margin-right: 24px;
-      &:focus {
-        box-shadow: 0 0 0 0.1rem $grey-4 !important;
-      }
-    }
-  }
 
   &__body {
     &__tips {

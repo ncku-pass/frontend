@@ -54,7 +54,7 @@
               <draggable
                 v-model='showedResume.cards'
                 v-bind='draggableOptions'
-                handle='.ability-card__header__btn-drag'
+                handle='.ability-card-header__btn-drag'
                 :itemKey='resume => resume.id || resume.vForKey'
               >
                 <template #item='{element, index}'>
@@ -65,6 +65,7 @@
                     v-bind='element'
                     @delete-experience='handleDeleteExperience($event, element)'
                     @delete-ability='handleDeleteCard(index)'
+                    @duplicate-ability='onDuplicateCard(index)'
                   />
                 </template>
               </draggable>
@@ -90,6 +91,7 @@
     </div>
     <TemplateModal :show-modal='showTemplateModal' @close='handleCloseTemplateModal' @choose='handleAddResume' />
     <ConfirmDialog class='no-header no-icon' group='delete-resume' />
+    <Toast group='copy-ability-text' :closable='false' />
   </div>
 </template>
 
@@ -100,6 +102,7 @@ import draggable from 'vuedraggable'
 import { isEqual } from 'lodash-es'
 import { useConfirm } from 'primevue/useconfirm'
 import ConfirmDialog from 'primevue/confirmdialog'
+import Toast from 'primevue/toast'
 
 import AbilityCard from '@/components/Portfolio/AbilityCard.vue'
 import TemplateModal from '@/components/Portfolio/TemplateModal.vue'
@@ -111,6 +114,7 @@ export default {
     AbilityCard,
     TemplateModal,
     draggable,
+    Toast
   },
   setup() {
     const store = useStore()
@@ -230,6 +234,11 @@ export default {
     const handleDeleteCard = abilityIndex => {
       showedResume.value.cards.splice(abilityIndex, 1)
     }
+    const onDuplicateCard = (abilityIndex) => {
+      const target = { ...showedResume.value.cards[abilityIndex] }
+      target.id = 0
+      showedResume.value.cards.splice(abilityIndex + 1, 0, target)
+    }
 
     // === 刪除卡片內的經驗 ===
     const handleDeleteExperience = (experienceIndex, card) => {
@@ -278,6 +287,7 @@ export default {
       handleAddResume,
       handleDeleteResume,
       handleAddCard,
+      onDuplicateCard,
       handleDeleteExperience,
       handleDeleteCard,
       handleSave,
