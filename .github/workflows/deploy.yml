@@ -1,0 +1,15 @@
+name: Build Vue
+on:
+  push:
+    branches: [ "master", "develop" ]
+jobs:
+  build_vue:
+    runs-on: ubuntu-latest
+    name: Build Vue
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Vue App to Github Pages
+        uses: StruggleYang/VuePagesAction@2.0.0
+        with:
+          useyarn: false
