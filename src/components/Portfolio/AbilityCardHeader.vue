@@ -9,7 +9,7 @@
     />
     <Menu id='ability-card-header-menu' ref='headerMenuRef' :model='headerMenuItems' :popup='true'>
       <template #item='{item}'>
-        <div class='p-menuitem-content' @click='item.command'>
+        <div class='p-menuitem-content'>
           <a class='p-menuitem-link'>
             <mdicon class='p-menuitem-icon' :name='item.icon' />
             <span class='p-menuitem-text'>{{ item.label }}</span>

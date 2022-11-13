@@ -145,7 +145,8 @@ export default {
 
             if (!isEmpty(exp?.feedback)) {
               // eslint-disable-next-line no-irregular-whitespace
-              text += `\n　${exp.feedback}`
+              const feedback = exp.feedback.replaceAll('\n', '\n  ')
+              text += `\n  ${feedback}`
             }
 
             text += '\n'

@@ -717,14 +717,13 @@
 .p-menu .p-menuitem-link:not(.p-disabled):hover {
   background: $grey-1;
 }
-.p-menu .p-menuitem-link:focus {
-  box-shadow: inset 0 0 0 0.15rem #fbebed;
+.p-menu .p-menuitem:not(.p-highlight):not(.p-disabled).p-focus > .p-menuitem-content {
+  color: $grey-5;
+  background: $white;
 }
-.p-menubar .p-menuitem-link:focus {
-  box-shadow: inset 0 0 0 0.15rem #fbebed;
-}
-.p-menubar .p-menubar-root-list > .p-menuitem > .p-menuitem-link:focus {
-  box-shadow: inset 0 0 0 0.15rem #fbebed;
+.p-menu .p-menuitem:not(.p-highlight):not(.p-disabled).p-focus > .p-menuitem-content .p-menuitem-link .p-menuitem-icon,
+.p-menu .p-menuitem:not(.p-highlight):not(.p-disabled).p-focus > .p-menuitem-content .p-menuitem-link .p-submenu-icon {
+  color: #6c757d;
 }
 
 @media screen and (max-width: 960px) {
