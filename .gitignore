@@ -23,4 +23,5 @@ pnpm-debug.log*
 *.sw?
 
 .vercel
+package-lock.json
 deploy_procedure.md
