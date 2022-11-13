@@ -7,9 +7,10 @@ jobs:
     runs-on: ubuntu-latest
     name: Build Vue
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-      - name: Vue App to Github Pages
-        uses: StruggleYang/VuePagesAction@2.0.0
-        with:
-          useyarn: false
+    - uses: actions/checkout@v2
+    - id: Build-Vue
+      uses: xRealNeon/VuePagesAction@1.0.1
+      with:
+        username: 'frontend'
+        reponame: 'fung-hei-man'
+        token: ${{ secrets.GITHUB_TOKEN }} # Leave this line unchanged
