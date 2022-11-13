@@ -3,36 +3,30 @@
     <h2 class='login-form__title'>
       登入E-portfolio
     </h2>
-    <div>
+    <div class='input-group'>
       <label for='studentId'>帳號</label>
-      <input
+      <InputText
         id='studentId'
         v-model='authData.studentId'
+        aria-label='帳號'
         type='text'
-        class='form-control'
-        required
-        pattern='[a-zA-Z0-9]{8,}'
-        title='請輸入8位以上英數字'
       />
     </div>
-    <div>
+    <div class='input-group'>
       <label for='password'>密碼</label>
-      <input
+      <Password
         id='password'
         v-model='authData.password'
-        type='password'
-        class='form-control'
+        aria-label='密碼'
         required
-        pattern='[a-zA-Z0-9]{8,}'
-        title='請輸入8位以上英數字'
+        toggleMask
+        :feedback='false'
       />
     </div>
     <p v-if='error'>
       登入失敗，請重新嘗試
     </p>
-    <button class='btn' :disabled='isPending' type='submit'>
-      {{ isPending ? '登入中' : '登入' }}
-    </button>
+    <Button :loading='isPending' type='submit' label='登入' />
   </form>
 </template>
 
@@ -40,8 +34,15 @@
 import { reactive, computed } from 'vue'
 import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'
+import InputText from 'primevue/inputtext'
+import Password from 'primevue/password'
 
 export default {
+  name: 'LoginForm',
+  components: {
+    InputText,
+    Password
+  },
   setup() {
     const store = useStore()
 
@@ -70,21 +71,19 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang='scss' scoped>
 @import '~@/scss/mixins';
 @import '~@/scss/variables';
 
 .login-form {
-  @include grid(row, 20px, 0);
   width: 350px;
   padding: 50px;
 
-  * {
-    color: $grey-6;
-  }
-
-  .btn {
-    justify-self: flex-end;
+  .input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin: 16px 0 16px 0;
   }
 }
 </style>

@@ -22,7 +22,6 @@
 <script>
 import { computed } from 'vue'
 import SplitButton from 'primevue/splitbutton'
-import Button from 'primevue/button'
 import SpeedDial from 'primevue/speeddial'
 import { MqResponsive } from 'vue3-mq'
 import { canImportFromSchool } from '@/helpers/experiences.helper'
@@ -31,7 +30,6 @@ export default {
   name: 'AddExperienceButton',
   components: {
     SplitButton,
-    Button,
     SpeedDial,
     MqResponsive
   },

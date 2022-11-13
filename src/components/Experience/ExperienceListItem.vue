@@ -27,7 +27,6 @@
 
 <script>
 import { reactive } from 'vue'
-import Button from 'primevue/button'
 import Chip from 'primevue/chip'
 import { useConfirm } from 'primevue/useconfirm'
 
@@ -35,7 +34,6 @@ import { deleteExperience } from '@/api/experiences'
 
 export default {
   components: {
-    Button,
     Chip,
   },
   inject: ['mq'],

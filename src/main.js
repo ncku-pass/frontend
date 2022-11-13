@@ -19,6 +19,7 @@ import 'primevue/resources/themes/saga-blue/theme.css'
 import '@/scss/_theme.scss'
 import ToastService from 'primevue/toastservice'
 import ConfirmationService from 'primevue/confirmationservice'
+import Button from 'primevue/button'
 
 // icon
 import mdiVue from 'mdi-vue/v3'
@@ -65,6 +66,7 @@ async function startApp() {
     }, router)
     .use(ToastService)
     .use(ConfirmationService)
+    .component('Button', Button)
     .mount('#app')
 }
 

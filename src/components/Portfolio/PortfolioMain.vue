@@ -100,7 +100,6 @@ import draggable from 'vuedraggable'
 import { isEqual } from 'lodash-es'
 import { useConfirm } from 'primevue/useconfirm'
 import ConfirmDialog from 'primevue/confirmdialog'
-import Button from 'primevue/button'
 
 import AbilityCard from '@/components/Portfolio/AbilityCard.vue'
 import TemplateModal from '@/components/Portfolio/TemplateModal.vue'
@@ -108,7 +107,6 @@ import TemplateModal from '@/components/Portfolio/TemplateModal.vue'
 export default {
   name: 'PortfolioMain',
   components: {
-    Button,
     ConfirmDialog,
     AbilityCard,
     TemplateModal,

@@ -35,19 +35,17 @@
     </div>
     <template #footer>
       <Button
+        label='取消'
         :disabled='isSubmitLoading'
         class='p-button-secondary p-button-outlined'
         @click='showDialog = false'
-      >
-        取消
-      </Button>
+      />
       <Button
+        label='儲存'
         :disabled='v$.$invalid'
         :loading='isSubmitLoading'
         @click='onSubmitExp'
-      >
-        儲存
-      </Button>
+      />
     </template>
   </Dialog>
   <ConfirmDialog class='no-header no-icon' group='close-dialog' />
@@ -56,7 +54,6 @@
 <script>
 import { computed, onBeforeUpdate, ref, watch } from 'vue'
 import { useStore } from 'vuex'
-import Button from 'primevue/button'
 import Dialog from 'primevue/dialog'
 import OverlayPanel from 'primevue/overlaypanel'
 import ConfirmDialog from 'primevue/confirmdialog'
@@ -73,7 +70,6 @@ import { generateEmptyExp, generateExpValidationRules } from '@/helpers/experien
 export default {
   name: 'AddExperienceDialog',
   components: {
-    Button,
     Dialog,
     OverlayPanel,
     ConfirmDialog,
