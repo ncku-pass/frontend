@@ -24,4 +24,3 @@ pnpm-debug.log*
 
 .vercel
 deploy_procedure.md
-package-lock.json
