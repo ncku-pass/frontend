@@ -23,13 +23,14 @@
         </div>
       </div>
     </div>
-    <AddExperienceButton
-      :type='activeTab'
-      :show-badge='showButtonBadge'
+    <ExperienceFooter
+      :active-tab='activeTab'
+      :show-button-badge='showButtonBadge'
       @add-experience='handleAddExperience'
       @import-ncku-data='handleImportNCKUData'
     />
   </div>
+
   <AddExperienceDialog
     :visible='showAddExperienceDialog'
     :exp-type='activeTab'
@@ -61,23 +62,23 @@ import Toast from 'primevue/toast'
 import { useToast } from 'primevue/usetoast'
 
 import Loader from '@/components/Loader'
-import ExperienceNavbar from '@/components/Experience/ExperienceNavbar.vue'
-import ExperienceListItem from '@/components/Experience/ExperienceListItem.vue'
-import ExperienceListBlock from '@/components/Experience/ExperienceListBlock.vue'
-import AddExperienceButton from '@/components/Experience/AddExp/AddExperienceButton.vue'
-import AddExperienceDialog from '@/components/Experience/AddExp/AddExperienceDialog.vue'
-import ViewerModal from '@/components/Experience/ViewerModal.vue'
-import ImportModal from '@/components/Experience/ImportModal.vue'
+import ExperienceNavbar from '@/components/Experience/ExperienceNavbar'
+import ExperienceListItem from '@/components/Experience/ExperienceListItem'
+import ExperienceListBlock from '@/components/Experience/ExperienceListBlock'
+import AddExperienceDialog from '@/components/Experience/AddExp/AddExperienceDialog'
+import ViewerModal from '@/components/Experience/ViewerModal'
+import ImportModal from '@/components/Experience/ImportModal'
 import { isCurrentOrLastSemester } from '@/helpers/semester.helper'
+import ExperienceFooter from '@/components/Experience/ExperienceFooter'
 
 export default {
   name: 'Experience',
   components: {
+    ExperienceFooter,
     Loader,
     ExperienceNavbar,
     ExperienceListItem,
     ExperienceListBlock,
-    AddExperienceButton,
     AddExperienceDialog,
     ViewerModal,
     ImportModal,

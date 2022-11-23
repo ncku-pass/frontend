@@ -10,16 +10,16 @@
 
     <div class='experience-list-item__btns'>
       <Button
-        class='p-button-rounded p-button-outlined p-button-secondary p-button-sm'
+        class='p-button-rounded p-button-outlined p-button-secondary p-button-sm btn-icon'
         @click.stop='handleEditExperience'
       >
         <mdicon name='squareEditOutline' :size='device === "mobile" ? 14 : 20' />
-        <span v-if='device !== "mobile"' class='p-button-label'>編輯</span>
+        <p v-if='device !== "mobile"'>編輯</p>
       </Button>
       <!-- TODO:  寫死的資料改掉-->
-      <Button class='p-button-rounded p-button-secondary p-button-sm' @click.stop='showDeleteConfirm'>
+      <Button class='p-button-rounded p-button-secondary p-button-sm btn-icon' @click.stop='showDeleteConfirm'>
         <mdicon name='trashCanOutline' :size='device === "mobile" ? 14 : 20' />
-        <span v-if='device !== "mobile"' class='p-button-label'>刪除</span>
+        <p v-if='device !== "mobile"'>刪除</p>
       </Button>
     </div>
   </li>
@@ -138,10 +138,6 @@ export default {
     @include grid(column, 0, 10px);
     margin-left: auto;
     flex-shrink: 0;
-
-    .p-button-label {
-      margin-left: 4px;
-    }
   }
 
   &--mobile {

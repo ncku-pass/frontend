@@ -3,6 +3,7 @@ import auth from './auth'
 import tags from './tags'
 import resumes from './resumes'
 import experiences from './experiences'
+import expQuickEdit from './expQuickEdit'
 
 export default createStore({
   state: () => ({
@@ -15,7 +16,8 @@ export default createStore({
     auth,
     tags,
     resumes,
-    experiences
+    experiences,
+    expQuickEdit,
   },
   plugins: process.env.NODE_ENV !== 'production'
     ? [createLogger()]

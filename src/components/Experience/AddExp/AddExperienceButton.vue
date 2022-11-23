@@ -1,7 +1,7 @@
 <template>
   <div class='add-experience-button'>
     <MqResponsive target='tablet+'>
-      <SplitButton v-if='isShowOptions' label='新增經驗' :model='addExpOptions' />
+      <SplitButton v-if='isShowOptions' icon='pi pi-plus' label='新增經驗' :model='addExpOptions' />
       <Button v-else label='新增校外或其他經驗' @click='$emit("add-experience")' />
       <div v-if='showBadge' class='button-badge' />
     </MqResponsive>
@@ -76,6 +76,10 @@ export default {
   justify-content: center;
   display: flex;
   position: relative;
+
+  .p-splitbutton {
+    height: 37px;
+  }
 
  :deep(.p-speeddial) {
     position: fixed;

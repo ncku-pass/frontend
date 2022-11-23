@@ -40,6 +40,11 @@ module.exports = {
     'vue/attribute-hyphenation': ['off'],
     'vue/multi-word-component-names': ['off'],
     'vue/no-reserved-component-names': ['off'],
+    'vue/singleline-html-element-content-newline': ['error', {
+      ignoreWhenNoAttributes: true,
+      ignoreWhenEmpty: true,
+      ignores: ['pre', 'textarea', 'p', 'span']
+    }],
   },
   overrides: [
     {
