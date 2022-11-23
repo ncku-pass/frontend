@@ -133,7 +133,7 @@ export default {
           for (const exp of props.experiences) {
             text += `• ${exp.name}`
 
-            if (!isEmpty(exp?.position)) {
+            if (!isEmpty(exp?.position) && exp.showPosition) {
               text += `｜${exp.position}`
             }
 
@@ -143,7 +143,7 @@ export default {
               }
             }
 
-            if (!isEmpty(exp?.feedback)) {
+            if (!isEmpty(exp?.feedback) && exp.showFeedback) {
               // eslint-disable-next-line no-irregular-whitespace
               const feedback = exp.feedback.replaceAll('\n', '\n  ')
               text += `\n  ${feedback}`
