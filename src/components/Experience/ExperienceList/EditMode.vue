@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import ExperienceListBlock from '@/components/Experience/ExperienceList/ExpListBlock'
+import ExperienceListBlock from '@/components/Experience/ExperienceList/ViewMode/ExpListBlock'
 export default {
   name: 'EditMode',
   components: { ExperienceListBlock },

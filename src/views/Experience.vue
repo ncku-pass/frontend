@@ -7,7 +7,6 @@
           :is='currentMode'
           :exp-type='activeTab'
           :experiences='classifiedExperiences'
-          @refresh-exp='() => getExperiences()'
           @edit-exp='editSingleExp'
         />
       </div>
@@ -33,7 +32,6 @@
     :exp-id='targetExpId'
     @close-dialog='onCloseExpEditDialog'
   />
-  <ExpDeleteConfirmDialog />
 </template>
 
 <script>
@@ -43,13 +41,12 @@ import Toast from 'primevue/toast'
 import { useToast } from 'primevue/usetoast'
 
 import ExperienceNavbar from '@/components/Experience/ExperienceNavbar'
-import ViewMode from '@/components/Experience/ExperienceList/ViewMode'
+import ViewMode from '@/components/Experience/ExperienceList/ViewMode/ViewMode'
 import LoadMode from '@/components/Experience/ExperienceList/LoadMode'
 import EditMode from '@/components/Experience/ExperienceList/EditMode'
 import ExperienceFooter from '@/components/Experience/ExperienceFooter'
 import ExpQuickEditFooter from '@/components/Experience/ExpQuickEditFooter'
 import ImportModal from '@/components/Experience/ImportModal'
-import ExpDeleteConfirmDialog from '@/components/Experience/ExperienceList/ExpDeleteConfirmDialog'
 import ExpEditDialog from '@/components/Experience/ExperienceEdit/ExpEditDialog'
 import { isCurrentOrLastSemester } from '@/helpers/semester.helper'
 
@@ -62,7 +59,6 @@ export default {
     EditMode,
     ExperienceFooter,
     ExpQuickEditFooter,
-    ExpDeleteConfirmDialog,
     ImportModal,
     ExpEditDialog,
     Toast,

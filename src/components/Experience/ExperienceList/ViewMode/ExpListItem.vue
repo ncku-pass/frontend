@@ -14,11 +14,6 @@
         @click.stop='handleEditExperience'
       >
         <mdicon name='squareEditOutline' :size='device === "mobile" ? 14 : 20' />
-        <p v-if='device !== "mobile"'>編輯</p>
-      </Button>
-      <Button class='p-button-rounded p-button-secondary p-button-sm btn-icon' @click.stop='showDeleteConfirm'>
-        <mdicon name='trashCanOutline' :size='device === "mobile" ? 14 : 20' />
-        <p v-if='device !== "mobile"'>刪除</p>
       </Button>
     </div>
   </li>
@@ -27,9 +22,6 @@
 <script>
 import { reactive } from 'vue'
 import Chip from 'primevue/chip'
-import { useConfirm } from 'primevue/useconfirm'
-
-import { deleteExperience } from '@/api/experiences'
 
 export default {
   components: {
@@ -44,51 +36,18 @@ export default {
       }
     },
   },
-  emits: ['delete-exp-completed', 'edit'],
+  emits: ['edit'],
   setup(props, { emit }) {
     const deleteStatus = reactive({
       isPending: false,
       error: null
     })
 
-    // TODO: 用vuex去處理
-    const handleDeleteExperience = async() => {
-      try {
-        deleteStatus.isPending = true
-        deleteStatus.error = null
-        await deleteExperience(props.experience.id)
-
-        confirm.close()
-        emit('delete-exp-completed')
-
-      } catch (error) {
-        deleteStatus.error = error
-
-      } finally {
-        deleteStatus.isPending = false
-      }
-    }
-
     const handleEditExperience = async() => {
       emit('edit', props.experience.id)
     }
 
-    // === CONFIRMATION MODEL ===
-    const confirm = useConfirm()
-    const showDeleteConfirm = () => {
-      confirm.require({
-        group: 'delete-exp',
-        message: props.experience.name,
-        acceptLabel: '確定刪除',
-        rejectLabel: '取消',
-        accept: () => {
-          handleDeleteExperience()
-        },
-      })
-    }
-
     return {
-      showDeleteConfirm,
       deleteStatus,
       handleEditExperience,
     }

@@ -9,7 +9,6 @@
         v-for='experience in semesterData'
         :key='experience.id'
         :experience='experience'
-        @delete-exp-completed='$emit("refresh-exp")'
         @edit='$emit("edit-exp", experience.id)'
         @click='openViewerModal(experience)'
       />
@@ -25,9 +24,9 @@
 </template>
 
 <script>
-import ExpListItem from '@/components/Experience/ExperienceList/ExpListItem'
-import ExpListBlock from '@/components/Experience/ExperienceList/ExpListBlock'
-import ViewerModal from '@/components/Experience/ViewerModal'
+import ExpListItem from '@/components/Experience/ExperienceList/ViewMode/ExpListItem'
+import ExpListBlock from '@/components/Experience/ExperienceList/ViewMode/ExpListBlock'
+import ViewerModal from '@/components/Experience/ExperienceList/ViewMode/ViewerModal'
 
 import { ref } from 'vue'
 

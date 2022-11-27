@@ -160,8 +160,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '~@/scss/variables';
-@import '~@/scss/mixins';
+@import '~@/scss/_variables';
+@import '~@/scss/_mixins';
 
 .viewer-modal {
   position: relative;
