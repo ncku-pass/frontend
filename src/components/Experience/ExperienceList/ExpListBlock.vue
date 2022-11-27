@@ -28,8 +28,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '~@/scss/variables';
-@import '~@/scss/mixins';
+@import '~@/scss/_variables';
+@import '~@/scss/_mixins';
 
 .experience-list-block {
   margin-bottom: 15px;

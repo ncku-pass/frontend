@@ -1,29 +1,23 @@
 <template>
   <div class='experience' :class='`experience--${device}`'>
     <div class='experience__window' :class='`experience__window--${device}`'>
-      <Toast position='top-right' />
       <ExperienceNavbar :active-tab='activeTab' :redirected='redirected' />
-      <Loader :loading='isPending' />
-      <div v-if='!isPending' class='experience__window__table'>
-        <div class='experience__window__table__wrapper'>
-          <ExperienceListBlock
-            v-for='(semesterData, semester) in classifiedExperiences[activeTab]'
-            :key='semester'
-            :semester='semester'
-          >
-            <ExperienceListItem
-              v-for='experience in semesterData'
-              :key='experience.id'
-              :experience='experience'
-              @delete='handleDelete'
-              @edit='handleEditExperience'
-              @click='openViewerModal(experience)'
-            />
-          </ExperienceListBlock>
-        </div>
+      <div class='experience__window__table'>
+        <component
+          :is='currentMode'
+          :exp-type='activeTab'
+          :experiences='classifiedExperiences'
+          @refresh-exp='() => getExperiences()'
+          @edit-exp='editSingleExp'
+        />
       </div>
     </div>
+    <ExpQuickEditFooter
+      v-if='currentMode === "EditMode"'
+      :exp-type='activeTab'
+    />
     <ExperienceFooter
+      v-else
       :active-tab='activeTab'
       :show-button-badge='showButtonBadge'
       @add-experience='handleAddExperience'
@@ -31,28 +25,15 @@
     />
   </div>
 
-  <AddExperienceDialog
-    :visible='showAddExperienceDialog'
+  <Toast position='top-right' />
+  <ImportModal v-if='showImportModal' :type='activeTab' @close='showImportModal = false' />
+  <ExpEditDialog
+    :visible='showExpEditDialog'
     :exp-type='activeTab'
     :exp-id='targetExpId'
-    @close-dialog='onCloseAddExpDialog'
+    @close-dialog='onCloseExpEditDialog'
   />
-  <ViewerModal
-    v-if='showViewerModal'
-    :experience-type='activeTab'
-    :experience='experienceToShow'
-    @close='showViewerModal = false'
-  />
-  <ImportModal v-if='showImportModal' :type='activeTab' @close='showImportModal = false' />
-  <ConfirmDialog class='no-header no-icon' group='delete-exp'>
-    <template #message='slotProps'>
-      <div>
-        確定要刪除
-        <span :style='{"color": `var(--primary-500)`}'>{{ slotProps.message.message }}</span>
-        此項歷程？
-      </div>
-    </template>
-  </ConfirmDialog>
+  <ExpDeleteConfirmDialog />
 </template>
 
 <script>
@@ -61,27 +42,29 @@ import { useStore } from 'vuex'
 import Toast from 'primevue/toast'
 import { useToast } from 'primevue/usetoast'
 
-import Loader from '@/components/Loader'
 import ExperienceNavbar from '@/components/Experience/ExperienceNavbar'
-import ExperienceListItem from '@/components/Experience/ExperienceListItem'
-import ExperienceListBlock from '@/components/Experience/ExperienceListBlock'
-import AddExperienceDialog from '@/components/Experience/AddExp/AddExperienceDialog'
-import ViewerModal from '@/components/Experience/ViewerModal'
-import ImportModal from '@/components/Experience/ImportModal'
-import { isCurrentOrLastSemester } from '@/helpers/semester.helper'
+import ViewMode from '@/components/Experience/ExperienceList/ViewMode'
+import LoadMode from '@/components/Experience/ExperienceList/LoadMode'
+import EditMode from '@/components/Experience/ExperienceList/EditMode'
 import ExperienceFooter from '@/components/Experience/ExperienceFooter'
+import ExpQuickEditFooter from '@/components/Experience/ExpQuickEditFooter'
+import ImportModal from '@/components/Experience/ImportModal'
+import ExpDeleteConfirmDialog from '@/components/Experience/ExperienceList/ExpDeleteConfirmDialog'
+import ExpEditDialog from '@/components/Experience/ExperienceEdit/ExpEditDialog'
+import { isCurrentOrLastSemester } from '@/helpers/semester.helper'
 
 export default {
   name: 'Experience',
   components: {
-    ExperienceFooter,
-    Loader,
     ExperienceNavbar,
-    ExperienceListItem,
-    ExperienceListBlock,
-    AddExperienceDialog,
-    ViewerModal,
+    ViewMode,
+    LoadMode,
+    EditMode,
+    ExperienceFooter,
+    ExpQuickEditFooter,
+    ExpDeleteConfirmDialog,
     ImportModal,
+    ExpEditDialog,
     Toast,
   },
   inject: ['mq'],
@@ -100,13 +83,16 @@ export default {
     store.dispatch('experiences/initExperiences')
 
     const isPending = computed(() => store.state.experiences.isPending)
+    const isQuickEdit = computed(() => store.state.expQuickEdit.quickEditMode)
     const classifiedExperiences = computed(() => store.getters['experiences/classifiedExperiences'])
     const getExperiences = () => store.dispatch('experiences/getExperiences')
 
+    const currentMode = computed(() => isPending.value ? 'LoadMode' : isQuickEdit.value ? 'EditMode' : 'ViewMode')
+
     // ===新增活動表單===
-    const showAddExperienceDialog = ref(false)
+    const showExpEditDialog = ref(false)
     const handleAddExperience = () => {
-      showAddExperienceDialog.value = true
+      showExpEditDialog.value = true
       targetExpId.value = null
 
       // small circle on add exp btn
@@ -114,33 +100,19 @@ export default {
       localStorage.setItem('add-exp-clicked', 'true')
     }
 
-    // ===處理經驗刪除===
-    const handleDelete = () => {
-      getExperiences()
-    }
-
     // === EDIT EXP ===
     const targetExpId = ref(-1)
-    const handleEditExperience = (expId) => {
+    const editSingleExp = (expId) => {
       targetExpId.value = expId
-      showAddExperienceDialog.value = true
+      showExpEditDialog.value = true
     }
-    const onCloseAddExpDialog = (submitClose) => {
+    const onCloseExpEditDialog = (submitClose) => {
       targetExpId.value = null
-      showAddExperienceDialog.value = false
+      showExpEditDialog.value = false
 
       if (submitClose) {
         getExperiences()
       }
-    }
-
-    // === 點擊經歷時，跳出檢視視窗 ===
-    const showViewerModal = ref(false)
-    const experienceToShow = ref(null)
-
-    const openViewerModal = experience => {
-      experienceToShow.value = experience
-      showViewerModal.value = true
     }
 
     // === 匯入學校資料 ===
@@ -172,17 +144,14 @@ export default {
     })
 
     return {
-      isPending,
+      currentMode,
       classifiedExperiences,
-      showAddExperienceDialog,
+      showExpEditDialog,
       handleAddExperience,
-      handleDelete,
-      onCloseAddExpDialog,
-      handleEditExperience,
+      getExperiences,
+      onCloseExpEditDialog,
+      editSingleExp,
       targetExpId,
-      showViewerModal,
-      openViewerModal,
-      experienceToShow,
       showImportModal,
       showButtonBadge,
       handleImportNCKUData

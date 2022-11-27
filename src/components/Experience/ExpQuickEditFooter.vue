@@ -1,0 +1,60 @@
+<template>
+  <div class='experience__footer'>
+    <Button
+      label='取消'
+      @click='toggleQuickEditMode'
+    />
+    <Button
+      label='儲存變更'
+      @click='saveQuickEditChanges'
+    />
+  </div>
+</template>
+
+<script>
+import { useStore } from 'vuex'
+
+export default {
+  name: 'ExpQuickEditFooter',
+  components: {
+  },
+  props: {
+    expType: {
+      type: String,
+      required: true,
+    },
+  },
+  setup() {
+    const store = useStore()
+
+    const toggleQuickEditMode = () => {
+      store.commit('expQuickEdit/TOGGLE_QUICK_MODE')
+    }
+
+    const saveQuickEditChanges = () => {
+      console.log('saveQuickEditChanges')
+      store.commit('expQuickEdit/TOGGLE_QUICK_MODE')
+    }
+
+    return {
+      toggleQuickEditMode,
+      saveQuickEditChanges
+    }
+  }
+}
+</script>
+
+<style lang='scss' scoped>
+@import '~@/scss/mixins';
+
+.experience__footer {
+  @include grid(column, 0, 20px);
+  margin-left: auto;
+  margin-right: auto;
+  flex-shrink: 0;
+
+  .btn-icon {
+    height: 37px;
+  }
+}
+</style>

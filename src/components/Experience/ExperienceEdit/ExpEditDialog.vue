@@ -67,7 +67,7 @@ import { addExperience, updateExperience } from '@/api/experiences'
 import { generateEmptyExp, generateExpValidationRules } from '@/helpers/experiences.helper'
 
 export default {
-  name: 'AddExperienceDialog',
+  name: 'ExpEditDialog',
   components: {
     Dialog,
     OverlayPanel,

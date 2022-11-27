@@ -16,7 +16,6 @@
         <mdicon name='squareEditOutline' :size='device === "mobile" ? 14 : 20' />
         <p v-if='device !== "mobile"'>編輯</p>
       </Button>
-      <!-- TODO:  寫死的資料改掉-->
       <Button class='p-button-rounded p-button-secondary p-button-sm btn-icon' @click.stop='showDeleteConfirm'>
         <mdicon name='trashCanOutline' :size='device === "mobile" ? 14 : 20' />
         <p v-if='device !== "mobile"'>刪除</p>
@@ -45,7 +44,7 @@ export default {
       }
     },
   },
-  emits: ['delete', 'edit'],
+  emits: ['delete-exp-completed', 'edit'],
   setup(props, { emit }) {
     const deleteStatus = reactive({
       isPending: false,
@@ -60,7 +59,7 @@ export default {
         await deleteExperience(props.experience.id)
 
         confirm.close()
-        emit('delete')
+        emit('delete-exp-completed')
 
       } catch (error) {
         deleteStatus.error = error
@@ -103,8 +102,8 @@ export default {
 </script>
 
 <style lang='scss' scoped>
-@import '~@/scss/variables';
-@import '~@/scss/mixins';
+@import '~@/scss/_variables';
+@import '~@/scss/_mixins';
 
 .experience-list-item {
   display: flex;

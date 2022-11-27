@@ -43,7 +43,7 @@ module.exports = {
     'vue/singleline-html-element-content-newline': ['error', {
       ignoreWhenNoAttributes: true,
       ignoreWhenEmpty: true,
-      ignores: ['pre', 'textarea', 'p', 'span']
+      ignores: ['pre', 'textarea', 'p', 'span', 'label', 'a']
     }],
   },
   overrides: [

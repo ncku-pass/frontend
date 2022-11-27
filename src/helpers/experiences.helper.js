@@ -3,7 +3,7 @@
  * @param {object} experiences 從API（getExperiences）得到的資料
  * @returns {object} 排序完的資料
  */
-import * as formSchema from '@/components/Experience/AddExp/experienceSchema'
+import * as formSchema from '@/components/Experience/ExperienceEdit/experienceSchema'
 
 export const sortExperiences = experiences => {
   const obj = Object.assign(experiences)

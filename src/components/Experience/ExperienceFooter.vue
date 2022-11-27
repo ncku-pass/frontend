@@ -19,7 +19,7 @@
 import { useStore } from 'vuex'
 import { MqResponsive } from 'vue3-mq'
 
-import AddExperienceButton from '@/components/Experience/AddExp/AddExperienceButton'
+import AddExperienceButton from '@/components/Experience/ExperienceEdit/ExpEditButton'
 
 export default {
   name: 'ExperienceFooter',
