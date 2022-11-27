@@ -1,6 +1,7 @@
 <template>
   <div class='experience__footer'>
     <Button
+      class='p-button-secondary p-button-outlined'
       label='取消'
       @click='toggleQuickEditMode'
     />

@@ -10,15 +10,15 @@
         :key='experience.id'
         :experience='experience'
         @edit='$emit("edit-exp", experience.id)'
-        @click='openViewerModal(experience)'
+        @click='openExpViewDialog(experience)'
       />
     </ExpListBlock>
 
-    <ViewerModal
-      v-if='showViewerModal'
-      :experience-type='expType'
+    <ExpViewDialog
+      :visible='showExpViewDialog'
+      :exp-type='expType'
       :experience='experienceToShow'
-      @close='showViewerModal = false'
+      @close-view-dialog='showExpViewDialog = false'
     />
   </div>
 </template>
@@ -26,7 +26,7 @@
 <script>
 import ExpListItem from '@/components/Experience/ExperienceList/ViewMode/ExpListItem'
 import ExpListBlock from '@/components/Experience/ExperienceList/ViewMode/ExpListBlock'
-import ViewerModal from '@/components/Experience/ExperienceList/ViewMode/ViewerModal'
+import ExpViewDialog from '@/components/Experience/ExperienceList/ViewMode/ExpViewDialog'
 
 import { ref } from 'vue'
 
@@ -35,7 +35,7 @@ export default {
   components: {
     ExpListItem,
     ExpListBlock,
-    ViewerModal,
+    ExpViewDialog,
   },
   props: {
     expType: {
@@ -52,18 +52,18 @@ export default {
   emits: ['refresh-exp', 'edit-exp'],
   setup() {
     // === EXP VIEWER MODAL ===
-    const showViewerModal = ref(false)
+    const showExpViewDialog = ref(false)
     const experienceToShow = ref(null)
 
-    const openViewerModal = (experience) => {
+    const openExpViewDialog = (experience) => {
       experienceToShow.value = experience
-      showViewerModal.value = true
+      showExpViewDialog.value = true
     }
 
     return {
-      showViewerModal,
+      showExpViewDialog,
       experienceToShow,
-      openViewerModal
+      openExpViewDialog
     }
   },
 }

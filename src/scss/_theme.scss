@@ -823,14 +823,8 @@
   background-color: $red-1;
   color: $red-8;
   border-radius: 50px;
-  padding: 0 0.5rem;
-}
-.p-chip .p-chip-text {
-  font-weight: $weight-light;
-  font-size: 10px;
-  line-height: 15px;
-  margin-top: 0.2rem;
-  margin-bottom: 0.2rem;
+  padding: 0 .75rem;
+  user-select: none;
 }
 .p-chip .p-chip-remove-icon:focus {
   outline: 0 none;

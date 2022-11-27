@@ -42,9 +42,7 @@
                 />
               </div>
               <div class='exp-card__tags'>
-                <div v-for='tag in exp.tags' :key='tag' class='tag'>
-                  {{ tag.name }}
-                </div>
+                <Chip v-for='tag in exp.tags' :key='tag.id' class='tag--small' :label='tag.name' />
               </div>
               <div v-if='exp.showFeedback' class='exp-card__body'>
                 {{ exp.feedback }}
@@ -73,6 +71,7 @@ import { isEmpty } from 'lodash-es'
 import draggable from 'vuedraggable'
 import useGrab from '@/composables/useGrab'
 import Menu from 'primevue/menu'
+import Chip from 'primevue/chip'
 import Textarea from 'primevue/textarea'
 import { useToast } from 'primevue/usetoast'
 
@@ -82,6 +81,7 @@ export default {
   name: 'AbilityCard',
   components: {
     AbilityCardHeader,
+    Chip,
     Textarea,
     Menu,
     draggable,
@@ -327,7 +327,7 @@ export default {
         gap: 5px;
         flex-wrap: wrap;
         padding: 10px 0;
-        .tag {
+        .tag--small {
           font-weight: $weight-light;
           color: $blue-6;
         }

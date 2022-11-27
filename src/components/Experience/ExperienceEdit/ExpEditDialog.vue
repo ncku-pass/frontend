@@ -1,6 +1,6 @@
 <template>
   <Dialog
-    id='add-exp-dialog'
+    id='exp-edit-dialog'
     v-model:visible='showDialog'
     :header='expId ? `修改學習歷程` : `新增學習歷程`'
     :dismissableMask='true'
@@ -19,7 +19,7 @@
           />
           <OverlayPanel
             :ref='(el) => { overlayPanelRefs[i] = el }'
-            class='add-exp-dialog__remarks'
+            class='exp-edit-dialog__remarks'
             :dismissable='true'
           >
             <component :is='item.remarks' />
@@ -255,7 +255,7 @@ export default {
 @import '~@/scss/_variables.scss';
 @import '~@/scss/_mixins.scss';
 
-#add-exp-dialog {
+#exp-edit-dialog {
   width: 100%;
   max-width: 770px;
   max-height: 80vh;
@@ -296,7 +296,7 @@ export default {
   }
 }
 
-.add-exp-dialog {
+.exp-edit-dialog {
   &__remarks {
     border-radius: 8px !important;
 

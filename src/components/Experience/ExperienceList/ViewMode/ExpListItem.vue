@@ -5,7 +5,7 @@
     </h4>
 
     <div class='experience-list-item__tags'>
-      <Chip v-for='tag in experience.tags' :key='tag.id' :label='tag.name' />
+      <Chip v-for='tag in experience.tags' :key='tag.id' class='tag--small' :label='tag.name' />
     </div>
 
     <div class='experience-list-item__btns'>
@@ -24,6 +24,7 @@ import { reactive } from 'vue'
 import Chip from 'primevue/chip'
 
 export default {
+  name: 'ExpListItem',
   components: {
     Chip,
   },
