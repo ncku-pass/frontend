@@ -1,6 +1,10 @@
 <template>
-  <Checkbox v-model='checked' :value='exp.id' :binary='true' />
-  {{ exp.name }}
+  <div class='experience-list-item'>
+    <Checkbox v-model='checked' :value='exp.id' :binary='true' />
+    <h4 class='experience-list-item__title'>
+      {{ exp.name }}
+    </h4>
+  </div>
 </template>
 
 <script>

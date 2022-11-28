@@ -2,6 +2,8 @@
   <div class='experience__window__table__wrapper'>
     <div class='exp-edit-toolbar'>
       <ExpQuickEditToolbar
+        :selected-all='selectExpIds.length === fullExpIds.length'
+        :selected-none='selectExpIds.length === 0'
         @select-all='selectAllExp'
         @delete-exp='deleteExp'
       />
@@ -29,7 +31,7 @@ import { useStore } from 'vuex'
 import ExperienceListBlock from '@/components/Experience/ExperienceList/ViewMode/ExpListBlock'
 import ExpQuickEditToolbar from '@/components/Experience/ExperienceList/QuickEditMode/ExpQuickEditToolbar'
 import ExpQuickEditItem from '@/components/Experience/ExperienceList/QuickEditMode/ExpQuickEditItem'
-import { mapValues } from 'lodash-es'
+import { mapValues, omitBy } from 'lodash-es'
 
 export default {
   name: 'EditMode',
@@ -57,14 +59,15 @@ export default {
 
     const filteredExps = computed(() => {
       if (deletedExpIds.value?.length > 0) {
-        return mapValues(props.experiences, sem => {
+        const filteredExp = mapValues(props.experiences, sem => {
           return sem.filter((exp) => !deletedExpIds.value.includes(exp.id))
         })
+
+        return omitBy(filteredExp, (sem) => sem.length < 1)
       } else {
         return props.experiences
       }
     })
-
     const fullExpIds = computed(() => {
       const ids = []
       Object.values(props.experiences).forEach(sem => {
@@ -99,6 +102,7 @@ export default {
       onSelectExp,
       deleteExp,
       filteredExps,
+      fullExpIds,
       selectExpIds,
     }
   }

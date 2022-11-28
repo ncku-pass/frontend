@@ -3,12 +3,14 @@
     <div class='quick-edit-toolbar__btns'>
       <Button
         label='全選'
-        class='p-button-outlined p-button-secondary p-button-sm'
+        :class='selectedAll ? "" : "p-button-outlined p-button-secondary "'
+        class='p-button-sm'
         @click.stop='$emit("select-all")'
       />
 
       <Button
         class='p-button-outlined p-button-secondary p-button-sm'
+        :disabled='selectedNone'
         @click.stop='$emit("delete-exp")'
       >
         <mdicon name='trashCanOutline' size='20' />
@@ -20,7 +22,19 @@
 <script>
 export default {
   name: 'ExpQuickEditToolbar',
+  props: {
+    selectedAll: {
+      type: Boolean,
+      required: true,
+    },
+    selectedNone: {
+      type: Boolean,
+      required: true,
+    },
+  },
   emits: ['select-all', 'delete-exp'],
+  setup() {
+  }
 }
 </script>
 

@@ -61,7 +61,7 @@ export default {
 }
 </script>
 
-<style lang='scss' scoped>
+<style lang='scss'>
 @import '~@/scss/_variables';
 @import '~@/scss/_mixins';
 
@@ -89,7 +89,7 @@ export default {
     color: $red-8;
     font-size: 10px;
 
-    :deep(.p-chip) {
+    .p-chip {
       margin-right: 12px;
     }
   }
@@ -105,10 +105,10 @@ export default {
     }
 
     .experience-list-item__tags {
-      :deep(.p-chip) {
+      .p-chip {
         margin-right: 6px;
       }
-      :deep(.p-chip-text) {
+      .p-chip-text {
         @include font-format('b4');
       }
     }
