@@ -29,7 +29,7 @@ export default {
   },
   setup() {
     const store = useStore()
-    const isQuickEditDirty = computed(() => store.state.expQuickEdit.isQuickEditDirty)
+    const isQuickEditDirty = computed(() => store.getters['expQuickEdit/isQuickEditDirty'])
 
     const toggleQuickEditMode = () => {
       store.commit('expQuickEdit/TOGGLE_QUICK_MODE')

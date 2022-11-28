@@ -6,9 +6,9 @@
         <component
           :is='currentMode'
           :exp-type='activeTab'
-          :experiences='classifiedExperiences'
+          :experiences='classifiedExperiences[activeTab]'
           @edit-exp='editSingleExp'
-        />
+        />\
       </div>
     </div>
     <ExpQuickEditFooter

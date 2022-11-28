@@ -1,7 +1,7 @@
 <template>
   <div class='experience__window__table__wrapper'>
     <ExpListBlock
-      v-for='(semesterData, semester) in experiences[expType]'
+      v-for='(semesterData, semester) in experiences'
       :key='semester'
       :semester='semester'
     >
@@ -24,11 +24,11 @@
 </template>
 
 <script>
+import { ref } from 'vue'
+
 import ExpListItem from '@/components/Experience/ExperienceList/ViewMode/ExpListItem'
 import ExpListBlock from '@/components/Experience/ExperienceList/ViewMode/ExpListBlock'
 import ExpViewDialog from '@/components/Experience/ExperienceList/ViewMode/ExpViewDialog'
-
-import { ref } from 'vue'
 
 export default {
   name: 'ViewMode',
