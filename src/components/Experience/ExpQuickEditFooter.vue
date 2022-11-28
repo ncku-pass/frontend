@@ -7,12 +7,14 @@
     />
     <Button
       label='儲存變更'
+      :disabled='!isQuickEditDirty'
       @click='saveQuickEditChanges'
     />
   </div>
 </template>
 
 <script>
+import { computed } from 'vue'
 import { useStore } from 'vuex'
 
 export default {
@@ -27,6 +29,7 @@ export default {
   },
   setup() {
     const store = useStore()
+    const isQuickEditDirty = computed(() => store.state.expQuickEdit.isQuickEditDirty)
 
     const toggleQuickEditMode = () => {
       store.commit('expQuickEdit/TOGGLE_QUICK_MODE')
@@ -39,7 +42,8 @@ export default {
 
     return {
       toggleQuickEditMode,
-      saveQuickEditChanges
+      saveQuickEditChanges,
+      isQuickEditDirty
     }
   }
 }

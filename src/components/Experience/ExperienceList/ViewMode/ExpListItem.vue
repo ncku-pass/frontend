@@ -10,7 +10,7 @@
 
     <div class='experience-list-item__btns'>
       <Button
-        class='p-button-rounded p-button-outlined p-button-secondary p-button-sm btn-icon'
+        class='p-button-outlined p-button-secondary p-button-sm'
         @click.stop='handleEditExperience'
       >
         <mdicon name='squareEditOutline' :size='device === "mobile" ? 14 : 20' />

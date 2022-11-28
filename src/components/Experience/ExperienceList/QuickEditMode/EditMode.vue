@@ -1,7 +1,7 @@
 <template>
   <div class='experience__window__table__wrapper'>
     <div class='exp-edit-toolbar'>
-      hello word
+      hello world
     </div>
     <ExperienceListBlock
       v-for='(semesterData, semester) in experiences[expType]'
