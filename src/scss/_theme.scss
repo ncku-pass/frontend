@@ -349,18 +349,18 @@
 
 .p-button.p-button-secondary, .p-buttonset.p-button-secondary > .p-button, .p-splitbutton.p-button-secondary > .p-button {
   color: #ffffff;
-  background: #4F4F4F;
-  border: 1px solid #4F4F4F;
+  background: $grey-4;
+  border: 1px solid $grey-4;
 }
 .p-button.p-button-secondary:enabled:hover, .p-buttonset.p-button-secondary > .p-button:enabled:hover, .p-splitbutton.p-button-secondary > .p-button:enabled:hover {
-  background: #828282;
+  background: $grey-5;
   color: #ffffff;
-  border-color: #828282;
+  border-color: $grey-5;
 }
 .p-button.p-button-secondary:enabled:active, .p-buttonset.p-button-secondary > .p-button:enabled:active, .p-splitbutton.p-button-secondary > .p-button:enabled:active {
-  background: #828282;
+  background: $grey-5;
   color: #ffffff;
-  border-color: #828282;
+  border-color: $grey-5;
 }
 .p-button.p-button-secondary.p-button-outlined, .p-buttonset.p-button-secondary > .p-button.p-button-outlined, .p-splitbutton.p-button-secondary > .p-button.p-button-outlined {
   background-color: #FFFFFF;

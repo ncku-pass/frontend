@@ -8,7 +8,7 @@
           :exp-type='activeTab'
           :experiences='classifiedExperiences[activeTab]'
           @edit-exp='editSingleExp'
-        />\
+        />
       </div>
     </div>
     <ExpQuickEditFooter

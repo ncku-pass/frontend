@@ -78,7 +78,7 @@ export default {
     const schema = computed(() => formSchema[props.expType])
     const showDialog = computed({
       get: () => props.visible,
-      set: () => (emit('close-view-dialog'))
+      set: () => emit('close-view-dialog')
     })
 
     const getDisplayDate = (start, end) => {

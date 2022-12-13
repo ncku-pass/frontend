@@ -377,7 +377,7 @@ export default {
     flex: 1;
   }
   &__btns {
-    @include grid(column, 0, 25px);
+    @include grid(column, 0, 20px);
     flex: 0 0 auto;
   }
   &__save {

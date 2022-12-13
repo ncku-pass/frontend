@@ -16,12 +16,19 @@
         <mdicon name='trashCanOutline' size='20' />
       </Button>
     </div>
+
+    <ExpQuickEditToolbarSelectTag
+      :disable='false'
+    />
   </div>
 </template>
 
 <script>
+import ExpQuickEditToolbarSelectTag
+  from '@/components/Experience/ExperienceList/QuickEditMode/ExpQuickEditToolbarSelectTag'
 export default {
   name: 'ExpQuickEditToolbar',
+  components: { ExpQuickEditToolbarSelectTag },
   props: {
     selectedAll: {
       type: Boolean,
@@ -42,15 +49,15 @@ export default {
 @import '~@/scss/_mixins';
 
 .quick-edit-toolbar {
-  @include grid(column, 0, 32px);
   display: flex;
+  gap: 0 32px;
   margin-bottom: 24px;
 
   &__btns {
     @include grid(column, 0, 8px);
 
     .p-button-sm {
-      height: 32px;
+      height: 38px;
     }
   }
 
