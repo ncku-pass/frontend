@@ -4,6 +4,7 @@
       v-model='selectedTags'
       placeholder='建立一個新的tag...'
       :allowDuplicate='false'
+      :forceSelection='true'
       @remove='onUnselectTag'
       @add='onCreateTag'
       @focus='showDropdown = true'

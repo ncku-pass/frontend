@@ -78,10 +78,31 @@ const useSelectTags = () => {
     debouncedByTagsByOthers(query)
   }
 
+  const createNewTag = async(value) => {
+    value = value.trim()
+    if (!value) return
+    if (!value.match(/^[\u4e00-\u9fa5_a-zA-Z0-9\s-]+$/)) {
+      throw new Error('只接受中、英、數、底線 (_)、橫線(-)哦！')
+    }
+    if (selectedTags.value.some(tag => tag.name === value)) {
+      throw new Error('已經有這個 tag 了！')
+    }
+    // same tag name exist in list, no need to create
+    const existedTag = defaultTagNames.find(tag => tag.name === value) || tagsFromStore.value.find(tag => tag.name === value)
+    if (existedTag) {
+      selectedTags.value = [...selectedTags.value, existedTag]
+      return
+    }
+
+    const newTag = await store.dispatch('tags/addTag', value)
+    selectedTags.value = [...selectedTags.value, newTag]
+  }
+
   return {
     filteredTags,
     selectedTags,
     searchTagsOptions,
+    createNewTag,
   }
 }
 

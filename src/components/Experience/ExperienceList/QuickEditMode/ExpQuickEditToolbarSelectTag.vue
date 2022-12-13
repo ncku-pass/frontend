@@ -1,30 +1,36 @@
 <template>
-  <div id='quick-edit-toolbar__select-tag'>
-    <AutoComplete
-      v-model='selectedTags'
-      :multiple='true'
-      :disabled='disable'
-      placeholder='在此新增 tag'
-      :suggestions='filteredTags'
-      optionGroupLabel='label'
-      optionGroupChildren='options'
-      optionLabel='name'
-      loadingIcon='pi pi-spinner'
-      :completeOnFocus='true'
-      @complete='searchTagsOptions($event)'
-      @keyup.enter.stop='onEnter($event)'
-    />
-    <Button
-      class='p-button-secondary p-button-sm'
-      :disabled='disable || selectedTags.length <= 0'
-      @click='confirmTagChanges'
-    >
-      <mdicon name='check' size='20' />
-    </Button>
+  <div>
+    <div id='quick-edit-toolbar__select-tag'>
+      <AutoComplete
+        v-model='selectedTags'
+        :multiple='true'
+        :disabled='disable'
+        placeholder='在此新增 tag'
+        :suggestions='filteredTags'
+        :completeOnFocus='true'
+        optionGroupLabel='label'
+        optionGroupChildren='options'
+        optionLabel='name'
+        loadingIcon='pi pi-spinner'
+        @complete='searchTagsOptions($event)'
+        @keyup.enter.stop='onEnter($event)'
+      />
+      <Button
+        class='p-button-secondary p-button-sm'
+        :disabled='disable || selectedTags.length <= 0'
+        @click='confirmTagChanges'
+      >
+        <mdicon name='check' size='20' />
+      </Button>
+    </div>
+    <small v-if='error' class='p-error'>
+      {{ error }}
+    </small>
   </div>
 </template>
 
 <script>
+import { ref } from 'vue'
 import AutoComplete from 'primevue/autocomplete'
 import useSelectTags from '@/composables/useSelectTags'
 
@@ -44,10 +50,21 @@ export default {
       filteredTags,
       selectedTags,
       searchTagsOptions,
+      createNewTag,
     } = useSelectTags()
 
-    const onEnter = (evt) => {
-      console.log(evt)
+    const error = ref(null)
+
+    const onEnter = async(evt) => {
+      try {
+        await createNewTag(evt.target.value)
+        // clear input
+        evt.target.value = ''
+
+      } catch (err) {
+        error.value = err.message
+        setTimeout(() => { error.value = null }, 5000)
+      }
     }
 
     const confirmTagChanges = () => {
@@ -59,7 +76,8 @@ export default {
       filteredTags,
       searchTagsOptions,
       onEnter,
-      confirmTagChanges
+      confirmTagChanges,
+      error,
     }
   },
 }
