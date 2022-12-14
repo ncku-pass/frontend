@@ -33,6 +33,7 @@
 import { ref } from 'vue'
 import AutoComplete from 'primevue/autocomplete'
 import useSelectTags from '@/composables/useSelectTags'
+import { useStore } from 'vuex'
 
 export default {
   name: 'ExpQuickEditToolbarSelectTag',
@@ -51,7 +52,9 @@ export default {
       selectedTags,
       searchTagsOptions,
       createNewTag,
+      clearTagSelects,
     } = useSelectTags()
+    const store = useStore()
 
     const error = ref(null)
 
@@ -68,7 +71,8 @@ export default {
     }
 
     const confirmTagChanges = () => {
-      console.log('confirmTagChanges')
+      store.dispatch('expQuickEdit/APPEND_TAG_CHANGES', selectedTags.value)
+      clearTagSelects()
     }
 
     return {

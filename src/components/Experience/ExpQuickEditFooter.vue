@@ -26,12 +26,12 @@ export default {
     const isQuickEditDirty = computed(() => store.getters['expQuickEdit/isQuickEditDirty'])
 
     const toggleQuickEditMode = () => {
-      store.commit('expQuickEdit/TOGGLE_QUICK_MODE')
+      store.dispatch('expQuickEdit/TOGGLE_QUICK_EDIT_MODE')
     }
 
     const saveQuickEditChanges = () => {
       console.log('saveQuickEditChanges')
-      store.commit('expQuickEdit/TOGGLE_QUICK_MODE')
+      store.dispatch('expQuickEdit/TOGGLE_QUICK_EDIT_MODE')
     }
 
     return {

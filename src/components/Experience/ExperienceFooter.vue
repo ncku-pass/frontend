@@ -37,7 +37,7 @@ export default {
     const store = useStore()
 
     const toggleQuickEditMode = () => {
-      store.commit('expQuickEdit/TOGGLE_QUICK_MODE')
+      store.dispatch('expQuickEdit/TOGGLE_QUICK_EDIT_MODE')
     }
 
     return {

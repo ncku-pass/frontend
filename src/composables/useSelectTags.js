@@ -98,11 +98,16 @@ const useSelectTags = () => {
     selectedTags.value = [...selectedTags.value, newTag]
   }
 
+  const clearTagSelects = () => {
+    selectedTags.value = []
+  }
+
   return {
     filteredTags,
     selectedTags,
     searchTagsOptions,
     createNewTag,
+    clearTagSelects,
   }
 }
 
