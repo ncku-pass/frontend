@@ -47,6 +47,7 @@ import Chip from 'primevue/chip'
 import Dialog from 'primevue/dialog'
 
 import * as formSchema from '@/components/Experience/ExperienceEdit/experienceSchema'
+import { useStore } from 'vuex'
 
 export default {
   name: 'ExpViewDialog',
@@ -59,13 +60,6 @@ export default {
       type: Boolean,
       required: true,
     },
-    expType: {
-      type: String,
-      required: true,
-      validator(value) {
-        return ['course', 'activity', 'competition', 'work', 'certificate', 'other'].includes(value)
-      }
-    },
     experience: {
       type: Object,
       default() {
@@ -75,7 +69,10 @@ export default {
   },
   emits: ['close-view-dialog'],
   setup(props, { emit }) {
-    const schema = computed(() => formSchema[props.expType])
+    const store = useStore()
+    const expType = computed(() => store.state.experiences.activeTab)
+
+    const schema = computed(() => formSchema[expType.value])
     const showDialog = computed({
       get: () => props.visible,
       set: () => emit('close-view-dialog')

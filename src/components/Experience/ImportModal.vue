@@ -71,18 +71,10 @@ export default {
     DisclosureButton,
     DisclosurePanel,
   },
-  props: {
-    type: {
-      type: String,
-      default: 'course',
-      validator(value) {
-        return ['course', 'activity'].includes(value)
-      }
-    }
-  },
   emits: ['close'],
   setup(props, { emit }) {
     const store = useStore()
+    const activeTab = computed(() => store.state.experiences.activeTab)
 
     const handleCloseModal = () => {
       if (isPending.value) {
@@ -93,7 +85,7 @@ export default {
 
     // === 取得學校資料 ===
     const classifiedNckuExperiences = computed(
-      () => store.getters['experiences/classifiedNckuExperiences']?.[props.type]
+      () => store.getters['experiences/classifiedNckuExperiences']?.[activeTab.value]
     )
     const getNckuExperiences = () => store.dispatch('experiences/getNckuExperiences')
     const nckuExperiencesError = ref(null)

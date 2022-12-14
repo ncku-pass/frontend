@@ -15,7 +15,8 @@ const experiences = {
     experiences: null,
     nckuExperiences: null,
     error: null,
-    isPending: false
+    isPending: false,
+    activeTab: 'course',
   }),
   mutations: {
     SET_EXPERIENCES(state, experiences) {
@@ -45,6 +46,11 @@ const experiences = {
     SET_STATUS(state, { error = undefined, isPending = undefined }) {
       if (error !== undefined) state.error = error
       if (isPending !== undefined) state.isPending = isPending
+    },
+    SET_ACTIVE_TAB(state, activeTab) {
+      if (['course', 'activity', 'competition', 'work', 'certificate', 'other'].includes(activeTab)) {
+        state.activeTab = activeTab
+      }
     }
   },
   actions: {
@@ -210,7 +216,7 @@ const experiences = {
       return (type, id) => {
         return state.experiences?.[type]?.filter(exp => exp.id === id)?.[0]
       }
-    }
+    },
   }
 }
 

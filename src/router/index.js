@@ -32,14 +32,8 @@ const routes = [
     name: 'Experience',
     component: Experience,
     props: route => {
-      if (isEmpty(route.params.activeTab)) {
-        return { activeTab: 'course', redirected: true }
-
-      } else if (!['course', 'activity', 'competition', 'work', 'certificate', 'other'].includes(route.params.activeTab)) {
-        return { activeTab: 'course', redirected: true }
-
-      } else {
-        return { activeTab: route.params.activeTab }
+      if (!isEmpty(route.params.activeTab) && ['course', 'activity', 'competition', 'work', 'certificate', 'other'].includes(route.params.activeTab)) {
+        if (store.state.experiences.activeTab !== route.params.activeTab) store.commit('experiences/SET_ACTIVE_TAB', route.params.activeTab)
       }
     },
     meta: { requiresAuth: true, layout: 'AppLayout' }

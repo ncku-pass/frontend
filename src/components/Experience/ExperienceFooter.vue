@@ -1,7 +1,6 @@
 <template>
   <div class='experience__footer'>
     <AddExperienceButton
-      :type='activeTab'
       :show-badge='showButtonBadge'
       @add-experience='$emit("add-experience")'
       @import-ncku-data='$emit("import-ncku-data")'
@@ -28,10 +27,6 @@ export default {
     MqResponsive,
   },
   props: {
-    activeTab: {
-      type: String,
-      required: true,
-    },
     showButtonBadge: {
       type: Boolean,
       required: true,

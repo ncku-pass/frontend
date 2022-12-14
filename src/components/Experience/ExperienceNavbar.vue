@@ -1,9 +1,9 @@
 <template>
   <ul class='experience__navbar' :class='`experience__navbar--${device}`'>
-    <li v-for='(link, idx) in experienceNavbarLinks' :key='`exp-navbar-${link.type}`'>
+    <li v-for='link in experienceNavbarLinks' :key='`exp-navbar-${link.type}`'>
       <router-link
         class='tab-link'
-        :class='[`tab-link--${device}`, { "router-link-active": redirected && idx === 0 }]'
+        :class='[`tab-link--${device}`, { "router-link-active": link.dest === activeTab }]'
         :to='{ name: "Experience", params: { activeTab: link.dest } }'
       >
         {{ link.name }}
@@ -14,21 +14,16 @@
 
 <script>
 import { experienceNavbarLinks } from '@/config'
+import { computed } from 'vue'
+import { useStore } from 'vuex'
 export default {
   name: 'ExperienceNavbar',
   inject: ['mq'],
-  props: {
-    activeTab: {
-      type: String,
-      default: '',
-    },
-    redirected: {
-      type: Boolean,
-      default: false,
-    }
-  },
   setup() {
-    return { experienceNavbarLinks }
+    const store = useStore()
+    const activeTab = computed(() => store.state.experiences.activeTab)
+
+    return { activeTab, experienceNavbarLinks }
   },
   computed: {
     device() {

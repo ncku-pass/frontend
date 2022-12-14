@@ -21,12 +21,6 @@ export default {
   name: 'ExpQuickEditFooter',
   components: {
   },
-  props: {
-    expType: {
-      type: String,
-      required: true,
-    },
-  },
   setup() {
     const store = useStore()
     const isQuickEditDirty = computed(() => store.getters['expQuickEdit/isQuickEditDirty'])

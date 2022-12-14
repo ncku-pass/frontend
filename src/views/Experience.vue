@@ -1,11 +1,10 @@
 <template>
   <div class='experience' :class='`experience--${device}`'>
     <div class='experience__window' :class='`experience__window--${device}`'>
-      <ExperienceNavbar :active-tab='activeTab' :redirected='redirected' />
+      <ExperienceNavbar />
       <div class='experience__window__table'>
         <component
           :is='currentMode'
-          :exp-type='activeTab'
           :experiences='classifiedExperiences[activeTab]'
           @edit-exp='editSingleExp'
         />
@@ -13,11 +12,9 @@
     </div>
     <ExpQuickEditFooter
       v-if='currentMode === "EditMode"'
-      :exp-type='activeTab'
     />
     <ExperienceFooter
       v-else
-      :active-tab='activeTab'
       :show-button-badge='showButtonBadge'
       @add-experience='handleAddExperience'
       @import-ncku-data='handleImportNCKUData'
@@ -25,7 +22,7 @@
   </div>
 
   <Toast position='top-right' />
-  <ImportModal v-if='showImportModal' :type='activeTab' @close='showImportModal = false' />
+  <ImportModal v-if='showImportModal' @close='showImportModal = false' />
   <ExpEditDialog
     :visible='showExpEditDialog'
     :exp-type='activeTab'
@@ -64,20 +61,11 @@ export default {
     Toast,
   },
   inject: ['mq'],
-  props: {
-    activeTab: {
-      type: String,
-      default: 'course'
-    },
-    redirected: {
-      type: Boolean,
-      default: false,
-    }
-  },
-  setup(props) {
+  setup() {
     const store = useStore()
     store.dispatch('experiences/initExperiences')
 
+    const activeTab = computed(() => store.state.experiences.activeTab)
     const isPending = computed(() => store.state.experiences.isPending)
     const isQuickEdit = computed(() => store.state.expQuickEdit.quickEditMode)
     const classifiedExperiences = computed(() => store.getters['experiences/classifiedExperiences'])
@@ -124,9 +112,9 @@ export default {
     const showButtonBadge = ref(false)
     watch(isPending, (newValue) => {
       if (!newValue) { // finish pending
-        const targetExp = classifiedExperiences.value[props.activeTab]
+        const targetExp = classifiedExperiences.value[activeTab.value]
 
-        if (props.activeTab === 'course' && targetExp) {
+        if (activeTab.value === 'course' && targetExp) {
           const lastKey = Object.keys(targetExp)[0]
           // alert user to import if no new record
           if (!isCurrentOrLastSemester(lastKey)) {
@@ -140,6 +128,7 @@ export default {
     })
 
     return {
+      activeTab,
       currentMode,
       classifiedExperiences,
       showExpEditDialog,

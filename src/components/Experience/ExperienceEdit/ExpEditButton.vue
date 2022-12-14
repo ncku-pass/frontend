@@ -25,6 +25,7 @@ import SplitButton from 'primevue/splitbutton'
 import SpeedDial from 'primevue/speeddial'
 import { MqResponsive } from 'vue3-mq'
 import { canImportFromSchool } from '@/helpers/experiences.helper'
+import { useStore } from 'vuex'
 
 export default {
   name: 'AddExperienceButton',
@@ -34,10 +35,6 @@ export default {
     MqResponsive
   },
   props: {
-    type: {
-      type: String,
-      required: true
-    },
     showBadge: {
       type: Boolean,
       required: true
@@ -45,8 +42,11 @@ export default {
   },
   emits: ['import-ncku-data', 'add-experience'],
   setup(props, { emit }) {
+    const store = useStore()
+    const activeTab = computed(() => store.state.experiences.activeTab)
+
     const isShowOptions = computed(() => {
-      return canImportFromSchool(props.type)
+      return canImportFromSchool(activeTab.value)
     })
 
     const addExpOptions = [{

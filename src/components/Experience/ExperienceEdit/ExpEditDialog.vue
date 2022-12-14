@@ -1,54 +1,56 @@
 <template>
-  <Dialog
-    id='exp-edit-dialog'
-    v-model:visible='showDialog'
-    :header='expId ? `修改學習歷程` : `新增學習歷程`'
-    :dismissableMask='true'
-    :modal='true'
-    :draggable='false'
-  >
-    <div v-for='(item, i) in schema' :key='item.inputKey'>
-      <label :class='{ "required": item.required }'>
-        {{ item.label }}
-        <div v-if='item.remarks'>
-          <mdicon
-            :id='`${item.inputKey}__remarks-icon`'
-            name='information'
-            size='16'
-            @click='(evt) => toggleRemarkPanel(evt, i)'
-          />
-          <OverlayPanel
-            :ref='(el) => { overlayPanelRefs[i] = el }'
-            class='exp-edit-dialog__remarks'
-            :dismissable='true'
-          >
-            <component :is='item.remarks' />
-          </OverlayPanel>
-        </div>
-      </label>
-      <DynamicFormRenderer
-        :schema='item'
-        :data='typeof item.inputKey === "string" ? inputData[item.inputKey] : inputData'
-        :validate-state='getValidateState(item.inputKey, item.label)'
-        @input='updateData($event)'
-      />
-    </div>
-    <template #footer>
-      <Button
-        label='取消'
-        :disabled='isSubmitLoading'
-        class='p-button-secondary p-button-outlined'
-        @click='showDialog = false'
-      />
-      <Button
-        label='儲存'
-        :disabled='v$.$invalid'
-        :loading='isSubmitLoading'
-        @click='onSubmitExp'
-      />
-    </template>
-  </Dialog>
-  <ConfirmDialog class='no-header no-icon' group='close-dialog' />
+  <div>
+    <Dialog
+      id='exp-edit-dialog'
+      v-model:visible='showDialog'
+      :header='expId ? `修改學習歷程` : `新增學習歷程`'
+      :dismissableMask='true'
+      :modal='true'
+      :draggable='false'
+    >
+      <div v-for='(item, i) in schema' :key='item.inputKey'>
+        <label :class='{ "required": item.required }'>
+          {{ item.label }}
+          <div v-if='item.remarks'>
+            <mdicon
+              :id='`${item.inputKey}__remarks-icon`'
+              name='information'
+              size='16'
+              @click='(evt) => toggleRemarkPanel(evt, i)'
+            />
+            <OverlayPanel
+              :ref='(el) => { overlayPanelRefs[i] = el }'
+              class='exp-edit-dialog__remarks'
+              :dismissable='true'
+            >
+              <component :is='item.remarks' />
+            </OverlayPanel>
+          </div>
+        </label>
+        <DynamicFormRenderer
+          :schema='item'
+          :data='typeof item.inputKey === "string" ? inputData[item.inputKey] : inputData'
+          :validate-state='getValidateState(item.inputKey, item.label)'
+          @input='updateData($event)'
+        />
+      </div>
+      <template #footer>
+        <Button
+          label='取消'
+          :disabled='isSubmitLoading'
+          class='p-button-secondary p-button-outlined'
+          @click='showDialog = false'
+        />
+        <Button
+          label='儲存'
+          :disabled='v$.$invalid'
+          :loading='isSubmitLoading'
+          @click='onSubmitExp'
+        />
+      </template>
+    </Dialog>
+    <ConfirmDialog class='no-header no-icon' group='close-dialog' />
+  </div>
 </template>
 
 <script>
@@ -79,13 +81,6 @@ export default {
       required: true,
       type: Boolean,
     },
-    expType: {
-      type: String,
-      default: 'activity',
-      validator(value) {
-        return ['course', 'activity', 'competition', 'work', 'certificate', 'other'].includes(value)
-      }
-    },
     expId: {
       type: Number,
       default: null,
@@ -94,7 +89,9 @@ export default {
   emits: ['close-dialog'],
   setup(props, { emit }) {
     const store = useStore()
-    const schema = computed(() => formSchema[props.expType])
+    const expType = computed(() => store.state.experiences.activeTab)
+
+    const schema = computed(() => formSchema[expType.value])
 
     // === INIT AND CLEAN UP ===
     const inputData = ref({})
@@ -116,12 +113,12 @@ export default {
       if (val && !isFormDirty.value) {
         // create exp
         if (!props.expId) {
-          inputData.value = generateEmptyExp(props.expType)
+          inputData.value = generateEmptyExp(expType.value)
 
         // edit exp
         } else {
-          const fromStore = store.getters['experiences/experienceByTypeAndId'](props.expType, props.expId)
-          inputData.value = fromStore === undefined ? generateEmptyExp(props.expType) : { ...fromStore }
+          const fromStore = store.getters['experiences/experienceByTypeAndId'](expType.value, props.expId)
+          inputData.value = fromStore === undefined ? generateEmptyExp(expType.value) : { ...fromStore }
         }
 
         // only show error msg when edit
@@ -157,7 +154,7 @@ export default {
 
       const payload = {
         ...inputData.value,
-        type: props.expType,
+        type: expType.value,
         tags: inputData.value.tags.map(tag => tag.id)
       }
       try {
@@ -209,7 +206,7 @@ export default {
     }
 
     // FORM VALIDATION
-    const rules = computed(() => generateExpValidationRules(props.expType))
+    const rules = computed(() => generateExpValidationRules(expType.value))
     const v$ = useVuelidate(rules, inputData)
 
     const getValidateState = (inputKey, label) => {

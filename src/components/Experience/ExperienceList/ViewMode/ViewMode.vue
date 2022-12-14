@@ -16,7 +16,6 @@
 
     <ExpViewDialog
       :visible='showExpViewDialog'
-      :exp-type='expType'
       :experience='experienceToShow'
       @close-view-dialog='showExpViewDialog = false'
     />
@@ -38,10 +37,6 @@ export default {
     ExpViewDialog,
   },
   props: {
-    expType: {
-      type: String,
-      default: 'course',
-    },
     experiences: {
       type: Object,
       default() {
