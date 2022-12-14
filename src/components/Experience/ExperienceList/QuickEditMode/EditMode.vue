@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import { computed, ref } from 'vue'
+import { computed } from 'vue'
 import { useStore } from 'vuex'
 
 import ExperienceListBlock from '@/components/Experience/ExperienceList/ViewMode/ExpListBlock'
@@ -41,10 +41,6 @@ export default {
     ExperienceListBlock,
   },
   props: {
-    expType: {
-      type: String,
-      default: 'course',
-    },
     experiences: {
       type: Object,
       default() {
@@ -54,7 +50,7 @@ export default {
   },
   setup(props) {
     const store = useStore()
-    const selectExpIds = ref([])
+    const selectExpIds = computed(() => store.state.expQuickEdit.selectedExpIds)
     const deletedExpIds = computed(() => store.state.expQuickEdit.deleteExpIds)
 
     const filteredExps = computed(() => {
@@ -78,23 +74,18 @@ export default {
 
     const selectAllExp = () => {
       if (selectExpIds.value.length !== fullExpIds.value.length) {
-        selectExpIds.value = fullExpIds.value
+        store.commit('expQuickEdit/SET_SELECTED_EXP_ID', fullExpIds.value)
       } else {
-        selectExpIds.value = []
+        store.commit('expQuickEdit/SET_SELECTED_EXP_ID', [])
       }
     }
 
     const onSelectExp = ({ expId, select }) => {
-      if (select && !selectExpIds.value.includes(expId)) {
-        selectExpIds.value.push(expId)
-      } else if (!select) {
-        selectExpIds.value = selectExpIds.value.filter(target => target !== expId)
-      }
+      store.commit('expQuickEdit/EDIT_SELECTED_EXP_ID', { expId, select })
     }
 
     const deleteExp = () => {
       store.commit('expQuickEdit/APPEND_DELETE_EXP_ID', selectExpIds.value)
-      selectExpIds.value = []
     }
 
     return {
