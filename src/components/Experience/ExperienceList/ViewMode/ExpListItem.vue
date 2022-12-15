@@ -85,11 +85,10 @@ export default {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-
-    color: $red-8;
     font-size: 10px;
 
     .p-chip {
+      color: $red-5;
       margin-right: 12px;
     }
   }

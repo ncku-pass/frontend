@@ -1,4 +1,4 @@
-import { dropWhile } from 'lodash-es'
+import { concat, dropWhile, uniqBy } from 'lodash-es'
 
 const expQuickEdit = {
   namespaced: true,
@@ -61,19 +61,17 @@ const expQuickEdit = {
     },
     APPEND_TAG_CHANGES({ state, commit, rootState }, newTags) {
       const expTags = []
-      const newTagIds = []
-      newTags.forEach(tag => newTagIds.push(tag.id))
 
       for (const expId of state.selectedExpIds) {
         const target = rootState.experiences.experiences[rootState.experiences.activeTab].find(exp => exp.id === expId)
+        const combinedTags = uniqBy(concat(target.tags, newTags), 'id')
 
-        const targetTagIds = []
-        target?.tags?.forEach(tag => targetTagIds.push(tag.id))
+        const combinedTagsIds = []
+        combinedTags.forEach(tag => combinedTagsIds.push(tag.id))
 
-        const fullTags = targetTagIds.length === 0 ? newTagIds : [...new Set([...targetTagIds, ...newTagIds])]
-        expTags.push({ experienceId: expId, fullTags })
+        expTags.push({ experienceId: expId, tagIds: combinedTagsIds })
 
-        target.tags.push(...newTags)
+        target.tags = combinedTags
         commit('experiences/UPDATE_EXPERIENCE', { id: expId, experience: target }, { root: true })
       }
       commit('SET_EDIT_EXP_TAGS', expTags)

@@ -94,8 +94,8 @@ export default {
 #quick-edit-toolbar__select-tag {
   display: flex;
   gap: 0;
-  min-width: 300px;
-  max-width: 600px;
+  min-width: 500px;
+  max-width: 500px;
 
   .p-autocomplete .p-inputtext {
     border-bottom-right-radius: 0 !important;
@@ -134,7 +134,6 @@ export default {
   }
 
   .p-button-sm {
-    height: 100%;
     padding: 8px;
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;

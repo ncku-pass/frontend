@@ -4,17 +4,22 @@
     <h4 class='experience-list-item__title'>
       {{ exp.name }}
     </h4>
+    <div class='experience-list-item__tags'>
+      <Chip v-for='tag in exp.tags' :key='tag.id' class='tag--small' :label='tag.name' />
+    </div>
   </div>
 </template>
 
 <script>
-import Checkbox from 'primevue/checkbox'
 import { computed } from 'vue'
+import Checkbox from 'primevue/checkbox'
+import Chip from 'primevue/chip'
 
 export default {
   name: 'ExpQuickEditItem',
   components: {
-    Checkbox
+    Checkbox,
+    Chip
   },
   props: {
     exp: {
