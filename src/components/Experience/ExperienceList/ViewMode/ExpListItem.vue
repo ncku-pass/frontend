@@ -4,8 +4,15 @@
       {{ experience.name }}
     </h4>
 
-    <div class='experience-list-item__tags'>
-      <Chip v-for='tag in experience.tags' :key='tag.id' class='tag--small' :label='tag.name' />
+    <div class='exp-tag-list-wrapper'>
+      <div class='exp-tag-list'>
+        <Chip
+          v-for='tag in experience.tags'
+          :key='tag.id'
+          :class='`exp-tag exp-tag--${device}`'
+          :label='tag.name'
+        />
+      </div>
     </div>
 
     <div class='experience-list-item__btns'>
@@ -80,18 +87,6 @@ export default {
     max-width: 250px;
   }
 
-  &__tags {
-    display: block;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    font-size: 10px;
-
-    .p-chip {
-      color: $red-5;
-      margin-right: 12px;
-    }
-  }
   &__btns {
     @include grid(column, 0, 10px);
     margin-left: auto;
@@ -101,19 +96,6 @@ export default {
   &--mobile {
     .experience-list-item__title {
       @include font-format('b2', $color: $red-8)
-    }
-
-    .experience-list-item__tags {
-      .p-chip {
-        margin-right: 6px;
-      }
-      .p-chip-text {
-        @include font-format('b4');
-      }
-    }
-
-    .p-button-sm {
-      padding: 4px 8px;
     }
   }
 }

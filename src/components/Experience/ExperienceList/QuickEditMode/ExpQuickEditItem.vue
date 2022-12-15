@@ -4,16 +4,21 @@
     <h4 class='experience-list-item__title'>
       {{ exp.name }}
     </h4>
-    <div class='experience-list-item__tags'>
-      <Chip
-        v-for='tag in exp.tags'
-        :key='tag.id'
-        class='tag--small'
-        :label='tag.name'
-        :removable='true'
-        removeIcon='pi pi-times'
-        @remove='removeTagFromExp(exp.id, tag.id)'
-      />
+    <div class='exp-tag-list-wrapper'>
+      <div class='exp-tag-list'>
+        <Chip
+          v-for='tag in exp.tags'
+          :key='tag.id'
+          class='exp-tag'
+          :label='tag.name'
+          :removable='true'
+          removeIcon='pi pi-times'
+          @remove='removeTagFromExp(exp.id, tag.id)'
+        />
+      </div>
+      <Chip class='exp-tag__ext'>
+        <mdicon name='plus' size='14' />
+      </Chip>
     </div>
   </div>
 </template>

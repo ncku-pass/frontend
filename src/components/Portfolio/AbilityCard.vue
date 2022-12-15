@@ -41,8 +41,10 @@
                   :popup='true'
                 />
               </div>
-              <div class='exp-card__tags'>
-                <Chip v-for='tag in exp.tags' :key='tag.id' class='tag--small' :label='tag.name' />
+              <div class='exp-tag-list-wrapper'>
+                <div class='exp-tag-list'>
+                  <Chip v-for='tag in exp.tags' :key='tag.id' class='exp-tag' :label='tag.name' />
+                </div>
               </div>
               <div v-if='exp.showFeedback' class='exp-card__body'>
                 {{ exp.feedback }}
@@ -322,14 +324,18 @@ export default {
         }
       }
 
-      &__tags {
+      .exp-tag-list {
         display: flex;
         gap: 5px;
         flex-wrap: wrap;
         padding: 10px 0;
-        .tag--small {
-          font-weight: $weight-light;
+        .exp-tag {
           color: $blue-6;
+          padding: 3px 8px;
+          margin: 0;
+          :deep(.p-chip-text) {
+            font-size: 10px;
+          }
         }
       }
 

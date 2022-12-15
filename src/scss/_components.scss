@@ -103,6 +103,60 @@
   background-color: rgba(0, 0, 0, 0.25);
 }
 
+.exp-tag-list-wrapper {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  column-gap: 10px;
+
+  .exp-tag-list {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    font-size: 10px;
+
+    .exp-tag {
+      padding: 8px 10px;
+      color: $red-5;
+      margin-right: 12px;
+
+      .p-chip-text {
+        font-weight: $weight-light;
+        font-size: 13px;
+        line-height: 15px;
+        margin: 0;
+      }
+      .p-chip-remove-icon {
+        font-size: 10px;
+      }
+    }
+    .exp-tag--mobile {
+      padding: 4px 8px;
+      margin-right: 6px;
+
+      .p-chip-text {
+        @include font-format('b4');
+        font-weight: $weight-light !important;
+      }
+    }
+  }
+
+  .exp-tag__ext {
+    flex-shrink: 0;
+    color: $red-5;
+    padding: 4px;
+
+    .mdi {
+      width: 14px;
+      height: 14px;
+
+      svg {
+        vertical-align: top;
+      }
+    }
+  }
+}
+
 
 // =====================================
 // adjusting primevue theme styles
@@ -161,4 +215,10 @@
 
 .mdi {
   cursor: pointer;
+}
+
+@media screen and (max-width: $mobile_max_width) {
+  .p-button.p-button-sm {
+    padding: 4px 8px !important;
+  }
 }
