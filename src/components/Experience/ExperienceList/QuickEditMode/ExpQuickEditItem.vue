@@ -5,7 +5,15 @@
       {{ exp.name }}
     </h4>
     <div class='experience-list-item__tags'>
-      <Chip v-for='tag in exp.tags' :key='tag.id' class='tag--small' :label='tag.name' />
+      <Chip
+        v-for='tag in exp.tags'
+        :key='tag.id'
+        class='tag--small'
+        :label='tag.name'
+        :removable='true'
+        removeIcon='pi pi-times'
+        @remove='removeTagFromExp(exp.id, tag.id)'
+      />
     </div>
   </div>
 </template>
@@ -14,6 +22,7 @@
 import { computed } from 'vue'
 import Checkbox from 'primevue/checkbox'
 import Chip from 'primevue/chip'
+import { useStore } from 'vuex'
 
 export default {
   name: 'ExpQuickEditItem',
@@ -40,13 +49,17 @@ export default {
       set: (val) => emit('toggle-exp-select', { expId: props.exp.id, select: val })
     })
 
+    const store = useStore()
+    const removeTagFromExp = (expId, tagId) => {
+      store.dispatch('expQuickEdit/REMOVE_TAG_FROM_EXP', { expId, tagId })
+    }
     return {
-      checked
+      checked,
+      removeTagFromExp
     }
   }
 }
 </script>
 
-<style lang='scss' scoped>
-
+<style lang='scss'>
 </style>

@@ -64,11 +64,10 @@ const expQuickEdit = {
 
       for (const expId of state.selectedExpIds) {
         const target = rootState.experiences.experiences[rootState.experiences.activeTab].find(exp => exp.id === expId)
+
+        // combine original and new tags - full obj list for state, id list for later api call
         const combinedTags = uniqBy(concat(target.tags, newTags), 'id')
-
-        const combinedTagsIds = []
-        combinedTags.forEach(tag => combinedTagsIds.push(tag.id))
-
+        const combinedTagsIds = combinedTags.map(tag => tag.id)
         expTags.push({ experienceId: expId, tagIds: combinedTagsIds })
 
         target.tags = combinedTags
@@ -76,6 +75,21 @@ const expQuickEdit = {
       }
       commit('SET_EDIT_EXP_TAGS', expTags)
       commit('SET_SELECTED_EXP_ID', [])
+    },
+    REMOVE_TAG_FROM_EXP({ state, commit, rootState }, { expId, tagId }) {
+      // update state.exp for display
+      const expTarget = rootState.experiences.experiences[rootState.experiences.activeTab].find(exp => exp.id === expId)
+      expTarget.tags = expTarget.tags.filter(tag => tag.id !== tagId)
+      commit('experiences/UPDATE_EXPERIENCE', { id: expId, experience: expTarget }, { root: true })
+
+      // update this state for api
+      const expTagTarget = state.editExpTags.find(expTag => expTag.experienceId === expId)
+      const targetTagIds = expTarget.tags.map(tag => tag.id)
+      if (expTagTarget) {
+        expTagTarget.tagIds = targetTagIds
+      } else {
+        state.editExpTags.push({ experienceId: expId, tagIds: targetTagIds })
+      }
     }
   },
   getters: {
