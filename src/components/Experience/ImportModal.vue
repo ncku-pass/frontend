@@ -35,19 +35,14 @@
             </Disclosure>
           </div>
           <div class='import-modal__btns'>
-            <button class='select-all btn' @click='toggleAllExperiences'>
-              全選
-            </button>
-            <button v-show='!isPending' class='btn' type='button' @click='handleCloseModal'>
-              取消
-            </button>
-            <button
-              class='btn--red'
+            <Button class='p-button-secondary p-button-outlined' label='全選' @click='toggleAllExperiences' />
+            <Button v-show='!isPending' class='p-button-secondary p-button-outlined' label='取消' @click='handleCloseModal' />
+            <Button
+              :loading='isPending'
               :disabled='isPending || !selectedExperiences.length'
+              label='儲存'
               @click='handleImportExperiences'
-            >
-              {{ isPending ? '儲存中' : '儲存' }}
-            </button>
+            />
           </div>
         </template>
         <div v-else class='import-modal__loading'>
@@ -180,10 +175,6 @@ export default {
     height: 100%;
     place-items: center;
   }
-}
-
-.select-all {
-  margin-right: auto;
 }
 
 .experiences__container {

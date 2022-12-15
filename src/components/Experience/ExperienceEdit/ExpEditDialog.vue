@@ -306,12 +306,6 @@ export default {
         margin-top: 5px;
         margin-bottom: 10px;
       }
-      .inline-code {
-        padding: 0 7px;
-        background-color: $grey-1;
-        border-radius: 5px;
-        display: inline-block;
-      }
     }
   }
 }

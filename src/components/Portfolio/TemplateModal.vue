@@ -43,12 +43,8 @@
             模板樣本
           </p>
           <div class='template-modal__btns'>
-            <button class='btn' @click.stop='$emit("close")'>
-              取消
-            </button>
-            <button class='btn--red' @click.stop='handleAddTemplate'>
-              確認
-            </button>
+            <Button class='p-button-secondary p-button-outlined' label='取消' @click.stop='$emit("close")' />
+            <Button label='確認' @click.stop='handleAddTemplate' />
           </div>
         </div>
       </div>
