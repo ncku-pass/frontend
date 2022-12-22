@@ -167,7 +167,7 @@ export default {
         closeDialog(true)
 
       } catch (error) {
-        toast.add({ severity: 'error', summary: '儲存出錯！', detail: '無法儲存經歷，請再次嘗試', life: 10000 })
+        toast.add({ severity: 'error', summary: '儲存失敗 :(', detail: '無法儲存經歷，請稍後再次嘗試', life: 10000 })
 
       } finally {
         isSubmitLoading.value = false

@@ -1,13 +1,10 @@
 import { cloneDeep, isEqual } from 'lodash-es'
 import {
-  getResumes as getResumesAPI,
   addResume as addResumeAPI,
+  deleteResume as deleteResumeAPI,
+  getResumes as getResumesAPI,
   saveResume as saveResumeAPI,
-  deleteResume as deleteResumeAPI
 } from '@/api/resumes'
-import { useToast } from 'vue-toastification'
-
-const toast = useToast()
 
 const resumes = {
   namespaced: true,
@@ -76,8 +73,7 @@ const resumes = {
             if (card.id !== 0) {
               const experiencesIdOfOriginCard = originResume.cards.find(({ id }) => id === card.id).experiences.map(exp => exp.id)
               const experiencesIdOfNowCard = card.experiences.map(exp => exp.id)
-              const deleteExpIds = [...experiencesIdOfOriginCard].filter(id => !experiencesIdOfNowCard.includes(id))
-              card.deleteExpIds = deleteExpIds
+              card.deleteExpIds = [...experiencesIdOfOriginCard].filter(id => !experiencesIdOfNowCard.includes(id))
             }
           }
 
@@ -89,7 +85,6 @@ const resumes = {
           state.localResumes[indexOfLocalResume] = cloneDeep(data)
         }
       } catch (error) {
-        toast.error(error.message)
         commit('SET_STATUS', { error })
       } finally {
         commit('SET_STATUS', { isPending: false })
