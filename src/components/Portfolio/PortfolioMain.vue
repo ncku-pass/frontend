@@ -92,6 +92,7 @@
     <TemplateModal :show-modal='showTemplateModal' @close='handleCloseTemplateModal' @choose='handleAddResume' />
     <ConfirmDialog class='no-header no-icon' group='delete-resume' />
     <Toast group='copy-ability-text' :closable='false' />
+    <Toast group='update-resume' position='top-right' />
   </div>
 </template>
 
@@ -102,6 +103,7 @@ import draggable from 'vuedraggable'
 import { isEqual } from 'lodash-es'
 import { useConfirm } from 'primevue/useconfirm'
 import Toast from 'primevue/toast'
+import { useToast } from 'primevue/usetoast'
 
 import AbilityCard from '@/components/Portfolio/AbilityCard.vue'
 import TemplateModal from '@/components/Portfolio/TemplateModal.vue'
@@ -116,6 +118,7 @@ export default {
   },
   setup() {
     const store = useStore()
+    const toast = useToast()
 
     const originResumes = computed(() => store.state.resumes.resumes)
     const resumes = computed(() => store.state.resumes.localResumes)
@@ -254,15 +257,16 @@ export default {
       )
     })
     const handleSave = async() => {
+      console.log(showedResume.value.name)
       if (showedResume.value.name.length > 25) {
-        console.log('超過了') // TODO: 新增toast
+        toast.add({ group: 'update-resume', severity: 'error', summary: '儲存失敗 :(', detail: '履歷名字最長為 25 字元', life: 10000 })
         return
       }
       await saveResume(showedResume.value)
-      if (!error.value) {
-        console.log('儲存成功')
+      if (error.value) {
+        toast.add({ group: 'update-resume', severity: 'error', summary: '儲存失敗 :(', detail: '無法儲存經歷，請稍後再次嘗試', life: 10000 })
       } else {
-        console.log('儲存失敗')
+        toast.add({ group: 'update-resume', severity: 'success', summary: '儲存成功！', detail: '履歷紀錄已更新', life: 10000 })
       }
     }
 

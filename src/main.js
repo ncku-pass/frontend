@@ -6,10 +6,8 @@ import router from './router'
 import store from './store'
 import VueGtag from 'vue-gtag'
 import { Vue3Mq } from 'vue3-mq'
-import Toast from 'vue-toastification'
 
 // styles
-import 'vue-toastification/dist/index.css'
 import '@/scss/index.scss'
 
 import PrimeVue from 'primevue/config'
@@ -26,12 +24,6 @@ import ConfirmDialog from 'primevue/confirmdialog'
 import mdiVue from 'mdi-vue/v3'
 import * as mdijs from '@mdi/js'
 
-const toastConfig = {
-  transition: 'Vue-Toastification__fade',
-  timeout: 4000,
-  position: 'top-center',
-  draggable: true
-}
 const someResumesNotSaved = computed(() => store.getters['resumes/someResumesNotSaved'])
 window.onbeforeunload = () => {
   if (someResumesNotSaved.value) {
@@ -44,7 +36,6 @@ async function startApp() {
     await store.dispatch('auth/checkToken')
   }
   createApp(App)
-    .use(Toast, toastConfig)
     .use(store)
     .use(router)
     .use(PrimeVue)
