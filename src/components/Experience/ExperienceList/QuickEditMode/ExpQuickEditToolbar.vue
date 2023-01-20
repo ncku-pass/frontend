@@ -17,18 +17,18 @@
       </Button>
     </div>
 
-    <ExpQuickEditToolbarSelectTag
-      :disable='false'
+    <ExpQuickEditSelectTag
+      :disable='selectedNone'
     />
   </div>
 </template>
 
 <script>
-import ExpQuickEditToolbarSelectTag
-  from '@/components/Experience/ExperienceList/QuickEditMode/ExpQuickEditToolbarSelectTag'
+import ExpQuickEditSelectTag
+  from '@/components/Experience/ExperienceList/QuickEditMode/ExpQuickEditSelectTag'
 export default {
   name: 'ExpQuickEditToolbar',
-  components: { ExpQuickEditToolbarSelectTag },
+  components: { ExpQuickEditSelectTag },
   props: {
     selectedAll: {
       type: Boolean,

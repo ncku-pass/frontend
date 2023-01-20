@@ -4,17 +4,14 @@ const expQuickEdit = {
   namespaced: true,
   state: () => ({
     quickEditMode: true,
-    isQuickEditDirty: false,
     selectedExpIds: [],
+    singleEditExpId: null,
     deleteExpIds: [],
     editExpTags: [],
   }),
   mutations: {
     SET_EDIT_MODE(state, mode) {
       state.quickEditMode = mode
-    },
-    SET_DIRTY(state, dirty) {
-      state.isQuickEditDirty = dirty
     },
     SET_SELECTED_EXP_ID(state, expIds) {
       state.selectedExpIds = expIds
@@ -25,6 +22,9 @@ const expQuickEdit = {
       } else if (!select) {
         state.selectedExpIds = state.selectedExpIds.filter(target => target !== expId)
       }
+    },
+    SET_SINGLE_EDIT_EXP_ID(state, expId) {
+      state.singleEditExpId = expId
     },
     SET_DELETE_EXP_ID(state, expIds) {
       state.deleteExpIds = expIds
@@ -50,7 +50,6 @@ const expQuickEdit = {
   actions: {
     TOGGLE_QUICK_EDIT_MODE({ state, commit, dispatch }) {
       commit('SET_EDIT_MODE', !state.quickEditMode)
-      commit('SET_DIRTY', false)
       commit('SET_DELETE_EXP_ID', [])
       commit('SET_SELECTED_EXP_ID', [])
       commit('SET_EDIT_EXP_TAGS', [])
@@ -61,8 +60,9 @@ const expQuickEdit = {
     },
     APPEND_TAG_CHANGES({ state, commit, rootState }, newTags) {
       const expTags = []
+      const targetExpIds = state.singleEditExpId === null ? state.selectedExpIds : [state.singleEditExpId]
 
-      for (const expId of state.selectedExpIds) {
+      for (const expId of targetExpIds) {
         const target = rootState.experiences.experiences[rootState.experiences.activeTab].find(exp => exp.id === expId)
 
         // combine original and new tags - full obj list for state, id list for later api call

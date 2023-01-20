@@ -16,6 +16,7 @@
         @keyup.enter.stop='onEnter($event)'
       />
       <Button
+        v-if='needConfirm'
         class='p-button-secondary p-button-sm'
         :disabled='disable || selectedTags.length <= 0'
         @click='confirmTagChanges'
@@ -30,13 +31,13 @@
 </template>
 
 <script>
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import AutoComplete from 'primevue/autocomplete'
 import useSelectTags from '@/composables/useSelectTags'
 import { useStore } from 'vuex'
 
 export default {
-  name: 'ExpQuickEditToolbarSelectTag',
+  name: 'ExpQuickEditSelectTag',
   components: {
     AutoComplete,
   },
@@ -44,9 +45,21 @@ export default {
     disable: {
       type: Boolean,
       required: true,
-    }
+    },
+    initValue: {
+      type: Array,
+      required: false,
+      default() {
+        return []
+      }
+    },
+    needConfirm: {
+      type: Boolean,
+      required: false,
+      default: true,
+    },
   },
-  setup() {
+  setup(props) {
     const {
       filteredTags,
       selectedTags,
@@ -55,6 +68,18 @@ export default {
       clearTagSelects,
     } = useSelectTags()
     const store = useStore()
+
+    watch(props.initValue, (newTags) => {
+      if (props.initValue !== []) {
+        selectedTags.value = newTags
+      }
+    }, { immediate: true })
+
+    watch(selectedTags, (newTags) => {
+      if (!props.needConfirm) {
+        store.dispatch('expQuickEdit/APPEND_TAG_CHANGES', selectedTags.value)
+      }
+    })
 
     const error = ref(null)
 
@@ -97,10 +122,13 @@ export default {
   min-width: 500px;
   max-width: 500px;
 
-  .p-autocomplete .p-inputtext {
+  &:has(> .p-button) > .p-autocomplete .p-inputtext {
     border-bottom-right-radius: 0 !important;
     border-top-right-radius: 0 !important;
     border-right: none;
+  }
+
+  .p-autocomplete .p-inputtext {
     align-content: center;
     gap: 8px 20px;
 
