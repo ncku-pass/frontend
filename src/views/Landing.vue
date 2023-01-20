@@ -96,19 +96,24 @@
     </div>
     <footer class='footer'>
       <img v-if='device !== "mobile"' class='footer__icon' src='@/assets/Logo/normal_white.svg' alt='brand icon' />
-      <p class='footer__info'>
-        <span>© NCKU 教學發展中心版權所有</span>
-        <br />
-        <span>Design by NCKU PASS 製作團隊</span>
-        <span>Mail：<a href='mailto:ncku.pass@gmail.com'>ncku.pass@gmail.com</a></span>
-        <br />
-        <span>[ 若有任何問題歡迎寄信與我們聯繫或填寫以下表單 ]</span>
-        <span><a href='https://forms.gle/tSSNHvQERSyVsHMJ6' target='_blank'>回饋表單</a></span>
-      </p>
-      <div class='footer__links'>
-        <a href='https://web.ncku.edu.tw/' target='_blank'>國立成功大學 National Cheng Kung University</a>
-        <a href='https://ctld-acad.ncku.edu.tw/' target='_blank'>教學發展中心</a>
+      <div class='footer__info'>
         <img v-if='device === "mobile"' class='footer__icon' src='@/assets/Logo/normal_white.svg' alt='brand icon' />
+        <div>© NCKU 教學發展中心版權所有</div>
+        <div>
+          Design by NCKU PASS 製作團隊
+          <br /> Mail: <a href='mailto:ncku.pass@gmail.com'>ncku.pass@gmail.com</a>
+        </div>
+        <div>[ 若有任何問題歡迎寄信與我們聯繫或填寫<a href='https://forms.gle/tSSNHvQERSyVsHMJ6' target='_blank'>回饋表單</a> ]</div>
+      </div>
+      <div class='footer__links'>
+        <div>
+          <a href='https://web.ncku.edu.tw/' target='_blank'>國立成功大學 <br /> National Cheng Kung University</a>
+          <br /> <a href='https://ctld-acad.ncku.edu.tw/' target='_blank'>教學發展中心</a>
+        </div>
+        <div class='sns-logos'>
+          <mdicon name='facebook' /> <a href='https://www.facebook.com/nckupass'>NCKU PASS</a>
+          <mdicon name='instagram' /> <a href='https://www.instagram.com/ncku.pass/'>ncku.pass</a>
+        </div>
       </div>
     </footer>
   </div>
@@ -242,32 +247,42 @@ export default {
 }
 
 .footer {
-  @include font-format($type: 'b5', $color: $white);
+  @include font-format($type: 'b5', $color: $red-1);
   height: 252px;
-  padding: 40px 120px;
+  padding: 49px 116px;
   background: $red-5;
   display: flex;
 
   a {
-    color: $white;
+    color: $red-1;
   }
 
   &__icon {
-    width: 276px;
+    width: 244px;
     align-self: center;
-    margin-right: 76px;
+    margin-right: 121px;
   }
   &__info {
     margin-right: auto;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-between;
   }
   &__links {
     text-align: right;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-between;
+
+    .sns-logos {
+      margin-top: 46px;
+      display: flex;
+      align-items: center;
+
+      .mdi {
+        @include icon-size($ml: 24px, $mr: 4px)
+      }
+    }
   }
 }
 
@@ -341,10 +356,10 @@ export default {
     }
   }
   .footer {
-    padding: 40px 90px;
+    padding: 59px 94px;
     &__icon {
       width: 276px;
-      margin-right: 96px;
+      margin-right: 110px;
     }
   }
 }
@@ -406,11 +421,17 @@ export default {
     }
   }
   .footer {
-    height: 176px;
-    padding: 36px 48px;
+    height: 174px;
+    padding: 41px 52px;
     &__icon {
       width: 176px;
-      margin-right: 40px;
+      margin-right: 51px;
+    }
+    .sns-logos {
+      margin-top: 19px;
+      .mdi {
+        @include icon-size($size: 16px, $ml: 8px, $mr: 2px);
+      }
     }
   }
 }
@@ -435,7 +456,6 @@ export default {
       }
     }
   }
-
   .login {
     @include grid(row, 0, 0);
     &__title {
@@ -480,13 +500,23 @@ export default {
   }
   .footer {
     @include font-format('b4');
-    height: 110px;
-    padding: 20px 28px;
+    height: 111px;
+    padding: 14px 25px;
 
     &__icon {
       width: 96px;
-      margin: 12px 0 0 0;
-      align-self: flex-end;
+    }
+
+    &__links {
+      margin-top: 24px;
+      .sns-logos {
+        @include font-format('b5');
+        justify-content: flex-end;
+        margin-top: 8px;
+        .mdi {
+          @include icon-size($size: 8px, $ml: 8px, $mr: 2px);
+        }
+      }
     }
   }
 }

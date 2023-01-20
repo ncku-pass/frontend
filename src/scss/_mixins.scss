@@ -173,3 +173,12 @@
     }
   }
 }
+
+@mixin icon-size($size: 20px, $ml: 0, $mr: 8px) {
+  width: $size;
+  height: $size;
+  margin-left: $ml;
+  margin-right: $mr;
+  display: flex;
+  align-items: center;
+}
