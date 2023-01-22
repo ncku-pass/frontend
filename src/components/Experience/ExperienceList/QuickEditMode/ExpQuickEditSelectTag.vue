@@ -1,6 +1,9 @@
 <template>
   <div>
-    <div id='quick-edit-toolbar__select-tag'>
+    <div
+      :ref='(el) => { expId === singleEditExpId ? selectTagRef = el : null}'
+      class='quick-edit__select-tag'
+    >
       <AutoComplete
         v-model='selectedTags'
         :multiple='true'
@@ -14,6 +17,8 @@
         loadingIcon='pi pi-spinner'
         @complete='searchTagsOptions($event)'
         @keyup.enter.stop='onEnter($event)'
+        @before-show='isSelecting = true'
+        @hide='isSelecting = false'
       />
       <Button
         v-if='needConfirm'
@@ -31,10 +36,12 @@
 </template>
 
 <script>
-import { ref, watch } from 'vue'
+import { ref, watch, computed } from 'vue'
 import AutoComplete from 'primevue/autocomplete'
-import useSelectTags from '@/composables/useSelectTags'
 import { useStore } from 'vuex'
+import { onClickOutside } from '@vueuse/core'
+
+import useSelectTags from '@/composables/useSelectTags'
 
 export default {
   name: 'ExpQuickEditSelectTag',
@@ -58,6 +65,11 @@ export default {
       required: false,
       default: true,
     },
+    expId: {
+      type: Number,
+      required: false,
+      default: undefined
+    }
   },
   setup(props) {
     const {
@@ -77,7 +89,7 @@ export default {
 
     watch(selectedTags, (newTags) => {
       if (!props.needConfirm) {
-        store.dispatch('expQuickEdit/APPEND_TAG_CHANGES', selectedTags.value)
+        store.dispatch('expQuickEdit/APPEND_TAG_CHANGES', newTags)
       }
     })
 
@@ -100,7 +112,20 @@ export default {
       clearTagSelects()
     }
 
+    // ===== HANDLE CLICK OUTSIDE SINGLE EDIT TAG =====
+    const selectTagRef = ref()
+    const isSelecting = ref(false)
+    const singleEditExpId = computed(() => store.state.expQuickEdit.singleEditExpId)
+    onClickOutside(selectTagRef, (evt) => {
+      if (!isSelecting.value) {
+        store.commit('expQuickEdit/SET_SINGLE_EDIT_EXP_ID', null)
+      }
+    })
+
     return {
+      selectTagRef,
+      singleEditExpId,
+      isSelecting,
       selectedTags,
       filteredTags,
       searchTagsOptions,
@@ -116,7 +141,7 @@ export default {
 @import '~@/scss/_mixins';
 @import '~@/scss/_variables';
 
-#quick-edit-toolbar__select-tag {
+.quick-edit__select-tag {
   display: flex;
   gap: 0;
   min-width: 500px;

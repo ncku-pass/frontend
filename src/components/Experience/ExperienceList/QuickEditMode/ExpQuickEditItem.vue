@@ -9,6 +9,7 @@
       :disable='false'
       :init-value='exp.tags'
       :need-confirm='false'
+      :exp-id='exp.id'
     />
     <div v-else class='exp-tag-list-wrapper'>
       <div class='exp-tag-list'>
@@ -37,8 +38,8 @@ import { ref, computed } from 'vue'
 import Checkbox from 'primevue/checkbox'
 import Chip from 'primevue/chip'
 import { useStore } from 'vuex'
-import ExpQuickEditSelectTag
-  from '@/components/Experience/ExperienceList/QuickEditMode/ExpQuickEditSelectTag'
+
+import ExpQuickEditSelectTag from '@/components/Experience/ExperienceList/QuickEditMode/ExpQuickEditSelectTag'
 
 export default {
   name: 'ExpQuickEditItem',
