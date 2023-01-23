@@ -15,6 +15,7 @@
     />
     <ExperienceFooter
       v-else
+      :loading='isPending'
       :show-button-badge='showButtonBadge'
       @add-experience='handleAddExperience'
       @import-ncku-data='handleImportNCKUData'
@@ -130,6 +131,7 @@ export default {
     return {
       activeTab,
       currentMode,
+      isPending,
       classifiedExperiences,
       showExpEditDialog,
       handleAddExperience,

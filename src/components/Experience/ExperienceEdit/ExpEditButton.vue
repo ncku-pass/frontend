@@ -1,20 +1,26 @@
 <template>
   <div class='add-experience-button'>
     <MqResponsive target='tablet+'>
-      <SplitButton v-if='isShowOptions' icon='pi pi-plus' label='新增經驗' :model='addExpOptions' />
-      <Button v-else label='新增校外或其他經驗' @click='$emit("add-experience")' />
+      <SplitButton
+        v-if='isShowOptions'
+        icon='pi pi-plus'
+        label='新增經驗'
+        :model='addExpOptions'
+        :disabled='loading'
+      />
+      <Button v-else label='新增校外或其他經驗' :disabled='loading' @click='$emit("add-experience")' />
       <div v-if='showBadge' class='button-badge' />
     </MqResponsive>
 
     <MqResponsive target='mobile' style='width: 100%'>
-      <SpeedDial v-if='isShowOptions' :model='addExpOptions'>
+      <SpeedDial v-if='isShowOptions' :model='addExpOptions' :disabled='loading'>
         <template #item='slotProps'>
           <div @click='slotProps.item.command'>
             {{ slotProps.item.label }}
           </div>
         </template>
       </SpeedDial>
-      <Button v-else icon='pi pi-plus' class='p-button-rounded button--float' @click='$emit("add-experience")' />
+      <Button v-else icon='pi pi-plus' class='p-button-rounded button--float' :disabled='loading' @click='$emit("add-experience")' />
     </MqResponsive>
   </div>
 </template>
@@ -38,6 +44,10 @@ export default {
     showBadge: {
       type: Boolean,
       required: true
+    },
+    loading: {
+      type: Boolean,
+      required: true,
     }
   },
   emits: ['import-ncku-data', 'add-experience'],

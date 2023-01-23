@@ -2,11 +2,12 @@
   <div class='experience__footer'>
     <AddExperienceButton
       :show-badge='showButtonBadge'
+      :loading='loading'
       @add-experience='$emit("add-experience")'
       @import-ncku-data='$emit("import-ncku-data")'
     />
     <MqResponsive target='tablet+'>
-      <Button class='btn-icon' @click='toggleQuickEditMode'>
+      <Button class='btn-icon' :disabled='loading' @click='toggleQuickEditMode'>
         <mdicon name='squareEditOutline' />
         <p>快速編輯</p>
       </Button>
@@ -28,6 +29,10 @@ export default {
   },
   props: {
     showButtonBadge: {
+      type: Boolean,
+      required: true,
+    },
+    loading: {
       type: Boolean,
       required: true,
     }
