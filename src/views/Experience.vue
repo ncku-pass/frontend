@@ -42,7 +42,11 @@
     :experience='experienceToShow'
     @close='showViewerModal = false'
   />
-  <ImportModal v-if='showImportModal' :type='activeTab' @close='showImportModal = false' />
+  <ImportDialog
+    :visible='showImportDialog'
+    :type='activeTab'
+    @close-import-dialog='showImportDialog = false'
+  />
   <ConfirmDialog class='no-header no-icon' group='delete-exp'>
     <template #message='slotProps'>
       <div>
@@ -67,7 +71,7 @@ import ExperienceListBlock from '@/components/Experience/ExperienceListBlock.vue
 import AddExperienceButton from '@/components/Experience/AddExp/AddExperienceButton.vue'
 import AddExperienceDialog from '@/components/Experience/AddExp/AddExperienceDialog.vue'
 import ViewerModal from '@/components/Experience/ViewerModal.vue'
-import ImportModal from '@/components/Experience/ImportModal.vue'
+import ImportDialog from '@/components/Experience/ImportDialog.vue'
 import { isCurrentOrLastSemester } from '@/helpers/semester.helper'
 
 export default {
@@ -80,7 +84,7 @@ export default {
     AddExperienceButton,
     AddExperienceDialog,
     ViewerModal,
-    ImportModal,
+    ImportDialog,
     Toast,
   },
   inject: ['mq'],
@@ -143,11 +147,11 @@ export default {
     }
 
     // === 匯入學校資料 ===
-    const showImportModal = ref(false)
+    const showImportDialog = ref(false)
     const handleImportNCKUData = async() => {
       localStorage.setItem('add-exp-clicked', 'true')
       showButtonBadge.value = false
-      showImportModal.value = true
+      showImportDialog.value = true
     }
 
     // === Check if need to display import exp reminder ===
@@ -182,7 +186,7 @@ export default {
       showViewerModal,
       openViewerModal,
       experienceToShow,
-      showImportModal,
+      showImportDialog,
       showButtonBadge,
       handleImportNCKUData
     }

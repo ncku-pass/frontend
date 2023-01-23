@@ -256,12 +256,7 @@ export default {
 @import '~@/scss/_mixins.scss';
 
 #add-exp-dialog {
-  width: 100%;
   max-width: 770px;
-  max-height: 80vh;
-  padding: 20px;
-  background-color: #fff;
-  border-radius: 8px;
 
   label {
     @include grid(column, 0, 10px);

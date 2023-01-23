@@ -21,7 +21,7 @@
   border-color: $grey-4;
 }
 .p-autocomplete .p-autocomplete-multiple-container:not(.p-disabled).p-focus {
-  box-shadow: 0 0 0 0.2rem #fbebed;
+  box-shadow: none;
   border-color: $grey-4;
 }
 
@@ -614,7 +614,7 @@
 }
 
 .p-accordion .p-accordion-header:not(.p-disabled) .p-accordion-header-link:focus {
-  box-shadow: 0 0 0 0.2rem #fbebed;
+  box-shadow: none;
 }
 
 .p-fieldset.p-fieldset-toggleable .p-fieldset-legend a:focus {
