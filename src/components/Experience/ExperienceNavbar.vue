@@ -2,8 +2,8 @@
   <ul class='experience__navbar' :class='`experience__navbar--${device}`'>
     <li v-for='link in experienceNavbarLinks' :key='`exp-navbar-${link.type}`'>
       <router-link
-        class='tab-link'
-        :class='[`tab-link--${device}`, { "router-link-active": link.dest === activeTab }]'
+        class='router-link'
+        :class='[`router-link--${device}`, { "router-link-active": link.dest === activeTab }, { "router-link__disabled": isEditMode }]'
         :to='{ name: "Experience", params: { activeTab: link.dest } }'
       >
         {{ link.name }}
@@ -22,8 +22,9 @@ export default {
   setup() {
     const store = useStore()
     const activeTab = computed(() => store.state.experiences.activeTab)
+    const isEditMode = computed(() => store.state.expQuickEdit.quickEditMode)
 
-    return { activeTab, experienceNavbarLinks }
+    return { activeTab, isEditMode, experienceNavbarLinks }
   },
   computed: {
     device() {
@@ -52,17 +53,12 @@ export default {
     max-height: 42px;
   }
 
-  .tab-link {
+  .router-link {
     font-weight: $weight-regular;
 
     &--mobile {
       @include font-format('b3');
       padding: 4px 16px 8px 16px;
-
-      &.is-active {
-        color: $grey-6;
-        box-shadow: 0px -2px 0px $red-5 inset;
-      }
     }
   }
 }

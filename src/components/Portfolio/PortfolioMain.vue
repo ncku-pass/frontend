@@ -8,8 +8,8 @@
             v-for='(resume, index) in resumes'
             :key='resume.id'
             :ref='setTabRef'
-            class='tab-link'
-            :class='{ "is-active": selectedIndex === index }'
+            class='router-link'
+            :class='{ "router-link-active": selectedIndex === index }'
             :title='resume.name'
             @click='handleSelectResume(index)'
           >

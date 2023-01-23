@@ -1,16 +1,16 @@
 <template>
   <nav class='navbar'>
     <h1 class='navbar__brand'>
-      <a href='/' class='navbar__brand__link'>E-portfolio</a>
+      <a href='/' :class='["navbar__brand__link", { "router-link__disabled": isEditMode }]'>E-portfolio</a>
     </h1>
     <ul class='navbar__links'>
       <li v-for='(link, idx) in navbarLinks' :key='`navbar-${idx}`'>
-        <router-link class='navbar__links__link tab-link' :to='{ name: link.dest }'>
+        <router-link :to='{ name: link.dest }' :class='["router-link", { "router-link__disabled": isEditMode }]'>
           {{ link.name }}
         </router-link>
       </li>
       <li>
-        <a class='navbar__links__link tab-link' @click='showLogoutConfirm'>
+        <a class='router-link' @click='showLogoutConfirm'>
           登出
         </a>
       </li>
@@ -21,6 +21,7 @@
 
 <script>
 import { useStore } from 'vuex'
+import { computed } from 'vue'
 import { useConfirm } from 'primevue/useconfirm'
 
 import { navbarLinks } from '@/config'
@@ -30,6 +31,7 @@ export default {
   setup() {
     const store = useStore()
     const logout = () => store.dispatch('auth/logout')
+    const isEditMode = computed(() => store.state.expQuickEdit.quickEditMode)
 
     // === CONFIRMATION MODEL ===
     const confirm = useConfirm()
@@ -45,7 +47,7 @@ export default {
       })
     }
 
-    return { navbarLinks, showLogoutConfirm }
+    return { navbarLinks, isEditMode, showLogoutConfirm }
   },
 }
 </script>
