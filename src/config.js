@@ -7,7 +7,7 @@ export const experienceTypes = [
   'other'
 ]
 
-export const experienceTypesInChinese = {
+export const expTypesInZh = {
   course: '課程紀錄',
   activity: '活動經驗',
   competition: '競賽經驗',

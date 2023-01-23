@@ -7,7 +7,12 @@ import {
 import { getNCKUExperiences as getNCKUExperiencesAPI } from '@/api/ncku-portal'
 import { sortExperiences, classifyBySemester, orderBySemester } from '@/helpers/experiences.helper'
 import { KeyNoPairedError } from '@/config'
-import { dateToSemester, semesterToDate } from '@/helpers/semester.helper'
+import {
+  covertActivitiesToExps,
+  covertClubsToExps,
+  covertCoursesToExps,
+  uniqueActivities,
+} from '@/helpers/nckuData.helper'
 
 const experiences = {
   namespaced: true,
@@ -96,7 +101,7 @@ const experiences = {
       commit('UPDATE_EXPERIENCE', { id: data.id, experience: data })
       dispatch('resumes/getResumes', {}, { root: true })
     },
-    async importExperiences({ commit }, experiences) {
+    async IMPORT_NCKU_EXP({ commit }, experiences) {
       try {
         commit('SET_STATUS', { isPending: true, error: null })
 
@@ -114,37 +119,27 @@ const experiences = {
         commit('SET_STATUS', { isPending: false })
       }
     },
-    async getNckuExperiences({ commit, rootState }) {
-      try {
-        if (!rootState.auth.key || !rootState.auth.keyval) {
-          throw new KeyNoPairedError('沒有key / keyval')
-        }
-        const res = await getNCKUExperiencesAPI({
-          key: rootState.auth.key,
-          keyval: rootState.auth.keyval
-        })
-        console.log(res)
-        const data = res.data?.data
-        if (!data) {
-          throw new KeyNoPairedError(res.data.msg)
-        }
-
-        const course = changeCoursesToExperiences(data.course)
-        const club = changeClubsToExperiences(data.club)
-        const activity = changeActivitiesToExperiences(filterDuplicateActivity(data.activity))
-
-        commit('SET_NCKU_EXPERIENCES', {
-          course: orderBySemester(course),
-          activity: orderBySemester([...club, ...activity])
-        })
-      } catch (error) {
-        if (error instanceof KeyNoPairedError) {
-          throw error
-        } else {
-          console.error(error.stack)
-          commit('SET_STATUS', { error })
-        }
+    async FETCH_NCKU_DATA({ commit, rootState }) {
+      if (!rootState.auth.key || !rootState.auth.keyval) {
+        throw new KeyNoPairedError('沒有key / keyval')
       }
+      const res = await getNCKUExperiencesAPI({
+        key: rootState.auth.key,
+        keyval: rootState.auth.keyval
+      })
+      const data = res.data?.data
+      if (!data) {
+        throw new KeyNoPairedError(res.data.msg)
+      }
+
+      const course = covertCoursesToExps(data.course)
+      const club = covertClubsToExps(data.club)
+      const activity = covertActivitiesToExps(uniqueActivities(data.activity))
+
+      commit('SET_NCKU_EXPERIENCES', {
+        course: orderBySemester(course),
+        activity: orderBySemester([...club, ...activity])
+      })
     }
   },
   getters: {
@@ -158,9 +153,7 @@ const experiences = {
       }
       return arr
     },
-    /**
-     * 將每個活動類別內的資料，依照學期分類好
-     */
+    // 將每個活動類別內的資料，依照學期分類好
     classifiedExperiences(state) {
       const experiences = {}
       for (const type in state.experiences) {
@@ -168,19 +161,19 @@ const experiences = {
       }
       return experiences
     },
-    classifiedNckuExperiences(state) {
+    NCKU_EXP_BY_TYPE_SEM(state) {
       if (!state.nckuExperiences) {
         return null
       }
       return {
         course: classifyBySemester(
           state.nckuExperiences.course.filter(nckuExp => {
-            return !state.experiences.course.find(exp => exp.name === nckuExp.name && exp.semester === nckuExp.semester)
+            return !state.experiences?.course?.find(exp => exp.name === nckuExp.name && exp.semester === nckuExp.semester)
           })
         ),
         activity: classifyBySemester(
           state.nckuExperiences.activity.filter(nckuExp => {
-            return !state.experiences.activity.find(
+            return !state.experiences?.activity?.find(
               exp => exp.name === nckuExp.name && exp.semester === nckuExp.semester
             )
           })
@@ -218,60 +211,6 @@ const experiences = {
       }
     },
   }
-}
-
-const experience = {
-  name: '',
-  position: '',
-  semester: '',
-  link: '',
-  coreAbilities: '',
-  type: null,
-  dateStart: null,
-  dateEnd: null
-}
-const changeActivitiesToExperiences = activities => {
-  return activities.map(activity => ({
-    ...experience,
-    name: activity.activity_name,
-    position: '參與者',
-    semester: dateToSemester(new Date(activity.active_start)),
-    link: activity.activity_url,
-    type: 'activity',
-    dateStart: new Date(activity.active_start.replace(/\s/, 'T')).toISOString()
-  }))
-}
-const changeClubsToExperiences = clubs => {
-  return clubs.map(club => ({
-    ...experience,
-    name: club.club_name,
-    position: club.position,
-    semester: `${club.syear}-${club.sem}`,
-    type: 'activity',
-    dateStart: semesterToDate(`${club.syear}-${club.sem}`).toISOString()
-  }))
-}
-const changeCoursesToExperiences = courses => {
-  return courses.map(course => ({
-    ...experience,
-    name: course.course_name,
-    semester: `${course.syear}-${course.sem}`,
-    link: course.course_url,
-    coreAbilities: Object.values(course.core_abilities).join('、'),
-    type: 'course',
-    dateStart: semesterToDate(`${course.syear}-${course.sem}`).toISOString()
-  }))
-}
-const filterDuplicateActivity = activities => {
-  const record = new Set()
-  const res = []
-  activities.forEach(activity => {
-    if (!record.has(activity.activity_name)) {
-      res.push(activity)
-      record.add(activity.activity_name)
-    }
-  })
-  return res
 }
 
 export default experiences

@@ -23,7 +23,11 @@
   </div>
 
   <Toast position='top-right' />
-  <ImportModal v-if='showImportModal' @close='showImportModal = false' />
+  <ImportDialog
+    :visible='showImportDialog'
+    :type='activeTab'
+    @close-import-dialog='showImportDialog = false'
+  />
   <ExpEditDialog
     :visible='showExpEditDialog'
     :exp-type='activeTab'
@@ -44,7 +48,7 @@ import LoadMode from '@/components/Experience/ExperienceList/LoadMode'
 import EditMode from '@/components/Experience/ExperienceList/QuickEditMode/EditMode'
 import ExperienceFooter from '@/components/Experience/ExperienceFooter'
 import ExpQuickEditFooter from '@/components/Experience/ExpQuickEditFooter'
-import ImportModal from '@/components/Experience/ImportModal'
+import ImportDialog from '@/components/Experience/ImportDialog.vue'
 import ExpEditDialog from '@/components/Experience/ExperienceEdit/ExpEditDialog'
 import { isCurrentOrLastSemester } from '@/helpers/semester.helper'
 
@@ -57,7 +61,7 @@ export default {
     EditMode,
     ExperienceFooter,
     ExpQuickEditFooter,
-    ImportModal,
+    ImportDialog,
     ExpEditDialog,
     Toast,
   },
@@ -101,11 +105,11 @@ export default {
     }
 
     // === 匯入學校資料 ===
-    const showImportModal = ref(false)
+    const showImportDialog = ref(false)
     const handleImportNCKUData = async() => {
       localStorage.setItem('add-exp-clicked', 'true')
       showButtonBadge.value = false
-      showImportModal.value = true
+      showImportDialog.value = true
     }
 
     // === Check if need to display import exp reminder ===
@@ -139,7 +143,7 @@ export default {
       onCloseExpEditDialog,
       editSingleExp,
       targetExpId,
-      showImportModal,
+      showImportDialog,
       showButtonBadge,
       handleImportNCKUData
     }

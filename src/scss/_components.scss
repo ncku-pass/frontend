@@ -183,6 +183,16 @@
   width: 100%;
 }
 
+// make dialog wider
+.p-dialog {
+  width: 100%;
+  max-width: 750px;
+  max-height: 80vh;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+}
+
 .p-confirm-dialog.no-header {
   .p-dialog-header {
     display: none;
@@ -204,7 +214,6 @@
     margin-left: 0 !important;
   }
 }
-
 
 // =====================================
 // little tweaks
