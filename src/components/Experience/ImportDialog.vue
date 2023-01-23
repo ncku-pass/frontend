@@ -66,7 +66,7 @@
 </template>
 
 <script>
-import { ref, computed, reactive } from 'vue'
+import { ref, computed, reactive, watch } from 'vue'
 import { useStore } from 'vuex'
 import { isEmpty } from 'lodash-es'
 import Accordion from 'primevue/accordion'
@@ -123,11 +123,13 @@ export default {
         fetchNckuExpError.value = error
       }
     }
-    if (props.visible && !nckuExps.value) fetchNckuExp()
+    watch(showDialog, (val) => {
+      if (val && !nckuExps.value) fetchNckuExp()
+    })
 
     // ===== CHECKBOXES =====
     const generateEmptySelect = (selected) => {
-      if (isEmpty(nckuExps.value)) return null
+      if (isEmpty(nckuExps.value)) return {}
       const select = {}
       for (const [sem, exps] of Object.entries(nckuExps.value)) select[sem] = new Array(exps.length).fill(selected)
       return select
