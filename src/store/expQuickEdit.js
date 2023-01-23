@@ -3,7 +3,7 @@ import { concat, dropWhile, uniqBy } from 'lodash-es'
 const expQuickEdit = {
   namespaced: true,
   state: () => ({
-    quickEditMode: true,
+    quickEditMode: false,
     selectedExpIds: [],
     singleEditExpId: null,
     deleteExpIds: [],
