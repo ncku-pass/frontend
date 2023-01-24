@@ -58,7 +58,7 @@ const expQuickEdit = {
         dispatch('experiences/getExperiences', {}, { root: true })
       }
     },
-    APPEND_TAG_CHANGES({ state, commit, rootState }, newTags) {
+    APPEND_TAG_CHANGES({ state, commit, rootState }, { newTags, includeAllTags }) {
       const expTags = []
       const targetExpIds = state.singleEditExpId === null ? state.selectedExpIds : [state.singleEditExpId]
 
@@ -66,7 +66,7 @@ const expQuickEdit = {
         const target = rootState.experiences.experiences[rootState.experiences.activeTab].find(exp => exp.id === expId)
 
         // combine original and new tags - full obj list for state, id list for later api call
-        const combinedTags = uniqBy(concat(target.tags, newTags), 'id')
+        const combinedTags = includeAllTags ? newTags : uniqBy(concat(target.tags, newTags), 'id')
         const combinedTagsIds = combinedTags.map(tag => tag.id)
         expTags.push({ experienceId: expId, tagIds: combinedTagsIds })
 

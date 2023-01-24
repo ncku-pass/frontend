@@ -89,7 +89,8 @@ export default {
 
     watch(selectedTags, (newTags) => {
       if (!props.needConfirm) {
-        store.dispatch('expQuickEdit/APPEND_TAG_CHANGES', newTags)
+        console.log('selectedTags changed')
+        store.dispatch('expQuickEdit/APPEND_TAG_CHANGES', { newTags, includeAllTags: true })
       }
     })
 
@@ -108,7 +109,7 @@ export default {
     }
 
     const confirmTagChanges = () => {
-      store.dispatch('expQuickEdit/APPEND_TAG_CHANGES', selectedTags.value)
+      store.dispatch('expQuickEdit/APPEND_TAG_CHANGES', { newTags: selectedTags.value, includeAllTags: false })
       clearTagSelects()
     }
 
