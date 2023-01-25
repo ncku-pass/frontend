@@ -84,7 +84,7 @@ export default {
 
   &__title {
     flex-shrink: 0;
-    max-width: 250px;
+    max-width: 280px;
   }
 
   &__btns {

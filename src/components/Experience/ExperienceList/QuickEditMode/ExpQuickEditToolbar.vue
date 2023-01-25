@@ -51,7 +51,6 @@ export default {
 .quick-edit-toolbar {
   display: flex;
   gap: 0 32px;
-  margin-bottom: 24px;
 
   &__btns {
     @include grid(column, 0, 8px);

@@ -1,13 +1,13 @@
 <template>
-  <div class='experience__window__table__wrapper'>
-    <div class='exp-edit-toolbar'>
-      <ExpQuickEditToolbar
-        :selected-all='selectExpIds.length === fullExpIds.length'
-        :selected-none='selectExpIds.length === 0'
-        @select-all='selectAllExp'
-        @delete-exp='deleteExp'
-      />
-    </div>
+  <div class='exp-edit-toolbar'>
+    <ExpQuickEditToolbar
+      :selected-all='selectExpIds.length === fullExpIds.length'
+      :selected-none='selectExpIds.length === 0'
+      @select-all='selectAllExp'
+      @delete-exp='deleteExp'
+    />
+  </div>
+  <div class='experience__content'>
     <ExperienceListBlock
       v-for='(semesterData, semester) in filteredExps'
       :key='semester'
@@ -101,5 +101,12 @@ export default {
 </script>
 
 <style lang='scss' scoped>
+.exp-edit-toolbar {
+  position: sticky;
+  padding: 24px 64px;
+}
 
+.experience__content {
+  padding-top: 0;
+}
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <div class='experience__window__table__wrapper'>
+  <div class='experience__content'>
     <ExpListBlock
       v-for='(semesterData, semester) in experiences'
       :key='semester'

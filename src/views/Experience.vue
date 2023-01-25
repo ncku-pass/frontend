@@ -2,13 +2,11 @@
   <div class='experience' :class='`experience--${device}`'>
     <div class='experience__window' :class='`experience__window--${device}`'>
       <ExperienceNavbar />
-      <div class='experience__window__table'>
-        <component
-          :is='currentMode'
-          :experiences='classifiedExperiences[activeTab]'
-          @edit-exp='editSingleExp'
-        />
-      </div>
+      <component
+        :is='currentMode'
+        :experiences='classifiedExperiences[activeTab]'
+        @edit-exp='editSingleExp'
+      />
     </div>
     <ExpQuickEditFooter
       v-if='currentMode === "EditMode"'
@@ -48,7 +46,7 @@ import LoadMode from '@/components/Experience/ExperienceList/LoadMode'
 import EditMode from '@/components/Experience/ExperienceList/QuickEditMode/EditMode'
 import ExperienceFooter from '@/components/Experience/ExperienceFooter'
 import ExpQuickEditFooter from '@/components/Experience/ExpQuickEditFooter'
-import ImportDialog from '@/components/Experience/ImportDialog.vue'
+import ImportDialog from '@/components/Experience/ImportDialog'
 import ExpEditDialog from '@/components/Experience/ExperienceEdit/ExpEditDialog'
 import { isCurrentOrLastSemester } from '@/helpers/semester.helper'
 
@@ -186,26 +184,18 @@ export default {
   }
 }
 
-.experience__window__table {
-  position: relative;
+.experience__content {
+  padding: 24px 64px;
   overflow-y: auto;
-  display: flex;
-  flex-direction: column;
-  &__wrapper {
-    overflow-y: auto;
-    padding: 24px 80px 100px;
-    &::-webkit-scrollbar {
-      display: none;
-    }
+  &::-webkit-scrollbar {
+    display: none;
   }
 }
 
 .experience--mobile {
   padding: 0;
-  .experience__window__table {
-    &__wrapper {
-      padding: 12px 24px 100px;
-    }
+  .experience__content {
+      padding: 12px 24px 50px;
   }
 }
 </style>
