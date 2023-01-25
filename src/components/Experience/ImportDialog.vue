@@ -66,7 +66,7 @@
 </template>
 
 <script>
-import { ref, computed, reactive, watch } from 'vue'
+import { ref, computed, reactive } from 'vue'
 import { useStore } from 'vuex'
 import { isEmpty } from 'lodash-es'
 import Accordion from 'primevue/accordion'
@@ -103,14 +103,29 @@ export default {
   setup(props, { emit }) {
     const showDialog = computed({
       get: () => props.visible,
-      set: (val) => {
-        if (!val) {
-          Object.assign(nckuExpSelects, generateEmptySelect(false))
-          emit('close-import-dialog')
-        }
+      set: () => {
+        Object.assign(nckuExpSelects, generateEmptySelect(false))
+        emit('close-import-dialog')
       }
     })
     const store = useStore()
+
+    // ===== CHECKBOXES =====
+    const generateEmptySelect = (selected) => {
+      if (isEmpty(nckuExps?.value)) return {}
+      const select = {}
+      for (const [sem, exps] of Object.entries(nckuExps.value)) select[sem] = new Array(exps.length).fill(selected)
+      return select
+    }
+    const nckuExpSelects = reactive({})
+    const selectedAll = ref(false)
+    const isSelected = computed(() => {
+      return Object.values(nckuExpSelects).some(expSelect => expSelect.some(value => value))
+    })
+    const selectAllExps = () => {
+      Object.assign(nckuExpSelects, generateEmptySelect(!selectedAll.value))
+      selectedAll.value = !selectedAll.value
+    }
 
     // ===== FETCH FROM NCKU =====
     const nckuExps = computed(() => store.getters['experiences/NCKU_EXP_BY_TYPE_SEM']?.[props.type])
@@ -123,25 +138,10 @@ export default {
         fetchNckuExpError.value = error
       }
     }
-    watch(showDialog, (val) => {
-      if (val && !nckuExps.value) fetchNckuExp()
-    })
-
-    // ===== CHECKBOXES =====
-    const generateEmptySelect = (selected) => {
-      if (isEmpty(nckuExps.value)) return {}
-      const select = {}
-      for (const [sem, exps] of Object.entries(nckuExps.value)) select[sem] = new Array(exps.length).fill(selected)
-      return select
-    }
-    const nckuExpSelects = reactive(generateEmptySelect(false))
-    const selectedAll = ref(false)
-    const isSelected = computed(() => {
-      return Object.values(nckuExpSelects).some(expSelect => expSelect.some(value => value))
-    })
-    const selectAllExps = () => {
-      Object.assign(nckuExpSelects, generateEmptySelect(!selectedAll.value))
-      selectedAll.value = !selectedAll.value
+    // fetch if no value
+    if (!nckuExps.value) {
+      fetchNckuExp()
+      Object.assign(nckuExpSelects, generateEmptySelect(false))
     }
 
     // ===== IMPORT EXP ======
