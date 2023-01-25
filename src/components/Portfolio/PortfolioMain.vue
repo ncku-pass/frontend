@@ -257,7 +257,6 @@ export default {
       )
     })
     const handleSave = async() => {
-      console.log(showedResume.value.name)
       if (showedResume.value.name.length > 25) {
         toast.add({ group: 'update-resume', severity: 'error', summary: '儲存失敗 :(', detail: '履歷名字最長為 25 字元', life: 10000 })
         return

@@ -1,4 +1,5 @@
 import { concat, dropWhile, uniqBy } from 'lodash-es'
+import { deleteExps, editExperienceTags } from '@/api/experiences'
 
 const expQuickEdit = {
   namespaced: true,
@@ -42,6 +43,7 @@ const expQuickEdit = {
 
       // remove deleted expIds from selectedIds
       state.selectedExpIds = dropWhile(state.selectedExpIds, id => expIds.includes(id))
+      state.editExpTags = dropWhile(state.editExpTags, item => expIds.includes(item.experienceId))
     },
     SET_EDIT_EXP_TAGS(state, expTags) {
       state.editExpTags = expTags
@@ -90,6 +92,20 @@ const expQuickEdit = {
       } else {
         state.editExpTags.push({ experienceId: expId, tagIds: targetTagIds })
       }
+    },
+    CONFIRM_QUICK_EDIT_CHANGE({ state, dispatch }) {
+      if (state.editExpTags?.length > 0) {
+        editExperienceTags(state.editExpTags)
+      }
+
+      if (state.deleteExpIds?.length > 0) {
+        deleteExps({ ids: state.deleteExpIds })
+      }
+
+      // reset quick edit mode (wait for delete to complete)
+      setTimeout(function() {
+        dispatch('TOGGLE_QUICK_EDIT_MODE')
+      }, 300)
     }
   },
   getters: {

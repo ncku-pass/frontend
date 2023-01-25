@@ -30,8 +30,7 @@ export default {
     }
 
     const saveQuickEditChanges = () => {
-      console.log('saveQuickEditChanges')
-      store.dispatch('expQuickEdit/TOGGLE_QUICK_EDIT_MODE')
+      store.dispatch('expQuickEdit/CONFIRM_QUICK_EDIT_CHANGE')
     }
 
     return {

@@ -89,7 +89,6 @@ export default {
 
     watch(selectedTags, (newTags) => {
       if (!props.needConfirm) {
-        console.log('selectedTags changed')
         store.dispatch('expQuickEdit/APPEND_TAG_CHANGES', { newTags, includeAllTags: true })
       }
     })
@@ -117,7 +116,7 @@ export default {
     const selectTagRef = ref()
     const isSelecting = ref(false)
     const singleEditExpId = computed(() => store.state.expQuickEdit.singleEditExpId)
-    onClickOutside(selectTagRef, (evt) => {
+    onClickOutside(selectTagRef, () => {
       if (!isSelecting.value) {
         store.commit('expQuickEdit/SET_SINGLE_EDIT_EXP_ID', null)
       }

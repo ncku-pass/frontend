@@ -20,6 +20,14 @@ export const deleteExperience = (experienceId) => {
   return req.delete(`/experiences/${experienceId}`)
 }
 
+export const deleteExps = (payload) => {
+  return req.delete('/experiences', { data: payload })
+}
+
+export const editExperienceTags = (payload) => {
+  return req.put('/experiences/tags', payload)
+}
+
 export const getExperienceTags = (experienceId) => {
   return req.get(`/experiences/${experienceId}/tags`)
 }
