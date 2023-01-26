@@ -22,7 +22,7 @@
       />
       <Button
         v-if='needConfirm'
-        class='p-button-secondary p-button-sm'
+        class='p-button-sm'
         :disabled='disable || selectedTags.length <= 0'
         @click='confirmTagChanges'
       >
