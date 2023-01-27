@@ -8,7 +8,7 @@
         v-model='selectedTags'
         :multiple='true'
         :disabled='disable'
-        placeholder='在此新增 tag'
+        placeholder='勾選經歷以在此新增 tag'
         :suggestions='filteredTags'
         :completeOnFocus='true'
         optionGroupLabel='label'

@@ -1,14 +1,15 @@
 <template>
   <div class='add-experience-button'>
     <MqResponsive target='tablet+'>
-      <SplitButton
+      <Menu ref='menuRef' :model='addExpOptions' :popup='true' />
+      <Button
         v-if='isShowOptions'
         icon='pi pi-plus'
         label='新增經驗'
-        :model='addExpOptions'
         :disabled='loading'
+        @click='toggleMenu'
       />
-      <Button v-else label='新增校外或其他經驗' :disabled='loading' @click='$emit("add-experience")' />
+      <Button v-else icon='pi pi-plus' label='新增校外或其他經驗' :disabled='loading' @click='$emit("add-experience")' />
       <div v-if='showBadge' class='button-badge' />
     </MqResponsive>
 
@@ -26,9 +27,9 @@
 </template>
 
 <script>
-import { computed } from 'vue'
-import SplitButton from 'primevue/splitbutton'
+import { computed, ref } from 'vue'
 import SpeedDial from 'primevue/speeddial'
+import Menu from 'primevue/menu'
 import { MqResponsive } from 'vue3-mq'
 import { canImportFromSchool } from '@/helpers/experiences.helper'
 import { useStore } from 'vuex'
@@ -36,8 +37,8 @@ import { useStore } from 'vuex'
 export default {
   name: 'AddExperienceButton',
   components: {
-    SplitButton,
     SpeedDial,
+    Menu,
     MqResponsive
   },
   props: {
@@ -54,6 +55,7 @@ export default {
   setup(props, { emit }) {
     const store = useStore()
     const activeTab = computed(() => store.state.experiences.activeTab)
+    const menuRef = ref(null)
 
     const isShowOptions = computed(() => {
       return canImportFromSchool(activeTab.value)
@@ -71,9 +73,16 @@ export default {
       }
     }]
 
+    const toggleMenu = (event) => {
+      console.log(event)
+      menuRef.value.toggle(event)
+    }
+
     return {
+      menuRef,
       isShowOptions,
-      addExpOptions
+      addExpOptions,
+      toggleMenu
     }
   }
 }
