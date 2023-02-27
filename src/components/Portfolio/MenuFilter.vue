@@ -48,7 +48,7 @@
               :class='{ "selected": checked }'
               @click='$emit("toggleType", type)'
             >
-              {{ chineseOfExperienceTypes[type] }}
+              {{ expTypesInZh[type] }}
             </li>
           </ul>
         </div>
@@ -60,7 +60,7 @@
 <script>
 import { computed } from 'vue'
 import vueScrollShadow from 'vue3-scroll-shadow'
-import { experienceTypesInChinese } from '@/config'
+import { expTypesInZh } from '@/config'
 
 export default {
   name: 'MenuFilter',
@@ -86,7 +86,7 @@ export default {
 
     return {
       allSelected,
-      chineseOfExperienceTypes: experienceTypesInChinese
+      expTypesInZh
     }
   }
 }
