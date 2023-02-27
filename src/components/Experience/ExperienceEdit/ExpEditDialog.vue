@@ -36,17 +36,26 @@
       </div>
       <template #footer>
         <Button
-          label='取消'
-          :disabled='isSubmitLoading'
+          label='刪除'
           class='p-button-secondary p-button-outlined'
-          @click='showDialog = false'
+          :disabled='isSubmitLoading'
+          :loading='isDeleteLoading'
+          @click='onDeleteExp'
         />
-        <Button
-          label='儲存'
-          :disabled='v$.$invalid'
-          :loading='isSubmitLoading'
-          @click='onSubmitExp'
-        />
+        <span>
+          <Button
+            label='取消'
+            :disabled='isSubmitLoading'
+            class='p-button-secondary p-button-outlined'
+            @click='showDialog = false'
+          />
+          <Button
+            label='儲存'
+            :disabled='v$.$invalid || isDeleteLoading'
+            :loading='isSubmitLoading'
+            @click='onSubmitExp'
+          />
+        </span>
       </template>
     </Dialog>
     <ConfirmDialog class='no-header no-icon' group='close-dialog' />
@@ -65,7 +74,7 @@ import { mdiInformation } from '@mdi/js'
 
 import * as formSchema from './experienceSchema'
 import DynamicFormRenderer from '@/components/Form/DynamicFormRenderer'
-import { addExperience, updateExperience } from '@/api/experiences'
+import { addExperience, updateExperience, deleteExperience } from '@/api/experiences'
 import { generateEmptyExp, generateExpValidationRules } from '@/helpers/experiences.helper'
 
 export default {
@@ -175,6 +184,23 @@ export default {
       }
     }
 
+    // === HANDLE DELETE ===
+    const isDeleteLoading = ref(false)
+    const onDeleteExp = async() => {
+      isDeleteLoading.value = true
+
+      try {
+        await deleteExperience(props.expId)
+        closeDialog(true)
+        toast.add({ severity: 'success', summary: '刪除成功！', life: 10000 })
+
+      } catch (error) {
+        toast.add({ severity: 'error', summary: '刪除失敗 :(', detail: '無法刪除經歷，請稍後再次嘗試', life: 10000 })
+      } finally {
+        isDeleteLoading.value = false
+      }
+    }
+
     // === CONFIRMATION MODEL ===
     const confirm = useConfirm()
     const showCloseReminder = () => {
@@ -238,6 +264,8 @@ export default {
       isSubmitLoading,
       isShowErrorMessage,
       onSubmitExp,
+      isDeleteLoading,
+      onDeleteExp,
       updateData,
       overlayPanelRefs,
       toggleRemarkPanel,
@@ -283,6 +311,8 @@ export default {
 
   .p-dialog-footer {
     padding: 8px 16px;
+    justify-content: space-between;
+    display: flex;
     .p-button {
       margin-left: 16px;
     }
