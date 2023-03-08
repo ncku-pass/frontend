@@ -22,6 +22,7 @@
 
   <Toast position='top-right' />
   <ImportDialog
+    v-if='showImportDialog'
     :visible='showImportDialog'
     :type='activeTab'
     @close-import-dialog='showImportDialog = false'
@@ -35,7 +36,7 @@
 </template>
 
 <script>
-import { ref, computed, watch } from 'vue'
+import { ref, computed, watch, defineAsyncComponent } from 'vue'
 import { useStore } from 'vuex'
 import Toast from 'primevue/toast'
 import { useToast } from 'primevue/usetoast'
@@ -46,7 +47,6 @@ import LoadMode from '@/components/Experience/ExperienceList/LoadMode'
 import EditMode from '@/components/Experience/ExperienceList/QuickEditMode/EditMode'
 import ExperienceFooter from '@/components/Experience/ExperienceFooter'
 import ExpQuickEditFooter from '@/components/Experience/ExpQuickEditFooter'
-import ImportDialog from '@/components/Experience/ImportDialog'
 import ExpEditDialog from '@/components/Experience/ExperienceEdit/ExpEditDialog'
 import { isCurrentOrLastSemester } from '@/helpers/semester.helper'
 
@@ -59,7 +59,7 @@ export default {
     EditMode,
     ExperienceFooter,
     ExpQuickEditFooter,
-    ImportDialog,
+    ImportDialog: defineAsyncComponent(() => import('@/components/Experience/ImportDialog')),
     ExpEditDialog,
     Toast,
   },

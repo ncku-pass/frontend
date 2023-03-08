@@ -76,6 +76,7 @@ import Dialog from 'primevue/dialog'
 
 import Loader from '@/components/Loader'
 import { expTypesInZh } from '@/config'
+import { useToast } from 'primevue/usetoast'
 
 export default {
   name: 'ImportDialog',
@@ -103,10 +104,7 @@ export default {
   setup(props, { emit }) {
     const showDialog = computed({
       get: () => props.visible,
-      set: () => {
-        Object.assign(nckuExpSelects, generateEmptySelect(false))
-        emit('close-import-dialog')
-      }
+      set: () => emit('close-import-dialog')
     })
     const store = useStore()
 
@@ -115,6 +113,7 @@ export default {
       if (!nckuExps.value) {
         fetchNckuExp()
       }
+      Object.assign(nckuExpSelects, generateEmptySelect(false))
     })
     const nckuExps = computed(() => store.getters['experiences/NCKU_EXP_BY_TYPE_SEM']?.[props.type])
     const fetchNckuExpError = ref(null)
@@ -148,6 +147,7 @@ export default {
     })
 
     // ===== IMPORT EXP ======
+    const toast = useToast()
     const importErr = computed(() => store.state.experiences.error)
     const importLoading = computed(() => store.state.experiences.isPending)
     const importNckuExps = async() => {
