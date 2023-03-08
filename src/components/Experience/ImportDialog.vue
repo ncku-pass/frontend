@@ -165,6 +165,8 @@ export default {
 
       if (!importErr.value) {
         showDialog.value = false
+      } else {
+        toast.add({ severity: 'error', summary: '匯入失敗 :(', detail: '無法匯入經歷，請稍後再次嘗試', life: 10000 })
       }
     }
 
