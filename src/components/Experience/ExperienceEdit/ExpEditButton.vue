@@ -74,7 +74,6 @@ export default {
     }]
 
     const toggleMenu = (event) => {
-      console.log(event)
       menuRef.value.toggle(event)
     }
 

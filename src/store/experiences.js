@@ -5,7 +5,7 @@ import {
   importExperiences as importExperiencesAPI
 } from '@/api/experiences'
 import { getNCKUExperiences as getNCKUExperiencesAPI } from '@/api/ncku-portal'
-import { sortExperiences, classifyBySemester, orderBySemester } from '@/helpers/experiences.helper'
+import { sortExperiences, groupBySemester, orderBySemester } from '@/helpers/experiences.helper'
 import { KeyNoPairedError } from '@/config'
 import {
   covertActivitiesToExps,
@@ -157,7 +157,7 @@ const experiences = {
     classifiedExperiences(state) {
       const experiences = {}
       for (const type in state.experiences) {
-        experiences[type] = classifyBySemester(state.experiences[type])
+        experiences[type] = groupBySemester(state.experiences[type])
       }
       return experiences
     },
@@ -166,12 +166,12 @@ const experiences = {
         return null
       }
       return {
-        course: classifyBySemester(
+        course: groupBySemester(
           state.nckuExperiences.course.filter(nckuExp => {
             return !state.experiences?.course?.find(exp => exp.name === nckuExp.name && exp.semester === nckuExp.semester)
           })
         ),
-        activity: classifyBySemester(
+        activity: groupBySemester(
           state.nckuExperiences.activity.filter(nckuExp => {
             return !state.experiences?.activity?.find(
               exp => exp.name === nckuExp.name && exp.semester === nckuExp.semester

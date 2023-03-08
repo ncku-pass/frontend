@@ -26,7 +26,7 @@ export const orderBySemester = (arr, order = 'desc') => {
  * @param {array} arr Experience[]
  * @returns {object} 以學期為key的Object
  */
-export const classifyBySemester = arr => {
+export const groupBySemester = arr => {
   return arr.reduce((obj, experience) => {
     if (Array.isArray(obj[experience.semester])) {
       obj[experience.semester].push(experience)

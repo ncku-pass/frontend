@@ -66,7 +66,7 @@
 </template>
 
 <script>
-import { ref, computed, reactive } from 'vue'
+import { ref, computed, reactive, onMounted, watch } from 'vue'
 import { useStore } from 'vuex'
 import { isEmpty } from 'lodash-es'
 import Accordion from 'primevue/accordion'
@@ -110,6 +110,23 @@ export default {
     })
     const store = useStore()
 
+    // ===== FETCH FROM NCKU =====
+    onMounted(() => {
+      if (!nckuExps.value) {
+        fetchNckuExp()
+      }
+    })
+    const nckuExps = computed(() => store.getters['experiences/NCKU_EXP_BY_TYPE_SEM']?.[props.type])
+    const fetchNckuExpError = ref(null)
+    const fetchNckuExp = async() => {
+      try {
+        fetchNckuExpError.value = null
+        await store.dispatch('experiences/FETCH_NCKU_DATA')
+      } catch (error) {
+        fetchNckuExpError.value = error.message
+      }
+    }
+
     // ===== CHECKBOXES =====
     const generateEmptySelect = (selected) => {
       if (isEmpty(nckuExps?.value)) return {}
@@ -126,23 +143,9 @@ export default {
       Object.assign(nckuExpSelects, generateEmptySelect(!selectedAll.value))
       selectedAll.value = !selectedAll.value
     }
-
-    // ===== FETCH FROM NCKU =====
-    const nckuExps = computed(() => store.getters['experiences/NCKU_EXP_BY_TYPE_SEM']?.[props.type])
-    const fetchNckuExpError = ref(null)
-    const fetchNckuExp = async() => {
-      try {
-        fetchNckuExpError.value = null
-        await store.dispatch('experiences/FETCH_NCKU_DATA')
-      } catch (error) {
-        fetchNckuExpError.value = error
-      }
-    }
-    // fetch if no value
-    if (!nckuExps.value) {
-      fetchNckuExp()
+    watch(nckuExps, () => {
       Object.assign(nckuExpSelects, generateEmptySelect(false))
-    }
+    })
 
     // ===== IMPORT EXP ======
     const importErr = computed(() => store.state.experiences.error)
