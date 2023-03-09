@@ -47,6 +47,7 @@ export default {
           message: '尚未儲存履歷，確定要離開嗎？',
           acceptLabel: '確定離開',
           rejectLabel: '留下存檔',
+          rejectClass: 'p-button-secondary p-button-outlined',
           accept: () => {
             confirmLeaving.value = true
           },

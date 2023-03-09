@@ -209,6 +209,7 @@ export default {
         message: '離開則無法儲存資料喔！',
         acceptLabel: '確定離開',
         rejectLabel: '留下',
+        rejectClass: 'p-button-secondary p-button-outlined',
         accept: () => {
           closeDialog(false)
         },

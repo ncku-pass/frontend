@@ -47,6 +47,7 @@ export default {
         message: '確定要登出？',
         acceptLabel: '登出',
         rejectLabel: '取消',
+        rejectClass: 'p-button-secondary p-button-outlined',
         accept: () => {
           logout()
         },

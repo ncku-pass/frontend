@@ -183,7 +183,7 @@
   width: 100%;
 }
 
-// make dialog wider
+// make dialog wider, confirm dialog as is
 .p-dialog {
   width: 100%;
   max-width: 750px;
@@ -193,7 +193,11 @@
   border-radius: 8px;
 }
 
-.p-confirm-dialog.no-header {
+.p-confirm-dialog {
+  width: auto;
+}
+
+.p-confirm-dialog.no-header, .p-dialog.no-header {
   .p-dialog-header {
     display: none;
   }
