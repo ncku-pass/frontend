@@ -11,12 +11,12 @@
             class='router-link'
             :class='{ "router-link-active": selectedIndex === index }'
             :title='resume.name'
-            @click='handleSelectResume(index)'
+            @click='selectDisplayPortfolio(index)'
           >
             {{ resume.name || '請輸入名稱' }}
           </li>
           <li class='portfolio__main__tabs__add'>
-            <mdicon name='plusCircleOutline' size='24' @click='openTemplateModal' />
+            <mdicon name='plusCircleOutline' size='24' @click='showSelectTempDialog = true' />
           </li>
         </ul>
         <mdicon name='chevronRight' size='30' @click.stop='scrollHorizontal(200)' />
@@ -83,13 +83,17 @@
             </div>
           </div>
         </template>
-        <div v-else class='content-body--empty' @click='openTemplateModal'>
+        <div v-else class='content-body--empty' @click='showSelectTempDialog = true'>
           <img src='@/assets/Portfolio/man-with-coffee.png' alt='man-with-coffee' />
           <p>點擊這裡新增第一份履歷吧</p>
         </div>
       </div>
     </div>
-    <TemplateModal :show-modal='showTemplateModal' @close='handleCloseTemplateModal' @choose='handleAddResume' />
+    <SelectTemplateDialog
+      :visible='showSelectTempDialog'
+      @close-template-dialog='showSelectTempDialog = false'
+      @select-template='selectPortfolioTemp'
+    />
     <ConfirmDialog class='no-header no-icon' group='delete-resume' />
     <Toast group='copy-ability-text' :closable='false' />
     <Toast group='update-resume' position='top-right' />
@@ -106,13 +110,13 @@ import Toast from 'primevue/toast'
 import { useToast } from 'primevue/usetoast'
 
 import AbilityCard from '@/components/Portfolio/AbilityCard.vue'
-import TemplateModal from '@/components/Portfolio/TemplateModal.vue'
+import SelectTemplateDialog from '@/components/Portfolio/SelectTemplateDialog'
 
 export default {
   name: 'PortfolioMain',
   components: {
     AbilityCard,
-    TemplateModal,
+    SelectTemplateDialog,
     draggable,
     Toast
   },
@@ -143,7 +147,7 @@ export default {
     onBeforeUpdate(() => {
       tabRefs.value = []
     })
-    const handleSelectResume = index => {
+    const selectDisplayPortfolio = index => {
       selectedIndex.value = index
       if (index >= 0) {
         tabRefs.value[index].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' })
@@ -161,13 +165,10 @@ export default {
       })
     }
 
-    // === 新增履歷 ===
-    const showTemplateModal = ref(false)
-    const openTemplateModal = () => {
-      showTemplateModal.value = true
-    }
-    const handleAddResume = async({ name, cards }) => {
-      showTemplateModal.value = false
+    // ===== ADD PORTFOLIO =====
+    const showSelectTempDialog = ref(false)
+    const selectPortfolioTemp = async({ name, cards }) => {
+      showSelectTempDialog.value = false
       resumes.value.push({
         id: `${Math.random()}`.slice(2, 7),
         name,
@@ -175,13 +176,10 @@ export default {
         isLocal: true
       })
       await nextTick()
-      handleSelectResume(resumes.value.length - 1)
-    }
-    const handleCloseTemplateModal = () => {
-      showTemplateModal.value = false
+      selectDisplayPortfolio(resumes.value.length - 1)
     }
 
-    // === CONFIRMATION PROFILE MODAL ===
+    // === CONFIRMATION PORTFOLIO MODAL ===
     const deleteStatus = reactive({
       isPending: false,
       error: null
@@ -193,13 +191,14 @@ export default {
         message: '確定刪除此項履歷？',
         acceptLabel: '確定刪除',
         rejectLabel: '取消',
+        rejectClass: 'p-button-secondary p-button-outlined',
         accept: () => {
-          handleDeleteResume()
+          deletePortfolio()
         },
       })
     }
 
-    const handleDeleteResume = async() => {
+    const deletePortfolio = async() => {
       if (showedResume.value.isLocal) {
         resumes.value.splice(selectedIndex.value, 1)
       } else {
@@ -214,9 +213,9 @@ export default {
         }
       }
       if (selectedIndex.value === resumes.value.length) {
-        handleSelectResume(resumes.value.length - 1)
+        selectDisplayPortfolio(resumes.value.length - 1)
       } else {
-        handleSelectResume(selectedIndex.value)
+        selectDisplayPortfolio(selectedIndex.value)
       }
     }
 
@@ -277,16 +276,14 @@ export default {
       draggableOptions,
       tabRefs,
       setTabRef,
-      handleSelectResume,
+      selectDisplayPortfolio,
       tabWrapperRef,
       scrollHorizontal,
-      showTemplateModal,
-      openTemplateModal,
+      showSelectTempDialog,
       deleteStatus,
       showDeleteConfirm,
-      handleCloseTemplateModal,
-      handleAddResume,
-      handleDeleteResume,
+      selectPortfolioTemp,
+      deletePortfolio,
       handleAddCard,
       onDuplicateCard,
       handleDeleteExperience,
