@@ -36,6 +36,7 @@
       </div>
       <template #footer>
         <Button
+          v-if='expId'
           label='刪除'
           class='p-button-secondary p-button-outlined'
           :disabled='isSubmitLoading'
@@ -324,8 +325,10 @@ export default {
 
   .p-dialog-footer {
     padding: 8px 16px;
-    justify-content: space-between;
-    display: flex;
+    &:has(> .p-button) {
+      justify-content: space-between;
+      display: flex;
+    }
     .p-button {
       margin-left: 16px;
     }
