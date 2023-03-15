@@ -40,7 +40,7 @@
           class='p-button-secondary p-button-outlined'
           :disabled='isSubmitLoading'
           :loading='isDeleteLoading'
-          @click='onDeleteExp'
+          @click='showDeleteReminder'
         />
         <span>
           <Button
@@ -215,6 +215,18 @@ export default {
         },
       })
     }
+    const showDeleteReminder = () => {
+      confirm.require({
+        group: 'close-dialog',
+        message: '是否確定要刪除項經驗？',
+        acceptLabel: '確定刪除',
+        rejectLabel: '取消',
+        rejectClass: 'p-button-secondary p-button-outlined',
+        accept: () => {
+          onDeleteExp()
+        },
+      })
+    }
 
     // === REMARK PANEL ===
     const overlayPanelRefs = ref([])
@@ -266,7 +278,7 @@ export default {
       isShowErrorMessage,
       onSubmitExp,
       isDeleteLoading,
-      onDeleteExp,
+      showDeleteReminder,
       updateData,
       overlayPanelRefs,
       toggleRemarkPanel,
