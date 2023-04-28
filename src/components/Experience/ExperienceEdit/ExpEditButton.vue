@@ -100,36 +100,36 @@ export default {
   }
 
  :deep(.p-speeddial) {
-    position: fixed;
-    bottom: 20px;
-    left: 50%;
-    transform: translate(-50%);
+   position: fixed;
+   bottom: 20px;
+   left: 50%;
+   transform: translate(-50%);
 
-    .p-button {
-      width: 40px;
-      height: 40px;
-      box-shadow: 1px 1px 3px #757575;
-    }
+   .p-button {
+     width: 40px;
+     height: 40px;
+     box-shadow: 1px 1px 3px #757575;
+   }
+ }
 
-    &-opened {
-      .p-speeddial-list {
-        background: #ffffff;
-        box-shadow: 0 2px 4px -1px #757575;
-        color: #495057;
-        border: 1px solid #dee2e6;
-        border-radius: 3px;
-        width: 12.5rem;
-        margin-bottom: 20px;
+ :deep(.p-speeddial-opened) {
+    .p-speeddial-list {
+      background: #ffffff;
+      box-shadow: 0 2px 4px -1px #757575;
+      color: #495057;
+      border: 1px solid #dee2e6;
+      border-radius: 3px;
+      width: 12.5rem;
+      margin-bottom: 20px;
 
-        .p-speeddial-item {
-          padding: 12px 16px;
-          cursor: pointer;
-          width: 100%;
-          text-align: center;
+      .p-speeddial-item {
+        padding: 12px 16px;
+        cursor: pointer;
+        width: 100%;
+        text-align: center;
 
-          &:hover {
-            background: #e9ecef;
-          }
+        &:hover {
+          background: #e9ecef;
         }
       }
     }
