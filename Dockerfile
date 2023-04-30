@@ -1,4 +1,4 @@
-FROM node:lts-alpine as build-stage
+FROM node:16.20.0-alpine as build-stage
 ARG VUE_APP_API_URL=${VUE_APP_API_URL}
 ARG VUE_APP_GA_ID=${VUE_APP_GA_ID}
 ARG VUE_APP_GA_APP_NAME=${VUE_APP_GA_APP_NAME}
